@@ -1,0 +1,147 @@
+[
+  {
+    "Id": "xc78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8",
+    "Firstname": "xMark",
+    "Lastname": "xWalton",
+    "CreationDate": "x2018-06-06T00:00:00",
+    "DateOfBirth": "x2000-06-25T00:00:00",
+    "Age": 130,
+    "Size": 2182.5214,
+    "Address": {
+      "Street": "xRohrstrasse",
+      "StreetNumber": 12,
+      "Plz": 8304,
+      "City": "xWallislellen",
+      "Country": {
+        "Name": "Switze3rland",
+        "CountryCode": "CH"
+      }
+    },
+    "Children": [
+      {
+        "Name": "xJames",
+        "DateOfBirth": "2015-02-12T00:00:00"
+      },
+      {
+        "Name": null,
+        "DateOfBirth": "2015-02-12T00:00:00"
+      },
+      {
+        "Name": "Hanna",
+        "DateOfBirth": "da2012-03-20T00:00:00"
+      }
+    ],
+    "Relatives": [
+      {
+        "Id": "xfcf04ca6-d8f2-4214-a3ff-d0ded5bad4de",
+        "Firstname": "xSandra",
+        "Lastname": "xSchneider",
+        "CreationDate": "2019-04-01T00:00:00",
+        "DateOfBirth": "1996-02-14T00:00:00",
+        "Age": null,
+        "Size": 165.23,
+        "Address": {
+          "Street": "xBahnhofstrasse",
+          "StreetNumber": 450,
+          "Plz": 8000,
+          "City": "xZurich",
+          "Country": {
+            "Name": "Switzerland",
+            "CountryCode": "CH"
+          }
+        },
+        "Children": [],
+        "Relatives": null
+      }
+    ]
+  },
+  {
+    "Id": "fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de",
+    "Firstname": "Sandra",
+    "Lastname": "xSchneider",
+    "CreationDate": "2019-04-01T00:00:00",
+    "DateOfBirth": "1996-02-14T00:00:00",
+    "Age": null,
+    "Size": 165.23,
+    "Address": {
+      "Street": "Bahnhofstrasse",
+      "StreetNumber": 4533,
+      "Plz": 8000,
+      "City": "Zurich",
+      "Country": {
+        "Name": "Switzerland",
+        "CountryCode": "CH"
+      }
+    },
+    "Children": [],
+    "Relatives": null
+  },
+  {
+    "Id": "xc78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8",
+    "Firstname": "xMark",
+    "Lastname": "Walton",
+    "CreationDate": "2018-06-06T00:00:00",
+    "DateOfBirth": "2000-06-25T00:00:00",
+    "Age": 30,
+    "Size": 182.5214,
+    "Address": {
+      "Street": "Rohrstrasse",
+      "StreetNumber": 12,
+      "Plz": 8304,
+      "City": "Wallislellen",
+      "Country": {
+        "Name": "Switzerland",
+        "CountryCode": "CH"
+      }
+    },
+    "Children": [
+      {
+        "Name": "xJames",
+        "DateOfBirth": "2015-02-12T00:00:00"
+      },
+      {
+        "Name": null,
+        "DateOfBirth": "2015-02-12T00:00:00"
+      },
+      {
+        "Name": "Hanna",
+        "DateOfBirth": "2012-03-20T00:00:00"
+      }
+    ],
+    "Relatives": [
+      {
+        "Id": "fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de",
+        "Firstname": "xSandra",
+        "Lastname": "Schneider",
+        "CreationDate": "2019-04-01T00:00:00",
+        "DateOfBirth": "1996-02-14T00:00:00",
+        "Age": null,
+        "Size": 165.23,
+        "Address": {
+          "Street": "xBahnhofstrasse",
+          "StreetNumber": 450,
+          "Plz": 8000,
+          "City": "Zurich",
+          "Country": {
+            "Name": "Switzerland",
+            "CountryCode": "CH"
+          }
+        },
+        "Children": [],
+        "Relatives": null
+      }
+    ]
+  },
+  {
+    "Name": "xJames",
+    "DateOfBirth": "2015-02-12T00:00:00"
+  },
+  {
+    "Name": "Hanna",
+    "DateOfBirth": "x2012-03-20T00:00:00"
+  },
+  {
+    "Name": "xSwitzerland",
+    "CountryCode": "xCH"
+  }
+]
