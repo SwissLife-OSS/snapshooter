@@ -1,0 +1,445 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <AssemblyName>Snapshooter.Xunit.Tests</AssemblyName>
+
+    <RootNamespace>Snapshooter.Xunit.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SubfolderTests\__snapshots__\new\**" />
+    <EmbeddedResource Remove="SubfolderTests\__snapshots__\new\**" />
+    <None Remove="SubfolderTests\__snapshots__\new\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.5.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
+    <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="__snapshots__\AssertSnapshotTests.FactMatchSingleSnapshot_FieldNotExistInSnapshot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.FactMatchSingleSnapshot_FieldNotExistInSnapshot.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.FactMatchSingleSnapshot_GoodCase.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.FactMatchSingleSnapshot_GoodCase.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.FactMatchSingleSnapshot_OneFieldNotEqual.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.FactMatchSingleSnapshot_OneFieldNotEqual.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AnyComplexObjectField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AnyComplexObjectField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AnyScalarFieldDateTime.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AnyScalarFieldDateTime.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AnyScalarFieldNotDateTime.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AnyScalarFieldNotDateTime.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AnyScalarFieldNullDateTime.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AnyScalarFieldNullDateTime.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarGuidField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarGuidField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarGuidFieldNotMatch.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarGuidFieldNotMatch.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarGuidNullField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarGuidNullField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarNullStringField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarNullStringField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarStringField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarStringField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarStringFieldToInteger.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarStringFieldToInteger.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarStringFieldToIntegerParseFailure.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarStringFieldToIntegerParseFailure.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarStringFieldUnequal.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertScalarStringFieldUnequal.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertSeveralFields.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_AssertSeveralFields.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_CircularReference.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_CircularReference.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreComplexObjectField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreComplexObjectField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarFieldNullConvertError.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarFieldNullConvertError.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarFieldPathNotExist.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarFieldPathNotExist.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarNullField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarNullField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarNullIntField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarNullIntField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarNullStringField.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreScalarNullStringField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreSeveralFields.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreSeveralFields.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreWildcard.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_IgnoreWildcard.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_LargeOverallTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_LargeOverallTest.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_MultipleObjectsSnapshot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_MultipleObjectsSnapshot.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_ObjectsArraySnapshot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_ObjectsArraySnapshot.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_ObjectsListsSnapshot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.MatchSnapshot_ObjectsListsSnapshot.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.TheoryMatchSingleSnapshot_FieldNotExistInSnapshot_22_160.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.TheoryMatchSingleSnapshot_FieldNotExistInSnapshot_22_160.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.TheoryMatchSingleSnapshot_GoodCase_36_189.45.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.TheoryMatchSingleSnapshot_GoodCase_36_189.45.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.TheoryMatchSingleSnapshot_OneFieldNotEqual_34_175.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\AssertSnapshotTests.TheoryMatchSingleSnapshot_OneFieldNotEqual_34_175.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\FactMatchSingleSnapshot_GoodCaseAsync.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\FactMatchSingleSnapshot_GoodCaseAsync.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_FactMatchSingleSnapshot_FieldNotExistInSnapshot.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.FactMatchSingleSnapshot_GoodCase.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreWildcardScalarFieldsArray_SuccessfulIgnored.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IsTypeComplexObjectField_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IsTypeScalarFieldDateTime_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IsTypeScalarFieldNotDateTime_ThrowsSnapshotFieldException.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IsTypeScalarFieldNullDateTime_ThrowsSnapshotFieldException.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertScalarGuidField_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertScalarGuidFieldNotMatch_ThrowsSnapshotCompareException.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertScalarGuidNullField_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertScalarNullStringField_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertScalarStringField_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertScalarStringFieldToInteger_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertScalarStringFieldToIntegerParseFailure_ThrowsSnapshotFieldException.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertScalarStringFieldUnequal_ThrowsSnapshotCompareException.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_AssertSeveralFields_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_CircularReference_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_FactMatchSingleSnapshotAsync_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_FactMatchSingleSnapshot_OneFieldNotEqual.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AnyComplexObjectField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AnyScalarFieldDateTime.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AnyScalarFieldNotDateTime.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AnyScalarFieldNullDateTime.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertScalarGuidField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertScalarGuidFieldNotMatch.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertScalarGuidNullField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertScalarNullStringField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertScalarStringField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertScalarStringFieldToInteger.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertScalarStringFieldToIntegerParseFailure.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertScalarStringFieldUnequal.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_AssertSeveralFields.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_CircularReference.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreComplexObjectField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreScalarField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreScalarFieldNullConvertError.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreScalarFieldPathNotExist.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreScalarNullField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreScalarNullIntField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreScalarNullStringField.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreSeveralFields.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_IgnoreWildcard.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_LargeOverallTest.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_MultipleObjectsSnapshot.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_ObjectsArraySnapshot.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.MatchSnapshot_ObjectsListsSnapshot.snap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_FactMatchSingleSnapshot_GoodCase.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreComplexObjectField_SuccessfulIgnored.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreScalarField_SuccessfulIgnored.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreScalarFieldNullConvertError_ThrowsSnapshotFieldException.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreScalarFieldPathNotExist_ThrowsSnapshotFieldException.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreScalarNullField_SuccessfulIgnored.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreScalarNullIntField_SuccessfulIgnored.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreScalarNullStringField_SuccessfulIgnored.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreSeveralFields_SuccessfulIgnored.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_IgnoreWildcard_SuccessfulIgnored.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_LargeOverallTest_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_MultipleObjectsSnapshot_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_ObjectsArraySnapshot_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_ObjectsListsSnapshot_SuccessfulMatch.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_FieldNotExistInSnapshot_22_160.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_FieldNotExistInSnapshot_23_164.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_GoodCase_19_193.02.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_GoodCase_36_189.45.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_GoodCase_42_173.16.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_OneFieldNotEqual_34_175.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_OneFieldNotEqual_36_177.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_OneFieldNotEqual_37_178.snap">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
