@@ -18,7 +18,7 @@ jobs:
   - job: release
     container: linux
     steps:
-      - script: ./build.sh -target=release
+      - script: bash ./build.sh -target=release
         env:
           Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
           Sonar_Branch: $(System.PullRequest.SourceBranch)
