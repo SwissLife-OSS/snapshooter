@@ -1,5 +1,5 @@
 trigger:
-  - master
+  - refs/tags/*
 
 pr:
   - master
@@ -9,7 +9,7 @@ variables:
 
 jobs:
   - job: pr
-    condition: eq(variables['System.PullRequest.PullRequestNumber'], True)
+    condition: eq(True, variables['System.PullRequest.PullRequestNumber'])
     pool:
       vmImage: ubuntu-16.04
     steps:
@@ -20,11 +20,13 @@ jobs:
         displayName: build
 
   - job: release
-    condition: eq(variables['System.PullRequest.PullRequestNumber'], False)
+    condition: and(eq(variables['Build.SourceBranch'], 'refs/tags/'), eq(False, variables['System.PullRequest.PullRequestNumber']))
     pool:
       vmImage: ubuntu-16.04
     steps:
       - script: bash ./build.sh -target=release
+        env:
+          Version: $(Build.SourceBranchName)
         displayName: build
       - script: bash ./build.sh -target=push
         displayName: publish

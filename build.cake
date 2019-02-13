@@ -14,10 +14,7 @@ var configuration = EnvironmentVariable<string>("Build_Configuration", "Release"
 var nugetToken = EnvironmentVariable<string>("Nuget_Token", default(string));
 var sonarLogin = EnvironmentVariable<string>("Sonar_Token", default(string));
 
-var packageVersion = EnvironmentVariable<string>("Version", default(string));
-
-
-var version = EnvironmentVariable<string>("Build_Version", default(string));
+var version = EnvironmentVariable<string>("Version", default(string));
 
 var sonarPrKey = EnvironmentVariable<string>("Sonar_Pr_Key", default(string));
 var sonarBranch = EnvironmentVariable<string>("Sonar_Branch", default(string));
@@ -132,7 +129,7 @@ Task("SonarBegin")
         OpenCoverReportsPath = "**/*.opencover.xml",
         Exclusions = "**/*.js,**/*.html,**/*.css,**/examples/**/*.*,**/benchmarks/**/*.*,**/src/Templates/**/*.*",
         Verbose = false,
-        Version = packageVersion,
+        Version = version,
         ArgumentCustomization = args => {
             var a = args;
 
