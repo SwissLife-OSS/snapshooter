@@ -6,23 +6,23 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
-
-resources:
-  containers:
-  - container: chillicream
-    image: dotnet-build:3.0
-
 variables:
   - group: Tokens
 
-steps:
-- script: dotnet tool install -g Cake.Tool
-  displayName: Install Cake
+resources:
+  containers:
+  - container: linux
+    image: chillicream/dotnet-build:3.0
 
-- script: dotnet cake -target=release
-  env:
-    Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
-    Sonar_Branch: $(System.PullRequest.SourceBranch)
-  displayName: build
+jobs:
+- job: release
+  container: linux
+  steps:
+    - script: dotnet tool install -g Cake.Tool
+      displayName: Install Cake
+
+    - script: dotnet cake -target=release
+      env:
+        Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
+        Sonar_Branch: $(System.PullRequest.SourceBranch)
+      displayName: build
