@@ -9,6 +9,11 @@ trigger:
 pool:
   vmImage: 'Ubuntu-16.04'
 
+resources:
+  containers:
+  - container: chillicream
+    image: dotnet-build:3.0
+
 variables:
   - group: Tokens
 
