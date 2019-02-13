@@ -328,3 +328,10 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+.sonarqube/
+
+testoutput/
+
+tools/**
+!tools/packages.config
