@@ -9,14 +9,10 @@ trigger:
 variables:
   - group: Tokens
 
-resources:
-  containers:
-    - container: linux
-      image: chillicream/dotnet-build:3.0
-
 jobs:
   - job: release
-    container: linux
+    pool:
+      vmImage: ubuntu-16.04
     steps:
       - script: bash ./build.sh -target=release
         env:
