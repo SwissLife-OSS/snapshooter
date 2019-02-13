@@ -17,4 +17,7 @@ steps:
   displayName: Install Cake
 
 - script: dotnet cake -target=release
+  env:
+    Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
+    Sonar_Branch: $(System.PullRequest.SourceBranch)
   displayName: build
