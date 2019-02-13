@@ -9,7 +9,7 @@ variables:
 
 jobs:
   - job: pr
-    condition: ne(variables['System.PullRequest.PullRequestNumber'], Null)
+    condition: eq(True, variables['System.PullRequest.PullRequestNumber'])
     pool:
       vmImage: ubuntu-16.04
     steps:
@@ -20,7 +20,7 @@ jobs:
         displayName: build
 
   - job: release
-    condition: eq(variables['System.PullRequest.PullRequestNumber'], Null)
+    condition: eq(False, variables['System.PullRequest.PullRequestNumber'])
     pool:
       vmImage: ubuntu-16.04
     steps:
