@@ -9,6 +9,7 @@
       Json Snapshooter is a flexible snapshot testing tool for .Net unit tests.
       It creates and asserts json snapshots in unit tests without any .Net test framework required.
     </Description>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

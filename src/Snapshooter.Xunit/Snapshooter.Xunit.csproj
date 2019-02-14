@@ -9,6 +9,7 @@
       Xunit Snapshooter is a flexible snapshot testing tool for .Net unit tests with Xunit.
       It creates and asserts snapshots (json) within Xunit unit tests.
     </Description>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
