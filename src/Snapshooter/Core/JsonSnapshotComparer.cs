@@ -7,24 +7,31 @@ using Snapshooter.Exceptions;
 
 namespace Snapshooter.Core
 {
-    public class JsonSnapshotComparer : ISnapshotComparer
+	/// <summary>
+	/// The snapshot comparer is responsible to compare the actual snapshot with the
+	/// existing one and also inclode the field match options checks.
+	/// </summary>
+	public class JsonSnapshotComparer : ISnapshotComparer
     {
         private readonly IAssert _snapshotAssert;
 
-        public JsonSnapshotComparer(IAssert snapshotAssert)
+		/// <summary>
+		/// Creates a new instance of the <see cref="JsonSnapshotComparer"/>
+		/// </summary>
+		/// <param name="snapshotAssert">The snapshot assert.</param>
+		public JsonSnapshotComparer(IAssert snapshotAssert)
         {
             _snapshotAssert = snapshotAssert;
         }
 
-        /// <summary>
-        /// Compares the current snapshot with the expected snapshot and applies 
-        /// the compare rules of the compare actions.
-        /// </summary>
-        /// <param name="matchOptions">The compare actions, which will be used for special comparion.</param>
-        /// <param name="originalActualSnapshot">The original snapshot of the current result.</param>
-        /// <param name="actualSnapshot">The actual (modifiable) snapshot of the current result.</param>
-        /// <param name="expectedSnapshot">The expected (modifiable) snaphshot.</param>
-        public void CompareSnapshots(
+		/// <summary>
+		/// Compares the current snapshot with the expected snapshot and applies 
+		/// the compare rules of the compare actions.
+		/// </summary>
+		/// <param name="matchOptions">The compare actions, which will be used for special comparion.</param>
+		/// <param name="expectedSnapshot">The original snapshot of the current result.</param>
+		/// <param name="actualSnapshot">The actual (modifiable) snapshot of the current result.</param>
+		public void CompareSnapshots(
             string expectedSnapshot,
             string actualSnapshot,
             Func<MatchOptions, MatchOptions> matchOptions)

@@ -25,7 +25,7 @@ namespace Snapshooter.Tests.Data
 
     public class TestPersonBuilder
     {
-        private TestPerson _testPerson;
+        private readonly TestPerson _testPerson;
 
         private TestPersonBuilder()
         {
