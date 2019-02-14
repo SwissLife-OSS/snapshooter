@@ -15,6 +15,9 @@ jobs:
     steps:
       - bash: echo $(Test123)
       - bash: echo $Test123
+      - bash: echo $Bar123
+        env:
+          Bar123: $(Test123)
       - script: bash ./build.sh -target=sonar
         env:
           Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
