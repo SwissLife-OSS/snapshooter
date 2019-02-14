@@ -4,7 +4,7 @@ trigger:
 pr:
   - master
 
-name: $(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+name: $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
 variables:
   - group: Tokens
