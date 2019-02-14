@@ -4,29 +4,41 @@ trigger:
 pr:
   - master
 
+name: $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
 variables:
   - group: Tokens
 
 jobs:
-  - job: pr
+  - job: pull_request_build
+    displayName: Pull Request Build
     condition: eq(True, variables['System.PullRequest.PullRequestNumber'])
     pool:
       vmImage: ubuntu-16.04
     steps:
-      - script: bash ./build.sh -target=release
+      - bash: ./build.sh -target=sonar
         env:
+          Sonar_Token: $(Sonar_Token)
           Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
           Sonar_Branch: $(System.PullRequest.SourceBranch)
-        displayName: build
+        displayName: Sonar Build
 
-  - job: release
+  - job: release_build
+    displayName: Release Build
     condition: and(contains(variables['Build.SourceBranch'], 'refs/tags/'), eq(False, variables['System.PullRequest.PullRequestNumber']))
     pool:
       vmImage: ubuntu-16.04
     steps:
-      - script: bash ./build.sh -target=release
+      - bash: ./build.sh -target=sonar
+        env:
+          Sonar_Token: $(Sonar_Token)
+          Version: $(Build.SourceBranchName)
+        displayName: Sonar Build
+      - bash: ./build.sh -target=publish
         env:
           Version: $(Build.SourceBranchName)
-        displayName: build
-      - script: bash ./build.sh -target=push
-        displayName: publish
+        displayName: Create Artifacts
+      - bash: ./build.sh -target=push
+        env:
+          Nuget_Token: $(Nuget_Token)
+        displayName: Publish Packages
