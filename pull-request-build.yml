@@ -1,21 +1,21 @@
 pr:
-  - master
+  autoCancel: true
+  branches:
+    include:
+      - master
 
 name: $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
 variables:
   - group: Tokens
 
-jobs:
-  - job: pull_request_build
-    displayName: Pull Request Build
-    condition: eq(True, variables['System.PullRequest.PullRequestNumber'])
-    pool:
-      vmImage: ubuntu-16.04
-    steps:
-      - bash: ./build.sh -target=sonar
-        env:
-          Sonar_Token: $(Sonar_Token)
-          Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
-          Sonar_Branch: $(System.PullRequest.SourceBranch)
-        displayName: Sonar Build
+pool:
+  vmImage: ubuntu-16.04
+
+steps:
+  - bash: ./build.sh -target=sonar
+    env:
+      Sonar_Token: $(Sonar_Token)
+      Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
+      Sonar_Branch: $(System.PullRequest.SourceBranch)
+    displayName: Sonar Build
