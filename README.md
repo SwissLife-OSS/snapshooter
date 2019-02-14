@@ -10,6 +10,7 @@ _Snapshooter_ is a flexible snapshot testing tool to simplify the result validat
 ## Getting Started
 
 At the moment  _Snapshooter_ only supports the Xunit test framework. 
+
 To get started, install the _Snapshooter Xunit_ nuget package: 
 
 ```
@@ -41,14 +42,16 @@ public void CreatePersonSnapshotTest()
 }
 ```
 
-2. Run the unit test
+2. Run the unit test to create a new Snapshot
 
-The `Snapshot.Match(person)` statement creates a new snapshot of your result object and stores it in the ```__snapshots__/__new__``` folder next to your executing unit test file. 
+The `Snapshot.Match(person)` statement creates a new snapshot of your result object and stores it in the 
+```__snapshots__/__new__``` folder, which will be creted next to your executing unit test file. 
 
 The name of your new snapshot file will be per default: 
 ```<UnitTestClassName>.<TestMethodName>.snap```
 
-3. Review your new snapshot file ```__snapshots__/__new__/<UnitTestClassName>.<TestMethodName>.snap``` and if the snapshot is alright, then move it from the ```__new__``` folder to the parent folder ```__snapshots__```.
+3. Review snapshot
+Review your new snapshot file ```__snapshots__/__new__/<UnitTestClassName>.<TestMethodName>.snap``` and if the snapshot content is valid, then move it from the ```__new__``` folder to the parent folder ```__snapshots__```.
 
-4. Run the unit test again.
+4. Run unit test to assert.
 Now the `Snapshot.Match(person)` statement will create again a snapshot of your test result and compare it against your reviewed snapshot available in the ```__snapshots__``` folder next to your unit test file.
