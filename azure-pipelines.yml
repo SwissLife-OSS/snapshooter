@@ -18,7 +18,7 @@ jobs:
       - bash: echo $Bar123
         env:
           Bar123: $(Test123)
-      - script: bash ./build.sh -target=sonar
+      - bash: ./build.sh -target=sonar
         env:
           Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
           Sonar_Branch: $(System.PullRequest.SourceBranch)
