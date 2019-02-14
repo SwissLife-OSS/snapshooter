@@ -13,7 +13,7 @@ At the moment  _Snapshooter_ only supports the Xunit test framework.
 
 To get started, install the _Snapshooter Xunit_ nuget package: 
 
-```
+```bash
 nuget install Snapshooter.Xunit
 ```
 
@@ -61,16 +61,24 @@ Now the `Snapshot.Match(person)` statement will create again a snapshot of your 
 
 
 ## Ignore Fields in Snapshots
-If some fields in your snapshot shall be ignored within the snapshot comparison, then you can use the following ignore options:
+If some fields in your snapshot shall be ignored during snapshot assertion, then the following ignore options can be used:
 ```csharp
  Snapshot.Match<TestPerson>(testPerson, matchOptions => matchOptions.IgnoreField("Size"));
 ```
 
-The fields to ignore will be located via JsonPath, therefore you are very flexible and you can also ignore fields from child objects.
+The fields to ignore will be located via JsonPath, therefore you are very flexible and you can also ignore fields from child objects or arrays.
 Examples:
 ```csharp
- // Ignores the field 'street' of the child node 'address'
-Snapshot.Match<TestPerson>(person, matchOptions => matchOptions.IgnoreField("Address.StreetNumber")));
+ // Ignores the field 'StreetNumber' of the child node 'Address' of the person
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Address.StreetNumber"));
 
+// Ignores the field 'Name' of the child node 'Country' of the child node 'Address' of the person
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Address.Country.Name"));
 
+// Ignores the field 'Id' of the first person in the 'Relatives' array of the person
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Relatives[0].Id"));
+
+// Ignores the field 'Name' of all 'Children' nodes of the person
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Children[*].Name"));
 ```
+
