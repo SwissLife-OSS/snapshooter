@@ -6,11 +6,11 @@ pr:
 
 name: $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
-variables:
-  - group: Tokens
-
 pool:
   vmImage: ubuntu-16.04
+
+variables:
+  - group: Tokens
 
 steps:
   - bash: ./build.sh -target=sonar

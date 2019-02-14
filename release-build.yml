@@ -3,26 +3,23 @@ trigger:
 
 name: $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
+pool:
+  vmImage: ubuntu-16.04
+
 variables:
   - group: Tokens
 
-jobs:
-  - job: release_build
-    displayName: Release Build
-    condition: and(contains(variables['Build.SourceBranch'], 'refs/tags/'), eq(False, variables['System.PullRequest.PullRequestNumber']))
-    pool:
-      vmImage: ubuntu-16.04
-    steps:
-      - bash: ./build.sh -target=sonar
-        env:
-          Sonar_Token: $(Sonar_Token)
-          Version: $(Build.SourceBranchName)
-        displayName: Sonar Build
-      - bash: ./build.sh -target=publish
-        env:
-          Version: $(Build.SourceBranchName)
-        displayName: Create Artifacts
-      - bash: ./build.sh -target=push
-        env:
-          Nuget_Token: $(Nuget_Token)
-        displayName: Publish Packages
+steps:
+  - bash: ./build.sh -target=sonar
+    env:
+      Sonar_Token: $(Sonar_Token)
+      Version: $(Build.SourceBranchName)
+    displayName: Sonar Build
+  - bash: ./build.sh -target=publish
+    env:
+      Version: $(Build.SourceBranchName)
+    displayName: Create Artifacts
+  - bash: ./build.sh -target=push
+    env:
+      Nuget_Token: $(Nuget_Token)
+    displayName: Publish Packages
