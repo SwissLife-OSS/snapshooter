@@ -11,7 +11,7 @@ _Snapshooter_ is a snapshot unit testing tool for the _.Net Core_ and _.Net Fram
 At the moment _Snapshooter_ only supports the Xunit test framework.
 The first step is to install the _Snapshooter_ nuget package:
 
-```
+```bash
 nuget install Snapshooter.Xunit
 ```
 
