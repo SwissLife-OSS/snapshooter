@@ -11,8 +11,8 @@ _Snapshooter_ is a snapshot unit testing tool for the _.Net Core_ and _.Net Fram
 At the moment _Snapshooter_ only supports the Xunit test framework.
 The first step is to install the _Snapshooter_ nuget package:
 
-```
-nuget install Snapshooter.Xunit
+```bash
+ dotnet add package Snapshooter.Xunit
 ```
 
 ### Snapshot Assert
@@ -36,15 +36,16 @@ Example:
 [Fact]
 public void CreatePersonSnapshotTest()
 {
-	// arrange
-	var serviceClient = new ServiceClient();
+    // arrange
+    var serviceClient = new ServiceClient();
 
-	// act
-	TestPerson person = serviceClient.CreatePerson(
-		Guid.Parse("2292F21C-8501-4771-A070-C79C7C7EF451"), "David", "Mustermann");
+    // act
+    TestPerson person = serviceClient.CreatePerson(
+        Guid.Parse("2292F21C-8501-4771-A070-C79C7C7EF451"),
+        "David", "Mustermann");
 
-	// assert
-	Snapshot.Match(person);
+    // assert
+    Snapshot.Match(person);
 }
 ```
 
