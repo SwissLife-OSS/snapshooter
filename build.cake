@@ -77,7 +77,7 @@ Task("Publish")
 Task("Push")
     .Does(() =>
 {
-    var packages = GetFiles("./**/*.nupkg");
+    var packages = GetFiles("./**/Snapshooter.*.nupkg");
 
     NuGetPush(packages, new NuGetPushSettings {
         Source = "https://api.nuget.org/v3/index.json",
