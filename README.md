@@ -20,7 +20,9 @@ nuget install Snapshooter.Xunit
 ### Assert with Snapshots
 To assert your test results with snapshots in your unit tests, follow the following steps:
 
-1. Insert a snapshot assert statement `Snapshot.Match(yourResultObject);` into your unit test.
+#### 1. Add snapshot assert statement
+
+Insert a snapshot assert statement `Snapshot.Match(yourResultObject);` into your unit test.
 
 Example:
 ```csharp
@@ -42,7 +44,7 @@ public void CreatePersonSnapshotTest()
 }
 ```
 
-2. Run the unit test to create a new Snapshot
+#### 2. Run the unit test to create a new Snapshot
 
 The `Snapshot.Match(person)` statement creates a new snapshot of your result object and stores it in the 
 ```__snapshots__/__new__``` folder, which will be creted next to your executing unit test file. 
@@ -50,8 +52,10 @@ The `Snapshot.Match(person)` statement creates a new snapshot of your result obj
 The name of your new snapshot file will be per default: 
 ```<UnitTestClassName>.<TestMethodName>.snap```
 
-3. Review snapshot
-Review your new snapshot file ```__snapshots__/__new__/<UnitTestClassName>.<TestMethodName>.snap``` and if the snapshot content is valid, then move it from the ```__new__``` folder to the parent folder ```__snapshots__```.
+#### 3. Review an confirm new snapshot
 
-4. Run unit test to assert.
+Review your new snapshot file ```__snapshots__/__new__/<UnitTestClassName>.<TestMethodName>.snap``` and if the snapshot content is    valid, then move it from the ```__new__``` folder to the parent folder ```__snapshots__```.
+
+#### 4. Run unit test to assert
+
 Now the `Snapshot.Match(person)` statement will create again a snapshot of your test result and compare it against your reviewed snapshot available in the ```__snapshots__``` folder next to your unit test file.
