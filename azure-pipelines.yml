@@ -13,7 +13,9 @@ jobs:
     pool:
       vmImage: ubuntu-16.04
     steps:
-      - script: bash ./build.sh -target=release
+      - script: bash echo $Test123
+        displayName: Test
+      - script: bash ./build.sh -target=sonar
         env:
           Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
           Sonar_Branch: $(System.PullRequest.SourceBranch)
