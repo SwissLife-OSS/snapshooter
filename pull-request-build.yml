@@ -1,7 +1,7 @@
 pr:
   autoCancel: true
   branches:
-    include:
+    exclude:
       - master
 
 name: $(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
