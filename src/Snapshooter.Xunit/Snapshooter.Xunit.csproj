@@ -1,9 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Snapshooter.Xunit</AssemblyName>
     <RootNamespace>Snapshooter.Xunit</RootNamespace>
+    <PackageId>Snapshooter.Xunit</PackageId>
+    <Description>
+      Xunit Snapshooter is a flexible snapshot testing tool for .Net unit tests with Xunit.
+      It creates and asserts snapshots (json) within Xunit unit tests.
+    </Description>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>Full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>

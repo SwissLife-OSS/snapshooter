@@ -4,13 +4,14 @@
     <Product>Snapshooter</Product>
     <Authors>Swiss Life authors and contributors</Authors>
     <Company>Swiss Life</Company>
-    <Copyright>Copyright © 2018 Swiss Life</Copyright>
+    <Copyright>Copyright © 2019 Swiss Life</Copyright>
     <PackageLicenseUrl>https://github.com/SwissLife-OSS/Snapshooter/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/SwissLife-OSS/Snapshooter</PackageProjectUrl>
     <PackageReleaseNotes>Release notes: https://github.com/ChilliCream/SwissLife-OSS/Snapshooter/releases/$(Version)</PackageReleaseNotes>
-    <PackageTags>XUnit SwissLife Snapshot</PackageTags>
+    <PackageTags>XUnit SwissLife Snapshot UnitTest Test .Net</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <!--PackageIconUrl>https://cdn.rawgit.com/ChilliCream/Snapshooter-logo/master/img/Snapshooter-signet.png</PackageIconUrl-->
+	<IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>

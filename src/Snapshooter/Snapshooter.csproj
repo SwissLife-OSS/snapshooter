@@ -4,6 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Snapshooter</AssemblyName>
     <RootNamespace>Snapshooter</RootNamespace>
+    <PackageId>Snapshooter</PackageId>
+    <Description>Snapshooter core functionalities to create and assert snapshots in .Net unit tests.</Description>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>

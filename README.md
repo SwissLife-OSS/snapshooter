@@ -1,5 +1,8 @@
 # Snapshooter
 
+[![Build Status](https://dev.azure.com/swisslife-oss/swisslife-oss/_apis/build/status/SwissLife-OSS.Snapshooter?branchName=master)](https://dev.azure.com/swisslife-oss/swisslife-oss/_build/latest?definitionId=2&branchName=master) [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=SwissLife-OSS_Snapshooter&metric=coverage)](https://sonarcloud.io/dashboard?id=SwissLife-OSS_Snapshooter) [![Quality](https://sonarcloud.io/api/project_badges/measure?project=SwissLife-OSS_Snapshooter&metric=alert_status)](https://sonarcloud.io/dashboard?id=SwissLife-OSS_Snapshooter)
+---
+
 **Snapshooter is a snapshot unit testing tool for _.NET Core_ and _.NET Framework_**
 
 _Snapshooter_ is a snapshot unit testing tool for the _.Net Core_ and _.Net Framework_ to simplify the result assertion of your unit tests. It is based on the idea of [Jest Snapshot Testing](https://jestjs.io/docs/en/snapshot-testing/).
