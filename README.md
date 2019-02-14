@@ -47,10 +47,9 @@ public void CreatePersonSnapshotTest()
 #### 2. Run the unit test to create a new Snapshot
 
 The `Snapshot.Match(person)` statement creates a new snapshot of your result object and stores it in the 
-```__snapshots__/__new__``` folder, which will be creted next to your executing unit test file. 
+```__snapshots__/__new__``` folder, which will be created next to your executing unit test file. 
 
-The name of your new snapshot file will be per default: 
-```<UnitTestClassName>.<TestMethodName>.snap```
+Snapshot name: ```<UnitTestClassName>.<TestMethodName>.snap```
 
 #### 3. Review an confirm new snapshot
 
@@ -58,4 +57,20 @@ Review your new snapshot file ```__snapshots__/__new__/<UnitTestClassName>.<Test
 
 #### 4. Run unit test to assert
 
-Now the `Snapshot.Match(person)` statement will create again a snapshot of your test result and compare it against your reviewed snapshot available in the ```__snapshots__``` folder next to your unit test file.
+Now the `Snapshot.Match(person)` statement will create again a snapshot of your test result and compare it against your reviewed snapshot in the ```__snapshots__``` folder, which next to your unit test file.
+
+
+## Ignore Fields in Snapshots
+If some fields in your snapshot shall be ignored within the snapshot comparison, then you can use the following ignore options:
+```csharp
+ Snapshot.Match<TestPerson>(testPerson, matchOptions => matchOptions.IgnoreField("Size"));
+```
+
+The fields to ignore will be located via JsonPath, therefore you are very flexible and you can also ignore fields from child objects.
+Examples:
+```csharp
+ // Ignores the field 'street' of the child node 'address'
+Snapshot.Match<TestPerson>(person, matchOptions => matchOptions.IgnoreField("Address.StreetNumber")));
+
+
+```
