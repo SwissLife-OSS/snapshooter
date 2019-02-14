@@ -13,8 +13,8 @@ jobs:
     pool:
       vmImage: ubuntu-16.04
     steps:
-      - script: echo $Test123
-        displayName: Test
+      - bash: echo $(Test123)
+      - bash: echo $Test123
       - script: bash ./build.sh -target=sonar
         env:
           Sonar_Pr_Key: $(System.PullRequest.PullRequestNumber)
