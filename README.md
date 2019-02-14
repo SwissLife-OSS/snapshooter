@@ -36,15 +36,16 @@ Example:
 [Fact]
 public void CreatePersonSnapshotTest()
 {
-	// arrange
-	var serviceClient = new ServiceClient();
+    // arrange
+    var serviceClient = new ServiceClient();
 
-	// act
-	TestPerson person = serviceClient.CreatePerson(
-		Guid.Parse("2292F21C-8501-4771-A070-C79C7C7EF451"), "David", "Mustermann");
+    // act
+    TestPerson person = serviceClient.CreatePerson(
+        Guid.Parse("2292F21C-8501-4771-A070-C79C7C7EF451"),
+        "David", "Mustermann");
 
-	// assert
-	Snapshot.Match(person);
+    // assert
+    Snapshot.Match(person);
 }
 ```
 
