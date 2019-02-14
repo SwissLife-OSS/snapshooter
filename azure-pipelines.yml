@@ -8,7 +8,8 @@ variables:
   - group: Tokens
 
 jobs:
-  - job: Pull Request Build
+  - job: pull_request_build
+    displayName: Pull Request Build
     condition: eq(True, variables['System.PullRequest.PullRequestNumber'])
     pool:
       vmImage: ubuntu-16.04
@@ -20,7 +21,8 @@ jobs:
           Sonar_Branch: $(System.PullRequest.SourceBranch)
         displayName: Sonar Build
 
-  - job: Release Build
+  - job: release_build
+    displayName: Release Build
     condition: and(contains(variables['Build.SourceBranch'], 'refs/tags/'), eq(False, variables['System.PullRequest.PullRequestNumber']))
     pool:
       vmImage: ubuntu-16.04
