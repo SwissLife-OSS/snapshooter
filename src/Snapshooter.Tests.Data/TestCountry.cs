@@ -9,7 +9,7 @@
 
     public class TestCountryBuilder
     {
-        private TestCountry _testCountry;
+        private readonly TestCountry _testCountry;
 
         private TestCountryBuilder()
         {

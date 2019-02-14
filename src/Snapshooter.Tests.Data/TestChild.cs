@@ -10,7 +10,7 @@ namespace Snapshooter.Tests.Data
 
     public class TestChildBuilder
     {
-        private TestChild _testChild;
+        private readonly TestChild _testChild;
 
         private TestChildBuilder()
         {

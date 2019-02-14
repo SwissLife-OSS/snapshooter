@@ -37,7 +37,7 @@
     /// </summary>
     public class TestAddressBuilder
     {
-        private TestAddress _testAddress;
+        private readonly TestAddress _testAddress;
 
         private TestAddressBuilder()
         {

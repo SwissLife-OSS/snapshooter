@@ -3,7 +3,7 @@ using Snapshooter.Core;
 
 namespace Snapshooter.Json
 {
-    public class Snapshot
+    public static class Snapshot
     {
         /// <summary>
         /// Matches the current result/object with the actual snapshot of the test. If 

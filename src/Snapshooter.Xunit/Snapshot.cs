@@ -3,7 +3,7 @@ using Snapshooter.Core;
 
 namespace Snapshooter.Xunit
 {
-    public class Snapshot
+    public static class Snapshot
     {
         /// <summary>        
         /// Creates a json snapshot of the given object and compares it with the 
