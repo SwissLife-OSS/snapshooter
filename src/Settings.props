@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <LangVersion>7.2</LangVersion>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
 </Project>
