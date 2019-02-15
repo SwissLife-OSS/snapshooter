@@ -221,8 +221,10 @@ namespace Snapshooter.Xunit
                 new SnapshotFileInfoResolver(
 					new XunitSnapshotFileInfoReader(),
 					new SnapshotFileNameBuilder()),
-                new SnapshotFileHandler(),                
-                new JsonSnapshotComparer(new XunitAssert()));
+                new SnapshotFileHandler(), 
+				new SnapshotEnvironmentCleaner(
+					new SnapshotFileHandler()),
+				new JsonSnapshotComparer(new XunitAssert()));
         }
     }
 }

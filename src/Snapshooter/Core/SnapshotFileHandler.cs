@@ -1,31 +1,35 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 
 namespace Snapshooter.Core
 {
-    /// <summary>
-    /// The class <see cref="SnapshotFileHandler"/> is responsible to either to store object as
-    /// snapshots on the file system or to retrieve the data of a snapshot from the file system.
-    /// </summary>
-    public class SnapshotFileHandler : ISnapshotFileHandler
+	/// <summary>
+	/// The <see cref="SnapshotFileHandler"/> is responsible to handle all snapshots  
+	/// interactions on the file system. It can read, save and delete snapshots or 
+	/// their folders.
+	/// </summary>
+	public class SnapshotFileHandler : ISnapshotFileHandler
     {
-        /// <summary>
-        /// Saves the current data as a snapshot on the file system.
-        /// </summary>
-        /// <param name="snapshotFileInfo">The file info of the snapshot.</param>
-        /// <param name="subfolder"></param> 
-        /// <param name="snapshotData">The current snapshot data to store.</param>
-        /// <returns>The file path of the stored snapshot.</returns>
-        public string SaveSnapshot(
-			ISnapshotFileInfo snapshotFileInfo, SnapshotSubfolder subfolder, string snapshotData)
+		/// <summary>
+		/// Saves a new snapshot as a snapshot *.snap file in the __snapshots__ folder.
+		/// </summary>
+		/// <param name="snapshotFileInfo">The snapshot name and location.</param>
+		/// <param name="snapshotData">The current snapshot data to store.</param>
+		/// <returns>The file path of the stored snapshot.</returns>
+		public string SaveNewSnapshot(
+			ISnapshotFileInfo snapshotFileInfo, string snapshotData)
         {
             if (snapshotFileInfo == null)
-                throw new ArgumentNullException(nameof(snapshotFileInfo));
+			{
+				throw new ArgumentNullException(nameof(snapshotFileInfo));
+			}
+                
             if (string.IsNullOrWhiteSpace(snapshotData))
-                throw new ArgumentException("Must not be empty", nameof(snapshotData));
-
-            string snapshotSubfolderPath = EnsureSnapshotSubfolder(snapshotFileInfo, subfolder);
+			{
+				throw new ArgumentException("Must not be empty", nameof(snapshotData));
+			}
+                
+            string snapshotSubfolderPath = EnsureSnapshotFolder(snapshotFileInfo);
 
             string fullSnapshotFilename = Path.Combine(
                 snapshotSubfolderPath, snapshotFileInfo.Filename);
@@ -35,65 +39,87 @@ namespace Snapshooter.Core
             return fullSnapshotFilename;
         }
 
-        
+		/// <summary>
+		/// Saves a mismatching snapshot as a snapshot *.snap file 
+		/// in the __snapshots__/__mismatch__ folder.
+		/// </summary>
+		/// <param name="snapshotFileInfo">The snapshot name and location.</param>
+		/// <param name="snapshotData">The current snapshot data to store.</param>
+		/// <returns>The file path of the stored snapshot.</returns>
+		public string SaveMismatchSnapshot(
+			ISnapshotFileInfo snapshotFileInfo, string snapshotData)
+		{
+			if (snapshotFileInfo == null)
+			{
+				throw new ArgumentNullException(nameof(snapshotFileInfo));
+			}
 
-        public void DeleteEmptySnapshotSubfolder(
-			ISnapshotFileInfo snapshotFileInfo, SnapshotSubfolder subfolder)
-        {
-            if (snapshotFileInfo == null)
-                throw new ArgumentNullException(nameof(snapshotFileInfo));
+			if (string.IsNullOrWhiteSpace(snapshotData))
+			{
+				throw new ArgumentException("Must not be empty", nameof(snapshotData));
+			}
 
-            var snapshotSubFolderPath = GetSnapshotSubfolderPath(snapshotFileInfo, subfolder);
+			string snapshotSubfolderPath = EnsureSnapshotSubfolder(
+				snapshotFileInfo, FileNames.MismatchFolderName);
 
-            if (!Directory.Exists(snapshotSubFolderPath))
-            {
-                return;
-            }
+			string fullSnapshotFilename = Path.Combine(
+				snapshotSubfolderPath, snapshotFileInfo.Filename);
 
-            if(!Directory.EnumerateFileSystemEntries(snapshotSubFolderPath).Any())
-            {
-                Directory.Delete(snapshotSubFolderPath);
-            }
-        }
+			File.WriteAllText(fullSnapshotFilename, snapshotData);
 
-        public void DeleteSnapshotSubfolderFile(
-			ISnapshotFileInfo snapshotFileInfo, SnapshotSubfolder subfolder)
-        {
-            if (snapshotFileInfo == null)
-                throw new ArgumentNullException(nameof(snapshotFileInfo));
+			return fullSnapshotFilename;
+		}
 
-            var snapshotSubfolderFilePath = 
-				GetSnapshotSubfolderFilePath(snapshotFileInfo, subfolder);
+		/// <summary>
+		/// Reads the current snapshot from the __snapshots__ folder.
+		/// </summary>
+		/// <param name="snapshotFileInfo">The file info of the snapshot.</param> 
+		/// <returns>The expected snapshot.</returns>
+		public string ReadSnapshot(ISnapshotFileInfo snapshotFileInfo)
+		{
+			if (snapshotFileInfo == null)
+			{
+				throw new ArgumentNullException(nameof(snapshotFileInfo));
+			}
+				
+			string snapshotFolderPath = EnsureSnapshotFolder(snapshotFileInfo);
 
-            DeleteFileIfExist(snapshotSubfolderFilePath);
-        }
+			string fullSnapshotName = Path.Combine(snapshotFolderPath, snapshotFileInfo.Filename);
 
-        /// <summary>
-        /// Loads the current snapshot from the file system.
-        /// </summary>
-        /// <param name="snapshotFileInfo">The file info of the snapshot.</param> 
-        /// <returns>The expected snapshot.</returns>
-        public string LoadSnapshot(ISnapshotFileInfo snapshotFileInfo)
-        {
-            if (snapshotFileInfo == null)
-                throw new ArgumentNullException(nameof(snapshotFileInfo));
+			string snapshotData = null;
 
-            string snapshotFolderPath = EnsureSnapshotFolder(snapshotFileInfo);
-			
-            string fullSnapshotName = Path.Combine(snapshotFolderPath, snapshotFileInfo.Filename);
+			if (File.Exists(fullSnapshotName))
+			{
+				snapshotData = File.ReadAllText(fullSnapshotName);
+			}
 
-            string snapshotData = null;
+			return snapshotData;
+		}
+				
+		/// <summary>
+		/// Deletes the given subfolder of the __snapshots__ folder of the current snapshot test.
+		/// </summary>
+		/// <param name="snapshotFileInfo">The location of the running snapshot test.</param>
+		/// <param name="subfolderName">The subfolder to delete.</param>
+		public void DeleteSnapshotSubfolder(
+			ISnapshotFileInfo snapshotFileInfo, string subfolderName)
+		{
+			if (snapshotFileInfo == null)
+			{
+				throw new ArgumentNullException(nameof(snapshotFileInfo));
+			}
 
-            if (File.Exists(fullSnapshotName))
-            {
-                snapshotData = File.ReadAllText(fullSnapshotName);
-            }
-						
-            return snapshotData;
-        }
+			if (string.IsNullOrEmpty(subfolderName))
+			{
+				throw new ArgumentException($"{nameof(subfolderName)} must be set");
+			}
 
+			var snapshotSubFolderPath = GetSnapshotSubfolderPath(snapshotFileInfo, subfolderName);
 
-        private string EnsureSnapshotFolder(ISnapshotFileInfo snapshotFileInfo)
+			DeleteFolderIfExist(snapshotSubFolderPath);
+		}
+		
+		private string EnsureSnapshotFolder(ISnapshotFileInfo snapshotFileInfo)
         {
             var snapshotFolderPath = GetSnapshotFolderPath(snapshotFileInfo);
 
@@ -103,7 +129,7 @@ namespace Snapshooter.Core
         }
 
         private string EnsureSnapshotSubfolder(
-            ISnapshotFileInfo snapshotFileInfo, SnapshotSubfolder subfolder)
+            ISnapshotFileInfo snapshotFileInfo, string subfolder)
         {
             var snapshotSubFolderPath = GetSnapshotSubfolderPath(snapshotFileInfo, subfolder);
 
@@ -114,24 +140,16 @@ namespace Snapshooter.Core
 		
         private static string GetSnapshotFolderPath(ISnapshotFileInfo snapshotFileInfo)
         {
-            return Path.Combine(snapshotFileInfo.FolderPath, FileNames.SnapshotFolderName);
+            return Path.Combine(
+				snapshotFileInfo.FolderPath, FileNames.SnapshotFolderName);
         }
 
         private static string GetSnapshotSubfolderPath(
-			ISnapshotFileInfo snapshotFileInfo, SnapshotSubfolder subfolder)
+			ISnapshotFileInfo snapshotFileInfo, string subfolder)
         {
             var snapshotFolderPath = GetSnapshotFolderPath(snapshotFileInfo);
 
-            return Path.Combine(snapshotFolderPath, 
-				string.Concat("__", subfolder.ToString().ToLower(), "__"));
-        }
-
-        private static string GetSnapshotSubfolderFilePath(
-            ISnapshotFileInfo snapshotFileInfo, SnapshotSubfolder subfolder)
-        {
-            var snapshotSubFolderPath = GetSnapshotSubfolderPath(snapshotFileInfo, subfolder);
-
-            return Path.Combine(snapshotSubFolderPath, snapshotFileInfo.Filename);
+            return Path.Combine(snapshotFolderPath, subfolder);
         }
 
         private static void CreateFolderIfNotExist(string folderPath)
@@ -142,12 +160,12 @@ namespace Snapshooter.Core
             }
         }
 
-        private static void DeleteFileIfExist(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-        }
-    }
+		private static void DeleteFolderIfExist(string snapshotSubFolderPath)
+		{
+			if (Directory.Exists(snapshotSubFolderPath))
+			{
+				Directory.Delete(snapshotSubFolderPath, true);
+			}
+		}
+	}
 }

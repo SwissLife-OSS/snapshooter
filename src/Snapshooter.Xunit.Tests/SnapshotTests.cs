@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Snapshooter.Core;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
 using Xunit;
@@ -66,17 +68,30 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
-        public void Match_FactMatchSingleSnapshot_ExpectedSnapshotNotExists()
+        public void Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
         {
-            // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+			// arrange
+			var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
+				new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-            // act & assert
-            SnapshotTestException ex = Assert.Throws<SnapshotTestException>(
-				() => Snapshot.Match<TestPerson>(testPerson));
+			ISnapshotFileInfo snapshotFileInfo = 
+				snapshotFileInfoResolver.ResolveSnapshotFileInfo();
 
-            Assert.StartsWith("The expected snapshot does not exist", ex.Message);
-        }
+			string snapshotFileName = Path.Combine(
+				snapshotFileInfo.FolderPath, 
+				FileNames.SnapshotFolderName, 
+				snapshotFileInfo.Filename);
+
+			File.Delete(snapshotFileName);
+
+			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+			// act 
+			Snapshot.Match<TestPerson>(testPerson);
+
+			// assert
+			Assert.True(File.Exists(snapshotFileName));
+		}
 
         [Theory]
         [InlineData(36, 189.45)]
@@ -126,18 +141,31 @@ namespace Snapshooter.Xunit.Tests
         [Theory]
         [InlineData(19, 162.3)]
         [InlineData(17, 112.3)]
-        public void Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists(int age, decimal size)
+        public void Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated(int age, decimal size)
         {
-            // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+			// arrange
+			var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
+				new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+
+			ISnapshotFileInfo snapshotFileInfo =
+				snapshotFileInfoResolver.ResolveSnapshotFileInfo();
+
+			string snapshotFileName = Path.Combine(
+				snapshotFileInfo.FolderPath,
+				FileNames.SnapshotFolderName,
+				snapshotFileInfo.Filename);
+
+			File.Delete(snapshotFileName);
+
+			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
                 .WithAge(age).WithSize(size).Build();
 
-            // act & assert
-            SnapshotTestException ex = Assert.Throws<SnapshotTestException>(
-				() => Snapshot.Match<TestPerson>(testPerson));
+			// act 
+			Snapshot.Match<TestPerson>(testPerson);
 
-            Assert.StartsWith("The expected snapshot does not exist", ex.Message);
-        }
+			// assert
+			Assert.True(File.Exists(snapshotFileName));
+		}
 
         #endregion
 
