@@ -86,7 +86,7 @@ namespace Snapshooter
         {
 			if (savedSnapshotSerialized == null)
 			{
-				string savedSnapshotFilename = _snapshotFileHandler
+				_snapshotFileHandler
 					.SaveNewSnapshot(snapshotFileInfo, actualSnapshotSerialized);
 
 				return;

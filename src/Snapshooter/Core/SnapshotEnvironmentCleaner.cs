@@ -8,20 +8,11 @@ namespace Snapshooter.Core
 	/// </summary>
 	public class SnapshotEnvironmentCleaner : ISnapshotEnvironmentCleaner
 	{
-		private static readonly object _lockObject;
-		private static readonly HashSet<string> _mismatchFolders;
+		private static readonly object _lockObject = new object ();
+		private static readonly HashSet<string> _mismatchFolders = new HashSet<string>();
 
 		private readonly ISnapshotFileHandler _snapshotFileHandler;
-
-		/// <summary>
-		/// Initializes the snapshot environment cleaner once per test run.
-		/// </summary>
-		static SnapshotEnvironmentCleaner()
-		{
-			_lockObject = new object();
-			_mismatchFolders = new HashSet<string>();
-		}
-
+		
 		/// <summary>
 		/// Constructor of the <see cref="SnapshotEnvironmentCleaner"/> class to create
 		/// a new instance.
