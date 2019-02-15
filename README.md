@@ -54,7 +54,7 @@ Snapshot name: `<UnitTestClassName>.<TestMethodName>.snap`
 
 #### 3. Review an confirm new snapshot
 
-Review your new snapshot file `__snapshots__/__new__/<UnitTestClassName>.<TestMethodName>.snap` and if the snapshot content is valid, then move it from the `__new__` folder to the parent folder `__snapshots__`.
+Review your new snapshot file `__snapshots__/__new__/<UnitTestClassName>.<TestMethodName>.snap` and if the snapshot content is valid, then move it from the `__new__` folders to the parent folder `__snapshots__`.
 
 #### 4. Run unit test to assert
 
