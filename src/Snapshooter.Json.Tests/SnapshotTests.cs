@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Snapshooter.Core;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
 using Xunit;
@@ -75,24 +77,40 @@ namespace Snapshooter.Json.Tests
             // assert
             Assert.Throws<SnapshotCompareException>(match);
         }
+		
+		[Fact]
+		public void Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
+		{
+			// arrange
+			string snapshotName = nameof(SnapshotTests) + "." +
+					nameof(Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
 
-        [Fact]
-        public void Match_FactMatchSingleSnapshot_ExpectedSnapshotNotExists()
-        {
-            // arrange
-            string snapshotName = nameof(SnapshotTests) + "." +
-                                  nameof(Match_FactMatchSingleSnapshot_ExpectedSnapshotNotExists);
+			var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
+					new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+			ISnapshotFileInfo snapshotFileInfo =
+				snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
 
-            // act & assert            
-            SnapshotTestException ex = Assert.Throws<SnapshotTestException>(
-				() => Snapshot.Match<TestPerson>(testPerson, snapshotName));
+			string snapshotFileName = Path.Combine(
+				snapshotFileInfo.FolderPath,
+				FileNames.SnapshotFolderName,
+				snapshotFileInfo.Filename);
 
-            Assert.StartsWith("The expected snapshot does not exist", ex.Message);
-        }
+			if (File.Exists(snapshotFileName))
+			{
+				File.Delete(snapshotFileName);
+			}
 
-        [Theory]
+			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+			// act 
+			Snapshot.Match<TestPerson>(testPerson, snapshotName);
+
+			// assert
+			Assert.True(File.Exists(snapshotFileName));
+		}
+
+		[Theory]
         [InlineData(36, 189.45)]
         [InlineData(42, 173.16)]
         [InlineData(19, 193.02)]
@@ -150,27 +168,43 @@ namespace Snapshooter.Json.Tests
         [Theory]
         [InlineData(19, 162.3)]
         [InlineData(17, 112.3)]
-        public void Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists(int age, decimal size)
+        public void Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated(int age, decimal size)
         {
             // arrange
-            string snapshotName = nameof(SnapshotTests) + "." +
-                                  nameof(Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists);
+			string snapshotName = nameof(SnapshotTests) + "." +
+					nameof(Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
 
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+			var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
+					new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+
+			ISnapshotFileInfo snapshotFileInfo =
+				snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
+
+			string snapshotFileName = Path.Combine(
+				snapshotFileInfo.FolderPath,
+				FileNames.SnapshotFolderName,
+				snapshotFileInfo.Filename);
+
+			if (File.Exists(snapshotFileName))
+			{
+				File.Delete(snapshotFileName);
+			}
+
+			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
                 .WithAge(age).WithSize(size).Build();
 
-            // act & assert
-            SnapshotTestException ex = Assert.Throws<SnapshotTestException>(
-            () => Snapshot.Match<TestPerson>(testPerson, snapshotName));
+            // act
+            Snapshot.Match<TestPerson>(testPerson, snapshotName);
 
-            Assert.StartsWith("The expected snapshot does not exist", ex.Message);
-        }
+			// assert
+			Assert.True(File.Exists(snapshotFileName));
+		}
 
-        #endregion
+		#endregion
 
-        #region Match Snapshot - Multiple Objects Tests
+		#region Match Snapshot - Multiple Objects Tests
 
-        [Fact]
+		[Fact]
         public void Match_MultipleObjectsSnapshot_SuccessfulMatch()
         {
             // arrange

@@ -6,6 +6,23 @@
     <RootNamespace>Snapshooter.Xunit.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
+    <Compile Remove="__snapshots__\__mismatch__\**" />
+    <EmbeddedResource Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
+    <EmbeddedResource Remove="__snapshots__\__mismatch__\**" />
+    <None Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
+    <None Remove="__snapshots__\__mismatch__\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="SubfolderTests\__snapshots__\SnapshotSubfolderTests.Match_SubfolderFactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated.snap" />
+    <None Remove="SubfolderTests\__snapshots__\SnapshotSubfolderTests.Match_SubfolderFactMatchSingleSnapshot_OneFieldNotEqual.snap" />
+    <None Remove="__snapshots__\SnapshotTests.Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated.snap" />
+    <None Remove="__snapshots__\SnapshotTests.Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated.snap" />
+    <None Remove="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists.snap" />
+  </ItemGroup>
   
 
   <ItemGroup>

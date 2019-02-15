@@ -14,5 +14,10 @@
         /// The folder name of the snapshots.
         /// </summary>
         public static readonly string SnapshotFolderName = "__snapshots__";
-    }
+
+		/// <summary>
+		/// The mismatch folder name of the snapshots.
+		/// </summary>
+		public static readonly string MismatchFolderName = "__mismatch__";
+	}
 }
