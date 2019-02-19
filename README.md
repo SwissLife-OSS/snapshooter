@@ -68,7 +68,8 @@ the actual snapshot which is mismatching with the existing snapshot in the `__sn
 
 If the snapshot in the mismatching folder `__mismatch__` is correct, just move it to the parent `__snapshots__` folder (override the existing one).
 
-## Ignore Fields in Snapshots Matches
+## Features
+### Ignore Fields in Snapshots Matches
 
 If some fields in your snapshot shall be ignored during snapshot assertion, then the following ignore options can be used:
 
@@ -105,7 +106,7 @@ Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Relativ
 Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Children[*].Name"));
 ```
 
-## Assert Fields in Snapshots Matches
+### Assert Fields in Snapshots Matches
 
 Sometimes there are fields in a snapshot, which you want to assert separately against another value.
 
@@ -158,7 +159,7 @@ Snapshot.Match<Person>(person, > matchOption.Assert(
 The Snapshooter assert functionality is not limited to Xunit asserts, it also could be used
 Fluent Assertsions or another assert tool.
 
-## Concatenate Ignore & Asserts checks
+### Concatenate Ignore & Asserts checks
 
 All the ignore, isType or assert field checks can be concatenated.
 
@@ -182,3 +183,7 @@ public void Match_ConcatenateFieldChecksTest_SuccessfulMatch()
             .Assert(option => Assert.Null(option.Field<TestCountry>("Relatives[0].Address.Plz"))));
 }
 ```
+## Community
+
+This project has adopted the code of conduct defined by the [Contributor Covenant](https://contributor-covenant.org/)
+to clarify expected behavior in our community. For more information, see the [Swiss Life OSS Code of Conduct](https://swisslife-oss.github.io/coc).
