@@ -87,9 +87,15 @@ namespace Snapshooter.Core
         /// <param name="fieldPath">The field path of the field to remove.</param>
         /// <param name="snapshot">The snapshot from which the field shall be removed.</param>
         private static void RemoveFieldFromSnapshot(string fieldPath, JToken snapshot)
-        {
-            IEnumerable<JToken> actualTokens = snapshot.SelectTokens(fieldPath, false);
+        {			
+			if (snapshot is JValue jValue)
+			{				
+				throw new NotSupportedException($"No snapshot match options are " +
+					$"supported for snapshots with scalar values. Therefore the " +
+					$"match option with field '{fieldPath}' is not allowed.");				
+			}
 
+			IEnumerable<JToken> actualTokens = snapshot.SelectTokens(fieldPath, false);
             if (actualTokens != null)
             {
                 foreach (JToken actual in actualTokens.ToList())
