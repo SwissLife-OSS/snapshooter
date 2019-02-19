@@ -46,8 +46,8 @@ namespace Snapshooter.Core
                     actualSnapshotToken, expectedSnapshotToken, matchOptions);
             }
 
-            string actualSnapshotToCompare = actualSnapshotToken.ToString(Formatting.None);
-            string expectedSnapshotToCompare = expectedSnapshotToken.ToString(Formatting.None);
+            string actualSnapshotToCompare = actualSnapshotToken.ToString(Formatting.Indented);
+            string expectedSnapshotToCompare = expectedSnapshotToken.ToString(Formatting.Indented);
 
             _snapshotAssert.Assert(expectedSnapshotToCompare, actualSnapshotToCompare);
         }
