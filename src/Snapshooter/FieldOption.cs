@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
-using Snapshooter.Extensions;
 
 namespace Snapshooter
 {
-    /// <summary>
-    /// The <see cref="FieldOption"/> is responsible to retrieve
-    /// a specific field from a json snapshot by the path of the field.
-    /// </summary>
-    public class FieldOption
+	/// <summary>
+	/// The <see cref="FieldOption"/> is responsible to retrieve
+	/// a specific field from a json snapshot by the path of the field.
+	/// </summary>
+	public class FieldOption
     {
         private JToken _snapshotData;
 
@@ -43,8 +40,15 @@ namespace Snapshooter
         {
             try
             {
-                FieldPath = fieldPath;
-
+				FieldPath = fieldPath;
+								
+				if (_snapshotData is JValue jValue)
+				{
+					throw new SnapshotFieldException($"No snapshot match options are " +
+						$"supported for snapshots with scalar values. Therefore the " +
+						$"match option with field '{fieldPath}' is not allowed.");
+				}
+								
                 IEnumerable<JToken> fields = _snapshotData.SelectTokens(FieldPath, true);
 
                 if (fields == null || fields.Count() == 0)
@@ -83,7 +87,14 @@ namespace Snapshooter
             {
                 FieldPath = fieldPath;
 
-                IEnumerable<JToken> fields = _snapshotData.SelectTokens(FieldPath, true);
+				if (_snapshotData is JValue jValue)
+				{
+					throw new SnapshotFieldException($"No snapshot match options are " +
+						$"supported for snapshots with scalar values. Therefore the " +
+						$"match option with field '{fieldPath}' is not allowed.");
+				}
+
+				IEnumerable<JToken> fields = _snapshotData.SelectTokens(FieldPath, true);
 
                 if (fields == null || fields.Count() == 0)
                 {
@@ -114,6 +125,6 @@ namespace Snapshooter
             {
                 return field.ToObject<T>();
             }
-        }
-    }
+        }		
+	}
 }
