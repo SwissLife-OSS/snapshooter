@@ -1,0 +1,1 @@
+"query fetch {\r\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\r\n    name\n    consultant {\r\n      name\n      __typename\n    }\n    id\n    __typename\n  }\n}"

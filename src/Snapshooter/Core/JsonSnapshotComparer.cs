@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
+using Snapshooter.Extensions;
 
 namespace Snapshooter.Core
 {
@@ -46,8 +47,8 @@ namespace Snapshooter.Core
                     actualSnapshotToken, expectedSnapshotToken, matchOptions);
             }
 
-            string actualSnapshotToCompare = actualSnapshotToken.ToString(Formatting.Indented);
-            string expectedSnapshotToCompare = expectedSnapshotToken.ToString(Formatting.Indented);
+			string actualSnapshotToCompare = SerializeSnapshotToken(actualSnapshotToken);
+			string expectedSnapshotToCompare = SerializeSnapshotToken(expectedSnapshotToken);
 
             _snapshotAssert.Assert(expectedSnapshotToCompare, actualSnapshotToCompare);
         }
@@ -112,7 +113,7 @@ namespace Snapshooter.Core
             }
         }
 
-        private static JToken ParseSnapshot(string snapshotJson)
+        private JToken ParseSnapshot(string snapshotJson)
         {
             var jsonLoadSettings = new JsonLoadSettings
             {
@@ -122,5 +123,11 @@ namespace Snapshooter.Core
 
             return JToken.Parse(snapshotJson, jsonLoadSettings);
         }
+
+		private string SerializeSnapshotToken(JToken snapshotToken)
+		{
+			return snapshotToken.ToString(Formatting.Indented)
+				.NormalizeLineEndings();
+		}
     }
 }

@@ -983,5 +983,46 @@ namespace Snapshooter.Xunit.Tests
 		}
 
 		#endregion
+
+		#region Match Snapshots - Crlf Tests
+
+		[Fact]
+		public void Match_FactMatchSnapshotWithCrlfString_SuccessfulMatch()
+		{
+			// arrange
+			string testText = "query fetch {\r\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\r\n    " +
+				"name\r\n    consultant {\r\n      name\r\n      __typename\r\n    " +
+				"}\r\n    id\r\n    __typename\r\n  }\r\n}";
+
+			// act & assert
+			Snapshot.Match<string>(testText);
+		}
+
+		[Fact]
+		public void Match_FactMatchSnapshotWithLfString_SuccessfulMatch()
+		{
+			// arrange
+			string testText = "query fetch {\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\n    " +
+				"name\n    consultant {\n      name\n      __typename\n    " +
+				"}\n    id\n    __typename\n  }\n}";
+
+			// act & assert
+			Snapshot.Match<string>(testText);
+		}
+
+		[Fact]
+		public void Match_FactMatchSnapshotWithCrLfStringInObject_SuccessfulMatch()
+		{
+			// arrange
+			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+			testPerson.Address.City = "\r\n test \n city \r";
+			testPerson.Lastname = "Your\r\nName\nAt\rHome";
+
+			// act & assert
+			Snapshot.Match<TestPerson>(testPerson);
+		}
+
+		#endregion
 	}
 }

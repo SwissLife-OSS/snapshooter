@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Snapshooter.Extensions;
 
 namespace Snapshooter.Core
 {
@@ -18,7 +19,7 @@ namespace Snapshooter.Core
         {
             string snapshotData = JsonConvert.SerializeObject(objectToSnapshot, _settings);
 
-			snapshotData = NormalizeLineEndings(snapshotData);
+			snapshotData = snapshotData.NormalizeLineEndings();
 
             return snapshotData;
         }
@@ -35,16 +36,5 @@ namespace Snapshooter.Core
                 new StringEnumConverter()
 			}
         };
-
-		/// <summary>
-		/// Removes the carriage return in string.
-		/// </summary>
-		/// <param name="snapshotData">The snapshot data string.</param>
-		/// <returns>The normalized line ending string.</returns>
-		private string NormalizeLineEndings(string snapshotData)
-		{
-			return snapshotData.Replace("\\r", string.Empty)
-							   .Replace("\r", string.Empty);
-		}
 	}
 }
