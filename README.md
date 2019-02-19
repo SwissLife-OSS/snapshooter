@@ -48,19 +48,28 @@ public void CreatePersonSnapshotTest()
 #### 2. Run the unit test to create a new Snapshot
 
 The `Snapshot.Match(person)` statement creates a new snapshot of your result object and stores it in the
-`__snapshots__/__new__` folder, which will be created next to your executing unit test file.
+`__snapshots__` folder. The `__snapshots__` folder is always next to your executed unit test file.
 
 Snapshot name: `<UnitTestClassName>.<TestMethodName>.snap`
 
-#### 3. Review an confirm new snapshot
+#### 3. Review new snapshot
 
-Review your new snapshot file `__snapshots__/__new__/<UnitTestClassName>.<TestMethodName>.snap` and if the snapshot content is valid, then move it from the `__new__` folders to the parent folder `__snapshots__`.
+Review your new snapshot file `__snapshots__/<UnitTestClassName>.<TestMethodName>.snap`.
 
 #### 4. Run unit test to assert
 
-Now the `Snapshot.Match(person)` statement will create again a snapshot of your test result and compare it against your reviewed snapshot in the `__snapshots__` folder, which next to your unit test file.
+Now the `Snapshot.Match(person)` statement will create again a snapshot of your test result and compare it against your reviewed snapshot in the `__snapshots__` folder. The `__snapshots__` folder is always next to your executed unit test file.
 
-## Ignore Fields in Snapshots
+### Mismatching Snapshot Handling
+If your result object has changed and the existing snapshot is not matching anymore, then the unit test will fail. The unit test error message will point to the exact mismatching position within the snapshot.
+
+In addition, in the snapshot folder `__snapshots__` a subfolder with name `__mismatch__` will be created. In this folder you can find
+the actual snapshot which is mismatching with the existing snapshot in the `__snapshots__` folder. Therefore it is possible to compare the two snapshots with a text compare tool.
+
+If the snapshot in the mismatching folder `__mismatch__` is correct, just move it to the parent `__snapshots__` folder (override the existing one).
+
+## Features
+### Ignore Fields in Snapshots Matches
 
 If some fields in your snapshot shall be ignored during snapshot assertion, then the following ignore options can be used:
 
@@ -97,7 +106,7 @@ Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Relativ
 Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Children[*].Name"));
 ```
 
-## Assert Fields in Snapshots
+### Assert Fields in Snapshots Matches
 
 Sometimes there are fields in a snapshot, which you want to assert separately against another value.
 
@@ -150,7 +159,7 @@ Snapshot.Match<Person>(person, > matchOption.Assert(
 The Snapshooter assert functionality is not limited to Xunit asserts, it also could be used
 Fluent Assertsions or another assert tool.
 
-## Concatenate Ignore / Asserts / IsType checks
+### Concatenate Ignore & Asserts checks
 
 All the ignore, isType or assert field checks can be concatenated.
 
@@ -174,3 +183,7 @@ public void Match_ConcatenateFieldChecksTest_SuccessfulMatch()
             .Assert(option => Assert.Null(option.Field<TestCountry>("Relatives[0].Address.Plz"))));
 }
 ```
+## Community
+
+This project has adopted the code of conduct defined by the [Contributor Covenant](https://contributor-covenant.org/)
+to clarify expected behavior in our community. For more information, see the [Swiss Life OSS Code of Conduct](https://swisslife-oss.github.io/coc).
