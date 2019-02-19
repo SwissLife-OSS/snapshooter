@@ -25,8 +25,8 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<TestPerson>(testPerson);
         }
-
-        [Fact]
+		
+		[Fact]
         public async Task Match_FactMatchSingleSnapshotAsync_SuccessfulMatch()
         {
             // arrange
@@ -92,8 +92,8 @@ namespace Snapshooter.Xunit.Tests
 			// assert
 			Assert.True(File.Exists(snapshotFileName));
 		}
-
-        [Theory]
+		
+		[Theory]
         [InlineData(36, 189.45)]
         [InlineData(42, 173.16)]
         [InlineData(19, 193.02)]
@@ -901,6 +901,87 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match<TestPerson>(markWalton);
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Match Snapshots - Scalar Types Tests
+
+		[Fact]
+		public void Match_FactMatchStringValueSnapshot_SuccessfulMatch()
+		{
+			// arrange
+			string testText = "This is a test string for the " +
+				"snapshot test with a plain string value";
+
+			// act & assert
+			Snapshot.Match<string>(testText);
+		}
+
+		[Fact]
+		public void Match_FactMatchStringValueSnapshot_ChangedLetter()
+		{
+			// arrange
+			string testText = "This is a fest string for the " +
+				"snapshot test with a plain string value";
+
+			// act
+			Action match = () => Snapshot.Match<string>(testText);
+
+			// assert
+			Assert.Throws<EqualException>(match).Message.Contains("fest");
+		}
+
+		[Fact]
+		public void Match_FactMatchStringValueSnapshot_IgnoreOptionFails()
+		{
+			// arrange
+			string testText = "This is a test string for the " +
+				"snapshot test with a plain string value";
+
+			// act
+			Action match = () => Snapshot.Match<string>(
+				testText, matchOption => matchOption.IgnoreField("test"));
+
+			// assert
+			Assert.Throws<SnapshotFieldException>(match).Message.Contains("test");
+		}
+
+		[Fact]
+		public void Match_FactMatchIntegerScalarValueSnapshot_SuccessfulMatch()
+		{
+			// arrange
+			int testNumber = 5;
+
+			// act & assert
+			Snapshot.Match<int>(testNumber);
+		}
+
+		[Fact]
+		public void Match_FactMatchIntegerScalarValueSnapshot_ChangedNumberNotEqual()
+		{
+			// arrange
+			int testNumber = 5;
+
+			// act
+			Action match = () => Snapshot.Match<int>(testNumber);
+
+			// assert
+			Assert.Throws<EqualException>(match).Message.Contains("6");
+		}
+
+		[Fact]
+		public void Match_FactMatchIntegerScalarValueSnapshot_IgnoreOptionFails()
+		{
+			// arrange
+			int testNumber = 5;
+
+			// act
+			Action match = () => Snapshot.Match<int>(
+				testNumber, matchOption => matchOption.IgnoreField("6"));
+
+			// assert
+			Assert.Throws<SnapshotFieldException>(match).Message.Contains("6");
+		}
+
+		#endregion
+	}
 }
