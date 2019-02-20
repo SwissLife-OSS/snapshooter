@@ -3,6 +3,13 @@ using Snapshooter.Core;
 
 namespace Snapshooter.Json
 {
+    /// <summary>
+    /// The snapshot class creates and compares snapshots of object.
+    /// It creates a json snapshot of the given object and compares it with the 
+    /// already existing snapshot of the test. If no snapshot exists already for this
+    /// test, then a new snapshot will be created from the current result and saved
+    /// in the folder __snapshots__ in the bin directory.
+    /// </summary>
     public static class Snapshot
     {
         /// <summary>
@@ -132,14 +139,16 @@ namespace Snapshooter.Json
         private static ISnapshotAssert CreateSnapshotAssert()
         {
             return new SnapshotAssert(
-                new JsonSnapshotSerializer(),
+                new SnapshotSerializer(),
                 new SnapshotFileInfoResolver(
                     new JsonSnapshotFileInfoReader(),
                     new SnapshotFileNameBuilder()),
                 new SnapshotFileHandler(),
                 new SnapshotEnvironmentCleaner(
                     new SnapshotFileHandler()),
-                new JsonSnapshotComparer(new JsonAssert()));
+                new JsonSnapshotComparer(
+                    new JsonAssert(), 
+                    new SnapshotSerializer()));
         }
     }
 }

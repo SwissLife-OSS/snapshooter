@@ -906,7 +906,7 @@ namespace Snapshooter.Xunit.Tests
         #region Match Snapshots - Scalar Types Tests
 
         [Fact]
-        public void Match_FactMatchStringValueSnapshot_SuccessfulMatch()
+        public void Match_FactMatchScalarStringValueSnapshot_SuccessfulMatch()
         {
             // arrange
             string testText = "This is a test string for the " +
@@ -917,7 +917,7 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
-        public void Match_FactMatchStringValueSnapshot_ChangedLetter()
+        public void Match_FactMatchScalarStringValueSnapshot_ChangedLetter()
         {
             // arrange
             string testText = "This is a fest string for the " +
@@ -927,11 +927,12 @@ namespace Snapshooter.Xunit.Tests
             Action match = () => Snapshot.Match<string>(testText);
 
             // assert
-            Assert.Throws<EqualException>(match).Message.Contains("fest");
+            Assert.Contains("fest",
+                Assert.Throws<EqualException>(match).Message);
         }
 
         [Fact]
-        public void Match_FactMatchStringValueSnapshot_IgnoreOptionFails()
+        public void Match_FactMatchScalarStringValueSnapshot_IgnoreOptionFails()
         {
             // arrange
             string testText = "This is a test string for the " +
@@ -942,11 +943,12 @@ namespace Snapshooter.Xunit.Tests
                 testText, matchOption => matchOption.IgnoreField("test"));
 
             // assert
-            Assert.Throws<SnapshotFieldException>(match).Message.Contains("test");
+            Assert.Contains("field",
+                Assert.Throws<SnapshotFieldException>(match).Message);
         }
 
         [Fact]
-        public void Match_FactMatchIntegerScalarValueSnapshot_SuccessfulMatch()
+        public void Match_FactMatchScalarIntegerValueSnapshot_SuccessfulMatch()
         {
             // arrange
             int testNumber = 5;
@@ -956,7 +958,7 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
-        public void Match_FactMatchIntegerScalarValueSnapshot_ChangedNumberNotEqual()
+        public void Match_FactMatchScalarIntegerValueSnapshot_ChangedNumberNotEqual()
         {
             // arrange
             int testNumber = 5;
@@ -965,11 +967,12 @@ namespace Snapshooter.Xunit.Tests
             Action match = () => Snapshot.Match<int>(testNumber);
 
             // assert
-            Assert.Throws<EqualException>(match).Message.Contains("6");
+            Assert.Contains("6",
+                Assert.Throws<EqualException>(match).Message);
         }
 
         [Fact]
-        public void Match_FactMatchIntegerScalarValueSnapshot_IgnoreOptionFails()
+        public void Match_FactMatchScalarIntegerValueSnapshot_IgnoreOptionFails()
         {
             // arrange
             int testNumber = 5;
@@ -979,7 +982,8 @@ namespace Snapshooter.Xunit.Tests
                 testNumber, matchOption => matchOption.IgnoreField("6"));
 
             // assert
-            Assert.Throws<SnapshotFieldException>(match).Message.Contains("6");
+            Assert.Contains("6",
+                Assert.Throws<SnapshotFieldException>(match).Message);
         }
 
         #endregion
@@ -996,6 +1000,33 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Snapshot.Match<string>(testText);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCrlfStringFormatted_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "query fetch {\r\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\r\n    " +
+                "name\r\n    consultant {\r\n      name\r\n      __typename\r\n    " +
+                "}\r\n    id\r\n    __typename\r\n  }\r\n}";
+
+            // act & assert
+            Snapshot.Match<string>(testText);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithMissingCrlfStringFormatted_ThrowsSnapshotCompareException()
+        {
+            // arrange
+            string testText = "query fetch {\r\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\r\n    " +
+                "name\r\n    consultant {\r\n      name\r\n      __typename\r\n    " +
+                "}\r\n    id\r\n    __typename\r\n  }\r\n}";
+
+            // act
+            Action match = () => Snapshot.Match<string>(testText);
+
+            // assert
+            Assert.Throws<EqualException>(match);
         }
 
         [Fact]
