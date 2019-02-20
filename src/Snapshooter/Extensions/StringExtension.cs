@@ -53,10 +53,6 @@ namespace Snapshooter.Extensions
                 {
                     return false;
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
             }
             else
             {
