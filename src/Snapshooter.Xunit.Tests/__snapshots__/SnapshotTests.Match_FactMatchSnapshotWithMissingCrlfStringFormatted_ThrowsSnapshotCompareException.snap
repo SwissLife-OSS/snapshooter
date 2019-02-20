@@ -3,6 +3,7 @@ query fetch {
     name
     consultant {
       name
+
       __typename
     }
     id

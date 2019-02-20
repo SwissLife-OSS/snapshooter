@@ -49,9 +49,16 @@ namespace Snapshooter
         /// <param name="currentResult">
         /// The object to compare.
         /// </param>
-        /// <param name="snapshotFileInfo">
-        /// The file infos of the snapshot.
-        /// </param> 
+        /// <param name="snapshotName">The name of the snapshot.</param>
+        /// <param name="snapshotNameExtension">
+        /// The snapshot name extension will extend the generated snapshot name with
+        /// this given extensions. It can be used to make a snapshot name even more
+        /// specific. 
+        /// Example: 
+        /// Generated Snapshotname = 'NumberAdditionTest'
+        /// Snapshot name extension = '5', '6', 'Result', '11'
+        /// Result: 'NumberAdditionTest_5_6_Result_11'
+        /// </param>       
         /// <param name="matchOptions">
         /// Additional match actions, which can be applied during the comparison
         /// </param>
@@ -71,7 +78,7 @@ namespace Snapshooter
 
             _snapshotEnvironmentCleaner.Cleanup(snapshotFileInfo);
 
-            string actualSnapshotSerialized = _snapshotSerializer.Serialize(currentResult);
+            string actualSnapshotSerialized = _snapshotSerializer.SerializeObject(currentResult);
             string savedSnapshotSerialized = _snapshotFileHandler.ReadSnapshot(snapshotFileInfo);
                        
             CompareSnapshots(actualSnapshotSerialized, savedSnapshotSerialized,

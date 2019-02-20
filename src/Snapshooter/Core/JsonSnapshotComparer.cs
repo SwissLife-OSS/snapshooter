@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
-using Snapshooter.Extensions;
 
 namespace Snapshooter.Core
 {
@@ -15,14 +13,18 @@ namespace Snapshooter.Core
     public class JsonSnapshotComparer : ISnapshotComparer
     {
         private readonly IAssert _snapshotAssert;
+        private readonly ISnapshotSerializer _snapshotSerializer;
 
         /// <summary>
         /// Creates a new instance of the <see cref="JsonSnapshotComparer"/>
         /// </summary>
         /// <param name="snapshotAssert">The snapshot assert.</param>
-        public JsonSnapshotComparer(IAssert snapshotAssert)
+        /// <param name="snapshotSerializer">The snapshot serializer.</param>
+        public JsonSnapshotComparer(
+            IAssert snapshotAssert, ISnapshotSerializer snapshotSerializer)
         {
             _snapshotAssert = snapshotAssert;
+            _snapshotSerializer = snapshotSerializer;
         }
 
         /// <summary>
@@ -37,9 +39,9 @@ namespace Snapshooter.Core
             string actualSnapshot,
             Func<MatchOptions, MatchOptions> matchOptions)
         {
-            JToken originalActualSnapshotToken = ParseSnapshot(actualSnapshot);
-            JToken actualSnapshotToken = ParseSnapshot(actualSnapshot);
-            JToken expectedSnapshotToken = ParseSnapshot(expectedSnapshot);
+            JToken originalActualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
+            JToken actualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
+            JToken expectedSnapshotToken = _snapshotSerializer.Deserialize(expectedSnapshot);
 
             if (matchOptions != null)
             {
@@ -47,8 +49,10 @@ namespace Snapshooter.Core
                     actualSnapshotToken, expectedSnapshotToken, matchOptions);
             }
 
-            string actualSnapshotToCompare = SerializeSnapshotToken(actualSnapshotToken);
-            string expectedSnapshotToCompare = SerializeSnapshotToken(expectedSnapshotToken);
+            string actualSnapshotToCompare = _snapshotSerializer
+                .SerializeJsonToken(actualSnapshotToken);
+            string expectedSnapshotToCompare = _snapshotSerializer
+                .SerializeJsonToken(expectedSnapshotToken);
 
             _snapshotAssert.Assert(expectedSnapshotToCompare, actualSnapshotToCompare);
         }
@@ -111,23 +115,6 @@ namespace Snapshooter.Core
                     }
                 }
             }
-        }
-
-        private JToken ParseSnapshot(string snapshotJson)
-        {
-            var jsonLoadSettings = new JsonLoadSettings
-            {
-                CommentHandling = CommentHandling.Ignore,
-                LineInfoHandling = LineInfoHandling.Ignore
-            };
-
-            return JToken.Parse(snapshotJson, jsonLoadSettings);
-        }
-
-        private string SerializeSnapshotToken(JToken snapshotToken)
-        {
-            return snapshotToken.ToString(Formatting.Indented)
-                .NormalizeLineEndings();
         }
     }
 }
