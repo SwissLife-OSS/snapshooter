@@ -34,7 +34,7 @@ namespace Snapshooter.Core
         }
 
         private static string AddFileNameExtension(
-			string snapshotName, string snapshotNameExtension)
+            string snapshotName, string snapshotNameExtension)
         {
             if (snapshotNameExtension != null)
             {

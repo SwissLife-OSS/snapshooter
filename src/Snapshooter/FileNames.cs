@@ -1,6 +1,6 @@
 ﻿namespace Snapshooter
 {
-	/// <summary>
+    /// <summary>
     /// The constant snapshot file names.
     /// </summary>
     public static class FileNames
@@ -15,9 +15,9 @@
         /// </summary>
         public static readonly string SnapshotFolderName = "__snapshots__";
 
-		/// <summary>
-		/// The mismatch folder name of the snapshots.
-		/// </summary>
-		public static readonly string MismatchFolderName = "__mismatch__";
-	}
+        /// <summary>
+        /// The mismatch folder name of the snapshots.
+        /// </summary>
+        public static readonly string MismatchFolderName = "__mismatch__";
+    }
 }

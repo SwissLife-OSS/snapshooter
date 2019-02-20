@@ -19,7 +19,7 @@ namespace Snapshooter
             _matchOperators = new List<FieldMatchOperator>();
         }
 
-		public IEnumerable<FieldMatchOperator> MatchOperators
+        public IEnumerable<FieldMatchOperator> MatchOperators
         {
             get { return _matchOperators.AsReadOnly(); }
         }
@@ -64,7 +64,7 @@ namespace Snapshooter
         public MatchOptions Ignore(Func<FieldOption, object> ignoreFieldOption)
         {
             _matchOperators.Add(
-				new FieldMatchOperator<object>(ignoreFieldOption, field => { }));
+                new FieldMatchOperator<object>(ignoreFieldOption, field => { }));
 
             return this;
         }

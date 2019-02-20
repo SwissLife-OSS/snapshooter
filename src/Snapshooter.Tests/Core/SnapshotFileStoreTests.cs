@@ -13,14 +13,14 @@
 //            // arrange
 //            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 //            string serializedTestPerson = new JsonSnapshotSerializer().Serialize(testPerson);
-//			string arrangedSnapshotName = $"{GetType().Name}." +
+//            string arrangedSnapshotName = $"{GetType().Name}." +
 //                $"{nameof(SaveNewSnapshot_SavesStringAsSnapshotFile_SavedStringInFile)}.snap";
 
 //            ISnapshotFileHandler snapshotStore = new SnapshotFileHandler();
 
 //            // act
 //            string actualSnapshot = snapshotStore
-//				.SaveNewSnapshot(serializedTestPerson, arrangedSnapshotName);
+//                .SaveNewSnapshot(serializedTestPerson, arrangedSnapshotName);
 
 //            // assert
 //            string expectedFilePath = Path.Combine("__snapshots__", "new", arrangedSnapshotName);

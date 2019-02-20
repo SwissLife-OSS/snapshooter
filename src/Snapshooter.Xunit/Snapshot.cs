@@ -17,7 +17,7 @@ namespace Snapshooter.Xunit
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
         public static void Match<T>(T currentResult,
-			Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             AssertSnapshot(currentResult, null, null, matchOptions);
         }
@@ -98,7 +98,7 @@ namespace Snapshooter.Xunit
         public static void Match<T>(T currentResult,
             string snapshotName,
             SnapshotNameExtension snapshotNameExtension,
-			Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             AssertSnapshot(currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
@@ -114,7 +114,7 @@ namespace Snapshooter.Xunit
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
         public static void Match(object currentResult,
-			Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             AssertSnapshot(currentResult, null, null, matchOptions);
         }
@@ -139,8 +139,8 @@ namespace Snapshooter.Xunit
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
         public static void Match(object currentResult,
-			SnapshotNameExtension snapshotNameExtension,
-			Func<MatchOptions, MatchOptions> matchOptions = null)
+            SnapshotNameExtension snapshotNameExtension,
+            Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             AssertSnapshot(currentResult, null, snapshotNameExtension, matchOptions);
         }
@@ -160,8 +160,8 @@ namespace Snapshooter.Xunit
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
         public static void Match(object currentResult,
-			string snapshotName,
-			Func<MatchOptions, MatchOptions> matchOptions = null)
+            string snapshotName,
+            Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             AssertSnapshot(currentResult, snapshotName, null, matchOptions);
         }
@@ -190,18 +190,18 @@ namespace Snapshooter.Xunit
         /// Additional compare actions, which can be applied during the snapshot comparison.
         /// </param>
         public static void Match(object currentResult,
-			string snapshotName,
-			SnapshotNameExtension snapshotNameExtension,
-			Func<MatchOptions, MatchOptions> matchOptions = null)
+            string snapshotName,
+            SnapshotNameExtension snapshotNameExtension,
+            Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             AssertSnapshot(currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
 
         private static void AssertSnapshot(
-			object currentResult, 
-			string snapshotName = null, 
-			SnapshotNameExtension snapshotNameExtension = null, 
-			Func<MatchOptions, MatchOptions> matchOptions = null)
+            object currentResult, 
+            string snapshotName = null, 
+            SnapshotNameExtension snapshotNameExtension = null, 
+            Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             if (currentResult == null)
             {
@@ -219,12 +219,12 @@ namespace Snapshooter.Xunit
             return new SnapshotAssert(
                 new JsonSnapshotSerializer(),
                 new SnapshotFileInfoResolver(
-					new XunitSnapshotFileInfoReader(),
-					new SnapshotFileNameBuilder()),
+                    new XunitSnapshotFileInfoReader(),
+                    new SnapshotFileNameBuilder()),
                 new SnapshotFileHandler(), 
-				new SnapshotEnvironmentCleaner(
-					new SnapshotFileHandler()),
-				new JsonSnapshotComparer(new XunitAssert()));
+                new SnapshotEnvironmentCleaner(
+                    new SnapshotFileHandler()),
+                new JsonSnapshotComparer(new XunitAssert()));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Snapshooter.Xunit.Tests
                 $"{nameof(ReadSnapshotFileInfo_ResolveSnapshotFileName_ResolvedSuccessfully)}",
                 snapshotFileInfo.Filename);
         }
-		
+        
         [Fact]
         public async Task ReadSnapshotFileInfo_ResolveFactSnapshotNameAsync_ResolvedSuccessfully()
         {
@@ -40,7 +40,7 @@ namespace Snapshooter.Xunit.Tests
                 snapshotFileInfo.Filename);
         }
 
-		#pragma warning disable xUnit1026 // Theory methods should use all of their parameters
+        #pragma warning disable xUnit1026 // Theory methods should use all of their parameters
 
         [Theory]
         [InlineData("testString1", 5)]
@@ -84,6 +84,6 @@ namespace Snapshooter.Xunit.Tests
                 snapshotFileInfo.Filename);
         }
 
-		#pragma warning restore xUnit1026 // Theory methods should use all of their parameters
+        #pragma warning restore xUnit1026 // Theory methods should use all of their parameters
     }
 }

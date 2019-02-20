@@ -77,40 +77,40 @@ namespace Snapshooter.Json.Tests
             // assert
             Assert.Throws<SnapshotCompareException>(match);
         }
-		
-		[Fact]
-		public void Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
-		{
-			// arrange
-			string snapshotName = nameof(SnapshotTests) + "." +
-					nameof(Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
+        
+        [Fact]
+        public void Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
+        {
+            // arrange
+            string snapshotName = nameof(SnapshotTests) + "." +
+                    nameof(Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
 
-			var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-					new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
+                    new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-			ISnapshotFileInfo snapshotFileInfo =
-				snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
+            ISnapshotFileInfo snapshotFileInfo =
+                snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
 
-			string snapshotFileName = Path.Combine(
-				snapshotFileInfo.FolderPath,
-				FileNames.SnapshotFolderName,
-				snapshotFileInfo.Filename);
+            string snapshotFileName = Path.Combine(
+                snapshotFileInfo.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFileInfo.Filename);
 
-			if (File.Exists(snapshotFileName))
-			{
-				File.Delete(snapshotFileName);
-			}
+            if (File.Exists(snapshotFileName))
+            {
+                File.Delete(snapshotFileName);
+            }
 
-			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
-			// act 
-			Snapshot.Match<TestPerson>(testPerson, snapshotName);
+            // act 
+            Snapshot.Match<TestPerson>(testPerson, snapshotName);
 
-			// assert
-			Assert.True(File.Exists(snapshotFileName));
-		}
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
+        }
 
-		[Theory]
+        [Theory]
         [InlineData(36, 189.45)]
         [InlineData(42, 173.16)]
         [InlineData(19, 193.02)]
@@ -125,7 +125,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(
-				testPerson, snapshotName, SnapshotNameExtension.Create(age, size));
+                testPerson, snapshotName, SnapshotNameExtension.Create(age, size));
         }
 
         [Theory]
@@ -171,40 +171,40 @@ namespace Snapshooter.Json.Tests
         public void Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated(int age, decimal size)
         {
             // arrange
-			string snapshotName = nameof(SnapshotTests) + "." +
-					nameof(Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
+            string snapshotName = nameof(SnapshotTests) + "." +
+                    nameof(Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
 
-			var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-					new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
+                    new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-			ISnapshotFileInfo snapshotFileInfo =
-				snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
+            ISnapshotFileInfo snapshotFileInfo =
+                snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
 
-			string snapshotFileName = Path.Combine(
-				snapshotFileInfo.FolderPath,
-				FileNames.SnapshotFolderName,
-				snapshotFileInfo.Filename);
+            string snapshotFileName = Path.Combine(
+                snapshotFileInfo.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFileInfo.Filename);
 
-			if (File.Exists(snapshotFileName))
-			{
-				File.Delete(snapshotFileName);
-			}
+            if (File.Exists(snapshotFileName))
+            {
+                File.Delete(snapshotFileName);
+            }
 
-			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
                 .WithAge(age).WithSize(size).Build();
 
             // act
             Snapshot.Match<TestPerson>(testPerson, snapshotName);
 
-			// assert
-			Assert.True(File.Exists(snapshotFileName));
-		}
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
+        }
 
-		#endregion
+        #endregion
 
-		#region Match Snapshot - Multiple Objects Tests
+        #region Match Snapshot - Multiple Objects Tests
 
-		[Fact]
+        [Fact]
         public void Match_MultipleObjectsSnapshot_SuccessfulMatch()
         {
             // arrange
@@ -247,7 +247,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match(
-				new List<object>() { markWalton, sandraSchneider, hanna }, snapshotName);
+                new List<object>() { markWalton, sandraSchneider, hanna }, snapshotName);
         }
 
         #endregion
@@ -266,7 +266,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson, snapshotName, 
-				matchOptions => matchOptions.IgnoreField("Size"));
+                matchOptions => matchOptions.IgnoreField("Size"));
         }
 
         [Fact]
@@ -281,7 +281,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson, snapshotName, 
-				matchOptions => matchOptions.IgnoreField<int?>("Age"));
+                matchOptions => matchOptions.IgnoreField<int?>("Age"));
         }
 
         [Fact]
@@ -296,7 +296,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<TestChild>( testChild, snapshotName, 
-				matchOptions => matchOptions.IgnoreField<string>("Name"));
+                matchOptions => matchOptions.IgnoreField<string>("Name"));
         }
 
         [Fact]
@@ -304,7 +304,7 @@ namespace Snapshooter.Json.Tests
         {
             // arrange
             string snapshotName = 
-				nameof(SnapshotTests) + "." +
+                nameof(SnapshotTests) + "." +
                 nameof(Match_IgnoreScalarFieldNullConvertError_ThrowsSnapshotFieldException);
 
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
@@ -312,7 +312,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
-				testPerson, snapshotName, matchOptions => matchOptions.IgnoreField<int>("Age")));
+                testPerson, snapshotName, matchOptions => matchOptions.IgnoreField<int>("Age")));
         }
 
         [Fact]
@@ -320,15 +320,15 @@ namespace Snapshooter.Json.Tests
         {
             // arrange
             string snapshotName = 
-				nameof(SnapshotTests) + "." +
-				nameof(Match_IgnoreScalarFieldPathNotExist_ThrowsSnapshotFieldException);
+                nameof(SnapshotTests) + "." +
+                nameof(Match_IgnoreScalarFieldPathNotExist_ThrowsSnapshotFieldException);
 
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
                 .Build();
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(testPerson, 
-				snapshotName, matchOptions => matchOptions.IgnoreField<decimal>("alt")));
+                snapshotName, matchOptions => matchOptions.IgnoreField<decimal>("alt")));
         }
 
         [Fact]
@@ -345,7 +345,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson, snapshotName, 
-				matchOptions => matchOptions.IgnoreField<object>("Address"));
+                matchOptions => matchOptions.IgnoreField<object>("Address"));
         }
 
         [Fact]
@@ -360,11 +360,11 @@ namespace Snapshooter.Json.Tests
 
             // act & assert            
             Snapshot.Match<TestPerson>(testPerson, snapshotName, 
-				matchOptions => matchOptions.IgnoreField("Size"));
+                matchOptions => matchOptions.IgnoreField("Size"));
             Snapshot.Match<TestPerson>(testPerson, snapshotName, 
-				matchOptions => matchOptions.IgnoreField<decimal>("Size"));
+                matchOptions => matchOptions.IgnoreField<decimal>("Size"));
             Snapshot.Match<TestPerson>(testPerson, snapshotName, 
-				matchOptions => matchOptions.Ignore(option => option.Field<decimal>("Size")));
+                matchOptions => matchOptions.Ignore(option => option.Field<decimal>("Size")));
         }
 
         [Fact]
@@ -465,7 +465,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<object[]>(testPersons, snapshotName, 
-				matchOptions => matchOptions.IgnoreFields<object>("[*]"));
+                matchOptions => matchOptions.IgnoreFields<object>("[*]"));
         }
 
         [Fact]
@@ -484,7 +484,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<object[]>(testPersons, snapshotName, 
-				matchOptions => matchOptions.IgnoreFields<object>("[*].Firstname"));
+                matchOptions => matchOptions.IgnoreFields<object>("[*].Firstname"));
         }
 
         #endregion
@@ -502,7 +502,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson, snapshotName, 
-				matchOptions => matchOptions.IsTypeField<DateTime>("CreationDate"));
+                matchOptions => matchOptions.IsTypeField<DateTime>("CreationDate"));
         }
 
         [Fact]
@@ -510,7 +510,7 @@ namespace Snapshooter.Json.Tests
         {
             // arrange
             string snapshotName = 
-				nameof(SnapshotTests) + "." +
+                nameof(SnapshotTests) + "." +
                 nameof(Match_IsTypeScalarFieldNotDateTime_ThrowsSnapshotFieldException);
 
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
@@ -706,7 +706,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson, snapshotName, 
-				matchOptions => matchOptions.IsTypeField<DateTime>("CreationDate"));
+                matchOptions => matchOptions.IsTypeField<DateTime>("CreationDate"));
             Snapshot.Match<TestPerson>(testPerson, snapshotName, matchOptions =>
                 matchOptions.IsType(option => option.Field<DateTime>("CreationDate")));
         }
@@ -813,7 +813,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match(testPersons, snapshotName, 
-				matchOptions => matchOptions.IsTypeFields<TestPerson>("[*]"));
+                matchOptions => matchOptions.IsTypeFields<TestPerson>("[*]"));
         }
 
         [Fact]
@@ -833,7 +833,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match(testPersons, snapshotName, 
-				matchOptions => matchOptions.IsTypeFields<DateTime>("[*].DateOfBirth"));
+                matchOptions => matchOptions.IsTypeFields<DateTime>("[*].DateOfBirth"));
         }
 
         #endregion
@@ -911,7 +911,7 @@ namespace Snapshooter.Json.Tests
         {
             // arrange
             string snapshotName = 
-				nameof(SnapshotTests) + "." +
+                nameof(SnapshotTests) + "." +
                 nameof(Match_AssertScalarStringFieldUnequal_ThrowsSnapshotCompareException);
 
             TestPerson testChild = TestDataBuilder.TestPersonMarkWalton()
@@ -961,8 +961,8 @@ namespace Snapshooter.Json.Tests
         {
             // arrange
             string snapshotName =
-				nameof(SnapshotTests) + "." +
-				nameof(Match_AssertScalarStringFieldToIntegerParseFailure_ThrowsSnapshotFieldException);
+                nameof(SnapshotTests) + "." +
+                nameof(Match_AssertScalarStringFieldToIntegerParseFailure_ThrowsSnapshotFieldException);
 
             TestPerson testChild = TestDataBuilder.TestPersonMarkWalton()
                 .Build();

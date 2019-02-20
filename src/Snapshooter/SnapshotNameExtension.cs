@@ -2,7 +2,7 @@
 
 namespace Snapshooter
 {
-	/// <summary>
+    /// <summary>
     /// A snapshot name extension will be transformed to a string, which will be 
     /// added to the end of the snapshot name.
     /// </summary>
@@ -10,7 +10,7 @@ namespace Snapshooter
     {
         private readonly List<object> _snapshotNameExtensions = new List<object>();
 
-		/// <summary>
+        /// <summary>
         /// Creates a new snapshot name extension with a given text.
         /// </summary>
         /// <param name="snapshotNameExtension">The snapshot name extension text.</param>
@@ -64,7 +64,7 @@ namespace Snapshooter
             return new SnapshotNameExtension(snapshotNameExtensions);
         }
 
-		/// <summary>
+        /// <summary>
         /// Creates the snapshot name extension string from the given parameters.
         /// </summary>
         /// <returns>The snapshot name extension text.</returns>

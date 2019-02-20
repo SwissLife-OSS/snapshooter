@@ -55,7 +55,7 @@ namespace Snapshooter.Json
         {
             AssertSnapshot(currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
-		        
+                
         /// <summary>
         /// Matches the current result/object with the actual snapshot of the test. If 
         /// no snapshot exists, a new snapshot will be created from the current result
@@ -108,21 +108,21 @@ namespace Snapshooter.Json
         }
 
         private static void AssertSnapshot(
-			object currentResult, 
-			string snapshotName, 
-			SnapshotNameExtension snapshotNameExtension = null, 
-			Func<MatchOptions, MatchOptions> matchOptions = null)
+            object currentResult, 
+            string snapshotName, 
+            SnapshotNameExtension snapshotNameExtension = null, 
+            Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             if (currentResult == null)
             {
                 throw new ArgumentNullException(nameof(currentResult));
             }
-			            
+
             if (string.IsNullOrEmpty(snapshotName))
             {
                 throw new ArgumentException($"{nameof(snapshotName)} cannot be null or empty");
             }
-			            
+
             ISnapshotAssert snapshotAssert = CreateSnapshotAssert();
 
             snapshotAssert.AssertSnapshot(
@@ -134,11 +134,11 @@ namespace Snapshooter.Json
             return new SnapshotAssert(
                 new JsonSnapshotSerializer(),
                 new SnapshotFileInfoResolver(
-					new JsonSnapshotFileInfoReader(),
-					new SnapshotFileNameBuilder()),
+                    new JsonSnapshotFileInfoReader(),
+                    new SnapshotFileNameBuilder()),
                 new SnapshotFileHandler(),
-				new SnapshotEnvironmentCleaner(
-					new SnapshotFileHandler()),
+                new SnapshotEnvironmentCleaner(
+                    new SnapshotFileHandler()),
                 new JsonSnapshotComparer(new JsonAssert()));
         }
     }

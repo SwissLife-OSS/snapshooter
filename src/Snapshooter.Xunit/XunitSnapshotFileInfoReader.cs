@@ -11,13 +11,13 @@ using Xunit;
 
 namespace Snapshooter.Xunit
 {
-	/// <summary>
+    /// <summary>
     /// A xunit snapshot file info reader is responsible to get the information  
     /// for the snapshot file from a xunit test.
     /// </summary>
     public class XunitSnapshotFileInfoReader : ISnapshotFileInfoReader
     {
-		/// <summary>
+        /// <summary>
         /// Evaluates the snapshot file infos.
         /// </summary>
         /// <returns>The file infos for the snapshot.</returns>
@@ -63,7 +63,7 @@ namespace Snapshooter.Xunit
             return isFactTest || isTheoryTest;
         }
 
-		private static bool IsFactTestMethod(MemberInfo method)
+        private static bool IsFactTestMethod(MemberInfo method)
         {
             return method?.GetCustomAttributes(typeof(FactAttribute)).Any() ?? false;
         }

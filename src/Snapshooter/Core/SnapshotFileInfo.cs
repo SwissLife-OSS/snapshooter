@@ -6,14 +6,14 @@
     /// </summary>
     public class SnapshotFileInfo : ISnapshotFileInfo
     {
-		/// <summary>
+        /// <summary>
         /// The file name of the snapshot.
         /// </summary>
-		public string Filename { get; set; }
+        public string Filename { get; set; }
 
-		/// <summary>
+        /// <summary>
         ///  The folder of the snapshot
         /// </summary>
-		public string FolderPath { get; set; }
+        public string FolderPath { get; set; }
     }
 }

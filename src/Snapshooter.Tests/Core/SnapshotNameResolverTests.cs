@@ -16,12 +16,12 @@
 
 //            // act
 //            string snapshotName = nameResolver.ResolveSnapshotName(
-//				nameof(ResolveSnapshotName_ResolveName_ReturnsSnapshotName));
+//                nameof(ResolveSnapshotName_ResolveName_ReturnsSnapshotName));
 
 //            // assert
 //            Assert.Equal($"{nameof(ResolveSnapshotName_ResolveName_ReturnsSnapshotName)}" +
-//						 $"{Wellknown.FileNames.SnapshotFileExtension}",
-//						 snapshotName);
+//                         $"{Wellknown.FileNames.SnapshotFileExtension}",
+//                         snapshotName);
 //        }
 
 //        [Fact]
@@ -37,13 +37,13 @@
 
 //            // assert
 //            Assert.Equal($"{nameof(ResolveSnapshotName_ResolveName_ReturnsSnapshotName)}" +
-//						 $"_5_6_Result_11" +
+//                         $"_5_6_Result_11" +
 //                         $"{Wellknown.FileNames.SnapshotFileExtension}",
 //                         snapshotName);
 //        }
 
 //        [Theory]
-//		[InlineData(null)]
+//        [InlineData(null)]
 //        [InlineData("")]
 //        [InlineData(" ")]
 //        public void ResolveSnapshotName_NameIsNullOrEmpty_ThrowsArgumentException(string name)

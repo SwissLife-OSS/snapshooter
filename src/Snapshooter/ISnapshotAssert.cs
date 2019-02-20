@@ -6,7 +6,7 @@ namespace Snapshooter
     {
         void AssertSnapshot(object currentResult,
                             string snapshotFileName,
-							SnapshotNameExtension snapshotNameExtension,
+                            SnapshotNameExtension snapshotNameExtension,
                             Func<MatchOptions, MatchOptions> matchOptions);
     }
 }
