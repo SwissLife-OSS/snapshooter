@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Snapshooter.Core
 {
-	/// <summary>
+    /// <summary>
     /// The assert instance is responsible to compare two strings.
     /// </summary>
     public interface IAssert
     {
-		/// <summary>
+        /// <summary>
         /// Compares two snapshot strings. Throws an execption if the strings are not equal.
         /// </summary>
         /// <param name="expectedSnapshot">The expected snapshot.</param>

@@ -7,10 +7,10 @@ namespace Snapshooter
     {
         private readonly ISnapshotFileInfoReader _snapshotFileInfoReader;
         private readonly ISnapshotFileNameBuilder _snapshotFileNameBuilder;
-		
+        
         public SnapshotFileInfoResolver(
-			ISnapshotFileInfoReader snapshotFileInfoReader,
-			ISnapshotFileNameBuilder snapshotFileNameBuilder)
+            ISnapshotFileInfoReader snapshotFileInfoReader,
+            ISnapshotFileNameBuilder snapshotFileNameBuilder)
         {
             _snapshotFileInfoReader = snapshotFileInfoReader;
             _snapshotFileNameBuilder = snapshotFileNameBuilder;
@@ -22,13 +22,13 @@ namespace Snapshooter
         }
 
         public ISnapshotFileInfo ResolveSnapshotFileInfo(
-			string snapshotName)
+            string snapshotName)
         {
             return ResolveSnapshotFileInfo(snapshotName, null);
         }
 
         public ISnapshotFileInfo ResolveSnapshotFileInfo(
-			string snapshotName, string snapshotNameExtension)
+            string snapshotName, string snapshotNameExtension)
         {
             SnapshotFileInfo snapshotFileInfo = _snapshotFileInfoReader.ReadSnapshotFileInfo();
 
@@ -38,18 +38,18 @@ namespace Snapshooter
             }
 
             if(string.IsNullOrWhiteSpace(snapshotFileInfo.Filename) && 
-			   string.IsNullOrWhiteSpace(snapshotName))
+               string.IsNullOrWhiteSpace(snapshotName))
             {
                 throw new SnapshotTestException("No snapshot name could be resolved.");
             }
 
             if (string.IsNullOrWhiteSpace(snapshotName))
             {
-                snapshotName = snapshotFileInfo.Filename;				
+                snapshotName = snapshotFileInfo.Filename;
             }
 
             snapshotFileInfo.Filename = _snapshotFileNameBuilder
-				.BuildSnapshotFileName(snapshotName, snapshotNameExtension);
+                .BuildSnapshotFileName(snapshotName, snapshotNameExtension);
 
             return snapshotFileInfo;
         }

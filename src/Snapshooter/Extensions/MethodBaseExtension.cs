@@ -15,7 +15,7 @@ namespace Snapshooter.Extensions
         public static string ToName(this MethodBase methodBase)
         {
             var fullName = string.Concat(
-				methodBase.ReflectedType.Name, ".", methodBase.Name);
+                methodBase.ReflectedType.Name, ".", methodBase.Name);
 
             return fullName;
         }

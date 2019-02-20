@@ -25,8 +25,8 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<TestPerson>(testPerson);
         }
-		
-		[Fact]
+        
+        [Fact]
         public async Task Match_FactMatchSingleSnapshotAsync_SuccessfulMatch()
         {
             // arrange
@@ -70,30 +70,30 @@ namespace Snapshooter.Xunit.Tests
         [Fact]
         public void Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
         {
-			// arrange
-			var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-				new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            // arrange
+            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
+                new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-			ISnapshotFileInfo snapshotFileInfo = 
-				snapshotFileInfoResolver.ResolveSnapshotFileInfo();
+            ISnapshotFileInfo snapshotFileInfo = 
+                snapshotFileInfoResolver.ResolveSnapshotFileInfo();
 
-			string snapshotFileName = Path.Combine(
-				snapshotFileInfo.FolderPath, 
-				FileNames.SnapshotFolderName, 
-				snapshotFileInfo.Filename);
+            string snapshotFileName = Path.Combine(
+                snapshotFileInfo.FolderPath, 
+                FileNames.SnapshotFolderName, 
+                snapshotFileInfo.Filename);
 
-			File.Delete(snapshotFileName);
+            File.Delete(snapshotFileName);
 
-			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
-			// act 
-			Snapshot.Match<TestPerson>(testPerson);
+            // act 
+            Snapshot.Match<TestPerson>(testPerson);
 
-			// assert
-			Assert.True(File.Exists(snapshotFileName));
-		}
-		
-		[Theory]
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
+        }
+        
+        [Theory]
         [InlineData(36, 189.45)]
         [InlineData(42, 173.16)]
         [InlineData(19, 193.02)]
@@ -121,7 +121,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<EqualException>(() => Snapshot.Match<TestPerson>(
-				testPerson, SnapshotNameExtension.Create(age, size)));
+                testPerson, SnapshotNameExtension.Create(age, size)));
         }
 
         [Theory]
@@ -135,7 +135,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<EqualException>(() => Snapshot.Match<TestPerson>(
-				testPerson, SnapshotNameExtension.Create(age, size)));
+                testPerson, SnapshotNameExtension.Create(age, size)));
         }
 
         [Theory]
@@ -143,29 +143,29 @@ namespace Snapshooter.Xunit.Tests
         [InlineData(17, 112.3)]
         public void Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated(int age, decimal size)
         {
-			// arrange
-			var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-				new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            // arrange
+            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
+                new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-			ISnapshotFileInfo snapshotFileInfo =
-				snapshotFileInfoResolver.ResolveSnapshotFileInfo();
+            ISnapshotFileInfo snapshotFileInfo =
+                snapshotFileInfoResolver.ResolveSnapshotFileInfo();
 
-			string snapshotFileName = Path.Combine(
-				snapshotFileInfo.FolderPath,
-				FileNames.SnapshotFolderName,
-				snapshotFileInfo.Filename);
+            string snapshotFileName = Path.Combine(
+                snapshotFileInfo.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFileInfo.Filename);
 
-			File.Delete(snapshotFileName);
+            File.Delete(snapshotFileName);
 
-			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
                 .WithAge(age).WithSize(size).Build();
 
-			// act 
-			Snapshot.Match<TestPerson>(testPerson);
+            // act 
+            Snapshot.Match<TestPerson>(testPerson);
 
-			// assert
-			Assert.True(File.Exists(snapshotFileName));
-		}
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
+        }
 
         #endregion
 
@@ -222,7 +222,7 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match<TestPerson>(
                 testPerson, matchOptions => matchOptions.IgnoreField("Size"));
         }
-		
+        
         [Fact]
         public void Match_IgnoreScalarNullIntField_SuccessfulIgnored()
         {
@@ -268,7 +268,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() => Snapshot.Match<TestPerson>(
-				testPerson, matchOptions => matchOptions.IgnoreField<decimal>("alt")));
+                testPerson, matchOptions => matchOptions.IgnoreField<decimal>("alt")));
         }
 
         [Fact]
@@ -318,12 +318,12 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<TestPerson>(testPerson,
                 matchOptions => matchOptions
-					.IgnoreField<Guid>("Id")
-					.IgnoreField<DateTime>("CreationDate")
-					.IgnoreField<int>("Address.StreetNumber")
-					.IgnoreField<TestChild>("Children[3]")
-					.IgnoreField<TestCountry>("Address.Country")
-					.IgnoreField<TestCountry>("Relatives[0].Address.Plz"));                
+                    .IgnoreField<Guid>("Id")
+                    .IgnoreField<DateTime>("CreationDate")
+                    .IgnoreField<int>("Address.StreetNumber")
+                    .IgnoreField<TestChild>("Children[3]")
+                    .IgnoreField<TestCountry>("Address.Country")
+                    .IgnoreField<TestCountry>("Relatives[0].Address.Plz"));                
         }
 
         [Fact]
@@ -340,11 +340,11 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson, 
-				matchOptions => matchOptions.IgnoreFields("Children[*].Name"));
+                matchOptions => matchOptions.IgnoreFields("Children[*].Name"));
             Snapshot.Match<TestPerson>(testPerson, 
-				matchOptions => matchOptions.IgnoreFields<string>("Children[*].Name"));
+                matchOptions => matchOptions.IgnoreFields<string>("Children[*].Name"));
             Snapshot.Match<TestPerson>(testPerson, 
-				matchOptions => matchOptions.Ignore(option => option.Fields<string>("Children[*].Name")));
+                matchOptions => matchOptions.Ignore(option => option.Fields<string>("Children[*].Name")));
         }
 
         [Fact]
@@ -418,9 +418,9 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson, 
-				matchOptions => matchOptions.IsTypeField<DateTime>("CreationDate"));
+                matchOptions => matchOptions.IsTypeField<DateTime>("CreationDate"));
         }
-		
+        
         [Fact]
         public void Match_IsTypeScalarFieldNotDateTime_ThrowsSnapshotFieldException()
         {
@@ -429,7 +429,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() => 
-				Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match<TestPerson>(testPerson,
                 matchOptions => matchOptions.IsTypeField<DateTime>("Size")));
         }
 
@@ -571,10 +571,10 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<TestPerson>(
                 testPerson, matchOptions => 
-					matchOptions.IsTypeField<DateTime>("CreationDate"));            
+                    matchOptions.IsTypeField<DateTime>("CreationDate"));            
             Snapshot.Match<TestPerson>(
                 testPerson, matchOptions => 
-					matchOptions.IsType(option => option.Field<DateTime>("CreationDate")));
+                    matchOptions.IsType(option => option.Field<DateTime>("CreationDate")));
         }
 
         [Fact]
@@ -585,7 +585,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson, 
-				matchOptions => matchOptions.IsTypeField<TestAddress>("Address"));
+                matchOptions => matchOptions.IsTypeField<TestAddress>("Address"));
         }
 
         [Fact]
@@ -676,7 +676,7 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match(
                 testPersons, matchOptions => 
-					matchOptions.IsTypeFields<DateTime>("[*].DateOfBirth"));
+                    matchOptions.IsTypeFields<DateTime>("[*].DateOfBirth"));
         }
 
         #endregion
@@ -692,8 +692,8 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<TestPerson>(testPerson,
                         matchOption => matchOption.Assert(
-							fieldOption => Assert.Equal(fieldOption.Field<Guid>("Id"), 
-								Guid.Parse("c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8"))));
+                            fieldOption => Assert.Equal(fieldOption.Field<Guid>("Id"), 
+                                Guid.Parse("c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8"))));
         }
 
         [Fact]
@@ -704,10 +704,10 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotCompareException>(
-				() => Snapshot.Match<TestPerson>(testPerson,
+                () => Snapshot.Match<TestPerson>(testPerson,
                     matchOption => matchOption.Assert(
                         fieldOption => Assert.Equal(fieldOption.Field<Guid>("Id"),
-							Guid.Parse("fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de")))));
+                            Guid.Parse("fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de")))));
         }
 
         [Fact]
@@ -717,11 +717,11 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
                 .WithId(null)
                 .Build();
-			
+            
             // act & assert
             Snapshot.Match<TestPerson>(testPerson,
                 matchOption => matchOption.Assert(
-					fieldOption => Assert.Null(fieldOption.Field<Guid?>("Id"))));
+                    fieldOption => Assert.Null(fieldOption.Field<Guid?>("Id"))));
         }
 
         [Fact]
@@ -734,7 +734,7 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<TestPerson>(testChild,
                 matchOption => matchOption.Assert(fieldOption => 
-					Assert.Equal("Hanna", fieldOption.Field<string>("Children[2].Name"))));
+                    Assert.Equal("Hanna", fieldOption.Field<string>("Children[2].Name"))));
         }
 
         [Fact]
@@ -746,9 +746,9 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotCompareException>(() => 
-				Snapshot.Match<TestPerson>(testChild,
-					matchOption => matchOption.Assert(fieldOption =>
-						Assert.Equal("Anna", fieldOption.Field<string>("Children[2].Name")))));
+                Snapshot.Match<TestPerson>(testChild,
+                    matchOption => matchOption.Assert(fieldOption =>
+                        Assert.Equal("Anna", fieldOption.Field<string>("Children[2].Name")))));
         }
 
         [Fact]
@@ -775,7 +775,7 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<TestPerson>(testChild,
                 matchOption => matchOption.Assert(fieldOption => 
-					Assert.Equal(22, fieldOption.Field<int>("Firstname"))));
+                    Assert.Equal(22, fieldOption.Field<int>("Firstname"))));
         }
 
         [Fact]
@@ -787,9 +787,9 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(
-				() => Snapshot.Match<TestPerson>(testChild,
-					matchOption => matchOption.Assert(fieldOption =>
-						Assert.Equal(22, fieldOption.Field<int>("Firstname")))));
+                () => Snapshot.Match<TestPerson>(testChild,
+                    matchOption => matchOption.Assert(fieldOption =>
+                        Assert.Equal(22, fieldOption.Field<int>("Firstname")))));
         }
 
         [Fact]
@@ -817,8 +817,8 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Assert.Throws<SnapshotFieldException>(
                 () => Snapshot.Match<TestPerson>(testChild,
-					 matchOption => matchOption.Assert(fieldOption =>
-						Assert.Null(fieldOption.Field<int>("Age")))));
+                     matchOption => matchOption.Assert(fieldOption =>
+                        Assert.Null(fieldOption.Field<int>("Age")))));
         }
 
         [Fact]
@@ -840,17 +840,17 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match<TestPerson>(testPerson,
                 matchOption => matchOption
                     .Assert(fieldOption => 
-						Assert.NotEqual(Guid.Empty, fieldOption.Field<Guid>("Id")))
+                        Assert.NotEqual(Guid.Empty, fieldOption.Field<Guid>("Id")))
                     .Assert(fieldOption => 
-						Assert.NotEqual(DateTime.UtcNow.AddSeconds(5), fieldOption.Field<DateTime>("CreationDate")))
+                        Assert.NotEqual(DateTime.UtcNow.AddSeconds(5), fieldOption.Field<DateTime>("CreationDate")))
                     .Assert(fieldOption => 
-						Assert.Equal(-58, fieldOption.Field<int>("Address.StreetNumber")))
+                        Assert.Equal(-58, fieldOption.Field<int>("Address.StreetNumber")))
                     .Assert(fieldOption => 
-						testChild.Should().BeEquivalentTo(fieldOption.Field<TestChild>("Children[3]")))
+                        testChild.Should().BeEquivalentTo(fieldOption.Field<TestChild>("Children[3]")))
                     .Assert(fieldOption => 
-						Assert.Null(fieldOption.Field<TestCountry>("Address.Country")))
+                        Assert.Null(fieldOption.Field<TestCountry>("Address.Country")))
                     .Assert(fieldOption => 
-						Assert.Null(fieldOption.Field<TestCountry>("Relatives[0].Address.Plz"))));
+                        Assert.Null(fieldOption.Field<TestCountry>("Relatives[0].Address.Plz"))));
         }
 
         #endregion
@@ -875,12 +875,12 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<TestPerson>(testPerson,
                 matchOption => matchOption
-					.Assert(option => Assert.NotEqual(Guid.Empty, option.Field<Guid>("Id")))
-					.IgnoreField<DateTime>("CreationDate")
-					.Assert(option => Assert.Equal(-58, option.Field<int>("Address.StreetNumber")))
-					.Assert(option => testChild.Should().BeEquivalentTo(option.Field<TestChild>("Children[3]")))
-					.IgnoreField<TestCountry>("Address.Country")
-					.Assert(option => Assert.Null(option.Field<TestCountry>("Relatives[0].Address.Plz"))));
+        .Assert(option => Assert.NotEqual(Guid.Empty, option.Field<Guid>("Id")))
+                    .IgnoreField<DateTime>("CreationDate")
+                    .Assert(option => Assert.Equal(-58, option.Field<int>("Address.StreetNumber")))
+                    .Assert(option => testChild.Should().BeEquivalentTo(option.Field<TestChild>("Children[3]")))
+                    .IgnoreField<TestCountry>("Address.Country")
+                    .Assert(option => Assert.Null(option.Field<TestCountry>("Relatives[0].Address.Plz"))));
         }
 
         [Fact]
@@ -901,128 +901,128 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match<TestPerson>(markWalton);
         }
 
-		#endregion
+        #endregion
 
-		#region Match Snapshots - Scalar Types Tests
+        #region Match Snapshots - Scalar Types Tests
 
-		[Fact]
-		public void Match_FactMatchStringValueSnapshot_SuccessfulMatch()
-		{
-			// arrange
-			string testText = "This is a test string for the " +
-				"snapshot test with a plain string value";
+        [Fact]
+        public void Match_FactMatchStringValueSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "This is a test string for the " +
+                "snapshot test with a plain string value";
 
-			// act & assert
-			Snapshot.Match<string>(testText);
-		}
+            // act & assert
+            Snapshot.Match<string>(testText);
+        }
 
-		[Fact]
-		public void Match_FactMatchStringValueSnapshot_ChangedLetter()
-		{
-			// arrange
-			string testText = "This is a fest string for the " +
-				"snapshot test with a plain string value";
+        [Fact]
+        public void Match_FactMatchStringValueSnapshot_ChangedLetter()
+        {
+            // arrange
+            string testText = "This is a fest string for the " +
+                "snapshot test with a plain string value";
 
-			// act
-			Action match = () => Snapshot.Match<string>(testText);
+            // act
+            Action match = () => Snapshot.Match<string>(testText);
 
-			// assert
-			Assert.Throws<EqualException>(match).Message.Contains("fest");
-		}
+            // assert
+            Assert.Throws<EqualException>(match).Message.Contains("fest");
+        }
 
-		[Fact]
-		public void Match_FactMatchStringValueSnapshot_IgnoreOptionFails()
-		{
-			// arrange
-			string testText = "This is a test string for the " +
-				"snapshot test with a plain string value";
+        [Fact]
+        public void Match_FactMatchStringValueSnapshot_IgnoreOptionFails()
+        {
+            // arrange
+            string testText = "This is a test string for the " +
+                "snapshot test with a plain string value";
 
-			// act
-			Action match = () => Snapshot.Match<string>(
-				testText, matchOption => matchOption.IgnoreField("test"));
+            // act
+            Action match = () => Snapshot.Match<string>(
+                testText, matchOption => matchOption.IgnoreField("test"));
 
-			// assert
-			Assert.Throws<SnapshotFieldException>(match).Message.Contains("test");
-		}
+            // assert
+            Assert.Throws<SnapshotFieldException>(match).Message.Contains("test");
+        }
 
-		[Fact]
-		public void Match_FactMatchIntegerScalarValueSnapshot_SuccessfulMatch()
-		{
-			// arrange
-			int testNumber = 5;
+        [Fact]
+        public void Match_FactMatchIntegerScalarValueSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            int testNumber = 5;
 
-			// act & assert
-			Snapshot.Match<int>(testNumber);
-		}
+            // act & assert
+            Snapshot.Match<int>(testNumber);
+        }
 
-		[Fact]
-		public void Match_FactMatchIntegerScalarValueSnapshot_ChangedNumberNotEqual()
-		{
-			// arrange
-			int testNumber = 5;
+        [Fact]
+        public void Match_FactMatchIntegerScalarValueSnapshot_ChangedNumberNotEqual()
+        {
+            // arrange
+            int testNumber = 5;
 
-			// act
-			Action match = () => Snapshot.Match<int>(testNumber);
+            // act
+            Action match = () => Snapshot.Match<int>(testNumber);
 
-			// assert
-			Assert.Throws<EqualException>(match).Message.Contains("6");
-		}
+            // assert
+            Assert.Throws<EqualException>(match).Message.Contains("6");
+        }
 
-		[Fact]
-		public void Match_FactMatchIntegerScalarValueSnapshot_IgnoreOptionFails()
-		{
-			// arrange
-			int testNumber = 5;
+        [Fact]
+        public void Match_FactMatchIntegerScalarValueSnapshot_IgnoreOptionFails()
+        {
+            // arrange
+            int testNumber = 5;
 
-			// act
-			Action match = () => Snapshot.Match<int>(
-				testNumber, matchOption => matchOption.IgnoreField("6"));
+            // act
+            Action match = () => Snapshot.Match<int>(
+                testNumber, matchOption => matchOption.IgnoreField("6"));
 
-			// assert
-			Assert.Throws<SnapshotFieldException>(match).Message.Contains("6");
-		}
+            // assert
+            Assert.Throws<SnapshotFieldException>(match).Message.Contains("6");
+        }
 
-		#endregion
+        #endregion
 
-		#region Match Snapshots - Crlf Tests
+        #region Match Snapshots - Crlf Tests
 
-		[Fact]
-		public void Match_FactMatchSnapshotWithCrlfString_SuccessfulMatch()
-		{
-			// arrange
-			string testText = "query fetch {\r\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\r\n    " +
-				"name\r\n    consultant {\r\n      name\r\n      __typename\r\n    " +
-				"}\r\n    id\r\n    __typename\r\n  }\r\n}";
+        [Fact]
+        public void Match_FactMatchSnapshotWithCrlfString_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "query fetch {\r\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\r\n    " +
+                "name\r\n    consultant {\r\n      name\r\n      __typename\r\n    " +
+                "}\r\n    id\r\n    __typename\r\n  }\r\n}";
 
-			// act & assert
-			Snapshot.Match<string>(testText);
-		}
+            // act & assert
+            Snapshot.Match<string>(testText);
+        }
 
-		[Fact]
-		public void Match_FactMatchSnapshotWithLfString_SuccessfulMatch()
-		{
-			// arrange
-			string testText = "query fetch {\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\n    " +
-				"name\n    consultant {\n      name\n      __typename\n    " +
-				"}\n    id\n    __typename\n  }\n}";
+        [Fact]
+        public void Match_FactMatchSnapshotWithLfString_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "query fetch {\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\n    " +
+                "name\n    consultant {\n      name\n      __typename\n    " +
+                "}\n    id\n    __typename\n  }\n}";
 
-			// act & assert
-			Snapshot.Match<string>(testText);
-		}
+            // act & assert
+            Snapshot.Match<string>(testText);
+        }
+                
+        [Fact]
+        public void Match_FactMatchSnapshotWithCrLfStringInObject_SuccessfulMatch()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
-		[Fact]
-		public void Match_FactMatchSnapshotWithCrLfStringInObject_SuccessfulMatch()
-		{
-			// arrange
-			TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+            testPerson.Address.City = "\r\n test \n city \r";
+            testPerson.Lastname = "Your\r\nName\nAt\rHome";
 
-			testPerson.Address.City = "\r\n test \n city \r";
-			testPerson.Lastname = "Your\r\nName\nAt\rHome";
+            // act & assert
+            Snapshot.Match<TestPerson>(testPerson);
+        }
 
-			// act & assert
-			Snapshot.Match<TestPerson>(testPerson);
-		}
-
-		#endregion
-	}
+        #endregion
+    }
 }

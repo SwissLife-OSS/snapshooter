@@ -7,11 +7,11 @@ using Snapshooter.Exceptions;
 
 namespace Snapshooter
 {
-	/// <summary>
-	/// The <see cref="FieldOption"/> is responsible to retrieve
-	/// a specific field from a json snapshot by the path of the field.
-	/// </summary>
-	public class FieldOption
+    /// <summary>
+    /// The <see cref="FieldOption"/> is responsible to retrieve
+    /// a specific field from a json snapshot by the path of the field.
+    /// </summary>
+    public class FieldOption
     {
         private JToken _snapshotData;
 
@@ -40,15 +40,15 @@ namespace Snapshooter
         {
             try
             {
-				FieldPath = fieldPath;
-								
-				if (_snapshotData is JValue jValue)
-				{
-					throw new SnapshotFieldException($"No snapshot match options are " +
-						$"supported for snapshots with scalar values. Therefore the " +
-						$"match option with field '{fieldPath}' is not allowed.");
-				}
-								
+                FieldPath = fieldPath;
+                                
+                if (_snapshotData is JValue jValue)
+                {
+                    throw new SnapshotFieldException($"No snapshot match options are " +
+                        $"supported for snapshots with scalar values. Therefore the " +
+                        $"match option with field '{fieldPath}' is not allowed.");
+                }
+                                
                 IEnumerable<JToken> fields = _snapshotData.SelectTokens(FieldPath, true);
 
                 if (fields == null || fields.Count() == 0)
@@ -87,21 +87,21 @@ namespace Snapshooter
             {
                 FieldPath = fieldPath;
 
-				if (_snapshotData is JValue jValue)
-				{
-					throw new SnapshotFieldException($"No snapshot match options are " +
-						$"supported for snapshots with scalar values. Therefore the " +
-						$"match option with field '{fieldPath}' is not allowed.");
-				}
+                if (_snapshotData is JValue jValue)
+                {
+                    throw new SnapshotFieldException($"No snapshot match options are " +
+                        $"supported for snapshots with scalar values. Therefore the " +
+                        $"match option with field '{fieldPath}' is not allowed.");
+                }
 
-				IEnumerable<JToken> fields = _snapshotData.SelectTokens(FieldPath, true);
+                IEnumerable<JToken> fields = _snapshotData.SelectTokens(FieldPath, true);
 
                 if (fields == null || fields.Count() == 0)
                 {
                     throw new SnapshotFieldException(
                         $"No fields of the path '{fieldPath}' could not be found.");
                 }
-				
+                
                 T[] fieldValues = fields.Select(f => ConvertToType<T>(f)).ToArray();
 
                 return fieldValues;
@@ -125,6 +125,6 @@ namespace Snapshooter
             {
                 return field.ToObject<T>();
             }
-        }		
-	}
+        }        
+    }
 }
