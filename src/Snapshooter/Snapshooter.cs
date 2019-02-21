@@ -26,6 +26,18 @@ namespace Snapshooter
             _snapshotFullNameResolver = snapshotFullNameResolver;
         }
 
+        /// <summary>        
+        /// Creates a snapshot of the given object and compares it with the 
+        /// already existing snapshot of the test. 
+        /// If no snapshot exists, a new snapshot will be created from the current result
+        /// and saved under a certain file path, given by the snapshot full name.
+        /// </summary>
+        /// <param name="currentResult">The object to match.</param>
+        /// <param name="snapshotFullName">
+        /// The full name of a snapshot with folder and file name.</param>
+        /// <param name="matchOptions">
+        /// Additional compare actions, which can be applied during the snapshot comparison.
+        /// </param>
         public void AssertSnapshot(
             object currentResult,
             SnapshotFullName snapshotFullName,
@@ -45,6 +57,26 @@ namespace Snapshooter
                 currentResult, snapshotFullName, matchOptions);
         }
 
+        /// <summary>
+        /// Resolves the snapshot name for the running unit test. 
+        /// The default generated snapshot name can either be overwritten 
+        /// with a given snapshot name, or can be extended by the snapshot name extensions,
+        /// or both.
+        /// </summary>
+        /// <param name="snapshotName">
+        /// The snapshot name given by the user, this snapshot name will overwrite 
+        /// the automatically generated snapshot name. 
+        /// </param>
+        /// <param name="snapshotNameExtension">
+        /// The snapshot name extension will extend the snapshot name with
+        /// this given extensions. It can be used to make a snapshot name even more
+        /// specific. 
+        /// Example: 
+        /// Snapshot name = 'NumberAdditionTest'
+        /// Snapshot name extension = '5', '6', 'Result', '11'
+        /// Result: 'NumberAdditionTest_5_6_Result_11'
+        /// </param>
+        /// <returns>The full name of a snapshot.</returns>
         public SnapshotFullName ResolveSnapshotFullName(
             string snapshotName = null,
             SnapshotNameExtension snapshotNameExtension = null)

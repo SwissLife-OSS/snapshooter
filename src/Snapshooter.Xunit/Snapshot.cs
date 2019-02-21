@@ -224,22 +224,71 @@ namespace Snapshooter.Xunit
             Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
         }
 
+        /// <summary>
+        /// Resolves automatically the snapshot name for the running unit test.
+        /// </summary>
+        /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName()
         {
             return Snapshooter.ResolveSnapshotFullName();
         }
 
+        /// <summary>
+        /// Resolves the snapshot name for the running unit test. 
+        /// The default generated snapshot name can be overwritten 
+        /// by the given snapshot name.
+        /// </summary>
+        /// <param name="snapshotName">
+        /// The snapshot name given by the user. This snapshot name will overwrite 
+        /// the automatically generated snapshot name. 
+        /// </param>       
+        /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName(string snapshotName)
         {
             return Snapshooter.ResolveSnapshotFullName(snapshotName);
         }
 
+        /// <summary>
+        /// Resolves the snapshot name for the running unit test. 
+        /// The default generated snapshot name can be extended by 
+        /// the snapshot name extensions.
+        /// </summary>       
+        /// <param name="snapshotNameExtension">
+        /// The snapshot name extension will extend the snapshot name with
+        /// this given extensions. It can be used to make a snapshot name even more
+        /// specific. 
+        /// Example: 
+        /// Snapshot name = 'NumberAdditionTest'
+        /// Snapshot name extension = '5', '6', 'Result', '11'
+        /// Result: 'NumberAdditionTest_5_6_Result_11'
+        /// </param>
+        /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName(
             SnapshotNameExtension snapshotNameExtension)
         {
             return Snapshooter.ResolveSnapshotFullName(snapshotNameExtension: snapshotNameExtension);
         }
 
+        /// <summary>
+        /// Resolves the snapshot name for the running unit test. 
+        /// The default generated snapshot name can either be overwritten 
+        /// with a given snapshot name, or can be extended by the snapshot name extensions,
+        /// or both.
+        /// </summary>
+        /// <param name="snapshotName">
+        /// The snapshot name given by the user, this snapshot name will overwrite 
+        /// the automatically generated snapshot name. 
+        /// </param>
+        /// <param name="snapshotNameExtension">
+        /// The snapshot name extension will extend the snapshot name with
+        /// this given extensions. It can be used to make a snapshot name even more
+        /// specific. 
+        /// Example: 
+        /// Snapshot name = 'NumberAdditionTest'
+        /// Snapshot name extension = '5', '6', 'Result', '11'
+        /// Result: 'NumberAdditionTest_5_6_Result_11'
+        /// </param>
+        /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName(
             string snapshotName, SnapshotNameExtension snapshotNameExtension)
         {
