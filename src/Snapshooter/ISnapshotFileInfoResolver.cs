@@ -2,10 +2,10 @@
 
 namespace Snapshooter
 {
-    public interface ISnapshotFileInfoResolver
+    public interface ISnapshotFullNameResolver
     {
-        SnapshotFullName ResolveSnapshotFileInfo();
-        SnapshotFullName ResolveSnapshotFileInfo(string snapshotName);
-        SnapshotFullName ResolveSnapshotFileInfo(string snapshotName, string nameExtension);
+        SnapshotFullName ResolveSnapshotFullName();
+        SnapshotFullName ResolveSnapshotFullName(string snapshotName);
+        SnapshotFullName ResolveSnapshotFullName(string snapshotName, string nameExtension);
     }
 }

@@ -12,25 +12,25 @@ using Xunit;
 namespace Snapshooter.Xunit
 {
     /// <summary>
-    /// A xunit snapshot file info reader is responsible to get the information  
+    /// A xunit snapshot full name reader is responsible to get the information  
     /// for the snapshot file from a xunit test.
     /// </summary>
-    public class XunitSnapshotFileInfoReader : ISnapshotFileInfoReader
+    public class XunitSnapshotFullNameReader : ISnapshotFullNameReader
     {
         /// <summary>
-        /// Evaluates the snapshot file infos.
+        /// Evaluates the snapshot full name information.
         /// </summary>
-        /// <returns>The file infos for the snapshot.</returns>
-        public SnapshotFullName ReadSnapshotFileInfo()
+        /// <returns>The full name of the snapshot.</returns>
+        public SnapshotFullName ReadSnapshotFullName()
         {
-            SnapshotFullName snapshotFileInfo = null;
+            SnapshotFullName snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
             foreach (StackFrame stackFrame in stackFrames)
             {
                 MethodBase method = stackFrame.GetMethod();
                 if (IsXunitTestMethod(method))
                 {
-                    snapshotFileInfo = new SnapshotFullName(
+                    snapshotFullName = new SnapshotFullName(
                         method.ToName(), 
                         Path.GetDirectoryName(stackFrame.GetFileName()));
                     
@@ -40,7 +40,7 @@ namespace Snapshooter.Xunit
                 MethodBase asyncMethod = GetAsyncMethodBase(method);
                 if (IsXunitTestMethod(asyncMethod))
                 {
-                    snapshotFileInfo = new SnapshotFullName(
+                    snapshotFullName = new SnapshotFullName(
                         asyncMethod.ToName(), 
                         Path.GetDirectoryName(stackFrame.GetFileName()));
                                       
@@ -48,7 +48,7 @@ namespace Snapshooter.Xunit
                 }
             }
             
-            return snapshotFileInfo;
+            return snapshotFullName;
         }
 
         private static bool IsXunitTestMethod(MemberInfo method)

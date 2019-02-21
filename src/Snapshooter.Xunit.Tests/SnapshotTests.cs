@@ -71,16 +71,16 @@ namespace Snapshooter.Xunit.Tests
         public void Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
         {
             // arrange
-            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-                new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader(), new SnapshotFileNameBuilder());
 
-            SnapshotFullName snapshotFileInfo = 
-                snapshotFileInfoResolver.ResolveSnapshotFileInfo();
+            SnapshotFullName snapshotFullName = 
+                snapshotFullNameResolver.ResolveSnapshotFullName();
 
             string snapshotFileName = Path.Combine(
-                snapshotFileInfo.FolderPath, 
+                snapshotFullName.FolderPath, 
                 FileNames.SnapshotFolderName, 
-                snapshotFileInfo.Filename);
+                snapshotFullName.Filename);
 
             File.Delete(snapshotFileName);
 
@@ -144,16 +144,16 @@ namespace Snapshooter.Xunit.Tests
         public void Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated(int age, decimal size)
         {
             // arrange
-            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-                new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader(), new SnapshotFileNameBuilder());
 
-            SnapshotFullName snapshotFileInfo =
-                snapshotFileInfoResolver.ResolveSnapshotFileInfo();
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
 
             string snapshotFileName = Path.Combine(
-                snapshotFileInfo.FolderPath,
+                snapshotFullName.FolderPath,
                 FileNames.SnapshotFolderName,
-                snapshotFileInfo.Filename);
+                snapshotFullName.Filename);
 
             File.Delete(snapshotFileName);
 

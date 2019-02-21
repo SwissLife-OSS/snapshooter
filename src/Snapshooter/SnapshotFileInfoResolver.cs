@@ -3,38 +3,38 @@ using Snapshooter.Exceptions;
 
 namespace Snapshooter
 {
-    public class SnapshotFileInfoResolver : ISnapshotFileInfoResolver
+    public class SnapshotFullNameResolver : ISnapshotFullNameResolver
     {
-        private readonly ISnapshotFileInfoReader _snapshotFileInfoReader;
+        private readonly ISnapshotFullNameReader _snapshotFullNameReader;
         private readonly ISnapshotFileNameBuilder _snapshotFileNameBuilder;
         
-        public SnapshotFileInfoResolver(
-            ISnapshotFileInfoReader snapshotFileInfoReader,
+        public SnapshotFullNameResolver(
+            ISnapshotFullNameReader snapshotFullNameReader,
             ISnapshotFileNameBuilder snapshotFileNameBuilder)
         {
-            _snapshotFileInfoReader = snapshotFileInfoReader;
+            _snapshotFullNameReader = snapshotFullNameReader;
             _snapshotFileNameBuilder = snapshotFileNameBuilder;
         }
 
-        public SnapshotFullName ResolveSnapshotFileInfo()
+        public SnapshotFullName ResolveSnapshotFullName()
         {
-            return ResolveSnapshotFileInfo(null);
+            return ResolveSnapshotFullName(null);
         }
 
-        public SnapshotFullName ResolveSnapshotFileInfo(
+        public SnapshotFullName ResolveSnapshotFullName(
             string snapshotName)
         {
-            return ResolveSnapshotFileInfo(snapshotName, null);
+            return ResolveSnapshotFullName(snapshotName, null);
         }
 
-        public SnapshotFullName ResolveSnapshotFileInfo(
+        public SnapshotFullName ResolveSnapshotFullName(
             string snapshotName, string snapshotNameExtension)
         {
-            SnapshotFullName snapshotFullName = _snapshotFileInfoReader.ReadSnapshotFileInfo();
+            SnapshotFullName snapshotFullName = _snapshotFullNameReader.ReadSnapshotFullName();
 
             if (snapshotFullName == null)
             {
-                throw new SnapshotTestException("The snapshot file infos could not be read.");
+                throw new SnapshotTestException("The snapshot full names could not be read.");
             }
 
             if(string.IsNullOrWhiteSpace(snapshotFullName.Filename) && 

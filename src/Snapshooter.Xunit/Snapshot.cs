@@ -309,8 +309,8 @@ namespace Snapshooter.Xunit
                             new JsonSnapshotComparer(
                                 new XunitAssert(),
                                 new SnapshotSerializer())),
-                        new SnapshotFileInfoResolver(
-                            new XunitSnapshotFileInfoReader(),
+                        new SnapshotFullNameResolver(
+                            new XunitSnapshotFullNameReader(),
                             new SnapshotFileNameBuilder()));
             }
         }

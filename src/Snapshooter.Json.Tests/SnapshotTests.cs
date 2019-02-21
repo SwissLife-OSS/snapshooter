@@ -85,16 +85,16 @@ namespace Snapshooter.Json.Tests
             string snapshotName = nameof(SnapshotTests) + "." +
                     nameof(Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
 
-            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-                    new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                    new JsonSnapshotFullNameReader(), new SnapshotFileNameBuilder());
 
-            SnapshotFullName snapshotFileInfo =
-                snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName(snapshotName);
 
             string snapshotFileName = Path.Combine(
-                snapshotFileInfo.FolderPath,
+                snapshotFullName.FolderPath,
                 FileNames.SnapshotFolderName,
-                snapshotFileInfo.Filename);
+                snapshotFullName.Filename);
 
             if (File.Exists(snapshotFileName))
             {
@@ -174,16 +174,16 @@ namespace Snapshooter.Json.Tests
             string snapshotName = nameof(SnapshotTests) + "." +
                     nameof(Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
 
-            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-                    new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                    new JsonSnapshotFullNameReader(), new SnapshotFileNameBuilder());
 
-            SnapshotFullName snapshotFileInfo =
-                snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName(snapshotName);
 
             string snapshotFileName = Path.Combine(
-                snapshotFileInfo.FolderPath,
+                snapshotFullName.FolderPath,
                 FileNames.SnapshotFolderName,
-                snapshotFileInfo.Filename);
+                snapshotFullName.Filename);
 
             if (File.Exists(snapshotFileName))
             {

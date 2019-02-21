@@ -29,7 +29,7 @@
         /// <summary>
         /// Reads the current snapshot from the __snapshots__ folder.
         /// </summary>
-        /// <param name="snapshotFileInfo">The file info of the snapshot.</param> 
+        /// <param name="snapshotFullName">The full name of the snapshot.</param> 
         /// <returns>The expected snapshot.</returns>
         string ReadSnapshot(SnapshotFullName snapshotFullName);
 

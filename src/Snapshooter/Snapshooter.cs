@@ -11,7 +11,7 @@ namespace Snapshooter
     public class Snapshooter
     {
         private readonly ISnapshotAssert _snapshotAssert;
-        private readonly ISnapshotFileInfoResolver _snapshotFullNameResolver;
+        private readonly ISnapshotFullNameResolver _snapshotFullNameResolver;
 
         /// <summary>
         /// Constructor of the class <see cref="Snapshooter"/> 
@@ -20,7 +20,7 @@ namespace Snapshooter
         /// <param name="snapshotAssert">The snapshot asserter.</param>
         /// <param name="snapshotFullNameResolver">The snapshot full name resolver.</param>
         public Snapshooter(ISnapshotAssert snapshotAssert, 
-            ISnapshotFileInfoResolver snapshotFullNameResolver)
+            ISnapshotFullNameResolver snapshotFullNameResolver)
         {
             _snapshotAssert = snapshotAssert;
             _snapshotFullNameResolver = snapshotFullNameResolver;
@@ -82,7 +82,7 @@ namespace Snapshooter
             SnapshotNameExtension snapshotNameExtension = null)
         {
             SnapshotFullName snapshotFullName = _snapshotFullNameResolver
-                .ResolveSnapshotFileInfo(
+                .ResolveSnapshotFullName(
                     snapshotName, snapshotNameExtension?.ToParamsString());
 
             return snapshotFullName;

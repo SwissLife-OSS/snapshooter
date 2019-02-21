@@ -171,8 +171,8 @@ namespace Snapshooter.Json
                             new JsonSnapshotComparer(
                                 new JsonAssert(),
                                 new SnapshotSerializer())),
-                        new SnapshotFileInfoResolver(
-                            new JsonSnapshotFileInfoReader(),
+                        new SnapshotFullNameResolver(
+                            new JsonSnapshotFullNameReader(),
                             new SnapshotFileNameBuilder()));
             }
         }
