@@ -123,8 +123,7 @@ namespace Snapshooter.Xunit
         public static void Match(object currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            SnapshotFullName snapshotFullName = FullName();
-            AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            Snapshooter.AssertSnapshot(currentResult, FullName(), matchOptions);
         }
 
         /// <summary>        
@@ -150,8 +149,7 @@ namespace Snapshooter.Xunit
             SnapshotNameExtension snapshotNameExtension,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            SnapshotFullName snapshotFullName = FullName(snapshotNameExtension);
-            AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            Match(currentResult, FullName(snapshotNameExtension), matchOptions);
         }
 
         /// <summary>        
@@ -172,8 +170,7 @@ namespace Snapshooter.Xunit
             object currentResult, string snapshotName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            SnapshotFullName snapshotFullName = FullName(snapshotName);
-            AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            Match(currentResult, FullName(snapshotName), matchOptions);
         }
 
         /// <summary>        
@@ -204,84 +201,69 @@ namespace Snapshooter.Xunit
             SnapshotNameExtension snapshotNameExtension,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            SnapshotFullName snapshotFullName = FullName(snapshotName, snapshotNameExtension);
-            AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            Match(currentResult, FullName(snapshotName, snapshotNameExtension), matchOptions);
+        }
+
+        /// <summary>        
+        /// Creates a json snapshot of the given object and compares it with the 
+        /// already existing snapshot of the test. 
+        /// If no snapshot exists, a new snapshot will be created from the current result
+        /// and saved under a certain file path, which will shown within the test message.
+        /// </summary>
+        /// <param name="currentResult">The object to match.</param>
+        /// <param name="snapshotFullName">
+        /// The full name of a snapshot with folder and file name.</param>
+        /// <param name="matchOptions">
+        /// Additional compare actions, which can be applied during the snapshot comparison.
+        /// </param>
+        public static void Match(
+            object currentResult,
+            SnapshotFullName snapshotFullName,
+            Func<MatchOptions, MatchOptions> matchOptions = null)
+        {
+            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
         }
 
         public static SnapshotFullName FullName()
         {
-            return ResolveSnapshotFullName();
+            return Snapshooter.ResolveSnapshotFullName();
         }
 
         public static SnapshotFullName FullName(string snapshotName)
         {
-            return ResolveSnapshotFullName(snapshotName);
+            return Snapshooter.ResolveSnapshotFullName(snapshotName);
         }
 
         public static SnapshotFullName FullName(
             SnapshotNameExtension snapshotNameExtension)
         {
-            return ResolveSnapshotFullName(snapshotNameExtension: snapshotNameExtension);
+            return Snapshooter.ResolveSnapshotFullName(snapshotNameExtension: snapshotNameExtension);
         }
 
         public static SnapshotFullName FullName(
             string snapshotName, SnapshotNameExtension snapshotNameExtension)
         {
-            return ResolveSnapshotFullName(snapshotName, snapshotNameExtension);
+            return Snapshooter.ResolveSnapshotFullName(snapshotName, snapshotNameExtension);
         }
 
-        private static void AssertSnapshot(
-            object currentResult,
-            SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+        private static Snapshooter Snapshooter
         {
-            if (currentResult == null)
+            get
             {
-                throw new ArgumentNullException(nameof(currentResult));
+                return 
+                    new Snapshooter(
+                        new SnapshotAssert(
+                            new SnapshotSerializer(),
+                            new SnapshotFileHandler(),
+                            new SnapshotEnvironmentCleaner(
+                                new SnapshotFileHandler()),
+                            new JsonSnapshotComparer(
+                                new XunitAssert(),
+                                new SnapshotSerializer())),
+                        new SnapshotFileInfoResolver(
+                            new XunitSnapshotFileInfoReader(),
+                            new SnapshotFileNameBuilder()));
             }
-
-            if (snapshotFullName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotFullName));
-            }
-
-            ISnapshotAssert snapshotAssert = CreateSnapshotAssert();
-
-            snapshotAssert.AssertSnapshot(
-                currentResult, snapshotFullName, matchOptions);
-        }
-
-        private static SnapshotFullName ResolveSnapshotFullName(
-            string snapshotName = null, 
-            SnapshotNameExtension snapshotNameExtension = null)
-        {
-            ISnapshotFileInfoResolver snapshotFullNameResolver = 
-                CreateSnapshotFullnameResolver();
-
-            SnapshotFullName snapshotFullName = snapshotFullNameResolver
-                .ResolveSnapshotFileInfo(
-                    snapshotName, snapshotNameExtension?.ToParamsString());
-
-            return snapshotFullName;
-        }
-
-        private static ISnapshotAssert CreateSnapshotAssert()
-        {
-            return new SnapshotAssert(
-                new SnapshotSerializer(),
-                new SnapshotFileHandler(), 
-                new SnapshotEnvironmentCleaner(
-                    new SnapshotFileHandler()),
-                new JsonSnapshotComparer(
-                    new XunitAssert(), 
-                    new SnapshotSerializer()));
-        }
-
-        private static ISnapshotFileInfoResolver CreateSnapshotFullnameResolver()
-        {
-            return new SnapshotFileInfoResolver(
-                new XunitSnapshotFileInfoReader(),
-                new SnapshotFileNameBuilder());
         }
     }
 }

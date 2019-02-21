@@ -81,7 +81,7 @@ namespace Snapshooter.Json
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             SnapshotFullName snapshotFullName = FullName(snapshotName);
-            AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
         }
 
         /// <summary>
@@ -113,77 +113,38 @@ namespace Snapshooter.Json
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             SnapshotFullName snapshotFullName = FullName(snapshotName, snapshotNameExtension);
-            AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
         }
 
         public static SnapshotFullName FullName(string snapshotName)
         {
-            return ResolveSnapshotFullName(snapshotName);
+            return Snapshooter.ResolveSnapshotFullName(snapshotName);
         }
         
         public static SnapshotFullName FullName(
             string snapshotName, SnapshotNameExtension snapshotNameExtension)
         {
-            return ResolveSnapshotFullName(snapshotName, snapshotNameExtension);
+            return Snapshooter.ResolveSnapshotFullName(snapshotName, snapshotNameExtension);
         }
 
-        private static void AssertSnapshot(
-            object currentResult,
-            SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+        private static Snapshooter Snapshooter
         {
-            if (currentResult == null)
+            get
             {
-                throw new ArgumentNullException(nameof(currentResult));
+                return 
+                    new Snapshooter(
+                        new SnapshotAssert(
+                            new SnapshotSerializer(),
+                            new SnapshotFileHandler(),
+                            new SnapshotEnvironmentCleaner(
+                                new SnapshotFileHandler()),
+                            new JsonSnapshotComparer(
+                                new JsonAssert(),
+                                new SnapshotSerializer())),
+                        new SnapshotFileInfoResolver(
+                            new JsonSnapshotFileInfoReader(),
+                            new SnapshotFileNameBuilder()));
             }
-            
-            if (snapshotFullName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotFullName));
-            }
-
-            if (string.IsNullOrEmpty(snapshotFullName.Filename))
-            {
-                throw new ArgumentException($"{nameof(snapshotFullName)} cannot be null or empty");
-            }
-
-            ISnapshotAssert snapshotAssert = CreateSnapshotAssert();
-
-            snapshotAssert.AssertSnapshot(
-                currentResult, snapshotFullName, matchOptions);
-        }
-
-        private static SnapshotFullName ResolveSnapshotFullName(
-            string snapshotName = null,
-            SnapshotNameExtension snapshotNameExtension = null)
-        {
-            ISnapshotFileInfoResolver snapshotFullNameResolver =
-                CreateSnapshotFullnameResolver();
-
-            SnapshotFullName snapshotFullName = snapshotFullNameResolver
-                .ResolveSnapshotFileInfo(
-                    snapshotName, snapshotNameExtension?.ToParamsString());
-
-            return snapshotFullName;
-        }
-
-        private static ISnapshotAssert CreateSnapshotAssert()
-        {
-            return new SnapshotAssert(
-                new SnapshotSerializer(),
-                new SnapshotFileHandler(),
-                new SnapshotEnvironmentCleaner(
-                    new SnapshotFileHandler()),
-                new JsonSnapshotComparer(
-                    new JsonAssert(), 
-                    new SnapshotSerializer()));
-        }
-
-        private static ISnapshotFileInfoResolver CreateSnapshotFullnameResolver()
-        {
-            return new SnapshotFileInfoResolver(
-                    new JsonSnapshotFileInfoReader(),
-                    new SnapshotFileNameBuilder());
         }
     }
 }
