@@ -73,28 +73,28 @@ namespace Snapshooter
                 throw new ArgumentNullException(nameof(currentResult));
             }                
             
-            ISnapshotFileInfo snapshotFileInfo = _snapshotFileInfoResolver
+            SnapshotFullName snapshotFullName = _snapshotFileInfoResolver
                 .ResolveSnapshotFileInfo(snapshotName, snapshotNameExtension?.ToParamsString());
 
-            _snapshotEnvironmentCleaner.Cleanup(snapshotFileInfo);
+            _snapshotEnvironmentCleaner.Cleanup(snapshotFullName);
 
             string actualSnapshotSerialized = _snapshotSerializer.SerializeObject(currentResult);
-            string savedSnapshotSerialized = _snapshotFileHandler.ReadSnapshot(snapshotFileInfo);
+            string savedSnapshotSerialized = _snapshotFileHandler.ReadSnapshot(snapshotFullName);
                        
             CompareSnapshots(actualSnapshotSerialized, savedSnapshotSerialized,
-                snapshotFileInfo, matchOptions);
+                snapshotFullName, matchOptions);
         }
 
         private void CompareSnapshots(
             string actualSnapshotSerialized,
             string savedSnapshotSerialized,
-            ISnapshotFileInfo snapshotFileInfo,
+            SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions)
         {
             if (savedSnapshotSerialized == null)
             {
                 _snapshotFileHandler
-                    .SaveNewSnapshot(snapshotFileInfo, actualSnapshotSerialized);
+                    .SaveNewSnapshot(snapshotFullName, actualSnapshotSerialized);
 
                 return;
             }
@@ -107,7 +107,7 @@ namespace Snapshooter
             catch (Exception)
             {
                 _snapshotFileHandler
-                    .SaveMismatchSnapshot(snapshotFileInfo, actualSnapshotSerialized);
+                    .SaveMismatchSnapshot(snapshotFullName, actualSnapshotSerialized);
 
                 throw;
             }

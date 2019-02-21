@@ -21,32 +21,28 @@ namespace Snapshooter.Xunit
         /// Evaluates the snapshot file infos.
         /// </summary>
         /// <returns>The file infos for the snapshot.</returns>
-        public SnapshotFileInfo ReadSnapshotFileInfo()
+        public SnapshotFullName ReadSnapshotFileInfo()
         {
-            SnapshotFileInfo snapshotFileInfo = null;
+            SnapshotFullName snapshotFileInfo = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
             foreach (StackFrame stackFrame in stackFrames)
             {
                 MethodBase method = stackFrame.GetMethod();
                 if (IsXunitTestMethod(method))
                 {
-                    snapshotFileInfo = new SnapshotFileInfo()
-                    {
-                        FolderPath = Path.GetDirectoryName(stackFrame.GetFileName()),
-                        Filename = method.ToName()
-                    };
+                    snapshotFileInfo = new SnapshotFullName(
+                        method.ToName(), 
+                        Path.GetDirectoryName(stackFrame.GetFileName()));
                     
-                    break;                    
+                    break;
                 }
 
                 MethodBase asyncMethod = GetAsyncMethodBase(method);
                 if (IsXunitTestMethod(asyncMethod))
                 {
-                    snapshotFileInfo = new SnapshotFileInfo()
-                    {
-                        FolderPath = Path.GetDirectoryName(stackFrame.GetFileName()),
-                        Filename = asyncMethod.ToName()
-                    };
+                    snapshotFileInfo = new SnapshotFullName(
+                        asyncMethod.ToName(), 
+                        Path.GetDirectoryName(stackFrame.GetFileName()));
                                       
                     break;
                 }

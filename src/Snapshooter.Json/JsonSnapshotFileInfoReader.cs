@@ -13,13 +13,10 @@ namespace Snapshooter.Json
         /// Evaluates the snapshot file infos.
         /// </summary>
         /// <returns>The file infos for the snapshot.</returns>
-        public SnapshotFileInfo ReadSnapshotFileInfo()
+        public SnapshotFullName ReadSnapshotFileInfo()
         {
-            return new SnapshotFileInfo()
-            {
-                Filename = null,
-                FolderPath = AppDomain.CurrentDomain.BaseDirectory
-            };
+            return new SnapshotFullName(
+                null, AppDomain.CurrentDomain.BaseDirectory);
         }
     }
 }

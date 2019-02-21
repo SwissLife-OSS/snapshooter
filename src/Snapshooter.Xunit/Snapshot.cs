@@ -204,6 +204,11 @@ namespace Snapshooter.Xunit
             AssertSnapshot(currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
 
+        //public static string FullName()
+        //{
+
+        //}
+
         private static void AssertSnapshot(
             object currentResult, 
             string snapshotName = null, 
@@ -214,7 +219,7 @@ namespace Snapshooter.Xunit
             {
                 throw new ArgumentNullException(nameof(currentResult));
             }
-
+            
             ISnapshotAssert snapshotAssert = CreateSnapshotAssert();
 
             snapshotAssert.AssertSnapshot(

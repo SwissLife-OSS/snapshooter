@@ -9,6 +9,6 @@
         /// Reads all file information for the snapshot to store.
         /// </summary>
         /// <returns></returns>
-        SnapshotFileInfo ReadSnapshotFileInfo();
+        SnapshotFullName ReadSnapshotFileInfo();
     }
 }

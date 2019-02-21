@@ -74,7 +74,7 @@ namespace Snapshooter.Xunit.Tests
             var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
                 new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-            ISnapshotFileInfo snapshotFileInfo = 
+            SnapshotFullName snapshotFileInfo = 
                 snapshotFileInfoResolver.ResolveSnapshotFileInfo();
 
             string snapshotFileName = Path.Combine(
@@ -147,7 +147,7 @@ namespace Snapshooter.Xunit.Tests
             var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
                 new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-            ISnapshotFileInfo snapshotFileInfo =
+            SnapshotFullName snapshotFileInfo =
                 snapshotFileInfoResolver.ResolveSnapshotFileInfo();
 
             string snapshotFileName = Path.Combine(

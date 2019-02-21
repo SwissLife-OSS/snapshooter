@@ -13,7 +13,7 @@ namespace Snapshooter.Xunit.Tests
             var snapshotFileInfoResolver = new XunitSnapshotFileInfoReader();
 
             // act
-            SnapshotFileInfo snapshotFileInfo = snapshotFileInfoResolver.ReadSnapshotFileInfo();
+            SnapshotFullName snapshotFileInfo = snapshotFileInfoResolver.ReadSnapshotFileInfo();
 
             // assert
             Assert.Equal(
@@ -30,7 +30,7 @@ namespace Snapshooter.Xunit.Tests
             await Task.Delay(1);
 
             // act
-            SnapshotFileInfo snapshotFileInfo = snapshotFileInfoResolver.ReadSnapshotFileInfo();
+            SnapshotFullName snapshotFileInfo = snapshotFileInfoResolver.ReadSnapshotFileInfo();
 
             // assert
             await Task.Delay(1);
@@ -53,7 +53,7 @@ namespace Snapshooter.Xunit.Tests
             var snapshotFileInfoResolver = new XunitSnapshotFileInfoReader();
 
             // act
-            SnapshotFileInfo snapshotFileInfo = snapshotFileInfoResolver.ReadSnapshotFileInfo();
+            SnapshotFullName snapshotFileInfo = snapshotFileInfoResolver.ReadSnapshotFileInfo();
 
             // assert
             Assert.Equal(
@@ -74,7 +74,7 @@ namespace Snapshooter.Xunit.Tests
             await Task.Delay(1);
 
             // act
-            SnapshotFileInfo snapshotFileInfo = snapshotFileInfoResolver.ReadSnapshotFileInfo();
+            SnapshotFullName snapshotFileInfo = snapshotFileInfoResolver.ReadSnapshotFileInfo();
 
             // assert
             await Task.Delay(1);

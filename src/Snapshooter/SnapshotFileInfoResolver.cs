@@ -16,28 +16,28 @@ namespace Snapshooter
             _snapshotFileNameBuilder = snapshotFileNameBuilder;
         }
 
-        public ISnapshotFileInfo ResolveSnapshotFileInfo()
+        public SnapshotFullName ResolveSnapshotFileInfo()
         {
             return ResolveSnapshotFileInfo(null);
         }
 
-        public ISnapshotFileInfo ResolveSnapshotFileInfo(
+        public SnapshotFullName ResolveSnapshotFileInfo(
             string snapshotName)
         {
             return ResolveSnapshotFileInfo(snapshotName, null);
         }
 
-        public ISnapshotFileInfo ResolveSnapshotFileInfo(
+        public SnapshotFullName ResolveSnapshotFileInfo(
             string snapshotName, string snapshotNameExtension)
         {
-            SnapshotFileInfo snapshotFileInfo = _snapshotFileInfoReader.ReadSnapshotFileInfo();
+            SnapshotFullName snapshotFullName = _snapshotFileInfoReader.ReadSnapshotFileInfo();
 
-            if (snapshotFileInfo == null)
+            if (snapshotFullName == null)
             {
                 throw new SnapshotTestException("The snapshot file infos could not be read.");
             }
 
-            if(string.IsNullOrWhiteSpace(snapshotFileInfo.Filename) && 
+            if(string.IsNullOrWhiteSpace(snapshotFullName.Filename) && 
                string.IsNullOrWhiteSpace(snapshotName))
             {
                 throw new SnapshotTestException("No snapshot name could be resolved.");
@@ -45,13 +45,13 @@ namespace Snapshooter
 
             if (string.IsNullOrWhiteSpace(snapshotName))
             {
-                snapshotName = snapshotFileInfo.Filename;
+                snapshotName = snapshotFullName.Filename;
             }
 
-            snapshotFileInfo.Filename = _snapshotFileNameBuilder
+            string filename = _snapshotFileNameBuilder
                 .BuildSnapshotFileName(snapshotName, snapshotNameExtension);
-
-            return snapshotFileInfo;
+                       
+            return new SnapshotFullName(filename, snapshotFullName.FolderPath);
         }
     }
 }

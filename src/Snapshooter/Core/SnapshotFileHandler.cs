@@ -17,7 +17,7 @@ namespace Snapshooter.Core
         /// <param name="snapshotData">The current snapshot data to store.</param>
         /// <returns>The file path of the stored snapshot.</returns>
         public string SaveNewSnapshot(
-            ISnapshotFileInfo snapshotFileInfo, string snapshotData)
+            SnapshotFullName snapshotFileInfo, string snapshotData)
         {
             if (snapshotFileInfo == null)
             {
@@ -47,7 +47,7 @@ namespace Snapshooter.Core
         /// <param name="snapshotData">The current snapshot data to store.</param>
         /// <returns>The file path of the stored snapshot.</returns>
         public string SaveMismatchSnapshot(
-            ISnapshotFileInfo snapshotFileInfo, string snapshotData)
+            SnapshotFullName snapshotFileInfo, string snapshotData)
         {
             if (snapshotFileInfo == null)
             {
@@ -75,7 +75,7 @@ namespace Snapshooter.Core
         /// </summary>
         /// <param name="snapshotFileInfo">The file info of the snapshot.</param> 
         /// <returns>The expected snapshot.</returns>
-        public string ReadSnapshot(ISnapshotFileInfo snapshotFileInfo)
+        public string ReadSnapshot(SnapshotFullName snapshotFileInfo)
         {
             if (snapshotFileInfo == null)
             {
@@ -102,7 +102,7 @@ namespace Snapshooter.Core
         /// <param name="snapshotFileInfo">The location of the running snapshot test.</param>
         /// <param name="subfolderName">The subfolder to delete.</param>
         public void DeleteSnapshotSubfolder(
-            ISnapshotFileInfo snapshotFileInfo, string subfolderName)
+            SnapshotFullName snapshotFileInfo, string subfolderName)
         {
             if (snapshotFileInfo == null)
             {
@@ -119,7 +119,7 @@ namespace Snapshooter.Core
             DeleteFolderIfExist(snapshotSubFolderPath);
         }
         
-        private string EnsureSnapshotFolder(ISnapshotFileInfo snapshotFileInfo)
+        private string EnsureSnapshotFolder(SnapshotFullName snapshotFileInfo)
         {
             var snapshotFolderPath = GetSnapshotFolderPath(snapshotFileInfo);
 
@@ -129,7 +129,7 @@ namespace Snapshooter.Core
         }
 
         private string EnsureSnapshotSubfolder(
-            ISnapshotFileInfo snapshotFileInfo, string subfolder)
+            SnapshotFullName snapshotFileInfo, string subfolder)
         {
             var snapshotSubFolderPath = GetSnapshotSubfolderPath(snapshotFileInfo, subfolder);
 
@@ -138,14 +138,14 @@ namespace Snapshooter.Core
             return snapshotSubFolderPath;
         }
         
-        private static string GetSnapshotFolderPath(ISnapshotFileInfo snapshotFileInfo)
+        private static string GetSnapshotFolderPath(SnapshotFullName snapshotFileInfo)
         {
             return Path.Combine(
                 snapshotFileInfo.FolderPath, FileNames.SnapshotFolderName);
         }
 
         private static string GetSnapshotSubfolderPath(
-            ISnapshotFileInfo snapshotFileInfo, string subfolder)
+            SnapshotFullName snapshotFileInfo, string subfolder)
         {
             var snapshotFolderPath = GetSnapshotFolderPath(snapshotFileInfo);
 

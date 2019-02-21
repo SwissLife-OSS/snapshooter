@@ -88,7 +88,7 @@ namespace Snapshooter.Json.Tests
             var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
                     new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-            ISnapshotFileInfo snapshotFileInfo =
+            SnapshotFullName snapshotFileInfo =
                 snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
 
             string snapshotFileName = Path.Combine(
@@ -177,7 +177,7 @@ namespace Snapshooter.Json.Tests
             var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
                     new JsonSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
 
-            ISnapshotFileInfo snapshotFileInfo =
+            SnapshotFullName snapshotFileInfo =
                 snapshotFileInfoResolver.ResolveSnapshotFileInfo(snapshotName);
 
             string snapshotFileName = Path.Combine(
