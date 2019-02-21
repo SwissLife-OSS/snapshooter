@@ -29,7 +29,7 @@ namespace Snapshooter.Json
                                     string snapshotName,
                                     Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            AssertSnapshot(currentResult, snapshotName, null, matchOptions);
+            Match((object)currentResult, snapshotName, matchOptions);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Snapshooter.Json
                                     SnapshotNameExtension snapshotNameExtension,
                                     Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            AssertSnapshot(currentResult, snapshotName, snapshotNameExtension, matchOptions);
+            Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
                 
         /// <summary>
@@ -80,7 +80,8 @@ namespace Snapshooter.Json
                                  string snapshotName,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            AssertSnapshot(currentResult, snapshotName, null, matchOptions);
+            SnapshotFullName snapshotFullName = FullName(snapshotName);
+            AssertSnapshot(currentResult, snapshotFullName, matchOptions);
         }
 
         /// <summary>
@@ -111,44 +112,78 @@ namespace Snapshooter.Json
                                  SnapshotNameExtension snapshotNameExtension,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            AssertSnapshot(currentResult, snapshotName, snapshotNameExtension, matchOptions);
+            SnapshotFullName snapshotFullName = FullName(snapshotName, snapshotNameExtension);
+            AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+        }
+
+        public static SnapshotFullName FullName(string snapshotName)
+        {
+            return ResolveSnapshotFullName(snapshotName);
+        }
+        
+        public static SnapshotFullName FullName(
+            string snapshotName, SnapshotNameExtension snapshotNameExtension)
+        {
+            return ResolveSnapshotFullName(snapshotName, snapshotNameExtension);
         }
 
         private static void AssertSnapshot(
-            object currentResult, 
-            string snapshotName, 
-            SnapshotNameExtension snapshotNameExtension = null, 
+            object currentResult,
+            SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             if (currentResult == null)
             {
                 throw new ArgumentNullException(nameof(currentResult));
             }
-
-            if (string.IsNullOrEmpty(snapshotName))
+            
+            if (snapshotFullName == null)
             {
-                throw new ArgumentException($"{nameof(snapshotName)} cannot be null or empty");
+                throw new ArgumentNullException(nameof(snapshotFullName));
+            }
+
+            if (string.IsNullOrEmpty(snapshotFullName.Filename))
+            {
+                throw new ArgumentException($"{nameof(snapshotFullName)} cannot be null or empty");
             }
 
             ISnapshotAssert snapshotAssert = CreateSnapshotAssert();
 
             snapshotAssert.AssertSnapshot(
-                currentResult, snapshotName, snapshotNameExtension, matchOptions);
+                currentResult, snapshotFullName, matchOptions);
+        }
+
+        private static SnapshotFullName ResolveSnapshotFullName(
+            string snapshotName = null,
+            SnapshotNameExtension snapshotNameExtension = null)
+        {
+            ISnapshotFileInfoResolver snapshotFullNameResolver =
+                CreateSnapshotFullnameResolver();
+
+            SnapshotFullName snapshotFullName = snapshotFullNameResolver
+                .ResolveSnapshotFileInfo(
+                    snapshotName, snapshotNameExtension?.ToParamsString());
+
+            return snapshotFullName;
         }
 
         private static ISnapshotAssert CreateSnapshotAssert()
         {
             return new SnapshotAssert(
                 new SnapshotSerializer(),
-                new SnapshotFileInfoResolver(
-                    new JsonSnapshotFileInfoReader(),
-                    new SnapshotFileNameBuilder()),
                 new SnapshotFileHandler(),
                 new SnapshotEnvironmentCleaner(
                     new SnapshotFileHandler()),
                 new JsonSnapshotComparer(
                     new JsonAssert(), 
                     new SnapshotSerializer()));
+        }
+
+        private static ISnapshotFileInfoResolver CreateSnapshotFullnameResolver()
+        {
+            return new SnapshotFileInfoResolver(
+                    new JsonSnapshotFileInfoReader(),
+                    new SnapshotFileNameBuilder());
         }
     }
 }
