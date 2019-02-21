@@ -37,7 +37,7 @@ namespace Snapshooter.Xunit.Tests.Subfolder
         {
             // arrange
             var snapshotFullNameResolver = new SnapshotFullNameResolver(
-                new XunitSnapshotFullNameReader(), new SnapshotFileNameBuilder());
+                new XunitSnapshotFullNameReader(), new SnapshotFullNameBuilder());
 
             SnapshotFullName snapshotFullName =
                 snapshotFullNameResolver.ResolveSnapshotFullName();

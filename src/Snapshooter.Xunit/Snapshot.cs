@@ -311,7 +311,7 @@ namespace Snapshooter.Xunit
                                 new SnapshotSerializer())),
                         new SnapshotFullNameResolver(
                             new XunitSnapshotFullNameReader(),
-                            new SnapshotFileNameBuilder()));
+                            new SnapshotFullNameBuilder()));
             }
         }
     }

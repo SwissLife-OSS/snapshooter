@@ -86,7 +86,7 @@ namespace Snapshooter.Json.Tests
                     nameof(Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
 
             var snapshotFullNameResolver = new SnapshotFullNameResolver(
-                    new JsonSnapshotFullNameReader(), new SnapshotFileNameBuilder());
+                    new JsonSnapshotFullNameReader(), new SnapshotFullNameBuilder());
 
             SnapshotFullName snapshotFullName =
                 snapshotFullNameResolver.ResolveSnapshotFullName(snapshotName);
@@ -175,7 +175,7 @@ namespace Snapshooter.Json.Tests
                     nameof(Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated);
 
             var snapshotFullNameResolver = new SnapshotFullNameResolver(
-                    new JsonSnapshotFullNameReader(), new SnapshotFileNameBuilder());
+                    new JsonSnapshotFullNameReader(), new SnapshotFullNameBuilder());
 
             SnapshotFullName snapshotFullName =
                 snapshotFullNameResolver.ResolveSnapshotFullName(snapshotName);

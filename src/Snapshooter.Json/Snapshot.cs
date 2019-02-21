@@ -173,7 +173,7 @@ namespace Snapshooter.Json
                                 new SnapshotSerializer())),
                         new SnapshotFullNameResolver(
                             new JsonSnapshotFullNameReader(),
-                            new SnapshotFileNameBuilder()));
+                            new SnapshotFullNameBuilder()));
             }
         }
     }

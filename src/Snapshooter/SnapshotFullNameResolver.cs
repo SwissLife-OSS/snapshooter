@@ -6,14 +6,14 @@ namespace Snapshooter
     public class SnapshotFullNameResolver : ISnapshotFullNameResolver
     {
         private readonly ISnapshotFullNameReader _snapshotFullNameReader;
-        private readonly ISnapshotFileNameBuilder _snapshotFileNameBuilder;
+        private readonly ISnapshotFullNameBuilder _snapshotFullNameBuilder;
         
         public SnapshotFullNameResolver(
             ISnapshotFullNameReader snapshotFullNameReader,
-            ISnapshotFileNameBuilder snapshotFileNameBuilder)
+            ISnapshotFullNameBuilder snapshotFullNameBuilder)
         {
             _snapshotFullNameReader = snapshotFullNameReader;
-            _snapshotFileNameBuilder = snapshotFileNameBuilder;
+            _snapshotFullNameBuilder = snapshotFullNameBuilder;
         }
 
         public SnapshotFullName ResolveSnapshotFullName()
@@ -48,8 +48,8 @@ namespace Snapshooter
                 snapshotName = snapshotFullName.Filename;
             }
 
-            string filename = _snapshotFileNameBuilder
-                .BuildSnapshotFileName(snapshotName, snapshotNameExtension);
+            string filename = _snapshotFullNameBuilder
+                .BuildSnapshotFullName(snapshotName, snapshotNameExtension);
                        
             return new SnapshotFullName(filename, snapshotFullName.FolderPath);
         }

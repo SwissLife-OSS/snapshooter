@@ -1,11 +1,11 @@
 ﻿namespace Snapshooter.Core
 {
     /// <summary>
-    /// The interface <see cref="ISnapshotFileNameBuilder"/> is responsible to resolve the name of 
+    /// The interface <see cref="ISnapshotFullNameBuilder"/> is responsible to resolve the name of 
     /// the test, in which the class instance is currently running. It finds the current running 
     /// test and constructs the name by class + method + parameters.
     /// </summary>
-    public interface ISnapshotFileNameBuilder
+    public interface ISnapshotFullNameBuilder
     {
         /// <summary>
         /// This method resolve the name of the test, in which the method was called.
@@ -14,8 +14,8 @@
         /// </summary>       
         /// <param name="snapshotName">The name of the snapshot.</param>
         /// <returns>The test name. Null if no test could be found.</returns>
-        string BuildSnapshotFileName(string snapshotName);
+        string BuildSnapshotFullName(string snapshotName);
 
-        string BuildSnapshotFileName(string snapshotName, string snapshotNameExtension);
+        string BuildSnapshotFullName(string snapshotName, string snapshotNameExtension);
     }
 }

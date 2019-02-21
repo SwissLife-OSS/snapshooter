@@ -1,14 +1,14 @@
 ﻿using Snapshooter.Exceptions;
 namespace Snapshooter.Core
 {
-    public class SnapshotFileNameBuilder : ISnapshotFileNameBuilder
+    public class SnapshotFullNameBuilder : ISnapshotFullNameBuilder
     {        
-        public string BuildSnapshotFileName(string snapshotName)
+        public string BuildSnapshotFullName(string snapshotName)
         {
-            return BuildSnapshotFileName(snapshotName, null);
+            return BuildSnapshotFullName(snapshotName, null);
         }
 
-        public string BuildSnapshotFileName(string snapshotName, string snapshotNameExtension)
+        public string BuildSnapshotFullName(string snapshotName, string snapshotNameExtension)
         {
             if (string.IsNullOrWhiteSpace(snapshotName))
             {

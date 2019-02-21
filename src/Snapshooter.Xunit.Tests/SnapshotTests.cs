@@ -72,7 +72,7 @@ namespace Snapshooter.Xunit.Tests
         {
             // arrange
             var snapshotFullNameResolver = new SnapshotFullNameResolver(
-                new XunitSnapshotFullNameReader(), new SnapshotFileNameBuilder());
+                new XunitSnapshotFullNameReader(), new SnapshotFullNameBuilder());
 
             SnapshotFullName snapshotFullName = 
                 snapshotFullNameResolver.ResolveSnapshotFullName();
@@ -145,7 +145,7 @@ namespace Snapshooter.Xunit.Tests
         {
             // arrange
             var snapshotFullNameResolver = new SnapshotFullNameResolver(
-                new XunitSnapshotFullNameReader(), new SnapshotFileNameBuilder());
+                new XunitSnapshotFullNameReader(), new SnapshotFullNameBuilder());
 
             SnapshotFullName snapshotFullName =
                 snapshotFullNameResolver.ResolveSnapshotFullName();
