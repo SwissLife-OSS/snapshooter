@@ -29,7 +29,7 @@ namespace Snapshooter.Json
                                     string snapshotName,
                                     Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            AssertSnapshot(currentResult, snapshotName, null, matchOptions);
+            Match((object)currentResult, snapshotName, matchOptions);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Snapshooter.Json
                                     SnapshotNameExtension snapshotNameExtension,
                                     Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            AssertSnapshot(currentResult, snapshotName, snapshotNameExtension, matchOptions);
+            Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
                 
         /// <summary>
@@ -80,7 +80,8 @@ namespace Snapshooter.Json
                                  string snapshotName,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            AssertSnapshot(currentResult, snapshotName, null, matchOptions);
+            SnapshotFullName snapshotFullName = FullName(snapshotName);
+            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
         }
 
         /// <summary>
@@ -111,44 +112,68 @@ namespace Snapshooter.Json
                                  SnapshotNameExtension snapshotNameExtension,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            AssertSnapshot(currentResult, snapshotName, snapshotNameExtension, matchOptions);
+            SnapshotFullName snapshotFullName = FullName(snapshotName, snapshotNameExtension);
+            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
         }
 
-        private static void AssertSnapshot(
-            object currentResult, 
-            string snapshotName, 
-            SnapshotNameExtension snapshotNameExtension = null, 
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+        /// <summary>
+        /// Resolves the snapshot name for the running unit test. 
+        /// The default generated snapshot name can be overwritten 
+        /// by the given snapshot name.
+        /// </summary>
+        /// <param name="snapshotName">
+        /// The snapshot name given by the user. This snapshot name will overwrite 
+        /// the automatically generated snapshot name. 
+        /// </param>       
+        /// <returns>The full name of a snapshot.</returns>
+        public static SnapshotFullName FullName(string snapshotName)
         {
-            if (currentResult == null)
-            {
-                throw new ArgumentNullException(nameof(currentResult));
-            }
-
-            if (string.IsNullOrEmpty(snapshotName))
-            {
-                throw new ArgumentException($"{nameof(snapshotName)} cannot be null or empty");
-            }
-
-            ISnapshotAssert snapshotAssert = CreateSnapshotAssert();
-
-            snapshotAssert.AssertSnapshot(
-                currentResult, snapshotName, snapshotNameExtension, matchOptions);
+            return Snapshooter.ResolveSnapshotFullName(snapshotName);
         }
 
-        private static ISnapshotAssert CreateSnapshotAssert()
+        /// <summary>
+        /// Resolves the snapshot name for the running unit test. 
+        /// The default generated snapshot name can either be overwritten 
+        /// with a given snapshot name, or can be extended by the snapshot name extensions,
+        /// or both.
+        /// </summary>
+        /// <param name="snapshotName">
+        /// The snapshot name given by the user, this snapshot name will overwrite 
+        /// the automatically generated snapshot name. 
+        /// </param>
+        /// <param name="snapshotNameExtension">
+        /// The snapshot name extension will extend the snapshot name with
+        /// this given extensions. It can be used to make a snapshot name even more
+        /// specific. 
+        /// Example: 
+        /// Snapshot name = 'NumberAdditionTest'
+        /// Snapshot name extension = '5', '6', 'Result', '11'
+        /// Result: 'NumberAdditionTest_5_6_Result_11'
+        /// </param>
+        /// <returns>The full name of a snapshot.</returns>
+        public static SnapshotFullName FullName(
+            string snapshotName, SnapshotNameExtension snapshotNameExtension)
         {
-            return new SnapshotAssert(
-                new SnapshotSerializer(),
-                new SnapshotFileInfoResolver(
-                    new JsonSnapshotFileInfoReader(),
-                    new SnapshotFileNameBuilder()),
-                new SnapshotFileHandler(),
-                new SnapshotEnvironmentCleaner(
-                    new SnapshotFileHandler()),
-                new JsonSnapshotComparer(
-                    new JsonAssert(), 
-                    new SnapshotSerializer()));
+            return Snapshooter.ResolveSnapshotFullName(snapshotName, snapshotNameExtension);
+        }
+
+        private static Snapshooter Snapshooter
+        {
+            get
+            {
+                return 
+                    new Snapshooter(
+                        new SnapshotAssert(
+                            new SnapshotSerializer(),
+                            new SnapshotFileHandler(),
+                            new SnapshotEnvironmentCleaner(
+                                new SnapshotFileHandler()),
+                            new JsonSnapshotComparer(
+                                new JsonAssert(),
+                                new SnapshotSerializer())),
+                        new SnapshotFullNameResolver(
+                            new JsonSnapshotFullNameReader()));
+            }
         }
     }
 }

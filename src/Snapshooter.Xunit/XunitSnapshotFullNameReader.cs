@@ -6,53 +6,61 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Snapshooter.Core;
+using Snapshooter.Exceptions;
 using Snapshooter.Extensions;
 using Xunit;
 
 namespace Snapshooter.Xunit
 {
     /// <summary>
-    /// A xunit snapshot file info reader is responsible to get the information  
+    /// A xunit snapshot full name reader is responsible to get the information  
     /// for the snapshot file from a xunit test.
     /// </summary>
-    public class XunitSnapshotFileInfoReader : ISnapshotFileInfoReader
+    public class XunitSnapshotFullNameReader : ISnapshotFullNameReader
     {
         /// <summary>
-        /// Evaluates the snapshot file infos.
+        /// Evaluates the snapshot full name information.
         /// </summary>
-        /// <returns>The file infos for the snapshot.</returns>
-        public SnapshotFileInfo ReadSnapshotFileInfo()
+        /// <returns>The full name of the snapshot.</returns>
+        public SnapshotFullName ReadSnapshotFullName()
         {
-            SnapshotFileInfo snapshotFileInfo = null;
+            SnapshotFullName snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
             foreach (StackFrame stackFrame in stackFrames)
             {
                 MethodBase method = stackFrame.GetMethod();
                 if (IsXunitTestMethod(method))
                 {
-                    snapshotFileInfo = new SnapshotFileInfo()
-                    {
-                        FolderPath = Path.GetDirectoryName(stackFrame.GetFileName()),
-                        Filename = method.ToName()
-                    };
+                    snapshotFullName = new SnapshotFullName(
+                        method.ToName(), 
+                        Path.GetDirectoryName(stackFrame.GetFileName()));
                     
-                    break;                    
+                    break;
                 }
 
                 MethodBase asyncMethod = GetAsyncMethodBase(method);
                 if (IsXunitTestMethod(asyncMethod))
                 {
-                    snapshotFileInfo = new SnapshotFileInfo()
-                    {
-                        FolderPath = Path.GetDirectoryName(stackFrame.GetFileName()),
-                        Filename = asyncMethod.ToName()
-                    };
+                    snapshotFullName = new SnapshotFullName(
+                        asyncMethod.ToName(), 
+                        Path.GetDirectoryName(stackFrame.GetFileName()));
                                       
                     break;
                 }
             }
-            
-            return snapshotFileInfo;
+
+            if (snapshotFullName == null)
+            {
+                throw new SnapshotTestException(
+                    "The snapshot full name could not be evaluated. " +
+                    "This error can occur, if you use the snapshot match " +
+                    "within a async test helper child method. To solve this issue, " +
+                    "use the Snapshot.FullName directly in the unit test to " +
+                    "get the snapshot name, then reach this name to your " +
+                    "Snapshot.Match method.");
+            }
+
+            return snapshotFullName;
         }
 
         private static bool IsXunitTestMethod(MemberInfo method)

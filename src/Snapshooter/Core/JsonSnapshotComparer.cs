@@ -65,9 +65,9 @@ namespace Snapshooter.Core
         {
             try
             {
-                MatchOptions configuredMatchOptions = matchOptions(new MatchOptions());
+                MatchOptions configMatchOptions = matchOptions(new MatchOptions());
 
-                foreach (FieldMatchOperator matchOperator in configuredMatchOptions.MatchOperators)
+                foreach (FieldMatchOperator matchOperator in configMatchOptions.MatchOperators)
                 {
                     FieldOption fieldOption = matchOperator.ExecuteMatch(originalActualSnapshot);
 

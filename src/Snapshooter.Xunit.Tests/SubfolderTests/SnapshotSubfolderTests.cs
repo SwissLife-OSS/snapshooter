@@ -1,5 +1,4 @@
-﻿using Snapshooter.Core;
-using Snapshooter.Tests.Data;
+﻿using Snapshooter.Tests.Data;
 using System;
 using System.IO;
 using Xunit;
@@ -36,16 +35,16 @@ namespace Snapshooter.Xunit.Tests.Subfolder
         public void Match_SubfolderFactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
         {
             // arrange
-            var snapshotFileInfoResolver = new SnapshotFileInfoResolver(
-                new XunitSnapshotFileInfoReader(), new SnapshotFileNameBuilder());
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader());
 
-            ISnapshotFileInfo snapshotFileInfo =
-                snapshotFileInfoResolver.ResolveSnapshotFileInfo();
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
 
             string snapshotFileName = Path.Combine(
-                snapshotFileInfo.FolderPath,
+                snapshotFullName.FolderPath,
                 FileNames.SnapshotFolderName,
-                snapshotFileInfo.Filename);
+                snapshotFullName.Filename);
 
             File.Delete(snapshotFileName);
 

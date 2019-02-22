@@ -9,9 +9,9 @@
         /// <summary>
         /// Cleans up the snapshot unit test environment.
         /// </summary>
-        /// <param name="snapshotFileInfo">
-        /// The file and folder path of the running snapshot unit test
+        /// <param name="snapshotFullName">
+        /// The file name and folder path of the current snapshot.
         /// </param>
-        void Cleanup(ISnapshotFileInfo snapshotFileInfo);
+        void Cleanup(SnapshotFullName snapshotFullName);
     }
 }

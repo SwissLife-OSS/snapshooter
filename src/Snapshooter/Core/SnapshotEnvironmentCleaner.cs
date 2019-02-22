@@ -26,26 +26,26 @@ namespace Snapshooter.Core
         /// <summary>
         /// Cleans up the snapshot unit test environment.
         /// </summary>
-        /// <param name="snapshotFileInfo">
-        /// The file and folder path of the running snapshot unit test
+        /// <param name="snapshotFullName">
+        /// The file and folder path of the actual snapshot.
         /// </param>
-        public void Cleanup(ISnapshotFileInfo snapshotFileInfo)
+        public void Cleanup(SnapshotFullName snapshotFullName)
         {
-            CleanupMismatchFolder(snapshotFileInfo);
+            CleanupMismatchFolder(snapshotFullName);
         }
 
-        private void CleanupMismatchFolder(ISnapshotFileInfo snapshotFileInfo)
+        private void CleanupMismatchFolder(SnapshotFullName snapshotFullName)
         {
-            if (!_mismatchFolders.Contains(snapshotFileInfo.FolderPath))
+            if (!_mismatchFolders.Contains(snapshotFullName.FolderPath))
             {
                 lock (_lockObject)
                 {
-                    if (!_mismatchFolders.Contains(snapshotFileInfo.FolderPath))
+                    if (!_mismatchFolders.Contains(snapshotFullName.FolderPath))
                     {
                         _snapshotFileHandler.DeleteSnapshotSubfolder(
-                            snapshotFileInfo, FileNames.MismatchFolderName);
+                            snapshotFullName, FileNames.MismatchFolderName);
 
-                        _mismatchFolders.Add(snapshotFileInfo.FolderPath);
+                        _mismatchFolders.Add(snapshotFullName.FolderPath);
                     }
                 }
             }
