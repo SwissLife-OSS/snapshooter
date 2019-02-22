@@ -39,7 +39,8 @@ namespace Snapshooter
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific.        
+        /// specific.
+        /// </param>
         /// <returns>The full name of a snapshot.</returns>
         SnapshotFullName ResolveSnapshotFullName(string snapshotName, string snapshotNameExtension);
     }
