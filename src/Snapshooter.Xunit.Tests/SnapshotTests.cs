@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
@@ -12,7 +11,7 @@ using Xunit.Sdk;
 
 namespace Snapshooter.Xunit.Tests
 {
-    public class SnapshotTests
+    public partial class SnapshotTests
     {        
         #region Match Snapshot - Simple Snapshot Tests
 
@@ -26,21 +25,6 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match<TestPerson>(testPerson);
         }
         
-        [Fact]
-        public async Task Match_FactMatchSingleSnapshotAsync_SuccessfulMatch()
-        {
-            // arrange
-            await Task.Delay(10);
-
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
-
-            // act
-            Snapshot.Match<TestPerson>(testPerson);
-
-            // assert
-            await Task.Delay(10);
-        }
-
         [Fact]
         public void Match_FactMatchSingleSnapshot_OneFieldNotEqual()
         {

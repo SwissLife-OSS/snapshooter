@@ -34,7 +34,7 @@ namespace Snapshooter
 
             if (snapshotFullName == null)
             {
-                throw new SnapshotTestException("The snapshot full names could not be read.");
+                throw new SnapshotTestException("The snapshot full name could not be evaluated.");
             }
 
             if(string.IsNullOrWhiteSpace(snapshotFullName.Filename) && 

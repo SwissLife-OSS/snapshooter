@@ -116,6 +116,25 @@ namespace Snapshooter.Xunit
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
+        /// <param name="currentResult">The object to match.</param>
+        /// <param name="snapshotFullName">
+        /// The full name of a snapshot with folder and file name.</param>
+        /// <param name="matchOptions">
+        /// Additional compare actions, which can be applied during the snapshot comparison.
+        /// </param>
+        public static void Match<T>(T currentResult,
+            SnapshotFullName snapshotFullName,
+            Func<MatchOptions, MatchOptions> matchOptions = null)
+        {
+            Match((object)currentResult, snapshotFullName, matchOptions);
+        }
+
+        /// <summary>        
+        /// Creates a json snapshot of the given object and compares it with the 
+        /// already existing snapshot of the test. 
+        /// If no snapshot exists, a new snapshot will be created from the current result
+        /// and saved under a certain file path, which will shown within the test message.
+        /// </summary>
         /// <param name="currentResult">The object to match.</param> 
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison

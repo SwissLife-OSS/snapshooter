@@ -37,6 +37,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
     <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Asynchronous\__snapshots__\" />
+    <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
   </ItemGroup> 
 
 </Project>

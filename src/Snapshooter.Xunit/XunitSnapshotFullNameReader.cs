@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Snapshooter.Core;
+using Snapshooter.Exceptions;
 using Snapshooter.Extensions;
 using Xunit;
 
@@ -47,7 +48,18 @@ namespace Snapshooter.Xunit
                     break;
                 }
             }
-            
+
+            if (snapshotFullName == null)
+            {
+                throw new SnapshotTestException(
+                    "The snapshot full name could not be evaluated. " +
+                    "This error can occur, if you use the snapshot match " +
+                    "within a async test helper child method. To solve this issue, " +
+                    "use the Snapshot.FullName directly in the unit test to " +
+                    "get the snapshot name, then reach this name to your " +
+                    "Snapshot.Match method.");
+            }
+
             return snapshotFullName;
         }
 
