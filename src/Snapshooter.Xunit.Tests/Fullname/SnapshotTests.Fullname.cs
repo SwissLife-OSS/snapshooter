@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.IO;
+using Xunit;
 
 namespace Snapshooter.Xunit.Tests
 {
@@ -10,7 +11,7 @@ namespace Snapshooter.Xunit.Tests
         public void FullName_ReadAutomaticallyFactTestFullName_ReturnsValidSnapshotFullname()
         {
             // arrange
-            string folderPathEnding = "Snapshooter.Xunit.Tests\\Fullname";
+            string folderPathEnding = Path.Combine("Snapshooter.Xunit.Tests", "Fullname");
             string filename = "SnapshotTests.FullName_ReadAutomaticallyFactTestFullName_" +
                               "ReturnsValidSnapshotFullname.snap";
             
@@ -26,7 +27,7 @@ namespace Snapshooter.Xunit.Tests
         public void FullName_ReadAutomaticallyFactTestFullNameAndAddNameExtension_ReturnsValidSnapshotFullname()
         {
             // arrange
-            string folderPathEnding = "Snapshooter.Xunit.Tests\\Fullname";
+            string folderPathEnding = Path.Combine("Snapshooter.Xunit.Tests","Fullname");
             string filename = "SnapshotTests.FullName_ReadAutomaticallyFactTest" +
                               "FullNameAndAddNameExtension_" +
                               "ReturnsValidSnapshotFullname_with_1_extension.snap";
@@ -44,7 +45,7 @@ namespace Snapshooter.Xunit.Tests
         public void FullName_OverwriteFactTestFullName_ReturnsValidSnapshotFullname()
         {
             // arrange
-            string folderPathEnding = "Snapshooter.Xunit.Tests\\Fullname";
+            string folderPathEnding = Path.Combine("Snapshooter.Xunit.Tests","Fullname");
             string filename = "Fact_OverwrittenSnapshotFullname.snap";
 
             // act
@@ -59,7 +60,7 @@ namespace Snapshooter.Xunit.Tests
         public void FullName_OverwriteFactTestFullNameAndAddNameExtension_ReturnsValidSnapshotFullname()
         {
             // arrange
-            string folderPathEnding = "Snapshooter.Xunit.Tests\\Fullname";
+            string folderPathEnding = Path.Combine("Snapshooter.Xunit.Tests","Fullname");
             string filename = "Fact_OverwrittenSnapshotFullname_with_1_extension.snap";
 
             // act
@@ -78,7 +79,7 @@ namespace Snapshooter.Xunit.Tests
             int age, int size)
         {
             // arrange
-            string folderPathEnding = "Snapshooter.Xunit.Tests\\Fullname";
+            string folderPathEnding = Path.Combine("Snapshooter.Xunit.Tests", "Fullname");
             string filename = "SnapshotTests.FullName_ReadAutomaticallyTheoryTestFullName_" +
                               "ReturnsValidSnapshotFullname.snap";
 
@@ -96,7 +97,7 @@ namespace Snapshooter.Xunit.Tests
             int age, decimal size)
         {
             // arrange
-            string folderPathEnding = "Snapshooter.Xunit.Tests\\Fullname";
+            string folderPathEnding = Path.Combine("Snapshooter.Xunit.Tests", "Fullname");
             string filename = "SnapshotTests.FullName_ReadAutomaticallyTheory" +
                               "TestFullNameAndAddNameExtensions_" +
                               "ReturnsValidSnapshotFullname_36_189.45.snap";
@@ -116,7 +117,7 @@ namespace Snapshooter.Xunit.Tests
             int age, int size)
         {
             // arrange
-            string folderPathEnding = "Snapshooter.Xunit.Tests\\Fullname";
+            string folderPathEnding = Path.Combine("Snapshooter.Xunit.Tests", "Fullname");
             string filename = "Theory_OverwrittenSnapshotFullname.snap";
 
             // act
@@ -134,7 +135,7 @@ namespace Snapshooter.Xunit.Tests
             int age, decimal size)
         {
             // arrange
-            string folderPathEnding = "Snapshooter.Xunit.Tests\\Fullname";
+            string folderPathEnding = Path.Combine("Snapshooter.Xunit.Tests", "Fullname");
             string filename = "Theory_OverwrittenSnapshotFullname_36_87189.45.snap";
 
             // act
