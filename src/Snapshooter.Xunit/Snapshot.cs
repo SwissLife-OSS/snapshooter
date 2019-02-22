@@ -329,8 +329,7 @@ namespace Snapshooter.Xunit
                                 new XunitAssert(),
                                 new SnapshotSerializer())),
                         new SnapshotFullNameResolver(
-                            new XunitSnapshotFullNameReader(),
-                            new SnapshotFullNameBuilder()));
+                            new XunitSnapshotFullNameReader()));
             }
         }
     }

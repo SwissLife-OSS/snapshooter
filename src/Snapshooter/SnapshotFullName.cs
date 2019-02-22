@@ -6,7 +6,7 @@
     /// </summary>
     public class SnapshotFullName
     {
-        // <summary>
+        /// <summary>
         /// Constructor of the class <see cref="SnapshotFullName"/> 
         /// initializes a new instance.
         /// </summary>

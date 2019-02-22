@@ -1,5 +1,4 @@
-﻿using Snapshooter.Core;
-using Snapshooter.Tests.Data;
+﻿using Snapshooter.Tests.Data;
 using System;
 using System.IO;
 using Xunit;
@@ -37,7 +36,7 @@ namespace Snapshooter.Xunit.Tests.Subfolder
         {
             // arrange
             var snapshotFullNameResolver = new SnapshotFullNameResolver(
-                new XunitSnapshotFullNameReader(), new SnapshotFullNameBuilder());
+                new XunitSnapshotFullNameReader());
 
             SnapshotFullName snapshotFullName =
                 snapshotFullNameResolver.ResolveSnapshotFullName();
