@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Basic Concept · Snapshooter</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;p&gt;A typical snapshot test case in .Net is, if you have a complex test result object&lt;/p&gt;
+"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Basic Concept · Snapshooter"/><meta property="og:type" content="website"/><meta property="og:url" content="https://swisslife-oss.github.io/snapshooter/index.html"/><meta property="og:description" content="&lt;p&gt;A typical snapshot test case in .Net is, if you have a complex test result object&lt;/p&gt;
+"/><meta property="og:image" content="https://swisslife-oss.github.io/snapshooter/img/logo_sl_snapshooter.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://swisslife-oss.github.io/snapshooter/img/logo_sl_snapshooter.svg"/><link rel="shortcut icon" href="/snapshooter/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://swisslife-oss.github.io/snapshooter/blog/atom.xml" title="Snapshooter Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://swisslife-oss.github.io/snapshooter/blog/feed.xml" title="Snapshooter Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/snapshooter/css/main.css"/><script src="/snapshooter/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/snapshooter/"><img class="logo" src="/snapshooter/img/logo_sl_snapshooter.svg" alt="Snapshooter"/><h2 class="headerTitleWithLogo">Snapshooter</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/snapshooter/docs/introduction" target="_self">Docs</a></li><li class=""><a href="https://github.com/SwissLife-OSS/snapshooter-examples" target="_blank">Examples</a></li><li class=""><a href="https://swissLife-oss.github.io/blog" target="_blank">Blog</a></li><li class=""><a href="https://github.com/SwissLife-OSS/snapshooter" target="_blank">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Introduction</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/snapshooter/docs/introduction">Introduction</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/get-started">Get Started</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/snapshooter/docs/basic-concept">Basic Concept</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Documentation</h3><ul class=""><li class="navListItem"><a class="navItem" href="/snapshooter/docs/snapshot-naming">Snapshot Naming</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/folder-structure">Folder Structure</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/snapshot-options">Snapshot Match Options</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/snapshot-mismatch-handling">Snapshot Mismatch</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/scalar-type-snapshot">Scalar Types</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/SwissLife-OSS/snapshooter-docs/edit/master/docs/basic-concept.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Basic Concept</h1></header><article><div><span><p>A typical snapshot test case in .Net is, if you have a complex test result object
+with several properties to validate and all these properties should always
+be the same.</p>
+<p>Instead of writing multiple tests or multiple asserts for each property in your
+test, a snapshot can be created and stored alongside the executed test. Now,
+every time when the test is executed, the test result object will be compared
+with the stored snapshot file. The test will fail, if the snapshots
+do not match.</p>
+<blockquote>
+<p>Usually in unit tests you have exactly one assert statement, therefore
+snapshot tests are not suitable for pure unit tests.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="snapshot-creation-concept"></a><a href="#snapshot-creation-concept" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Snapshot Creation Concept</h2>
+<p>If in an unit test the statement <code>Snapshot.Match(yourResultObject);</code> is used,
+the Snapshooter serializes the given result object into a <strong>JSON</strong> string
+(which is the snapshot) and saves it on the file system alongside the executed
+test.</p>
+<blockquote>
+<p>The format of the stored snapshot will be <strong>JSON</strong>.</p>
+</blockquote>
+<p>The default snapshot name will be generated out of the class name and test
+method name. Additionally, every snapshot file name ends with <strong>.snap</strong>. If
+you want to specify your own snapshot name, then go to
+<a href="snapshot-naming">Snapshot Naming</a></p>
+<blockquote>
+<p>Snapshot default name: <code>&lt;UnitTestClassName&gt;.&lt;TestMethodName&gt;.snap</code></p>
+</blockquote>
+<p>The name of folder, which will contain the snapshots of the tests is always <code>__snapshot__</code>. This folder will be always generated automatically from the
+Snapshooter if not exists.</p>
+<pre><code class="hljs"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">MyTestApplication</span>.</span></span>csproj
+│
+├── __snapshots__
+│   ├── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UserServiceTests</span>.</span><span class="hljs-module"><span class="hljs-identifier">GetFirstUserTest</span>.</span></span>snap
+│   ├── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UserServiceTests</span>.</span><span class="hljs-module"><span class="hljs-identifier">GetFirstUserTest</span>.</span></span>snap
+│   └── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UserServiceTests</span>.</span><span class="hljs-module"><span class="hljs-identifier">FindUserByIdTest</span>.</span></span>snap
+│
+└── <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UserServiceTests</span>.</span></span>cs
+</code></pre>
+<p>If your test file is in a subfolder, then the <code>__snapshot__</code> folder will be
+created in this subfolder and the snapshot is stored there. This guarantees that
+the snapshot is always saved aloangside your test.</p>
+<h2><a class="anchor" aria-hidden="true" id="snapshot-validation-concept"></a><a href="#snapshot-validation-concept" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Snapshot Validation Concept</h2>
+<p>If a test will be executed and a snapshot already exists in the <code>__snapshot__</code> folder for this test, then
+Snapshooter serializes the current test result into a snapshot (JSON) and compares
+it with the already existing snapshot on the file system (<code>__snapshot__</code> folder).</p>
+<h3><a class="anchor" aria-hidden="true" id="snapshot-match-handling"></a><a href="#snapshot-match-handling" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Snapshot Match Handling</h3>
+<p>If the two snapshots match, then the test will pass and every thing
+is fine.</p>
+<h3><a class="anchor" aria-hidden="true" id="snapshot-mismatch-handling"></a><a href="#snapshot-mismatch-handling" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Snapshot Mismatch Handling</h3>
+<p>If the two snapshots have some differences, then the test will fail and a specific
+error message will be shown. The error message will give you the exact position
+and text part, which is not equal.
+In Addition, the newly created snapshot of the current test result will be stored
+in the subfolder <code>__snapshot__\mismatch</code> with the exact same snapshot name.</p>
+<blockquote>
+<p>A mismatching snapshot will automatically be saved in the
+<code>__snapshot__\mismatch</code> folder.</p>
+</blockquote>
+<p>Now you can compare the two snapshots with a file compare util and check the
+differences.</p>
+<p>If the new mismatching snapshot file is correct, then you can move it from
+the <code>__snapshot__\mismatch</code> folder to the parent folder <code>__snapshot__</code> and
+overwrite the existing snapshot.</p>
+<p>If the new mismatching snapshot file is wrong... then verify your code....</p>
+<p>Best Practices about <a href="snapshot-mismatch-handling">Snapshot Mismatch Handling</a></p>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 3/26/2019 by Normen Scheiber</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/snapshooter/docs/get-started"><span class="arrow-prev">← </span><span>Get Started</span></a><a class="docs-next button" href="/snapshooter/docs/snapshot-naming"><span>Snapshot Naming</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#snapshot-creation-concept">Snapshot Creation Concept</a></li><li><a href="#snapshot-validation-concept">Snapshot Validation Concept</a><ul class="toc-headings"><li><a href="#snapshot-match-handling">Snapshot Match Handling</a></li><li><a href="#snapshot-mismatch-handling">Snapshot Mismatch Handling</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h3>Community</h3><a href="https://swissLife-oss.github.io/cla">Contributor License Agreements</a><a href="https://swissLife-oss.github.io/coc">Code of Conduct</a></div></section><a href="https://swissLife-oss.github.io" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/snapshooter/img/logo_sl_oss_inverted.svg" alt="Swiss Life OSS" height="45"/><span class="projectTitleInverted">Swiss Life | OSS</span></a><section class="copyright">Copyright © 2019 Swiss Life Developer</section></footer></div></body></html>

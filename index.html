@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang=""><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Snapshooter · A snapshot testing tool for .NET Core and .NET Framework</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="A snapshot testing tool for .NET Core and .NET Framework"/><meta property="og:title" content="Snapshooter · A snapshot testing tool for .NET Core and .NET Framework"/><meta property="og:type" content="website"/><meta property="og:url" content="https://swisslife-oss.github.io/snapshooter/index.html"/><meta property="og:description" content="A snapshot testing tool for .NET Core and .NET Framework"/><meta property="og:image" content="https://swisslife-oss.github.io/snapshooter/img/logo_sl_snapshooter.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://swisslife-oss.github.io/snapshooter/img/logo_sl_snapshooter.svg"/><link rel="shortcut icon" href="/snapshooter/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://swisslife-oss.github.io/snapshooter/blog/atom.xml" title="Snapshooter Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://swisslife-oss.github.io/snapshooter/blog/feed.xml" title="Snapshooter Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/snapshooter/css/main.css"/><script src="/snapshooter/js/codetabs.js"></script></head><body><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/snapshooter/"><img class="logo" src="/snapshooter/img/logo_sl_snapshooter.svg" alt="Snapshooter"/><h2 class="headerTitleWithLogo">Snapshooter</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/snapshooter/docs/introduction" target="_self">Docs</a></li><li class=""><a href="https://github.com/SwissLife-OSS/snapshooter-examples" target="_blank">Examples</a></li><li class=""><a href="https://swissLife-oss.github.io/blog" target="_blank">Blog</a></li><li class=""><a href="https://github.com/SwissLife-OSS/snapshooter" target="_blank">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div><div class="homeContainer"><div class="homeSplashFade"><div class="wrapper homeWrapper"><div class="inner"><div class="section logo"><img src="/snapshooter/img/logo_sl_snapshooter.svg" alt="Project Logo"/></div><h2 class="projectTitle">Snapshooter<small>A snapshot testing tool for .NET Core and .NET Framework</small></h2><div class="section promoSection"><div class="promoRow"><div class="pluginRowBlock"><div class="pluginWrapper buttonWrapper"><a class="button" href="/snapshooter/docs/get-started">Get Started</a></div><div class="pluginWrapper buttonWrapper"><a class="button" href="/snapshooter/docs/introduction">Learn More</a></div></div></div></div></div></div></div></div><div class="mainContainer"><div class="productShowcaseSection paddingBottom" style="text-align:center"><h1>A snapshot test utility to simplify your tests</h1><div><span><p>Snapshooter is a flexible .Net testing tool to simplify the validation of your test results in your unit / integration tests. It creates simply a snapshot of your test result object and stores it on the file system. When the test is executed again, the snapshooter will compare the current test result object with the stored snapshot, if both are the same, the test will pass.</p>
+</span></div><div><span><p>Snapshooter is based on the idea of <strong><a href="https://jestjs.io/docs/en/snapshot-testing/">Jest Snapshot Testing</a></strong></p>
+</span></div></div><div class="container paddingBottom paddingTop"><div class="wrapper"><div class="gridBlock"><div class="blockElement threeByGridBlock"><div class="blockContent"><div><span><pre><code class="hljs css language-csharp">
+<span class="hljs-comment">// arrange</span>
+<span class="hljs-keyword">var</span> serviceClient = <span class="hljs-keyword">new</span> ServiceClient();
+
+<span class="hljs-comment">// act</span>
+TestPerson person = serviceClient.CreatePerson(...);
+
+<span class="hljs-comment">// assert</span>
+Assert.IsEqual(person.Firstname, <span class="hljs-string">"David"</span>);
+Assert.IsEqual(person.Lastname, <span class="hljs-string">"Smith"</span>);
+Assert.IsEqual(person.Age, <span class="hljs-number">30</span>);
+Assert.IsEqual(person.Size, <span class="hljs-number">182.5214</span>);
+Assert.IsEqual(person.CreationDate, DateTime.Parse(...));
+Assert.IsEqual(person.DateOfBirth, DateTime.Parse(...));
+
+</code></pre>
+</span></div></div></div><div class="blockElement threeByGridBlock"><div class="blockContent"><h2><div><span><p><strong>Reduce your asserts in your test</strong></p>
+</span></div></h2><div><span><p>Instead of writing multiple asserts within your test assert
+section, just reduce it to one assert.</p>
+<p>Sometimes we receive a test result object with several properties,
+and all of them have to be checked... Now instead of writing for each property
+an assert, just validate all properties at once with a snapshot.</p>
+</span></div></div></div><div class="blockElement threeByGridBlock"><div class="blockContent"><div><span><pre><code class="hljs css language-csharp">
+<span class="hljs-comment">// arrange</span>
+<span class="hljs-keyword">var</span> serviceClient = <span class="hljs-keyword">new</span> ServiceClient();
+
+<span class="hljs-comment">// act</span>
+TestPerson person = serviceClient.CreatePerson(...);
+
+<span class="hljs-comment">// assert</span>
+Snapshot.Match(person);
+
+
+
+
+
+
+</code></pre>
+</span></div></div></div></div></div></div><div class="container lightBackground paddingBottom paddingTop"><div class="wrapper"><div class="gridBlock"><div class="blockElement twoByGridBlock"><div class="blockContent"><h2><div><span><p><strong>Get started in seconds</strong></p>
+</span></div></h2><div><span><p>With Snapshooter you need just two commands to get a
+snapshot test validation running in your test project.</p>
+<p>Install the snapshooter nuget package within your test project:</p>
+<pre><code class="hljs css language-sh">dotnet add package Snapshooter.Xunit
+</code></pre>
+<p>Assert the result in your test with the <strong>Snapshot.Match</strong> command:</p>
+<pre><code class="hljs css language-csharp">[<span class="hljs-meta">Fact</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">CreatePerson_VerifyPersonBySnapshot_SuccessfulVerified</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-comment">// arrange</span>
+    <span class="hljs-keyword">var</span> serviceClient = <span class="hljs-keyword">new</span> ServiceClient();
+
+    <span class="hljs-comment">// act</span>
+    TestPerson person = serviceClient.CreatePerson(
+        Guid.Parse(<span class="hljs-string">"2292F21C-8501-4771-A070-C79C7C7EF451"</span>), <span class="hljs-string">"David"</span>, <span class="hljs-string">"Mustermann"</span>);
+
+    <span class="hljs-comment">// assert</span>
+    Snapshot.Match(person);
+}
+</code></pre>
+</span></div></div></div><div class="blockElement imageAlignSide imageAlignRight twoByGridBlock"><div class="blockContent"><div></div></div><div class="blockImage"><img src="/snapshooter/img/SnapshotJson.jpg"/></div></div></div></div></div></div></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h3>Community</h3><a href="https://swissLife-oss.github.io/cla">Contributor License Agreements</a><a href="https://swissLife-oss.github.io/coc">Code of Conduct</a></div></section><a href="https://swissLife-oss.github.io" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/snapshooter/img/logo_sl_oss_inverted.svg" alt="Swiss Life OSS" height="45"/><span class="projectTitleInverted">Swiss Life | OSS</span></a><section class="copyright">Copyright © 2019 Swiss Life Developer</section></footer></div></body></html>
