@@ -1,6 +1,4 @@
-<img src="https://raw.github.com/swissLife-oss/snapshooter-docs/master/website/static/img/logo_sl_snapshooter.svg?sanitize=true" width="200" height="200">
-
-# Snapshooter
+![Snapshooter](https://raw.github.com/swissLife-oss/snapshooter-docs/master/website/static/img/logotype_snapshooter.png)
 
 ## [![Nuget](https://img.shields.io/nuget/v/Snapshooter.svg?style=flat)](https://www.nuget.org/packages/Snapshooter.Xunit/0.1.0-preview.3) [![GitHub Release](https://img.shields.io/github/release/SwissLife-OSS/Snapshooter.svg?style=flat)](https://github.com/SwissLife-OSS/Snapshooter/releases/latest) [![Build Status](https://dev.azure.com/swisslife-oss/swisslife-oss/_apis/build/status/Snapshooter.Release?branchName=master)](https://dev.azure.com/swisslife-oss/swisslife-oss/_build/latest?definitionId=6&branchName=master) [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=SwissLife-OSS_Snapshooter&metric=coverage)](https://sonarcloud.io/dashboard?id=SwissLife-OSS_Snapshooter) [![Quality](https://sonarcloud.io/api/project_badges/measure?project=SwissLife-OSS_Snapshooter&metric=alert_status)](https://sonarcloud.io/dashboard?id=SwissLife-OSS_Snapshooter)
 
