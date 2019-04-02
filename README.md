@@ -6,6 +6,8 @@
 
 _Snapshooter_ is a flexible snapshot testing tool to simplify the result validation in your unit tests in .Net. It is based on the idea of [Jest Snapshot Testing](https://jestjs.io/docs/en/snapshot-testing/).
 
+To get more detailed information about Snapshooter, go to the [Snapshooter Docs](https://swisslife-oss.github.io/snapshooter/docs/introduction)
+
 ## Getting Started
 
 At the moment _Snapshooter_ only supports the Xunit test framework.
@@ -15,6 +17,8 @@ To get started, install the _Snapshooter Xunit_ nuget package:
 ```bash
 dotnet add package Snapshooter.Xunit
 ```
+
+[Get Started](https://swisslife-oss.github.io/snapshooter/docs/get-started)
 
 ### Assert with Snapshots
 
@@ -67,6 +71,8 @@ In addition, in the snapshot folder `__snapshots__` a subfolder with name `__mis
 the actual snapshot which is mismatching with the existing snapshot in the `__snapshots__` folder. Therefore it is possible to compare the two snapshots with a text compare tool.
 
 If the snapshot in the mismatching folder `__mismatch__` is correct, just move it to the parent `__snapshots__` folder (override the existing one).
+
+[Read More](https://swisslife-oss.github.io/snapshooter/docs/snapshot-mismatch-handling)
 
 ## Features
 ### Ignore Fields in Snapshots Matches
