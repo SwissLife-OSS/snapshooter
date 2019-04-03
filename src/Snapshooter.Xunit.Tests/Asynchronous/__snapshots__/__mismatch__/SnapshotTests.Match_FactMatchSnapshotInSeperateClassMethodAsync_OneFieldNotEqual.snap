@@ -4,7 +4,7 @@
   "Lastname": "Schneider",
   "CreationDate": "2019-04-01T00:00:00",
   "DateOfBirth": "1996-02-14T00:00:00",
-  "Age": null,
+  "Age": 255,
   "Size": 165.23,
   "Address": {
     "Street": "Bahnhofstrasse",
