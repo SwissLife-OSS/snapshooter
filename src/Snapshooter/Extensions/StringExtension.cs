@@ -39,22 +39,12 @@ namespace Snapshooter.Extensions
         /// </returns>
         public static bool IsValidJsonFormat(this string input)
         {
-            input = input.Trim();
-            if ((input.StartsWith("{") && input.EndsWith("}")) ||
-                (input.StartsWith("[") && input.EndsWith("]")) ||
-                (input.StartsWith("\"") && input.EndsWith("\"")))
+            try
             {
-                try
-                {
-                    JToken.Parse(input);
-                    return true;
-                }
-                catch (JsonReaderException)
-                {
-                    return false;
-                }
+                JToken.Parse(input);
+                return true;
             }
-            else
+            catch (JsonReaderException)
             {
                 return false;
             }

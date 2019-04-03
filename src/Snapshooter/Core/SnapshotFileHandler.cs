@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace Snapshooter.Core
 {
@@ -34,7 +35,7 @@ namespace Snapshooter.Core
             string fullSnapshotFilename = Path.Combine(
                 snapshotSubfolderPath, snapshotFullName.Filename);
 
-            File.WriteAllText(fullSnapshotFilename, snapshotData);
+            File.WriteAllText(fullSnapshotFilename, snapshotData, Encoding.UTF8);
 
             return fullSnapshotFilename;
         }
@@ -65,7 +66,7 @@ namespace Snapshooter.Core
             string fullSnapshotFilename = Path.Combine(
                 snapshotSubfolderPath, snapshotFullName.Filename);
 
-            File.WriteAllText(fullSnapshotFilename, snapshotData);
+            File.WriteAllText(fullSnapshotFilename, snapshotData, Encoding.UTF8);
 
             return fullSnapshotFilename;
         }
@@ -90,7 +91,7 @@ namespace Snapshooter.Core
 
             if (File.Exists(fullSnapshotName))
             {
-                snapshotData = File.ReadAllText(fullSnapshotName);
+                snapshotData = File.ReadAllText(fullSnapshotName, Encoding.UTF8);
             }
 
             return snapshotData;

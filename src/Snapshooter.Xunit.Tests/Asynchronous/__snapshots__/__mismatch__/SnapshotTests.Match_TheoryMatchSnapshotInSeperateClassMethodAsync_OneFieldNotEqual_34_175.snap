@@ -4,8 +4,8 @@
   "Lastname": "Walton",
   "CreationDate": "2018-06-06T00:00:00",
   "DateOfBirth": "2000-06-25T00:00:00",
-  "Age": 17,
-  "Size": 112.3,
+  "Age": 34,
+  "Size": 175.0,
   "Address": {
     "Street": "Rohrstrasse",
     "StreetNumber": 12,
@@ -13,7 +13,7 @@
     "City": "Wallislellen",
     "Country": {
       "Name": "Switzerland",
-      "CountryCode": "CH"
+      "CountryCode": "EN"
     }
   },
   "Children": [

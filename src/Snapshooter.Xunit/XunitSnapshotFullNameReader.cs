@@ -38,7 +38,7 @@ namespace Snapshooter.Xunit
                     break;
                 }
 
-                MethodBase asyncMethod = GetAsyncMethodBase(method);
+                MethodBase asyncMethod = EvaluateAsynchronMethodBase(method);
                 if (IsXunitTestMethod(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
@@ -81,22 +81,27 @@ namespace Snapshooter.Xunit
             return method?.GetCustomAttributes(typeof(TheoryAttribute)).Any() ?? false;
         }
 
-        private static MethodBase GetAsyncMethodBase(MemberInfo method)
+        private static MethodBase EvaluateAsynchronMethodBase(MemberInfo method)
         {
-            Type generatedType = method?.DeclaringType;
-            Type originalClass = generatedType?.DeclaringType;
-            if (originalClass == null)
-            {
-                return null;
-            }
+            Type methodDeclaringType = method?.DeclaringType;
+            Type classDeclaringType = methodDeclaringType?.DeclaringType;
 
-            IEnumerable<MethodInfo> matchingMethods =
-                from methodInfo in originalClass.GetMethods()
-                let attr = methodInfo.GetCustomAttribute<AsyncStateMachineAttribute>()
-                where attr != null && attr.StateMachineType == generatedType
+            MethodInfo actualMethodInfo = null;
+            if (classDeclaringType != null)
+            {
+                IEnumerable<MethodInfo> selectedMethodInfos =
+                from methodInfo in classDeclaringType.GetMethods()
+                let stateMachineAttribute = methodInfo
+                    .GetCustomAttribute<AsyncStateMachineAttribute>()
+                where stateMachineAttribute != null && 
+                    stateMachineAttribute.StateMachineType == methodDeclaringType
                 select methodInfo;
 
-            return matchingMethods.SingleOrDefault();
-        }       
+                actualMethodInfo = selectedMethodInfos.SingleOrDefault();
+            }
+
+            return actualMethodInfo;
+
+        }
     }
 }
