@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,9 +18,9 @@ namespace Snapshooter.Extensions
         /// <returns>The normalized line ending string.</returns>
         public static string NormalizeLineEndings(this string snapshotData)
         {
-            string snapshotText = snapshotData
-                .Replace("\\r", string.Empty)
-                .Replace("\r", string.Empty);
+            string snapshotText = snapshotData                
+                .Replace("\r\n", "\n")
+                .Replace("\n\r", "\n");
 
             if (snapshotText.Last() == '\n')
             {
@@ -44,8 +45,9 @@ namespace Snapshooter.Extensions
                 JToken.Parse(input);
                 return true;
             }
-            catch (JsonReaderException)
+            catch (JsonReaderException ex)
             {
+                Debug.WriteLine(ex);
                 return false;
             }
         }
