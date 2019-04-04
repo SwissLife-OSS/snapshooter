@@ -1,10 +1,12 @@
-# Snapshooter
+![Snapshooter](https://raw.github.com/swissLife-oss/snapshooter-docs/master/website/static/img/logotype_snapshooter.png)
 
 ## [![Nuget](https://img.shields.io/nuget/v/Snapshooter.svg?style=flat)](https://www.nuget.org/packages/Snapshooter.Xunit/0.1.0-preview.3) [![GitHub Release](https://img.shields.io/github/release/SwissLife-OSS/Snapshooter.svg?style=flat)](https://github.com/SwissLife-OSS/Snapshooter/releases/latest) [![Build Status](https://dev.azure.com/swisslife-oss/swisslife-oss/_apis/build/status/Snapshooter.Release?branchName=master)](https://dev.azure.com/swisslife-oss/swisslife-oss/_build/latest?definitionId=6&branchName=master) [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=SwissLife-OSS_Snapshooter&metric=coverage)](https://sonarcloud.io/dashboard?id=SwissLife-OSS_Snapshooter) [![Quality](https://sonarcloud.io/api/project_badges/measure?project=SwissLife-OSS_Snapshooter&metric=alert_status)](https://sonarcloud.io/dashboard?id=SwissLife-OSS_Snapshooter)
 
 **Snapshooter is a snapshot testing tool for _.NET Core_ and _.NET Framework_**
 
 _Snapshooter_ is a flexible snapshot testing tool to simplify the result validation in your unit tests in .Net. It is based on the idea of [Jest Snapshot Testing](https://jestjs.io/docs/en/snapshot-testing/).
+
+To get more detailed information about Snapshooter, go to the [Snapshooter Docs](https://swisslife-oss.github.io/snapshooter/docs/introduction)
 
 ## Getting Started
 
@@ -15,6 +17,8 @@ To get started, install the _Snapshooter Xunit_ nuget package:
 ```bash
 dotnet add package Snapshooter.Xunit
 ```
+
+[Get Started](https://swisslife-oss.github.io/snapshooter/docs/get-started)
 
 ### Assert with Snapshots
 
@@ -67,6 +71,8 @@ In addition, in the snapshot folder `__snapshots__` a subfolder with name `__mis
 the actual snapshot which is mismatching with the existing snapshot in the `__snapshots__` folder. Therefore it is possible to compare the two snapshots with a text compare tool.
 
 If the snapshot in the mismatching folder `__mismatch__` is correct, just move it to the parent `__snapshots__` folder (override the existing one).
+
+[Read More](https://swisslife-oss.github.io/snapshooter/docs/snapshot-mismatch-handling)
 
 ## Features
 ### Ignore Fields in Snapshots Matches
