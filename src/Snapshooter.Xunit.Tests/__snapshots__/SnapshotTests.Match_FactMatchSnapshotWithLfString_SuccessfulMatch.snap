@@ -1,4 +1,4 @@
-query fetch {
+﻿query fetch {
   customer(id: "Q3VzdG9tZXIteDE=") {
     name
     consultant {
