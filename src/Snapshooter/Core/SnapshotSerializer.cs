@@ -73,6 +73,7 @@ namespace Snapshooter.Core
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Include,
                 Converters = new JsonConverter[]
                 {
                     new StringEnumConverter()
@@ -86,7 +87,8 @@ namespace Snapshooter.Core
             new JsonLoadSettings
             {
                 CommentHandling = CommentHandling.Ignore,
-                LineInfoHandling = LineInfoHandling.Ignore
+                LineInfoHandling = LineInfoHandling.Ignore,
+                DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
             };
     }
 }
