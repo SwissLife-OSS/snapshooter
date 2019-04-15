@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
@@ -132,11 +131,20 @@ namespace Snapshooter.Core
         /// </summary>
         private class JsonTextWriterCrRemove : JsonTextWriter
         {
+            /// <summary>
+            /// Constructor of the <see cref="JsonTextWriterCrRemove"/> class to create
+            /// a new instance.
+            /// </summary>
+            /// <param name="textWriter">The text writer.</param>
             public JsonTextWriterCrRemove(TextWriter textWriter) 
                 : base(textWriter)
             {
             }
 
+            /// <summary>
+            /// Writes a string value to the json output.
+            /// </summary>
+            /// <param name="text">The string value.</param>
             public override void WriteValue(string text)
             {
                 string normalisedText = text.NormalizeLineEndings();
