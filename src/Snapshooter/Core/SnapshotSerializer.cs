@@ -5,6 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using Snapshooter.Extensions;
 
 namespace Snapshooter.Core
@@ -106,6 +107,9 @@ namespace Snapshooter.Core
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Include,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                Culture = CultureInfo.InvariantCulture,
+                ContractResolver = new DefaultContractResolver(),
                 Converters = new JsonConverter[]
                 {
                     new StringEnumConverter()
