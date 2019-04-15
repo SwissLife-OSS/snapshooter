@@ -11,6 +11,9 @@ pool:
 
 variables:
   - group: Tokens
+  
+workspace:
+    clean: all
 
 steps:
   - bash: ./build.sh -target=sonar
