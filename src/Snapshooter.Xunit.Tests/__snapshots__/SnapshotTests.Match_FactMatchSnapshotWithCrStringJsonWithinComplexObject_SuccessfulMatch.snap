@@ -1,0 +1,18 @@
+﻿{
+  "Name": "Name of the test message",
+  "Content": "{\n  \"Id\": \"c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8\",\n  \"Firstname\": \"Mark\",\n  \"Lastname\": \"last \\r name \n with \\r carriage return\",\n  \"CreationDate\": \"2018-06-06T00:00:00\",\n  \"DateOfBirth\": \"2000-06-25T00:00:00\",\n  \"Age\": 30,\n  \"Size\": 182.5214,\n  \"Address\": {\n    \"Street\": \"Rohrstrasse\",\n    \"StreetNumber\": 12,\n    \"Plz\": 8304,\n    \"City\": \"Wallislellen\",\n    \"Country\": {\n      \"Name\": \"Switzerland\",\n      \"CountryCode\": \"CH\"\n    }\n  },\n  \"Children\": [\n    {\n      \"Name\": \"\\rJames\n\",\n      \"DateOfBirth\": \"2015-02-12T00:00:00\"\n    },\n    {\n      \"Name\": null,\n      \"DateOfBirth\": \"2015-02-12T00:00:00\"\n    },\n    {\n      \"Name\": \"Hanna\",\n      \"DateOfBirth\": \"2012-03-20T00:00:00\"\n    }\n  ],\n  \"Relatives\": [\n    {\n      \"Id\": \"fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de\",\n      \"Firstname\": \"Sandra\",\n      \"Lastname\": \"Schneider\",\n      \"CreationDate\": \"2019-04-01T00:00:00\",\n      \"DateOfBirth\": \"1996-02-14T00:00:00\",\n      \"Age\": null,\n      \"Size\": 165.23,\n      \"Address\": {\n        \"Street\": \"Bahnhofstrasse\",\n        \"StreetNumber\": 450,\n        \"Plz\": 8000,\n        \"City\": \"Zurich\",\n        \"Country\": {\n          \"Name\": \"Switzerland\",\n          \"CountryCode\": \"CH\"\n        }\n      },\n      \"Children\": [],\n      \"Relatives\": null\n    }\n  ]\n}",
+  "Error": {
+    "ClassName": "System.Exception",
+    "Message": "Error Titel: \n Remove Carriage Returns",
+    "Data": null,
+    "InnerException": null,
+    "HelpURL": null,
+    "StackTraceString": null,
+    "RemoteStackTraceString": null,
+    "RemoteStackIndex": 0,
+    "ExceptionMethod": null,
+    "HResult": -2146233088,
+    "Source": null,
+    "WatsonBuckets": null
+  }
+}

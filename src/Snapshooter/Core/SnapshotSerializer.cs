@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Extensions;
@@ -23,18 +27,20 @@ namespace Snapshooter.Core
             if (objectToSnapshot is string snapshotScalarString)
             {
                 // handle strings separately
-                snapshotData = snapshotScalarString.NormalizeLineEndings();
+                snapshotData = snapshotScalarString
+                    .NormalizeLineEndings()
+                    .EnsureLineEnding();
             }
             else
             {
-                // handle objects
-                snapshotData = JsonConvert.SerializeObject(objectToSnapshot, _settings);
-                snapshotData = snapshotData.NormalizeLineEndings();
-            }            
+                // handle objects                
+                snapshotData = SerializeToJson(objectToSnapshot)
+                    .EnsureLineEnding();
+            }
 
             return snapshotData;
         }
-
+        
         /// <summary>
         /// Serializes a json token to a snapshot string.
         /// </summary>
@@ -43,7 +49,8 @@ namespace Snapshooter.Core
         public string SerializeJsonToken(JToken jsonToken)
         {
             return jsonToken.ToString(Formatting.Indented)
-                .NormalizeLineEndings();
+                .NormalizeLineEndings()
+                .EnsureLineEnding();
         }
 
         /// <summary>
@@ -66,9 +73,34 @@ namespace Snapshooter.Core
         }
 
         /// <summary>
+        /// Serializes the object to json and removes the carriage returns.
+        /// </summary>
+        /// <param name="value">The object value to serialize.</param>
+        /// <returns>The serialized object in json.</returns>
+        private string SerializeToJson(object value)
+        {
+            var jsonSerializer = JsonSerializer.CreateDefault(_jsonSerializerSettings);
+
+            var stringBuilder = new StringBuilder(1024);
+            var stringWriter = new StringWriter(
+                stringBuilder, CultureInfo.InvariantCulture);
+
+            stringWriter.NewLine = "\n";
+
+            using (var jsonWriter = new JsonTextWriterCrRemove(stringWriter))
+            {
+                jsonWriter.Formatting = jsonSerializer.Formatting;
+
+                jsonSerializer.Serialize(jsonWriter, value);
+            }
+
+            return stringWriter.ToString();
+        }
+
+        /// <summary>
         /// Snapshot serialization settings.
         /// </summary>
-        private static readonly JsonSerializerSettings _settings =
+        private static readonly JsonSerializerSettings _jsonSerializerSettings =
             new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -90,5 +122,23 @@ namespace Snapshooter.Core
                 LineInfoHandling = LineInfoHandling.Ignore,
                 DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
             };
+        
+        /// <summary>
+        /// Json text writer, which removes the carriage returns of the string.
+        /// </summary>
+        private class JsonTextWriterCrRemove : JsonTextWriter
+        {
+            public JsonTextWriterCrRemove(TextWriter textWriter) 
+                : base(textWriter)
+            {
+            }
+
+            public override void WriteValue(string text)
+            {
+                string normalisedText = text.NormalizeLineEndings();
+
+                base.WriteValue(normalisedText);
+            }
+        }
     }
 }
