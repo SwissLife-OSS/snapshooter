@@ -999,7 +999,7 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
-        public void Match_FactMatchSnapshotWithMissingCrlfStringFormatted_ThrowsSnapshotCompareException()
+        public void Match_FactMatchSnapshotWithWrongCrlfStringFormatted_ThrowsSnapshotCompareException()
         {
             // arrange
             string testText = "query fetch {\r\n  customer(id: \"Q3VzdG9tZXIteDE=\") {\r\n    " +
@@ -1024,7 +1024,55 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match<string>(testText);
         }
-                
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCrString_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "query fetch {\r  customer(id: \"Q3VzdG9tZXIteDE=\") {\r    " +
+                "name\r    consultant {\r      name\r      __typename\r    " +
+                "}\r    id\r    __typename\r  }\r}";
+
+            // act & assert
+            Snapshot.Match<string>(testText);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCommentedCrlfString_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "query fetch {\r\n  customer(id: \"Q3VzdG9tZXIteDE= \\r\\n \") {\r\n    " +
+                "name\r\n    consultant {\r\n      name\\r\\n\r\n    __typename\r\n    " +
+                "}\r\n    id\r\n    __typename\r\n  }\r\n}";
+
+            // act & assert
+            Snapshot.Match<string>(testText);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCommentedLfString_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "query fetch {\n  customer(id: \"Q3VzdG9tZXIteDE= \\r\\n \") {\n    " +
+                "name\n    consultant {\n      name\\r\\n\n    __typename\n    " +
+                "}\n    id\n    __typename\n  }\n}";
+
+            // act & assert
+            Snapshot.Match<string>(testText);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCommentedCrString_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "query fetch {\r  customer(id: \"Q3VzdG9tZXIteDE= \\r \") {\r    " +
+                "name\r    consultant {\r      name\\r\r    __typename\r    " +
+                "}\r    id\r    __typename\r  }\r}";
+
+            // act & assert
+            Snapshot.Match<string>(testText);
+        }
+
         [Fact]
         public void Match_FactMatchSnapshotWithCrLfStringInObject_SuccessfulMatch()
         {
@@ -1036,6 +1084,119 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Snapshot.Match<TestPerson>(testPerson);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCrLfStringInFile_ThrowsException()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            testPerson.Address.City = "\r\n test \n city \r";
+            testPerson.Lastname = "Your\r\nName\nAt\rHome";
+
+            // act & assert
+            Action match = () => Snapshot.Match<TestPerson>(testPerson);
+
+            // assert
+            Assert.Throws<EqualException>(match);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithMissingCrlfStringWithinObject_ThrowsException()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            testPerson.Lastname = "last \r\n name \r with \r\n carriage return";
+
+            // act
+            Action match = () => Snapshot.Match<TestPerson>(testPerson);
+
+            // assert
+            Assert.Throws<EqualException>(match);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCommentedCrLfStringInObject_SuccessfulMatch()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            testPerson.Lastname = "\\r\\n last \r\n name \r with \r\n carriage \\r\\n return \\r\\n";
+
+            // act & assert
+            Snapshot.Match<TestPerson>(testPerson);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCommentedCrStringInObject_SuccessfulMatch()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            testPerson.Lastname = "\\r last \r\n name \r with \r\n carriage \\r return \\r";
+
+            // act & assert
+            Snapshot.Match<TestPerson>(testPerson);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCommentedLfStringInObject_SuccessfulMatch()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            testPerson.Lastname = "\\n last \r\n name \r with \r\n carriage \\n return \\n";
+
+            // act & assert
+            Snapshot.Match<TestPerson>(testPerson);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCrLfStringJsonWithinComplexObject_SuccessfulMatch()
+        {
+            // arrange
+            var testMessageInfo = new TestMessageInfo()
+            {
+                Name = "Name of the test message",
+                Content = "{\r\n  \"Id\": \"c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8\",\r\n  \"Firstname\": \"Mark\",\r\n  \"Lastname\": \"last \\r\\n name \\r with \r\n carriage return\",\r\n  \"CreationDate\": \"2018-06-06T00:00:00\",\r\n  \"DateOfBirth\": \"2000-06-25T00:00:00\",\r\n  \"Age\": 30,\r\n  \"Size\": 182.5214,\r\n  \"Address\": {\r\n    \"Street\": \"Rohrstrasse\",\r\n    \"StreetNumber\": 12,\r\n    \"Plz\": 8304,\r\n    \"City\": \"Wallislellen\",\r\n    \"Country\": {\r\n      \"Name\": \"Switzerland\",\r\n      \"CountryCode\": \"CH\"\r\n    }\r\n  },\r\n  \"Children\": [\r\n    {\r\n      \"Name\": \"\\r\\nJames\r\n\",\r\n      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r\n    },\r\n    {\r\n      \"Name\": null,\r\n      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r\n    },\r\n    {\r\n      \"Name\": \"Hanna\",\r\n      \"DateOfBirth\": \"2012-03-20T00:00:00\"\r\n    }\r\n  ],\r\n  \"Relatives\": [\r\n    {\r\n      \"Id\": \"fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de\",\r\n      \"Firstname\": \"Sandra\",\r\n      \"Lastname\": \"Schneider\",\r\n      \"CreationDate\": \"2019-04-01T00:00:00\",\r\n      \"DateOfBirth\": \"1996-02-14T00:00:00\",\r\n      \"Age\": null,\r\n      \"Size\": 165.23,\r\n      \"Address\": {\r\n        \"Street\": \"Bahnhofstrasse\",\r\n        \"StreetNumber\": 450,\r\n        \"Plz\": 8000,\r\n        \"City\": \"Zurich\",\r\n        \"Country\": {\r\n          \"Name\": \"Switzerland\",\r\n          \"CountryCode\": \"CH\"\r\n        }\r\n      },\r\n      \"Children\": [],\r\n      \"Relatives\": null\r\n    }\r\n  ]\r\n}",
+                Error = new Exception("Error Titel: \r\n Remove Carriage Returns")
+            };
+
+            // act & assert
+            Snapshot.Match<TestMessageInfo>(testMessageInfo);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCrStringJsonWithinComplexObject_SuccessfulMatch()
+        {
+            // arrange
+            var testMessageInfo = new TestMessageInfo()
+            {
+                Name = "Name of the test message",
+                Content = "{\r  \"Id\": \"c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8\",\r  \"Firstname\": \"Mark\",\r  \"Lastname\": \"last \\r name \r with \\r carriage return\",\r  \"CreationDate\": \"2018-06-06T00:00:00\",\r  \"DateOfBirth\": \"2000-06-25T00:00:00\",\r  \"Age\": 30,\r  \"Size\": 182.5214,\r  \"Address\": {\r    \"Street\": \"Rohrstrasse\",\r    \"StreetNumber\": 12,\r    \"Plz\": 8304,\r    \"City\": \"Wallislellen\",\r    \"Country\": {\r      \"Name\": \"Switzerland\",\r      \"CountryCode\": \"CH\"\r    }\r  },\r  \"Children\": [\r    {\r      \"Name\": \"\\rJames\r\",\r      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r    },\r    {\r      \"Name\": null,\r      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r    },\r    {\r      \"Name\": \"Hanna\",\r      \"DateOfBirth\": \"2012-03-20T00:00:00\"\r    }\r  ],\r  \"Relatives\": [\r    {\r      \"Id\": \"fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de\",\r      \"Firstname\": \"Sandra\",\r      \"Lastname\": \"Schneider\",\r      \"CreationDate\": \"2019-04-01T00:00:00\",\r      \"DateOfBirth\": \"1996-02-14T00:00:00\",\r      \"Age\": null,\r      \"Size\": 165.23,\r      \"Address\": {\r        \"Street\": \"Bahnhofstrasse\",\r        \"StreetNumber\": 450,\r        \"Plz\": 8000,\r        \"City\": \"Zurich\",\r        \"Country\": {\r          \"Name\": \"Switzerland\",\r          \"CountryCode\": \"CH\"\r        }\r      },\r      \"Children\": [],\r      \"Relatives\": null\r    }\r  ]\r}",
+                Error = new Exception("Error Titel: \r Remove Carriage Returns")
+            };
+
+            // act & assert
+            Snapshot.Match<TestMessageInfo>(testMessageInfo);
+        }
+
+        [Fact]
+        public void Match_FactMatchSnapshotWithCrLfStringJsonWithinAnonymousObject_SuccessfulMatch()
+        {
+            // arrange
+            var testChild = new 
+            {
+                Name = "{\r\n  \"Id\": \"c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8\",\r\n  \"Firstname\": \"Mark\",\r\n  \"Lastname\": \"last \\r\\n name \\r with \\r\\n carriage return\",\r\n  \"CreationDate\": \"2018-06-06T00:00:00\",\r\n  \"DateOfBirth\": \"2000-06-25T00:00:00\",\r\n  \"Age\": 30,\r\n  \"Size\": 182.5214,\r\n  \"Address\": {\r\n    \"Street\": \"Rohrstrasse\",\r\n    \"StreetNumber\": 12,\r\n    \"Plz\": 8304,\r\n    \"City\": \"Wallislellen\",\r\n    \"Country\": {\r\n      \"Name\": \"Switzerland\",\r\n      \"CountryCode\": \"CH\"\r\n    }\r\n  },\r\n  \"Children\": [\r\n    {\r\n      \"Name\": \"James\",\r\n      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r\n    },\r\n    {\r\n      \"Name\": null,\r\n      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r\n    },\r\n    {\r\n      \"Name\": \"Hanna\",\r\n      \"DateOfBirth\": \"2012-03-20T00:00:00\"\r\n    }\r\n  ],\r\n  \"Relatives\": [\r\n    {\r\n      \"Id\": \"fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de\",\r\n      \"Firstname\": \"Sandra\",\r\n      \"Lastname\": \"Schneider\",\r\n      \"CreationDate\": \"2019-04-01T00:00:00\",\r\n      \"DateOfBirth\": \"1996-02-14T00:00:00\",\r\n      \"Age\": null,\r\n      \"Size\": 165.23,\r\n      \"Address\": {\r\n        \"Street\": \"Bahnhofstrasse\",\r\n        \"StreetNumber\": 450,\r\n        \"Plz\": 8000,\r\n        \"City\": \"Zurich\",\r\n        \"Country\": {\r\n          \"Name\": \"Switzerland\",\r\n          \"CountryCode\": \"CH\"\r\n        }\r\n      },\r\n      \"Children\": [],\r\n      \"Relatives\": null\r\n    }\r\n  ]\r\n}",
+                DateOfBirth = DateTime.Now,
+                TestException = new Exception("Test exception")
+            };
+
+            // act & assert
+            Snapshot.Match(testChild, matchOptions => 
+                matchOptions.IgnoreField(nameof(testChild.DateOfBirth)));
         }
 
         #endregion

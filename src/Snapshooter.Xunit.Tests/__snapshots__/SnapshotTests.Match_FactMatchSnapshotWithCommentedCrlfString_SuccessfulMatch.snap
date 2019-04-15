@@ -1,9 +1,9 @@
 ﻿query fetch {
-  customer(id: "Q3VzdG9tZXIteDE=") {
+  customer(id: "Q3VzdG9tZXIteDE= \r\n ") {
     name
     consultant {
-      name
-      __typename
+      name\r\n
+    __typename
     }
     id
     __typename
