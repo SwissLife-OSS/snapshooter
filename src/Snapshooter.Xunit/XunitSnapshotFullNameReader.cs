@@ -60,44 +60,13 @@ namespace Snapshooter.Xunit
                     "Snapshot.Match method.");
             }
 
-            if (string.IsNullOrEmpty(snapshotFullName.FolderPath))
-            {
-                snapshotFullName = TryResolveNameInLiveUnitTestingSession(snapshotFullName.Filename);
+            snapshotFullName = LiveUnitTestingDirectoryResolver
+                                    .CheckForSession(snapshotFullName);
 
-                if (string.IsNullOrEmpty(snapshotFullName.FolderPath))
-                {
-                    throw new SnapshotTestException("Could not resove directory for SnapShot");
-                }
-            }
+
+
 
             return snapshotFullName;
-        }
-
-
-        private SnapshotFullName TryResolveNameInLiveUnitTestingSession(string testname)
-        {
-            var currentDir = Directory.GetCurrentDirectory();
-            if (currentDir.ToLower().Contains("liveunittest"))
-            {
-                var srcPath = currentDir.Substring(0, currentDir.IndexOf(".vs") - 1);
-                var filename = testname.Split('.').FirstOrDefault() + ".cs";
-                var files = Directory.GetFiles(srcPath, filename, SearchOption.AllDirectories);
-                if (files.Length == 1)
-                {
-                    return new SnapshotFullName(testname, Path.GetDirectoryName(files[0]));
-                }
-                else if (files.Length > 1)
-                {
-                    throw new SnapshotTestException(
-                            $"Multiple files found with '{filename}' this can happen " +
-                             "in Visual Studio Live Unit session while trying to resolve " +
-                             "the directory name. " +
-                             "To solve this issue either stop Live Unit Testing or " +
-                             "make sure testfile names are unique. " +
-                            $"Duplicate files are:{Environment.NewLine}{string.Join(Environment.NewLine, files)}");
-                }
-            }
-            return null;
         }
 
         private static bool IsXunitTestMethod(MemberInfo method)
