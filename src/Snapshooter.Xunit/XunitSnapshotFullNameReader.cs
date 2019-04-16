@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -26,15 +26,16 @@ namespace Snapshooter.Xunit
         {
             SnapshotFullName snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
+
             foreach (StackFrame stackFrame in stackFrames)
             {
                 MethodBase method = stackFrame.GetMethod();
+
                 if (IsXunitTestMethod(method))
                 {
                     snapshotFullName = new SnapshotFullName(
-                        method.ToName(), 
+                        method.ToName(),
                         Path.GetDirectoryName(stackFrame.GetFileName()));
-                    
                     break;
                 }
 
@@ -42,9 +43,8 @@ namespace Snapshooter.Xunit
                 if (IsXunitTestMethod(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
-                        asyncMethod.ToName(), 
+                        asyncMethod.ToName(),
                         Path.GetDirectoryName(stackFrame.GetFileName()));
-                                      
                     break;
                 }
             }
@@ -60,7 +60,42 @@ namespace Snapshooter.Xunit
                     "Snapshot.Match method.");
             }
 
+            if (string.IsNullOrEmpty(snapshotFullName.FolderPath))
+            {
+                snapshotFullName = TryResolveNameInLiveUnitTestingSession(snapshotFullName.Filename);
+
+                if (string.IsNullOrEmpty(snapshotFullName.FolderPath))
+                {
+                    throw new SnapshotTestException("Could not resove directory for SnapShot");
+                }
+            }
             return snapshotFullName;
+        }
+
+        private SnapshotFullName TryResolveNameInLiveUnitTestingSession(string testname)
+        {
+            var currentDir = Directory.GetCurrentDirectory();
+            if (currentDir.ToLower().Contains("liveunittest"))
+            {
+                var srcPath = currentDir.Substring(0, currentDir.IndexOf(".vs") - 1);
+                var filename = testname.Split('.').FirstOrDefault() + ".cs";
+                var files = Directory.GetFiles(srcPath, filename, SearchOption.AllDirectories);
+                if (files.Length == 1)
+                {
+                    return new SnapshotFullName(testname, Path.GetDirectoryName(files[0]));
+                }
+                else if (files.Length > 1)
+                {
+                    throw new SnapshotTestException(
+                            $"Multiple files found with '{filename}' this can happen " +
+                             "in Visual Studio Live Unit session while trying to resolve " +
+                             "the directory name. " +
+                             "To solve this issue either stop Live Unit Testing or " +
+                             "make sure testfile names are unique. " +
+                            $"Duplicate files are:{Environment.NewLine}{string.Join(Environment.NewLine, files)}");
+                }
+            }
+            return null;
         }
 
         private static bool IsXunitTestMethod(MemberInfo method)
@@ -93,7 +128,7 @@ namespace Snapshooter.Xunit
                 from methodInfo in classDeclaringType.GetMethods()
                 let stateMachineAttribute = methodInfo
                     .GetCustomAttribute<AsyncStateMachineAttribute>()
-                where stateMachineAttribute != null && 
+                where stateMachineAttribute != null &&
                     stateMachineAttribute.StateMachineType == methodDeclaringType
                 select methodInfo;
 
