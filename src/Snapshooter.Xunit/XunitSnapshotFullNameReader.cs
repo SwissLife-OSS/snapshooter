@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -32,9 +32,9 @@ namespace Snapshooter.Xunit
                 if (IsXunitTestMethod(method))
                 {
                     snapshotFullName = new SnapshotFullName(
-                        method.ToName(), 
+                        method.ToName(),
                         Path.GetDirectoryName(stackFrame.GetFileName()));
-                    
+
                     break;
                 }
 
@@ -42,9 +42,9 @@ namespace Snapshooter.Xunit
                 if (IsXunitTestMethod(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
-                        asyncMethod.ToName(), 
+                        asyncMethod.ToName(),
                         Path.GetDirectoryName(stackFrame.GetFileName()));
-                                      
+
                     break;
                 }
             }
@@ -59,6 +59,12 @@ namespace Snapshooter.Xunit
                     "get the snapshot name, then reach this name to your " +
                     "Snapshot.Match method.");
             }
+
+            snapshotFullName = LiveUnitTestingDirectoryResolver
+                                    .CheckForSession(snapshotFullName);
+
+
+
 
             return snapshotFullName;
         }
@@ -93,7 +99,7 @@ namespace Snapshooter.Xunit
                 from methodInfo in classDeclaringType.GetMethods()
                 let stateMachineAttribute = methodInfo
                     .GetCustomAttribute<AsyncStateMachineAttribute>()
-                where stateMachineAttribute != null && 
+                where stateMachineAttribute != null &&
                     stateMachineAttribute.StateMachineType == methodDeclaringType
                 select methodInfo;
 
