@@ -64,6 +64,10 @@ namespace Snapshooter.Core
 
             if(!isValidJson)
             {
+                snapshotJson = snapshotJson
+                    .NormalizeLineEndings()
+                    .EnsureLineEnding();
+
                 snapshotJson = JsonConvert.ToString(snapshotJson);
             }
 
