@@ -26,16 +26,15 @@ namespace Snapshooter.Xunit
         {
             SnapshotFullName snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
-
             foreach (StackFrame stackFrame in stackFrames)
             {
                 MethodBase method = stackFrame.GetMethod();
-
                 if (IsXunitTestMethod(method))
                 {
                     snapshotFullName = new SnapshotFullName(
                         method.ToName(),
                         Path.GetDirectoryName(stackFrame.GetFileName()));
+
                     break;
                 }
 
@@ -45,6 +44,7 @@ namespace Snapshooter.Xunit
                     snapshotFullName = new SnapshotFullName(
                         asyncMethod.ToName(),
                         Path.GetDirectoryName(stackFrame.GetFileName()));
+
                     break;
                 }
             }
@@ -69,8 +69,10 @@ namespace Snapshooter.Xunit
                     throw new SnapshotTestException("Could not resove directory for SnapShot");
                 }
             }
+
             return snapshotFullName;
         }
+
 
         private SnapshotFullName TryResolveNameInLiveUnitTestingSession(string testname)
         {
