@@ -71,9 +71,17 @@ namespace Snapshooter
 
             string actualSnapshotSerialized = _snapshotSerializer.SerializeObject(currentResult);
             string savedSnapshotSerialized = _snapshotFileHandler.ReadSnapshot(snapshotFullName);
+
+            if (savedSnapshotSerialized == null)
+            {
+                _snapshotFileHandler
+                    .SaveNewSnapshot(snapshotFullName, actualSnapshotSerialized);
+
+                return;
+            }
                        
             CompareSnapshots(actualSnapshotSerialized, savedSnapshotSerialized,
-                snapshotFullName, matchOptions);
+                    snapshotFullName, matchOptions);
         }
 
         private void CompareSnapshots(
@@ -82,14 +90,6 @@ namespace Snapshooter
             SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions)
         {
-            if (savedSnapshotSerialized == null)
-            {
-                _snapshotFileHandler
-                    .SaveNewSnapshot(snapshotFullName, actualSnapshotSerialized);
-
-                return;
-            }
-
             try
             {
                 _snapshotComparer.CompareSnapshots(
