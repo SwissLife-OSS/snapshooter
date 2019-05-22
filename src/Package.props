@@ -10,7 +10,7 @@
     <PackageReleaseNotes>Release notes: https://github.com/SwissLife-OSS/Snapshooter/releases/$(Version)</PackageReleaseNotes>
     <PackageTags>XUnit SwissLife Snapshot UnitTest Test .Net</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <!--PackageIconUrl>https://cdn.rawgit.com/SwissLife-OSS/Snapshooter-logo/master/img/Snapshooter-signet.png</PackageIconUrl-->
+    <PackageIconUrl>https://github.com/SwissLife-OSS/snapshooter/raw/master/logo.png</PackageIconUrl>
 	<IsPackable>false</IsPackable>
   </PropertyGroup>
 
