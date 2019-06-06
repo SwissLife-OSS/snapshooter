@@ -4,25 +4,26 @@ namespace Snapshooter.Xunit
 {
     public static class SnapshotExtension
     {
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
-        /// <param name="currentResult">The object to match.</param> 
+        /// <param name="currentResult">The object to match.</param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
         public static void MatchSnapshot(this object currentResult,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshot.Match(currentResult, matchOptions);
+            var cleanedObject = currentResult.RemoveUnwantedWrappers();
+            Snapshot.Match(cleanedObject, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
@@ -30,8 +31,8 @@ namespace Snapshooter.Xunit
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Generated Snapshotname = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
@@ -43,20 +44,21 @@ namespace Snapshooter.Xunit
                                  SnapshotNameExtension snapshotNameExtension,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshot.Match(currentResult, snapshotNameExtension, matchOptions);
+            var cleanedObject = currentResult.RemoveUnwantedWrappers();
+            Snapshot.Match(cleanedObject, snapshotNameExtension, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
-        /// The name of the snapshot. If not set, then the snapshotname 
+        /// The name of the snapshot. If not set, then the snapshotname
         /// will be evaluated automatically from the xunit test name.
-        /// </param>  
+        /// </param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
@@ -64,25 +66,26 @@ namespace Snapshooter.Xunit
                                  string snapshotName,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshot.Match(currentResult, snapshotName, matchOptions);
+            var cleanedObject = currentResult.RemoveUnwantedWrappers();
+            Snapshot.Match(cleanedObject, snapshotName, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
-        /// The name of the snapshot. If not set, then the snapshotname 
+        /// The name of the snapshot. If not set, then the snapshotname
         /// will be evaluated automatically from the xunit test name.
-        /// </param> 
+        /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Generated Snapshotname = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
@@ -95,7 +98,8 @@ namespace Snapshooter.Xunit
                                  SnapshotNameExtension snapshotNameExtension,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshot.Match(currentResult, snapshotName, snapshotNameExtension, matchOptions);
+            var cleanedObject = currentResult.RemoveUnwantedWrappers();
+            Snapshot.Match(cleanedObject, snapshotName, snapshotNameExtension, matchOptions);
         }
     }
 }
