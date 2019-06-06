@@ -7,9 +7,9 @@ namespace Snapshooter.Xunit
     {
         public static object RemoveUnwantedWrappers(this object objectToRemoveWrappers)
         {
-            objectToRemoveWrappers.RemoveFluentAssertionWrapper();
+            object cleanedObject = objectToRemoveWrappers.RemoveFluentAssertionWrapper();
 
-            return objectToRemoveWrappers;
+            return cleanedObject;
         }
 
         private static object RemoveFluentAssertionWrapper(this object objectToRemoveWrappers)
