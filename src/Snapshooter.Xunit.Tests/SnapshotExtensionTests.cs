@@ -16,5 +16,15 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             testPerson.Should().MatchSnapshot();
         }
+
+        [Fact]
+        public void MatchSnapshot_PlainExtension_CorrectSnapshot()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            testPerson.Should().MatchSnapshot();
+        }
     }
 }
