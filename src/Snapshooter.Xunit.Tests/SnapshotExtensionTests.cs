@@ -34,7 +34,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            testPerson.Should().MatchSnapshot();
+            testPerson.MatchSnapshot();
         }
     }
 }
