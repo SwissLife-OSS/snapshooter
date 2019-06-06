@@ -18,6 +18,16 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
+        public void MatchSnapshot_ShouldFluentAssertionsNameOf_RemovesSubject()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            testPerson.Should().MatchSnapshot(nameof(MatchSnapshot_ShouldFluentAssertionsNameOf_RemovesSubject));
+        }
+
+        [Fact]
         public void MatchSnapshot_PlainExtension_CorrectSnapshot()
         {
             // arrange
