@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace Snapshooter.Xunit
 {
@@ -18,7 +17,8 @@ namespace Snapshooter.Xunit
         public static void MatchSnapshot(this object currentResult,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshot.Match(RemoveUnwantedWrappers(currentResult), matchOptions);
+            var cleanedObject = currentResult.RemoveUnwantedWrappers();
+            Snapshot.Match(cleanedObject, matchOptions);
         }
 
         /// <summary>
@@ -44,7 +44,8 @@ namespace Snapshooter.Xunit
                                  SnapshotNameExtension snapshotNameExtension,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshot.Match(RemoveUnwantedWrappers(currentResult), snapshotNameExtension, matchOptions);
+            var cleanedObject = currentResult.RemoveUnwantedWrappers();
+            Snapshot.Match(cleanedObject, snapshotNameExtension, matchOptions);
         }
 
         /// <summary>
@@ -65,7 +66,8 @@ namespace Snapshooter.Xunit
                                  string snapshotName,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshot.Match(RemoveUnwantedWrappers(currentResult), snapshotName, matchOptions);
+            var cleanedObject = currentResult.RemoveUnwantedWrappers();
+            Snapshot.Match(cleanedObject, snapshotName, matchOptions);
         }
 
         /// <summary>
@@ -96,23 +98,8 @@ namespace Snapshooter.Xunit
                                  SnapshotNameExtension snapshotNameExtension,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshot.Match(RemoveUnwantedWrappers(currentResult), snapshotName, snapshotNameExtension, matchOptions);
-        }
-
-        private static object RemoveUnwantedWrappers(object objectToRemoveWrappers)
-        {
-            Type resultType = objectToRemoveWrappers.GetType();
-
-            if (resultType.Namespace.Equals("FluentAssertions.Primitives")
-                && resultType.Name.Equals("ObjectAssertions"))
-            {
-                PropertyInfo prop = resultType.GetProperty("Subject");
-                object actualvalue = prop.GetValue(objectToRemoveWrappers);
-
-                return actualvalue;
-            }
-
-            return objectToRemoveWrappers;
+            var cleanedObject = currentResult.RemoveUnwantedWrappers();
+            Snapshot.Match(cleanedObject, snapshotName, snapshotNameExtension, matchOptions);
         }
     }
 }
