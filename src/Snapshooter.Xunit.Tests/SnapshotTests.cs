@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
-using Snapshooter.Core;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
 using Xunit;
@@ -28,7 +27,7 @@ namespace Snapshooter.Xunit.Tests
         [InlineData("on")]
         [InlineData("true")]
         [Theory]
-        public void Strict_Mode_No_Snapshot_Found(string value)
+        public void Match_With_StrictMode_On_Snapshot_Missing(string value)
         {
             // arrange
             Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
@@ -39,6 +38,49 @@ namespace Snapshooter.Xunit.Tests
 
             //assert
             Assert.Throws<SnapshotNotFoundException>(action);
+        }
+
+        [InlineData("on")]
+        [InlineData("true")]
+        [Theory]
+        public void Match_With_StrictMode_On_Snapshot_Exists(string value)
+        {
+            // arrange
+            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            Snapshot.Match<TestPerson>(testPerson);
+        }
+
+        [InlineData("off")]
+        [InlineData("false")]
+        [Theory]
+        public void Match_With_StrictMode_Off_Snapshot_Not_Exists(string value)
+        {
+            // arrange
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader());
+
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            if (File.Exists(snapshotFileName))
+            {
+                File.Delete(snapshotFileName);
+            }
+
+            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            Snapshot.Match<TestPerson>(testPerson);
+            File.Delete(snapshotFileName);
         }
 
         [Fact]
