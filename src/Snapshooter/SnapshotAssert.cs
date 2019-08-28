@@ -80,7 +80,7 @@ namespace Snapshooter
                     || (bool.TryParse(value, out bool b) && b))
                 {
                     throw new SnapshotNotFoundException(
-                        "Strict mode is enabled an no snapshot has been found " +
+                        "Strict mode is enabled and no snapshot has been found " +
                         "for the current test. Create a new snapshot locally and " +
                         "rerun your tests.");
                 }
