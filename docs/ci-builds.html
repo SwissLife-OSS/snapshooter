@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Snapshooter on CI-Builds · Snapshooter</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Snapshooter is nice and convenient in the way that it creates snapshots automatically on the first run of your tests."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Snapshooter on CI-Builds · Snapshooter"/><meta property="og:type" content="website"/><meta property="og:url" content="https://swisslife-oss.github.io/snapshooter/"/><meta property="og:description" content="Snapshooter is nice and convenient in the way that it creates snapshots automatically on the first run of your tests."/><meta property="og:image" content="https://swisslife-oss.github.io/snapshooter/img/logo_sl_snapshooter.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://swisslife-oss.github.io/snapshooter/img/logo_sl_snapshooter.svg"/><link rel="shortcut icon" href="/snapshooter/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow-night.min.css"/><link rel="alternate" type="application/atom+xml" href="https://swisslife-oss.github.io/snapshooter/blog/atom.xml" title="Snapshooter Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://swisslife-oss.github.io/snapshooter/blog/feed.xml" title="Snapshooter Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/snapshooter/js/scrollSpy.js"></script><link rel="stylesheet" href="/snapshooter/css/main.css"/><script src="/snapshooter/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/snapshooter/"><img class="logo" src="/snapshooter/img/logo_sl_snapshooter.svg" alt="Snapshooter"/><h2 class="headerTitleWithLogo">Snapshooter</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/snapshooter/docs/introduction" target="_self">Docs</a></li><li class=""><a href="https://github.com/SwissLife-OSS/snapshooter-examples" target="_blank">Examples</a></li><li class=""><a href="https://swissLife-oss.github.io/blog" target="_blank">Blog</a></li><li class=""><a href="https://github.com/SwissLife-OSS/snapshooter" target="_blank">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Documentation</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/snapshooter/docs/introduction">Introduction</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/get-started">Get Started</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/basic-concept">Basic Concept</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Documentation</h3><ul class=""><li class="navListItem"><a class="navItem" href="/snapshooter/docs/snapshot-naming">Snapshot Naming</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/folder-structure">Folder Structure</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/snapshot-options">Snapshot Match Options</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/snapshot-mismatch-handling">Snapshot Mismatch</a></li><li class="navListItem"><a class="navItem" href="/snapshooter/docs/scalar-type-snapshot">Scalar Types</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/snapshooter/docs/ci-builds">CI-Builds</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/SwissLife-OSS/snapshooter-docs/edit/master/docs/ci-builds.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Snapshooter on CI-Builds</h1></header><article><div><span><p>Snapshooter is nice and convenient in the way that it creates snapshots automatically on the first run of your tests.</p>
+<p>This is a feature and makes your live easier.</p>
+<p>But once in a while you might forget to commit your snapshot and by default those snapshots will create the initial snapshot on the next run and become green.</p>
+<p>This means that on the CI-Server we will now have always a green test even if the tested functionality produces a wrong result.</p>
+<p>This is where strict mode comes in. With strict mode we will fail tests and create a mismatch whenever a snapshot is missing.</p>
+<p>This behavior is ideal on your build servers.</p>
+<p>In order to enable strict mode set the environment variable <code>SNAPSHOOTER_STRICT_MODE</code> to <code>on</code> or <code>true</code>. If this environment variable is set we will fail all tests that are missing its snapshot.</p>
+<p>Since, we are also producing a mismatch snapshot file in strict mode you can also opt to run snapshooter in strict mode on your dev box and force yourself to review and move the snapshot file to the accepted folder explicitly.</p>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 8/28/2019 by Michael Staib</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/snapshooter/docs/scalar-type-snapshot"><span class="arrow-prev">← </span><span>Scalar Types</span></a><a class="docs-next button" href="/snapshooter/docs/Ignore%20Option"><span>Next</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h3>Community</h3><a href="https://swissLife-oss.github.io/cla">Contributor License Agreements</a><a href="https://swissLife-oss.github.io/coc">Code of Conduct</a></div></section><a href="https://swissLife-oss.github.io" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/snapshooter/img/logo_sl_oss_inverted.svg" alt="Swiss Life OSS" height="45"/><span class="projectTitleInverted">Swiss Life | OSS</span></a><section class="copyright">Copyright © 2019 Swiss Life Developer</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: '39489e5eb0c1a936be6ed354c0358c41',
+                indexName: 'swisslife-oss',
+                inputSelector: '#search_input_react'
+              });
+            </script></body></html>
