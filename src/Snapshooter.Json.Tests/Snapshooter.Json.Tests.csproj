@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>    
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Snapshooter.Json.Tests</AssemblyName>
     <RootNamespace>Snapshooter.Json.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
@@ -10,10 +10,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="FluentAssertions" Version="5.5.3" />
-    <PackageReference Include="coverlet.msbuild" Version="2.5.1" />
+    <PackageReference Include="coverlet.msbuild" Version="2.6.3" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
-    <DotNetCliToolReference Include="dotnet-xunit" Version="2.4.0-beta.1.build3958" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,5 +25,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
 </Project>

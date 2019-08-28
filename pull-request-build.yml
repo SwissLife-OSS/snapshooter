@@ -11,11 +11,19 @@ pool:
 
 variables:
   - group: Tokens
-  
+
 workspace:
-    clean: all
+  clean: all
 
 steps:
+  - task: UseDotNet@2
+    displayName: "Use .Net Core SDK global.json"
+    inputs:
+      useGlobalJson: true
+  - task: UseDotNet@2
+    displayName: "Use .Net Core SDK 2.1.801"
+    inputs:
+      version: 2.1.801
   - bash: ./build.sh -target=sonar
     env:
       Sonar_Token: $(Sonar_Token)

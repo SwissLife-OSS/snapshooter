@@ -65,6 +65,7 @@ Review your new snapshot file `__snapshots__/<UnitTestClassName>.<TestMethodName
 Now the `Snapshot.Match(person)` statement will create again a snapshot of your test result and compare it against your reviewed snapshot in the `__snapshots__` folder. The `__snapshots__` folder is always next to your executed unit test file.
 
 ### Mismatching Snapshot Handling
+
 If your result object has changed and the existing snapshot is not matching anymore, then the unit test will fail. The unit test error message will point to the exact mismatching position within the snapshot.
 
 In addition, in the snapshot folder `__snapshots__` a subfolder with name `__mismatch__` will be created. In this folder you can find
@@ -75,6 +76,7 @@ If the snapshot in the mismatching folder `__mismatch__` is correct, just move i
 [Read More](https://swisslife-oss.github.io/snapshooter/docs/snapshot-mismatch-handling)
 
 ## Features
+
 ### Ignore Fields in Snapshots Matches
 
 If some fields in your snapshot shall be ignored during snapshot assertion, then the following ignore options can be used:
@@ -189,6 +191,13 @@ public void Match_ConcatenateFieldChecksTest_SuccessfulMatch()
             .Assert(option => Assert.Null(option.Field<TestCountry>("Relatives[0].Address.Plz"))));
 }
 ```
+
+### Using Snapshooter in CI-Builds
+
+When running snapshooter tests in a CI-build you might want to ensure that a snapshots are correctly checked-in since otherwise tests without a snapshot will just create the initial snapshot and become green.
+
+In order to fail tests that are without a snapshot on your CI-build you can set the snapshooter behavior to strict-mode by setting the environment variable `SNAPSHOOTER_STRICT_MODE` to `on` or `true`.
+
 ## Community
 
 This project has adopted the code of conduct defined by the [Contributor Covenant](https://contributor-covenant.org/)

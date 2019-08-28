@@ -1,10 +1,11 @@
 ﻿using System;
 using Snapshooter.Core;
+using Snapshooter.Exceptions;
 
 namespace Snapshooter
 {
     /// <summary>
-    /// The class <see cref="SnapshotAssert"/> can be used to compare a given object 
+    /// The class <see cref="SnapshotAssert"/> can be used to compare a given object
     /// against a snapshot. If no snapshot exists, a new snapshot will be created from
     /// the current object and saved on the file system.
     /// </summary>
@@ -27,13 +28,13 @@ namespace Snapshooter
                               ISnapshotEnvironmentCleaner snapshotEnvironmentCleaner,
                               ISnapshotComparer snapshotComparer)
         {
-            _snapshotSerializer = snapshotSerializer 
-                ?? throw new ArgumentNullException(nameof(snapshotSerializer));           
-            _snapshotFileHandler = snapshotFileHandler 
+            _snapshotSerializer = snapshotSerializer
+                ?? throw new ArgumentNullException(nameof(snapshotSerializer));
+            _snapshotFileHandler = snapshotFileHandler
                 ?? throw new ArgumentNullException(nameof(snapshotFileHandler));
             _snapshotEnvironmentCleaner = snapshotEnvironmentCleaner
                 ?? throw new ArgumentNullException(nameof(snapshotEnvironmentCleaner));
-            _snapshotComparer = snapshotComparer 
+            _snapshotComparer = snapshotComparer
                 ?? throw new ArgumentNullException(nameof(snapshotComparer));
         }
 
@@ -48,12 +49,12 @@ namespace Snapshooter
         /// </param>
         /// <param name="snapshotFullName">
         /// The name and folder of the snapshot.
-        /// </param>        
+        /// </param>
         /// <param name="matchOptions">
         /// Additional match actions, which can be applied during the comparison
         /// </param>
         public void AssertSnapshot(
-            object currentResult, 
+            object currentResult,
             SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
@@ -62,11 +63,11 @@ namespace Snapshooter
                 throw new ArgumentNullException(nameof(currentResult));
             }
 
-            if(snapshotFullName == null)
+            if (snapshotFullName == null)
             {
                 throw new ArgumentNullException(nameof(snapshotFullName));
             }
-            
+
             _snapshotEnvironmentCleaner.Cleanup(snapshotFullName);
 
             string actualSnapshotSerialized = _snapshotSerializer.SerializeObject(currentResult);
@@ -74,12 +75,24 @@ namespace Snapshooter
 
             if (savedSnapshotSerialized == null)
             {
+                string value = Environment.GetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE");
+                if (string.Equals(value, "on", StringComparison.Ordinal)
+                    || (bool.TryParse(value, out bool b) && b))
+                {
+                    _snapshotFileHandler
+                        .SaveMismatchSnapshot(snapshotFullName, actualSnapshotSerialized);
+
+                    throw new SnapshotNotFoundException(
+                        "Strict mode is enabled and no snapshot has been found " +
+                        "for the current test. Create a new snapshot locally and " +
+                        "rerun your tests.");
+                }
+
                 _snapshotFileHandler
                     .SaveNewSnapshot(snapshotFullName, actualSnapshotSerialized);
-
                 return;
             }
-                       
+
             CompareSnapshots(actualSnapshotSerialized, savedSnapshotSerialized,
                     snapshotFullName, matchOptions);
         }
@@ -91,6 +104,7 @@ namespace Snapshooter
             Func<MatchOptions, MatchOptions> matchOptions)
         {
             try
+
             {
                 _snapshotComparer.CompareSnapshots(
                     savedSnapshotSerialized, actualSnapshotSerialized, matchOptions);
