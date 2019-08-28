@@ -79,7 +79,7 @@ namespace Snapshooter
                 if (string.Equals(value, "on", StringComparison.Ordinal)
                     || (bool.TryParse(value, out bool b) && b))
                 {
-                    throw new NoSnapshotFoundException(
+                    throw new SnapshotNotFoundException(
                         "Strict mode is enabled an no snapshot has been found " +
                         "for the current test. Create a new snapshot locally and " +
                         "rerun your tests.");

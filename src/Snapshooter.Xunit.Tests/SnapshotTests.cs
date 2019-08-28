@@ -38,7 +38,7 @@ namespace Snapshooter.Xunit.Tests
             Action action = () => Snapshot.Match<TestPerson>(testPerson);
 
             //assert
-            Assert.Throws<NoSnapshotFoundException>(action);
+            Assert.Throws<SnapshotNotFoundException>(action);
         }
 
         [Fact]

@@ -1,20 +1,19 @@
 using System;
-using Snapshooter.Exceptions;
 using Xunit;
 
 namespace Snapshooter.Exceptions
 {
-    public class NoSnapshotFoundExceptionTests
+    public class SnapshotNotFoundExceptionTests
     {
         [Fact]
         public void Create_Instance()
         {
             // act
-            var exception = new NoSnapshotFoundException();
+            var exception = new SnapshotNotFoundException();
 
             // assert
             Assert.Equal(
-                "Exception of type 'Snapshooter.Exceptions.NoSnapshotFoundException' was thrown.",
+                "Exception of type 'Snapshooter.Exceptions.SnapshotNotFoundException' was thrown.",
                 exception.Message);
             Assert.Null(exception.InnerException);
         }
@@ -23,7 +22,7 @@ namespace Snapshooter.Exceptions
         public void Create_Instance_With_Message()
         {
             // act
-            var exception = new NoSnapshotFoundException("abc");
+            var exception = new SnapshotNotFoundException("abc");
 
             // assert
             Assert.Equal("abc", exception.Message);
@@ -37,7 +36,7 @@ namespace Snapshooter.Exceptions
             var innerException = new Exception();
 
             // act
-            var exception = new NoSnapshotFoundException("abc", innerException);
+            var exception = new SnapshotNotFoundException("abc", innerException);
 
             // assert
             Assert.Equal("abc", exception.Message);

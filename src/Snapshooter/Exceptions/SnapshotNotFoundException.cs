@@ -5,30 +5,30 @@ namespace Snapshooter.Exceptions
     /// <summary>
     /// Exception thrown if something went wrong during snapshot assertion.
     /// </summary>
-    public class NoSnapshotFoundException : SnapshotTestException
+    public class SnapshotNotFoundException : SnapshotTestException
     {
         /// <summary>
-        /// Initializes the <see cref="NoSnapshotFoundException"/>
+        /// Initializes the <see cref="SnapshotNotFoundException"/>
         /// </summary>
-        public NoSnapshotFoundException()
+        public SnapshotNotFoundException()
         {
         }
 
         /// <summary>
-        /// Initializes the <see cref="NoSnapshotFoundException"/>
+        /// Initializes the <see cref="SnapshotNotFoundException"/>
         /// <param name="message">The exception message.</param>
         /// </summary>
-        public NoSnapshotFoundException(string message)
+        public SnapshotNotFoundException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes the <see cref="NoSnapshotFoundException"/>
+        /// Initializes the <see cref="SnapshotNotFoundException"/>
         /// <param name="message">The exception message.</param>
         /// <param name="inner">The inner exception.</param>
         /// </summary>
-        public NoSnapshotFoundException(string message, Exception inner)
+        public SnapshotNotFoundException(string message, Exception inner)
             : base(message, inner)
         {
         }
