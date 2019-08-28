@@ -79,6 +79,9 @@ namespace Snapshooter
                 if (string.Equals(value, "on", StringComparison.Ordinal)
                     || (bool.TryParse(value, out bool b) && b))
                 {
+                    _snapshotFileHandler
+                        .SaveMismatchSnapshot(snapshotFullName, actualSnapshotSerialized);
+
                     throw new SnapshotNotFoundException(
                         "Strict mode is enabled and no snapshot has been found " +
                         "for the current test. Create a new snapshot locally and " +
