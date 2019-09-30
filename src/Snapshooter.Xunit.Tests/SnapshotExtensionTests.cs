@@ -36,5 +36,25 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             testPerson.MatchSnapshot();
         }
+
+        [Fact]
+        public void MatchSnapshot_PlainExtensionAnonymousType_CorrectSnapshot()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            new { foo = testPerson }.MatchSnapshot();
+        }
+
+        [Fact]
+        public void MatchSnapshot_ShouldFluentAssertionsAnonymousType_CorrectSnapshot()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            new { foo = testPerson }.Should().MatchSnapshot();
+        }
     }
 }

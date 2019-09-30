@@ -16,7 +16,9 @@ namespace Snapshooter.Xunit
         {
             Type resultType = objectToRemoveWrappers.GetType();
 
-            if (resultType.Namespace.Equals("FluentAssertions.Primitives")
+            if (resultType.Namespace != null
+                && resultType.Name != null
+                && resultType.Namespace.Equals("FluentAssertions.Primitives")
                 && resultType.Name.Equals("ObjectAssertions"))
             {
                 PropertyInfo prop = resultType.GetProperty("Subject");
