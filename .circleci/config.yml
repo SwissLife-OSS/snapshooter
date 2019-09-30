@@ -8,7 +8,9 @@ jobs:
       - checkout
       - run:
           name: Pull Request Build
-          command: dotnet cake -target=Tests
+          command: |
+            export PATH="$PATH:/root/.dotnet/tools"
+            dotnet cake -target=Tests
       - store_test_results:
           path: /work/testoutput
       - store_artifacts:
