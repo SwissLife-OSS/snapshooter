@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <AssemblyName>Snapshooter.Examples.Xunit</AssemblyName>
+
+    <RootNamespace>Snapshooter.Examples.Xunit</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="2_IgnoreTests\**" />
+    <EmbeddedResource Remove="2_IgnoreTests\**" />
+    <None Remove="2_IgnoreTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Snapshooter.Xunit" Version="0.4.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="1_SimpleTests\__snapshots__\" />
+    <Folder Include="1_SimpleTests\__snapshots__\__mismatch__\" />
+    <Folder Include="2_NamingTests\__snapshots__\" />
+  </ItemGroup>
+
+</Project>
