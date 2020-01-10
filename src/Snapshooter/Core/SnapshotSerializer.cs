@@ -1,5 +1,8 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -112,7 +115,7 @@ namespace Snapshooter.Core
                 NullValueHandling = NullValueHandling.Include,
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 Culture = CultureInfo.InvariantCulture,
-                ContractResolver = new DefaultContractResolver(),
+                ContractResolver = ChildFirstContractResolver.Instance,
                 Converters = new JsonConverter[]
                 {
                     new StringEnumConverter()
@@ -154,6 +157,30 @@ namespace Snapshooter.Core
                 string normalisedText = text.NormalizeLineEndings();
 
                 base.WriteValue(normalisedText);
+            }
+        }
+
+        private class ChildFirstContractResolver : DefaultContractResolver
+        {
+            static ChildFirstContractResolver() { Instance = new ChildFirstContractResolver(); }
+
+            public static ChildFirstContractResolver Instance { get; private set; }
+
+            protected override IList<JsonProperty> CreateProperties(
+                Type type, MemberSerialization memberSerialization)
+            {
+                IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization);
+
+                if (properties != null)
+                {
+                    properties = properties.OrderBy(p =>
+                    {
+                        IEnumerable<Type> d = p.DeclaringType.BaseTypesAndSelf().ToList();
+                        return 1000 - d.Count();
+                    }).ToList();
+                }
+
+                return properties;
             }
         }
     }
