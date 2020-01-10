@@ -27,6 +27,26 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
+        public async Task Match_FactAsyncMatchSnapshotWithSpecifiedName_SuccessfulMatch()
+        {
+            // arrange
+            await Task.Delay(1);
+
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            await Task.Delay(1);
+
+            string specifiedName = "SnapshotTests.Match_FactAsyncMatchWithSpecificSnapshotName";
+
+            // act
+            Snapshot.Match<TestPerson>(
+                testPerson, specifiedName);
+
+            // assert
+            await Task.Delay(1);
+        }
+
+        [Fact]
         public async Task Match_FactAsyncMatchSingleSnapshot_OneFieldNotEqual()
         {
             // arrange
@@ -42,6 +62,32 @@ namespace Snapshooter.Xunit.Tests
             // assert
             Assert.Throws<EqualException>(match);
 
+            await Task.Delay(1);
+        }
+
+        [Theory]
+        [InlineData(36, 189.45)]
+        [InlineData(42, 173.16)]
+        [InlineData(19, 193.02)]
+        public async Task Match_TheoryAsyncMatchSnapshotWithSpecifiedName_SuccessfulMatch(
+            int age, decimal size)
+        {
+            // arrange
+            await Task.Delay(1);
+
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+                .WithAge(age).WithSize(size).Build();
+
+            await Task.Delay(1);
+
+            string specifiedName = 
+                $"SnapshotTests.Match_TheoryAsyncMatchWithSpecificSnapshotName_{age}_{size}";
+
+            // act
+            Snapshot.Match<TestPerson>(
+                testPerson, specifiedName);
+
+            // assert
             await Task.Delay(1);
         }
 
@@ -114,24 +160,21 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
-        public async Task Match_FactMatchSnapshotInAsncMethod_OneFieldNotEqual()
+        public async Task Match_FactMatchSnapshotWithSpecifiedNameInAsncMethod_SuccessfulMatch()
         {
-            // arrange
+            // arrange -here
             await Task.Delay(1);
 
-            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
-                                                   .WithAge(4055).Build();
-            
-            SnapshotFullName snapshotFullName = Snapshot.FullName();
+            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider().Build();
+
+            await Task.Delay(1);
+
+            string specifiedName = "Match_FactAsyncMatchSnapshotWithSpecifiedName";
 
             // act
-            Func<Task> asyncMatch = () => AsyncMatchWithFullName(testPerson, snapshotFullName);
+            await AsyncMatchWithSpecifiedName(testPerson, specifiedName);
 
             // assert
-            EqualException exception =
-                await Assert.ThrowsAsync<EqualException>(asyncMatch);
-            Assert.Contains("4055", exception.Message);
-
             await Task.Delay(1);
         }
 
@@ -147,9 +190,33 @@ namespace Snapshooter.Xunit.Tests
             Func<Task> asyncMatch = () => AsyncMatch(testPerson);
 
             // assert
-            SnapshotTestException exception = 
+            SnapshotTestException exception =
                 await Assert.ThrowsAsync<SnapshotTestException>(asyncMatch);
             Assert.Contains("async", exception.Message);
+
+            await Task.Delay(1);
+        }
+
+        [Fact]
+        public async Task Match_FactMatchSnapshotInAsncMethod_OneFieldNotEqual()
+        {
+            // arrange
+            await Task.Delay(1);
+
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
+                .WithAge(4055)
+                .Build();
+            
+            SnapshotFullName snapshotFullName = Snapshot.FullName();
+
+            // act
+            Func<Task> asyncMatch = () => AsyncMatchWithFullName(testPerson, snapshotFullName);
+
+            // assert
+            EqualException exception =
+                await Assert.ThrowsAsync<EqualException>(asyncMatch);
+            Assert.Contains("4055", exception.Message);
 
             await Task.Delay(1);
         }
@@ -161,8 +228,11 @@ namespace Snapshooter.Xunit.Tests
             // arrange
             await Task.Delay(1);
 
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
-                .WithAge(age).WithSize(size).Build();
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .WithAge(age)
+                .WithSize(size)
+                .Build();
             
             SnapshotFullName snapshotFullName = 
                 Snapshot.FullName(SnapshotNameExtension.Create(age, size));
@@ -175,14 +245,67 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Theory]
+        [InlineData(36, 189.45)]
+        public async Task Match_TheoryMatchSnapshotWithSpecifiedNameInAsncMethod_SuccessfulMatch(int age, decimal size)
+        {
+            // arrange
+            await Task.Delay(1);
+
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .WithAge(age)
+                .WithSize(size)
+                .Build();
+            
+            string specifiedName =
+                $"SnapshotTests.Match_TheoryAsyncMatchWithSpecificSnapshotName_{age}_{size}";
+
+            // act
+            await AsyncMatchWithSpecifiedName(testPerson, specifiedName);
+
+            // assert
+            await Task.Delay(1);
+        }
+
+        [Theory]
+        [InlineData(37, 178)]
+        public async Task Match_TheoryMatchSnapshotInAsncMethod_ThrowsSnapshotTestException(int age, decimal size)
+        {
+            // arrange
+            await Task.Delay(1);
+
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .WithAge(age)
+                .WithSize(size)
+                .Build();
+
+            await Task.Delay(1);
+
+            // act
+            Func<Task> asyncMatch = () => AsyncMatchWithNameExtension(
+                testPerson, SnapshotNameExtension.Create(age, size));
+
+            // assert
+            SnapshotTestException exception =
+                await Assert.ThrowsAsync<SnapshotTestException>(asyncMatch);
+            Assert.Contains("async", exception.Message);
+
+            await Task.Delay(1);
+        }
+
+        [Theory]
         [InlineData(34, 175)]
         public async Task Match_TheoryMatchSnapshotInAsncMethod_OneFieldNotEqual(int age, decimal size)
         {
             // arrange
             await Task.Delay(1);
 
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
-                .WithAge(age).WithSize(size).Build();
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .WithAge(age)
+                .WithSize(size)
+                .Build();
 
             testPerson.Address.Country.CountryCode = CountryCode.US;
 
@@ -197,31 +320,7 @@ namespace Snapshooter.Xunit.Tests
                 await Assert.ThrowsAsync<EqualException>(asyncMatch);
             Assert.Contains(CountryCode.US.ToString(), exception.Message);
         }
-
-        [Theory]
-        [InlineData(37, 178)]
-        public async Task Match_TheoryMatchSnapshotInAsncMethod_ThrowsSnapshotTestException(int age, decimal size)
-        {
-            // arrange
-            await Task.Delay(1);
-
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
-                .WithAge(age).WithSize(size).Build();
-            
-            await Task.Delay(1);
-
-            // act
-            Func<Task> asyncMatch = () => AsyncMatchWithNameExtension(
-                testPerson, SnapshotNameExtension.Create(age, size));
-            
-            // assert
-            SnapshotTestException exception =
-                await Assert.ThrowsAsync<SnapshotTestException>(asyncMatch);
-            Assert.Contains("async", exception.Message);
-            
-            await Task.Delay(1);
-        }
-
+        
         #endregion
         
         #region Match Snapshot - In Asyc Class Helper Method Tests
@@ -373,6 +472,16 @@ namespace Snapshooter.Xunit.Tests
             await Task.Delay(1);
 
             Snapshot.Match<TestPerson>(testPerson);
+
+            await Task.Delay(1);
+        }
+
+        private async Task AsyncMatchWithSpecifiedName(
+            TestPerson testPerson, string specificName)
+        {
+            await Task.Delay(1);
+
+            Snapshot.Match<TestPerson>(testPerson, specificName);
 
             await Task.Delay(1);
         }
