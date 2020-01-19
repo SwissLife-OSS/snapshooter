@@ -15,26 +15,26 @@ namespace Snapshooter
         SnapshotFullName ResolveSnapshotFullName();
 
         /// <summary>
-        /// Resolves the snapshot name for the running unit test. 
-        /// The default generated snapshot name can be overwritten 
+        /// Resolves the snapshot name for the running unit test.
+        /// The default generated snapshot name can be overwritten
         /// by the given snapshot name.
         /// </summary>
         /// <param name="snapshotName">
-        /// The snapshot name given by the user. This snapshot name will overwrite 
-        /// the automatically generated snapshot name. 
+        /// The snapshot name given by the user. This snapshot name will overwrite
+        /// the automatically generated snapshot name.
         /// </param>
         /// <returns>The full name of a snapshot.</returns>
         SnapshotFullName ResolveSnapshotFullName(string snapshotName);
 
         /// <summary>
-        /// Resolves the snapshot name for the running unit test. 
-        /// The default generated snapshot name can either be overwritten 
+        /// Resolves the snapshot name for the running unit test.
+        /// The default generated snapshot name can either be overwritten
         /// with a given snapshot name, or can be extended by the snapshot name extensions,
         /// or both.
         /// </summary>
         /// <param name="snapshotName">
-        /// The snapshot name given by the user, this snapshot name will overwrite 
-        /// the automatically generated snapshot name. 
+        /// The snapshot name given by the user, this snapshot name will overwrite
+        /// the automatically generated snapshot name.
         /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the snapshot name with

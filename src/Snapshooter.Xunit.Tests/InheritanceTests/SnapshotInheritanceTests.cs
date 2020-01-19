@@ -169,7 +169,7 @@ namespace Snapshooter.Xunit.Tests
         {
             public override string Level { get; set; }
         }
-        
+
         private class NotOverrideVirtualDeveloper : VirtualDeveloper
         {
         }
@@ -191,7 +191,7 @@ namespace Snapshooter.Xunit.Tests
         private class Developer : Employee
         {
             public string Language { get; set; }
-            
+
             public string Level { get; set; }
         }
 

@@ -9,7 +9,7 @@ namespace Snapshooter.Core
     public interface ISnapshotComparer
     {
         /// <summary>
-        /// Compares the current snapshot with the expected snapshot and applies 
+        /// Compares the current snapshot with the expected snapshot and applies
         /// the compare rules of the compare actions.
         /// </summary>
         /// <param name="matchOptions">
@@ -20,8 +20,8 @@ namespace Snapshooter.Core
         /// </param>
         /// <param name="actualSnapshot">
         /// The actual (modifiable) snapshot of the current result.
-        /// </param>    
-        void CompareSnapshots(string expectedSnapshot, string actualSnapshot, 
+        /// </param>
+        void CompareSnapshots(string expectedSnapshot, string actualSnapshot,
                               Func<MatchOptions, MatchOptions> matchOptions);
     }
 }

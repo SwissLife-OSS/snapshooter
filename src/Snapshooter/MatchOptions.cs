@@ -35,7 +35,7 @@ namespace Snapshooter
         }
 
         /// <summary>
-        /// With the <see cref="IgnoreField"/> option, you can ignore the given field 
+        /// With the <see cref="IgnoreField"/> option, you can ignore the given field
         /// during snapshot comparison. Therefore the field will just be skipped during compare.
         /// </summary>
         /// <param name="fieldPath">The json path to the field to ignore.</param>
@@ -48,7 +48,7 @@ namespace Snapshooter
         }
 
         /// <summary>
-        /// With the <see cref="IgnoreFields"/> option, you can ignore the given fields 
+        /// With the <see cref="IgnoreFields"/> option, you can ignore the given fields
         /// during snapshot comparison. Therefore the fields will just be skipped during compare.
         /// </summary>
         /// <param name="fieldsPath">The json path to the fields to ignore.</param>
@@ -61,7 +61,7 @@ namespace Snapshooter
         }
 
         /// <summary>
-        /// With the <see cref="IgnoreField"/> option, you can ignore the given field 
+        /// With the <see cref="IgnoreField"/> option, you can ignore the given field
         /// during snapshot comparison. Therefore the field will just be skipped during compare.
         /// </summary>
         /// <param name="fieldPath">The json path to the field to ignore.</param>
@@ -74,7 +74,7 @@ namespace Snapshooter
         }
 
         /// <summary>
-        /// With the <see cref="IgnoreFields"/> option, you can ignore the given fields 
+        /// With the <see cref="IgnoreFields"/> option, you can ignore the given fields
         /// during snapshot comparison. Therefore the fields will just be skipped during compare.
         /// </summary>
         /// <param name="fieldsPath">The json path to the fields to ignore.</param>
@@ -101,8 +101,8 @@ namespace Snapshooter
 
         /// <summary>
         /// The method IsType allows you during the snapshot comparison,
-        /// to check if a field is from a specific type. Therefore the given field will NOT 
-        /// be compared with the field of the snapshot, it will only be checked if the 
+        /// to check if a field is from a specific type. Therefore the given field will NOT
+        /// be compared with the field of the snapshot, it will only be checked if the
         /// field has the given type.
         /// </summary>
         /// <typeparam name="T">The type which the field should have.</typeparam>
@@ -123,8 +123,8 @@ namespace Snapshooter
 
         /// <summary>
         /// The method IsType allows you during the snapshot comparison,
-        /// to check if a field is from a specific type. Therefore the given field will NOT 
-        /// be compared with the field of the snapshot, it will only be checked if the 
+        /// to check if a field is from a specific type. Therefore the given field will NOT
+        /// be compared with the field of the snapshot, it will only be checked if the
         /// field has the given type.
         /// </summary>
         /// <typeparam name="T">The type which the field should have.</typeparam>
@@ -138,8 +138,8 @@ namespace Snapshooter
 
         /// <summary>
         /// The method <see cref="IsTypeField"/> allows you during the snapshot comparison,
-        /// to check if a field is from a specific type. Therefore the given field will NOT 
-        /// be compared with the field of the snapshot, it will only be checked if the 
+        /// to check if a field is from a specific type. Therefore the given field will NOT
+        /// be compared with the field of the snapshot, it will only be checked if the
         /// field is from the given type.
         /// </summary>
         /// <typeparam name="T">The type which the field should have.</typeparam>
@@ -156,7 +156,7 @@ namespace Snapshooter
         /// <summary>
         /// The method <see cref="IsTypeFields"/> allows you during the snapshot comparison,
         /// to check if the given fields are from a specific type. Therefore the given fields
-        /// will NOT be compared with the fields of the snapshot, it will only be checked if the 
+        /// will NOT be compared with the fields of the snapshot, it will only be checked if the
         /// fields are from the given type.
         /// </summary>
         /// <typeparam name="T">The type which the field should have.</typeparam>

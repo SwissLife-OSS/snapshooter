@@ -7,7 +7,7 @@
     public class SnapshotFullName
     {
         /// <summary>
-        /// Constructor of the class <see cref="SnapshotFullName"/> 
+        /// Constructor of the class <see cref="SnapshotFullName"/>
         /// initializes a new instance.
         /// </summary>
         /// <param name="fileName">The filename.</param>
@@ -26,6 +26,6 @@
         /// <summary>
         ///  The folder of the snapshot
         /// </summary>
-        public string FolderPath { get; }        
+        public string FolderPath { get; }
     }
 }

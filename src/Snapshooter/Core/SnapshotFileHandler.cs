@@ -5,8 +5,8 @@ using System.Text;
 namespace Snapshooter.Core
 {
     /// <summary>
-    /// The <see cref="SnapshotFileHandler"/> is responsible to handle all snapshots  
-    /// interactions on the file system. It can read, save and delete snapshots or 
+    /// The <see cref="SnapshotFileHandler"/> is responsible to handle all snapshots
+    /// interactions on the file system. It can read, save and delete snapshots or
     /// their folders.
     /// </summary>
     public class SnapshotFileHandler : ISnapshotFileHandler
@@ -24,12 +24,12 @@ namespace Snapshooter.Core
             {
                 throw new ArgumentNullException(nameof(snapshotFullName));
             }
-                
+
             if (string.IsNullOrWhiteSpace(snapshotData))
             {
                 throw new ArgumentException("Must not be empty", nameof(snapshotData));
             }
-                
+
             string snapshotSubfolderPath = EnsureSnapshotFolder(snapshotFullName);
 
             string fullSnapshotFilename = Path.Combine(
@@ -41,7 +41,7 @@ namespace Snapshooter.Core
         }
 
         /// <summary>
-        /// Saves a mismatching snapshot as a snapshot *.snap file 
+        /// Saves a mismatching snapshot as a snapshot *.snap file
         /// in the __snapshots__/__mismatch__ folder.
         /// </summary>
         /// <param name="snapshotFullName">The snapshot name and location.</param>
@@ -74,7 +74,7 @@ namespace Snapshooter.Core
         /// <summary>
         /// Reads the current snapshot from the __snapshots__ folder.
         /// </summary>
-        /// <param name="snapshotFullName">The full name of the snapshot.</param> 
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
         /// <returns>The expected snapshot.</returns>
         public string ReadSnapshot(SnapshotFullName snapshotFullName)
         {
@@ -82,7 +82,7 @@ namespace Snapshooter.Core
             {
                 throw new ArgumentNullException(nameof(snapshotFullName));
             }
-                
+
             string snapshotFolderPath = EnsureSnapshotFolder(snapshotFullName);
 
             string fullSnapshotName = Path.Combine(snapshotFolderPath, snapshotFullName.Filename);
@@ -96,7 +96,7 @@ namespace Snapshooter.Core
 
             return snapshotData;
         }
-                
+
         /// <summary>
         /// Deletes the given subfolder of the __snapshots__ folder of the current snapshot test.
         /// </summary>
@@ -119,7 +119,7 @@ namespace Snapshooter.Core
 
             DeleteFolderIfExist(snapshotSubFolderPath);
         }
-        
+
         private string EnsureSnapshotFolder(SnapshotFullName snapshotFullName)
         {
             var snapshotFolderPath = GetSnapshotFolderPath(snapshotFullName);
@@ -138,7 +138,7 @@ namespace Snapshooter.Core
 
             return snapshotSubFolderPath;
         }
-        
+
         private static string GetSnapshotFolderPath(SnapshotFullName snapshotFullName)
         {
             return Path.Combine(

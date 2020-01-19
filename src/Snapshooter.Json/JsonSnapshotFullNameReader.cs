@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using Snapshooter.Core;
 
 namespace Snapshooter.Json
 {
     /// <summary>
-    /// A json snapshot full name reader is responsible to get the information  
+    /// A json snapshot full name reader is responsible to get the information
     /// for the snapshot from a test.
     /// </summary>
     public class JsonSnapshotFullNameReader : ISnapshotFullNameReader

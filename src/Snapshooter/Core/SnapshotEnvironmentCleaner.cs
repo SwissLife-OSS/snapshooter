@@ -12,7 +12,7 @@ namespace Snapshooter.Core
         private static readonly HashSet<string> _mismatchFolders = new HashSet<string>();
 
         private readonly ISnapshotFileHandler _snapshotFileHandler;
-        
+
         /// <summary>
         /// Constructor of the <see cref="SnapshotEnvironmentCleaner"/> class to create
         /// a new instance.

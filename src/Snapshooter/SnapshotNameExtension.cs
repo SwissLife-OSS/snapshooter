@@ -3,7 +3,7 @@
 namespace Snapshooter
 {
     /// <summary>
-    /// A snapshot name extension will be transformed to a string, which will be 
+    /// A snapshot name extension will be transformed to a string, which will be
     /// added to the end of the snapshot name.
     /// </summary>
     public class SnapshotNameExtension
@@ -69,13 +69,13 @@ namespace Snapshooter
         /// </summary>
         /// <returns>The snapshot name extension text.</returns>
         public string ToParamsString()
-        {            
+        {
             string extensionName = string.Join("_", _snapshotNameExtensions);
             if (!string.IsNullOrWhiteSpace(extensionName))
             {
                 extensionName = string.Concat("_", extensionName);
             }
-            return extensionName;            
+            return extensionName;
         }
     }
 }

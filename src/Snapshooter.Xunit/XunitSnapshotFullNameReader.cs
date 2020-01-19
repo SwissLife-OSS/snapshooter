@@ -13,7 +13,7 @@ using Xunit;
 namespace Snapshooter.Xunit
 {
     /// <summary>
-    /// A xunit snapshot full name reader is responsible to get the information  
+    /// A xunit snapshot full name reader is responsible to get the information
     /// for the snapshot file from a xunit test.
     /// </summary>
     public class XunitSnapshotFullNameReader : ISnapshotFullNameReader

@@ -3,7 +3,7 @@
 namespace Snapshooter
 {
     /// <summary>
-    /// The class <see cref="SnapshotAssert"/> can be used to compare a given object 
+    /// The class <see cref="SnapshotAssert"/> can be used to compare a given object
     /// against a snapshot. If no snapshot exists, a new snapshot will be created from
     /// the current object and saved on the file system.
     /// </summary>
@@ -20,7 +20,7 @@ namespace Snapshooter
         /// </param>
         /// <param name="snapshotFullName">
         /// The name and folder of the snapshot.
-        /// </param>        
+        /// </param>
         /// <param name="matchOptions">
         /// Additional match actions, which can be applied during the comparison
         /// </param>

@@ -3,7 +3,7 @@
 namespace Snapshooter.Extensions
 {
     /// <summary>
-    /// The method base extension is used to add more functionality 
+    /// The method base extension is used to add more functionality
     /// to the class <see cref="MethodBase"/>
     /// </summary>
     public static class MethodBaseExtension

@@ -1,4 +1,4 @@
-﻿using Snapshooter.Tests.Data;
+using Snapshooter.Tests.Data;
 using System;
 using System.IO;
 using Xunit;
@@ -50,7 +50,7 @@ namespace Snapshooter.Xunit.Tests.Subfolder
 
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
-            // act 
+            // act
             Snapshot.Match<TestPerson>(testPerson);
 
             // assert

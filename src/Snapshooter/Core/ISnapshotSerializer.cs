@@ -3,7 +3,7 @@
 namespace Snapshooter.Core
 {
     /// <summary>
-    /// The class <see cref="ISnapshotSerializer"/> is responsible to 
+    /// The class <see cref="ISnapshotSerializer"/> is responsible to
     /// serialize an object into a snapshot and deserialize it.
     /// </summary>
     public interface ISnapshotSerializer

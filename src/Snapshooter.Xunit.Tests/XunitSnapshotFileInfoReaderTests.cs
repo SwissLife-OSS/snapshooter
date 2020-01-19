@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using Snapshooter.Core;
 using System.Threading.Tasks;
 
@@ -21,7 +21,7 @@ namespace Snapshooter.Xunit.Tests
                 $"{nameof(ReadSnapshotFullName_ResolveSnapshotFileName_ResolvedSuccessfully)}",
                 snapshotFullName.Filename);
         }
-        
+
         [Fact]
         public async Task ReadSnapshotFullName_ResolveFactSnapshotNameAsync_ResolvedSuccessfully()
         {

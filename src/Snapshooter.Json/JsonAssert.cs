@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
 
@@ -10,7 +10,7 @@ namespace Snapshooter.Json
     public class JsonAssert : IAssert
     {
         /// <summary>
-        /// Asserts the expected snapshot and the actual snapshot 
+        /// Asserts the expected snapshot and the actual snapshot
         /// with the .Net string compare.
         /// </summary>
         /// <param name="expectedSnapshot">The expected snapshot.</param>
@@ -18,7 +18,7 @@ namespace Snapshooter.Json
         public virtual void Assert(string expectedSnapshot, string actualSnapshot)
         {
             int snapshotCompare = string.Compare(
-                expectedSnapshot.ToString(), actualSnapshot.ToString(), 
+                expectedSnapshot.ToString(), actualSnapshot.ToString(),
                 StringComparison.InvariantCultureIgnoreCase);
 
             if (snapshotCompare != 0)

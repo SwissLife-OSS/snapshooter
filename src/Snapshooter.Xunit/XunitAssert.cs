@@ -9,7 +9,7 @@ namespace Snapshooter.Xunit
     public class XunitAssert : IAssert
     {
         /// <summary>
-        /// Asserts the expected snapshot and the actual snapshot 
+        /// Asserts the expected snapshot and the actual snapshot
         /// with the XUnit assert utility.
         /// </summary>
         /// <param name="expectedSnapshot">The expected snapshot.</param>

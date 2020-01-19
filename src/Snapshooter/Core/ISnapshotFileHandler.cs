@@ -1,8 +1,8 @@
 ﻿namespace Snapshooter.Core
 {
     /// <summary>
-    /// The <see cref="SnapshotFileHandler"/> is responsible to handle all snapshots  
-    /// interactions on the file system. It can read, save and delete snapshots or 
+    /// The <see cref="SnapshotFileHandler"/> is responsible to handle all snapshots
+    /// interactions on the file system. It can read, save and delete snapshots or
     /// their folders.
     /// </summary>
     public interface ISnapshotFileHandler
@@ -17,7 +17,7 @@
             SnapshotFullName snapshotFullName, string snapshotData);
 
         /// <summary>
-        /// Saves a mismatching snapshot as a snapshot *.snap file 
+        /// Saves a mismatching snapshot as a snapshot *.snap file
         /// in the __snapshots__/__mismatch__ folder.
         /// </summary>
         /// <param name="snapshotFullName">The snapshot name and location.</param>
@@ -29,7 +29,7 @@
         /// <summary>
         /// Reads the current snapshot from the __snapshots__ folder.
         /// </summary>
-        /// <param name="snapshotFullName">The full name of the snapshot.</param> 
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
         /// <returns>The expected snapshot.</returns>
         string ReadSnapshot(SnapshotFullName snapshotFullName);
 

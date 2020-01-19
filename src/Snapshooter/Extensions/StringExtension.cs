@@ -27,7 +27,7 @@ namespace Snapshooter.Extensions
         }
 
         /// <summary>
-        /// Normalizes the line endings of a text string. 
+        /// Normalizes the line endings of a text string.
         /// (Removes the carriage returns)
         /// </summary>
         /// <param name="text">The text string.</param>
@@ -38,7 +38,7 @@ namespace Snapshooter.Extensions
                 .Replace("\r\n", "\n")
                 .Replace("\n\r", "\n")
                 .Replace("\r", "\n");
-            
+
             return normalisedText;
         }
 

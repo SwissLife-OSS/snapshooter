@@ -13,7 +13,7 @@ using Snapshooter.Extensions;
 namespace Snapshooter.Core
 {
     /// <summary>
-    /// The class <see cref="SnapshotSerializer"/> is responsible to 
+    /// The class <see cref="SnapshotSerializer"/> is responsible to
     /// serialize an object into a snapshot.
     /// </summary>
     public class SnapshotSerializer : ISnapshotSerializer
@@ -36,14 +36,14 @@ namespace Snapshooter.Core
             }
             else
             {
-                // handle objects                
+                // handle objects
                 snapshotData = SerializeToJson(objectToSnapshot)
                     .EnsureLineEnding();
             }
 
             return snapshotData;
         }
-        
+
         /// <summary>
         /// Serializes a json token to a snapshot string.
         /// </summary>
@@ -132,7 +132,7 @@ namespace Snapshooter.Core
                 LineInfoHandling = LineInfoHandling.Ignore,
                 DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
             };
-        
+
         /// <summary>
         /// Json text writer, which removes the carriage returns of the string.
         /// </summary>
@@ -143,7 +143,7 @@ namespace Snapshooter.Core
             /// a new instance.
             /// </summary>
             /// <param name="textWriter">The text writer.</param>
-            public JsonTextWriterCrRemove(TextWriter textWriter) 
+            public JsonTextWriterCrRemove(TextWriter textWriter)
                 : base(textWriter)
             {
             }
