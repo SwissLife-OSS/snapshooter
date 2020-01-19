@@ -10,7 +10,7 @@ namespace Snapshooter.Core
     public interface IAssert
     {
         /// <summary>
-        /// Compares two snapshot strings. Throws an execption if the strings are not equal.
+        /// Compares two snapshot strings. Throws an exception if the strings are not equal.
         /// </summary>
         /// <param name="expectedSnapshot">The expected snapshot.</param>
         /// <param name="actualSnapshot">The actual snapshot.</param>
