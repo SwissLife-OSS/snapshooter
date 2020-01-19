@@ -15,7 +15,7 @@ namespace Snapshooter.Xunit.Tests.Subfolder
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace Snapshooter.Xunit.Tests.Subfolder
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().WithAge(5).Build();
 
             // act
-            Action match = () => Snapshot.Match<TestPerson>(testPerson);
+            Action match = () => Snapshot.Match(testPerson);
 
             // assert
             Assert.Throws<EqualException>(match);
@@ -51,7 +51,7 @@ namespace Snapshooter.Xunit.Tests.Subfolder
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act 
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
 
             // assert
             Assert.True(File.Exists(snapshotFileName));
