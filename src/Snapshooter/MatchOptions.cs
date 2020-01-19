@@ -148,7 +148,7 @@ namespace Snapshooter
         {
             Func<FieldOption, T> fieldOption = option => option.Field<T>(fieldPath);
 
-            IsType<T>(fieldOption);
+            IsType(fieldOption);
 
             return this;
         }
@@ -172,7 +172,7 @@ namespace Snapshooter
 
         /// <summary>
         /// The method <see cref="Assert"/> allows you during the snapshot comparison,
-        /// to assert/validate a specific field seperately. Therefore the given field
+        /// to assert/validate a specific field separately. Therefore the given field
         /// will NOT be compared with the fields of the snapshot, it will only be validated
         /// with the assert function defined.
         /// </summary>

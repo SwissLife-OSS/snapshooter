@@ -18,7 +18,7 @@ namespace Snapshooter.Json
         public virtual void Assert(string expectedSnapshot, string actualSnapshot)
         {
             int snapshotCompare = string.Compare(
-                expectedSnapshot.ToString(), actualSnapshot.ToString(),
+                expectedSnapshot, actualSnapshot,
                 StringComparison.InvariantCultureIgnoreCase);
 
             if (snapshotCompare != 0)

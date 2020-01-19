@@ -4,7 +4,7 @@ namespace Snapshooter.Core
 {
     /// <summary>
     /// The snapshot comparer is responsible to compare the actual snapshot with the
-    /// existing one and also inclode the field match options checks.
+    /// existing one and also include the field match options checks.
     /// </summary>
     public interface ISnapshotComparer
     {
@@ -13,7 +13,7 @@ namespace Snapshooter.Core
         /// the compare rules of the compare actions.
         /// </summary>
         /// <param name="matchOptions">
-        /// The compare actions, which will be used for special comparion.
+        /// The compare actions, which will be used for special comparison.
         /// </param>
         /// <param name="expectedSnapshot">
         /// The original snapshot of the current result.

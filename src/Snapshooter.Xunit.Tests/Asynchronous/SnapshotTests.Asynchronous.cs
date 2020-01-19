@@ -20,7 +20,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
 
             // assert
             await Task.Delay(1);
@@ -37,7 +37,7 @@ namespace Snapshooter.Xunit.Tests
             await Task.Delay(1);
 
             // act
-            Action match = () => Snapshot.Match<TestPerson>(testPerson);
+            Action match = () => Snapshot.Match(testPerson);
 
             // assert
             Assert.Throws<EqualException>(match);
@@ -60,7 +60,7 @@ namespace Snapshooter.Xunit.Tests
             await Task.Delay(1);
 
             // act
-            Snapshot.Match<TestPerson>(testPerson, SnapshotNameExtension.Create(age, size));
+            Snapshot.Match(testPerson, SnapshotNameExtension.Create(age, size));
 
             // assert
             await Task.Delay(1);
@@ -372,7 +372,7 @@ namespace Snapshooter.Xunit.Tests
         {
             await Task.Delay(1);
 
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
 
             await Task.Delay(1);
         }
@@ -382,7 +382,7 @@ namespace Snapshooter.Xunit.Tests
         {
             await Task.Delay(1);
 
-            Snapshot.Match<TestPerson>(testPerson, snapshotFullName);
+            Snapshot.Match(testPerson, snapshotFullName);
 
             await Task.Delay(1);
         }
@@ -392,7 +392,7 @@ namespace Snapshooter.Xunit.Tests
         {
             await Task.Delay(1);
 
-            Snapshot.Match<TestPerson>(testPerson, snapshotNameExtension);
+            Snapshot.Match(testPerson, snapshotNameExtension);
 
             await Task.Delay(1);
         }
@@ -403,7 +403,7 @@ namespace Snapshooter.Xunit.Tests
             {
                 await Task.Delay(1);
 
-                Snapshot.Match<TestPerson>(testPerson);
+                Snapshot.Match(testPerson);
 
                 await Task.Delay(1);
             }
@@ -413,7 +413,7 @@ namespace Snapshooter.Xunit.Tests
             {
                 await Task.Delay(1);
 
-                Snapshot.Match<TestPerson>(testPerson, snapshotFullName);
+                Snapshot.Match(testPerson, snapshotFullName);
 
                 await Task.Delay(1);
             }
@@ -423,7 +423,7 @@ namespace Snapshooter.Xunit.Tests
             {
                 await Task.Delay(1);
 
-                Snapshot.Match<TestPerson>(testPerson, snapshotNameExtension);
+                Snapshot.Match(testPerson, snapshotNameExtension);
 
                 await Task.Delay(1);
             }

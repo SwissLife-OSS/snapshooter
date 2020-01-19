@@ -1,5 +1,4 @@
 using Xunit;
-using Snapshooter.Core;
 using System.Threading.Tasks;
 
 namespace Snapshooter.Xunit.Tests

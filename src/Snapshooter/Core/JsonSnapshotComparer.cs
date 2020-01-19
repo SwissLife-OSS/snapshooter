@@ -8,7 +8,7 @@ namespace Snapshooter.Core
 {
     /// <summary>
     /// The snapshot comparer is responsible to compare the actual snapshot with the
-    /// existing one and also inclode the field match options checks.
+    /// existing one and also include the field match options checks.
     /// </summary>
     public class JsonSnapshotComparer : ISnapshotComparer
     {
@@ -105,9 +105,9 @@ namespace Snapshooter.Core
             {
                 foreach (JToken actual in actualTokens.ToList())
                 {
-                    if (actual.Parent is JArray)
+                    if (actual.Parent is JArray array)
                     {
-                        ((JArray)actual.Parent).Remove(actual);
+                        array.Remove(actual);
                     }
                     else
                     {

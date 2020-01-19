@@ -22,7 +22,7 @@ namespace Snapshooter.Xunit.Tests
             };
 
             // act & assert
-            Snapshot.Match<Developer>(developer);
+            Snapshot.Match(developer);
         }
 
         [Fact]
