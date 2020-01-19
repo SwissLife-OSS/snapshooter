@@ -105,9 +105,9 @@ namespace Snapshooter.Core
             {
                 foreach (JToken actual in actualTokens.ToList())
                 {
-                    if (actual.Parent is JArray)
+                    if (actual.Parent is JArray array)
                     {
-                        ((JArray)actual.Parent).Remove(actual);
+                        array.Remove(actual);
                     }
                     else
                     {
