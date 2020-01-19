@@ -148,7 +148,7 @@ namespace Snapshooter
         {
             Func<FieldOption, T> fieldOption = option => option.Field<T>(fieldPath);
 
-            IsType<T>(fieldOption);
+            IsType(fieldOption);
 
             return this;
         }
