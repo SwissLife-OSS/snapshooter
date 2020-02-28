@@ -29,24 +29,5 @@ namespace Snapshooter.Xunit
 
             return objectToRemoveWrappers;
         }
-
-        // TODO: Remove
-        private static object RemoveFluentAssertionWrapper2(this object objectToRemoveWrappers)
-        {
-            Type resultType = objectToRemoveWrappers.GetType();
-
-            if (resultType.Namespace != null
-                && resultType.Name != null
-                && resultType.Namespace.Equals("FluentAssertions.Primitives")
-                && resultType.Name.Equals("ObjectAssertions"))
-            {
-                PropertyInfo prop = resultType.GetProperty("Subject");
-                object actualvalue = prop.GetValue(objectToRemoveWrappers);
-
-                return actualvalue;
-            }
-
-            return objectToRemoveWrappers;
-        }
     }
 }
