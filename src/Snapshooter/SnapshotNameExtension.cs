@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Snapshooter
 {
@@ -69,13 +72,31 @@ namespace Snapshooter
         /// </summary>
         /// <returns>The snapshot name extension text.</returns>
         public string ToParamsString()
-        {            
-            string extensionName = string.Join("_", _snapshotNameExtensions);
+        {
+            string extensionName = string.Join("_",
+                _snapshotNameExtensions.Select(obj => { return ConvertParameter(obj); }));
+
             if (!string.IsNullOrWhiteSpace(extensionName))
             {
                 extensionName = string.Concat("_", extensionName);
             }
-            return extensionName;            
+
+            return extensionName;
+        }
+
+        private static string ConvertParameter(object obj)
+        {
+            if (obj is DateTime dateTime)
+            {
+                return dateTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
+            }
+
+            if (obj is DateTimeOffset dateTimeOffset)
+            {
+                return dateTimeOffset.ToString("yyyy-MM-ddTHH:mm:ssZ");
+            }
+
+            return Convert.ToString(obj, CultureInfo.InvariantCulture);
         }
     }
 }
