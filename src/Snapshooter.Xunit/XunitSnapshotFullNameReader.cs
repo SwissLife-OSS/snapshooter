@@ -79,12 +79,12 @@ namespace Snapshooter.Xunit
 
         private static bool IsFactTestMethod(MemberInfo method)
         {
-            return method?.GetCustomAttributes(typeof(FactAttribute)).Any() ?? false;
+            return method?.GetCustomAttributes(typeof(FactAttribute))?.Any() ?? false;
         }
 
         private static bool IsTheoryTestMethod(MemberInfo method)
         {
-            return method?.GetCustomAttributes(typeof(TheoryAttribute)).Any() ?? false;
+            return method?.GetCustomAttributes(typeof(TheoryAttribute))?.Any() ?? false;
         }
 
         private static MethodBase EvaluateAsynchronMethodBase(MemberInfo method)

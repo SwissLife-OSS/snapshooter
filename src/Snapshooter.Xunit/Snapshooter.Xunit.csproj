@@ -10,6 +10,7 @@
       It creates and asserts snapshots (json) within Xunit unit tests.
     </Description>
     <IsPackable>true</IsPackable>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

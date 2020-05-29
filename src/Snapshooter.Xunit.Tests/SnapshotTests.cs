@@ -21,7 +21,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
         }
 
         [InlineData("on")]
@@ -34,7 +34,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act
-            Action action = () => Snapshot.Match<TestPerson>(testPerson);
+            Action action = () => Snapshot.Match(testPerson);
 
             //assert
             Assert.Throws<SnapshotNotFoundException>(action);
@@ -50,7 +50,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
         }
 
         [InlineData("off")]
@@ -79,7 +79,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
             File.Delete(snapshotFileName);
         }
 
@@ -90,7 +90,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().WithAge(5).Build();
 
             // act
-            Action match = () => Snapshot.Match<TestPerson>(testPerson);
+            Action match = () => Snapshot.Match(testPerson);
 
             // assert
             Assert.Throws<EqualException>(match);
@@ -103,7 +103,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act
-            Action match = () => Snapshot.Match<TestPerson>(testPerson);
+            Action match = () => Snapshot.Match(testPerson);
 
             // assert
             Assert.Throws<EqualException>(match);
@@ -129,7 +129,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
 
             // assert
             Assert.True(File.Exists(snapshotFileName));
@@ -146,7 +146,7 @@ namespace Snapshooter.Xunit.Tests
                 .WithAge(age).WithSize(size).Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson, SnapshotNameExtension.Create(age, size));
+            Snapshot.Match(testPerson, SnapshotNameExtension.Create(age, size));
         }
 
         [Theory]
@@ -162,7 +162,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Address.Country.CountryCode = CountryCode.US;
 
             // act & assert
-            Assert.Throws<EqualException>(() => Snapshot.Match<TestPerson>(
+            Assert.Throws<EqualException>(() => Snapshot.Match(
                 testPerson, SnapshotNameExtension.Create(age, size)));
         }
 
@@ -176,7 +176,7 @@ namespace Snapshooter.Xunit.Tests
                 .WithAge(age).WithSize(size).Build();
 
             // act & assert
-            Assert.Throws<EqualException>(() => Snapshot.Match<TestPerson>(
+            Assert.Throws<EqualException>(() => Snapshot.Match(
                 testPerson, SnapshotNameExtension.Create(age, size)));
         }
 
@@ -203,7 +203,7 @@ namespace Snapshooter.Xunit.Tests
                 .WithAge(age).WithSize(size).Build();
 
             // act
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
 
             // assert
             Assert.True(File.Exists(snapshotFileName));
@@ -261,7 +261,7 @@ namespace Snapshooter.Xunit.Tests
                 .WithSize(0.5m).Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(
+            Snapshot.Match(
                 testPerson, matchOptions => matchOptions.IgnoreField("Size"));
         }
 
@@ -273,7 +273,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(
+            Snapshot.Match(
                 testPerson, matchOptions => matchOptions.IgnoreField<int?>("Age"));
         }
 
@@ -285,7 +285,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Snapshot.Match<TestChild>(
+            Snapshot.Match(
                 testChild, matchOptions => matchOptions.IgnoreField<string>("Name"));
         }
 
@@ -309,7 +309,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match<TestPerson>(
+            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
                 testPerson, matchOptions => matchOptions.IgnoreField<decimal>("alt")));
         }
 
@@ -323,7 +323,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Address = null;
 
             // act & assert
-            Snapshot.Match<TestPerson>(
+            Snapshot.Match(
                 testPerson, matchOptions => matchOptions.IgnoreField<object>("Address"));
         }
 
@@ -335,11 +335,11 @@ namespace Snapshooter.Xunit.Tests
                 .WithSize(1.5m).Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(
+            Snapshot.Match(
                 testPerson, matchOptions => matchOptions.IgnoreField("Size"));
-            Snapshot.Match<TestPerson>(
+            Snapshot.Match(
                 testPerson, matchOptions => matchOptions.IgnoreField<decimal>("Size"));
-            Snapshot.Match<TestPerson>(
+            Snapshot.Match(
                 testPerson, matchOptions => matchOptions.Ignore(option => option.Field<decimal>("Size")));
         }
 
@@ -358,7 +358,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Relatives[0].Address.Plz = null;
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions
                     .IgnoreField<Guid>("Id")
                     .IgnoreField<DateTime>("CreationDate")
@@ -381,11 +381,11 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Children.ElementAt(2).Name = "newName3";
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IgnoreFields("Children[*].Name"));
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IgnoreFields<string>("Children[*].Name"));
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.Ignore(option => option.Fields<string>("Children[*].Name")));
         }
 
@@ -403,13 +403,13 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
 
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IgnoreFields("Children[*]"));
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IgnoreFields<TestChild>("Children[*]"));
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.Ignore(option => option.Fields<TestChild>("Children[*]")));
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IgnoreField("Children"));
         }
 
@@ -428,7 +428,7 @@ namespace Snapshooter.Xunit.Tests
             };
 
             // act & assert
-            Snapshot.Match<object[]>(
+            Snapshot.Match(
                 testPersons, matchOptions => matchOptions.IgnoreFields<object>("[*]"));
         }
 
@@ -444,7 +444,7 @@ namespace Snapshooter.Xunit.Tests
             };
 
             // act & assert
-            Snapshot.Match<object[]>(
+            Snapshot.Match(
                 testPersons, matchOptions => matchOptions.IgnoreFields<object>("[*].Firstname"));
         }
 
@@ -459,7 +459,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<DateTime>("CreationDate"));
         }
 
@@ -471,7 +471,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() =>
-                Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<DateTime>("Size")));
         }
 
@@ -483,7 +483,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() =>
-                Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match(testPerson,
                     matchOptions => matchOptions.IsTypeField<DateTime>("Age")));
         }
 
@@ -494,7 +494,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<Guid>("Id"));
         }
 
@@ -506,7 +506,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() =>
-                Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<Guid>("Size")));
         }
 
@@ -518,7 +518,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() =>
-                Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match(testPerson,
                     matchOptions => matchOptions.IsTypeField<Guid>("Age")));
         }
 
@@ -529,7 +529,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<int>("Age"));
         }
 
@@ -541,7 +541,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() =>
-                Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<int>("Size")));
         }
 
@@ -553,7 +553,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() =>
-                Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match(testPerson,
                     matchOptions => matchOptions.IsTypeField<int>("Age")));
         }
 
@@ -564,7 +564,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<decimal>("Size"));
         }
 
@@ -575,7 +575,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<decimal>("Age"));
         }
 
@@ -587,7 +587,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() =>
-                Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<decimal>("Firstname")));
         }
 
@@ -599,7 +599,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(() =>
-                Snapshot.Match<TestPerson>(testPerson,
+                Snapshot.Match(testPerson,
                     matchOptions => matchOptions.IsTypeField<int>("Age")));
         }
 
@@ -611,10 +611,10 @@ namespace Snapshooter.Xunit.Tests
                 .WithSize(1.5m).Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(
+            Snapshot.Match(
                 testPerson, matchOptions =>
                     matchOptions.IsTypeField<DateTime>("CreationDate"));
-            Snapshot.Match<TestPerson>(
+            Snapshot.Match(
                 testPerson, matchOptions =>
                     matchOptions.IsType(option => option.Field<DateTime>("CreationDate")));
         }
@@ -626,7 +626,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeField<TestAddress>("Address"));
         }
 
@@ -643,10 +643,10 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Children.ElementAt(2).DateOfBirth = DateTime.Parse("2018-08-17");
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeFields<DateTime>("Children[*].DateOfBirth"));
-            Snapshot.Match<TestPerson>(testPerson,
-                matchOptions => matchOptions.IsType<DateTime>(
+            Snapshot.Match(testPerson,
+                matchOptions => matchOptions.IsType(
                     option => option.Fields<DateTime>("Children[*].DateOfBirth")));
         }
 
@@ -661,10 +661,10 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Children.ElementAt(0).DateOfBirth = DateTime.Parse("2015-08-17");
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeFields<DateTime>("Children[*].DateOfBirth"));
-            Snapshot.Match<TestPerson>(testPerson,
-                matchOptions => matchOptions.IsType<DateTime>(
+            Snapshot.Match(testPerson,
+                matchOptions => matchOptions.IsType(
                     option => option.Fields<DateTime>("Children[*].DateOfBirth")));
         }
 
@@ -681,10 +681,10 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Children.ElementAt(2).Name = "newName3x";
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IsTypeFields<TestChild>("Children[*]"));
-            Snapshot.Match<TestPerson>(testPerson,
-                matchOptions => matchOptions.IsType<TestChild>(
+            Snapshot.Match(testPerson,
+                matchOptions => matchOptions.IsType(
                     option => option.Fields<TestChild>("Children[*]")));
         }
 
@@ -732,7 +732,7 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                         matchOption => matchOption.Assert(
                             fieldOption => Assert.Equal(fieldOption.Field<Guid>("Id"),
                                 Guid.Parse("c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8"))));
@@ -746,7 +746,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotCompareException>(
-                () => Snapshot.Match<TestPerson>(testPerson,
+                () => Snapshot.Match(testPerson,
                     matchOption => matchOption.Assert(
                         fieldOption => Assert.Equal(fieldOption.Field<Guid>("Id"),
                             Guid.Parse("fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de")))));
@@ -761,7 +761,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOption => matchOption.Assert(
                     fieldOption => Assert.Null(fieldOption.Field<Guid?>("Id"))));
         }
@@ -774,7 +774,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testChild,
+            Snapshot.Match(testChild,
                 matchOption => matchOption.Assert(fieldOption =>
                     Assert.Equal("Hanna", fieldOption.Field<string>("Children[2].Name"))));
         }
@@ -788,7 +788,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotCompareException>(() =>
-                Snapshot.Match<TestPerson>(testChild,
+                Snapshot.Match(testChild,
                     matchOption => matchOption.Assert(fieldOption =>
                         Assert.Equal("Anna", fieldOption.Field<string>("Children[2].Name")))));
         }
@@ -801,7 +801,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testChild,
+            Snapshot.Match(testChild,
                 matchOption => matchOption.Assert(fieldOption =>
                     Assert.Null(fieldOption.Field<string>("Children[1].Name"))));
         }
@@ -815,7 +815,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testChild,
+            Snapshot.Match(testChild,
                 matchOption => matchOption.Assert(fieldOption =>
                     Assert.Equal(22, fieldOption.Field<int>("Firstname"))));
         }
@@ -829,7 +829,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(
-                () => Snapshot.Match<TestPerson>(testChild,
+                () => Snapshot.Match(testChild,
                     matchOption => matchOption.Assert(fieldOption =>
                         Assert.Equal(22, fieldOption.Field<int>("Firstname")))));
         }
@@ -843,7 +843,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Snapshot.Match<TestPerson>(testChild,
+            Snapshot.Match(testChild,
                 matchOption => matchOption.Assert(fieldOption =>
                     Assert.Null(fieldOption.Field<int?>("Age"))));
         }
@@ -858,7 +858,7 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Assert.Throws<SnapshotFieldException>(
-                () => Snapshot.Match<TestPerson>(testChild,
+                () => Snapshot.Match(testChild,
                      matchOption => matchOption.Assert(fieldOption =>
                         Assert.Null(fieldOption.Field<int>("Age")))));
         }
@@ -879,7 +879,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Relatives[0].Address.Plz = null;
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOption => matchOption
                     .Assert(fieldOption =>
                         Assert.NotEqual(Guid.Empty, fieldOption.Field<Guid>("Id")))
@@ -915,7 +915,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Relatives[0].Address.Plz = null;
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson,
+            Snapshot.Match(testPerson,
                 matchOption => matchOption
         .Assert(option => Assert.NotEqual(Guid.Empty, option.Field<Guid>("Id")))
                     .IgnoreField<DateTime>("CreationDate")
@@ -940,7 +940,7 @@ namespace Snapshooter.Xunit.Tests
             markWalton.Relatives = new[] { sandraSchneider };
 
             // act & assert
-            Snapshot.Match<TestPerson>(markWalton);
+            Snapshot.Match(markWalton);
         }
 
         #endregion
@@ -955,7 +955,7 @@ namespace Snapshooter.Xunit.Tests
                 "snapshot test with a plain string value";
 
             // act & assert
-            Snapshot.Match<string>(testText);
+            Snapshot.Match(testText);
         }
 
         [Fact]
@@ -966,7 +966,7 @@ namespace Snapshooter.Xunit.Tests
                 "snapshot test with a plain string value";
 
             // act
-            Action match = () => Snapshot.Match<string>(testText);
+            Action match = () => Snapshot.Match(testText);
 
             // assert
             Assert.Contains("fest",
@@ -981,7 +981,7 @@ namespace Snapshooter.Xunit.Tests
                 "snapshot test with a plain string value";
 
             // act
-            Action match = () => Snapshot.Match<string>(
+            Action match = () => Snapshot.Match(
                 testText, matchOption => matchOption.IgnoreField("test"));
 
             // assert
@@ -996,7 +996,7 @@ namespace Snapshooter.Xunit.Tests
             int testNumber = 5;
 
             // act & assert
-            Snapshot.Match<int>(testNumber);
+            Snapshot.Match(testNumber);
         }
 
         [Fact]
@@ -1006,7 +1006,7 @@ namespace Snapshooter.Xunit.Tests
             int testNumber = 5;
 
             // act
-            Action match = () => Snapshot.Match<int>(testNumber);
+            Action match = () => Snapshot.Match(testNumber);
 
             // assert
             Assert.Contains("6",
@@ -1020,7 +1020,7 @@ namespace Snapshooter.Xunit.Tests
             int testNumber = 5;
 
             // act
-            Action match = () => Snapshot.Match<int>(
+            Action match = () => Snapshot.Match(
                 testNumber, matchOption => matchOption.IgnoreField("6"));
 
             // assert
@@ -1041,7 +1041,7 @@ namespace Snapshooter.Xunit.Tests
                 "}\r\n    id\r\n    __typename\r\n  }\r\n}";
 
             // act & assert
-            Snapshot.Match<string>(testText);
+            Snapshot.Match(testText);
         }
 
         [Fact]
@@ -1053,7 +1053,7 @@ namespace Snapshooter.Xunit.Tests
                 "}\r\n    id\r\n    __typename\r\n  }\r\n}";
 
             // act & assert
-            Snapshot.Match<string>(testText);
+            Snapshot.Match(testText);
         }
 
         [Fact]
@@ -1065,7 +1065,7 @@ namespace Snapshooter.Xunit.Tests
                 "}\r\n    id\r\n    __typename\r\n  }\r\n}";
 
             // act
-            Action match = () => Snapshot.Match<string>(testText);
+            Action match = () => Snapshot.Match(testText);
 
             // assert
             Assert.Throws<EqualException>(match);
@@ -1080,7 +1080,7 @@ namespace Snapshooter.Xunit.Tests
                 "}\n    id\n    __typename\n  }\n}";
 
             // act & assert
-            Snapshot.Match<string>(testText);
+            Snapshot.Match(testText);
         }
 
         [Fact]
@@ -1092,7 +1092,7 @@ namespace Snapshooter.Xunit.Tests
                 "}\r    id\r    __typename\r  }\r}";
 
             // act & assert
-            Snapshot.Match<string>(testText);
+            Snapshot.Match(testText);
         }
 
         [Fact]
@@ -1104,7 +1104,7 @@ namespace Snapshooter.Xunit.Tests
                 "}\r\n    id\r\n    __typename\r\n  }\r\n}";
 
             // act & assert
-            Snapshot.Match<string>(testText);
+            Snapshot.Match(testText);
         }
 
         [Fact]
@@ -1116,7 +1116,7 @@ namespace Snapshooter.Xunit.Tests
                 "}\n    id\n    __typename\n  }\n}";
 
             // act & assert
-            Snapshot.Match<string>(testText);
+            Snapshot.Match(testText);
         }
 
         [Fact]
@@ -1128,7 +1128,7 @@ namespace Snapshooter.Xunit.Tests
                 "}\r    id\r    __typename\r  }\r}";
 
             // act & assert
-            Snapshot.Match<string>(testText);
+            Snapshot.Match(testText);
         }
 
         [Fact]
@@ -1141,7 +1141,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Lastname = "Your\r\nName\nAt\rHome";
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
         }
 
         [Fact]
@@ -1154,7 +1154,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Lastname = "Your\r\nName\nAt\rHome";
 
             // act & assert
-            Action match = () => Snapshot.Match<TestPerson>(testPerson);
+            Action match = () => Snapshot.Match(testPerson);
 
             // assert
             Assert.Throws<EqualException>(match);
@@ -1169,7 +1169,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Lastname = "last \r\n name \r with \r\n carriage return";
 
             // act
-            Action match = () => Snapshot.Match<TestPerson>(testPerson);
+            Action match = () => Snapshot.Match(testPerson);
 
             // assert
             Assert.Throws<EqualException>(match);
@@ -1184,7 +1184,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Lastname = "\\r\\n last \r\n name \r with \r\n carriage \\r\\n return \\r\\n";
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
         }
 
         [Fact]
@@ -1196,7 +1196,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Lastname = "\\r last \r\n name \r with \r\n carriage \\r return \\r";
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
         }
 
         [Fact]
@@ -1208,7 +1208,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Lastname = "\\n last \r\n name \r with \r\n carriage \\n return \\n";
 
             // act & assert
-            Snapshot.Match<TestPerson>(testPerson);
+            Snapshot.Match(testPerson);
         }
 
         [Fact]
@@ -1223,7 +1223,7 @@ namespace Snapshooter.Xunit.Tests
             };
 
             // act & assert
-            Snapshot.Match<TestMessageInfo>(testMessageInfo);
+            Snapshot.Match(testMessageInfo);
         }
 
         [Fact]
@@ -1238,7 +1238,7 @@ namespace Snapshooter.Xunit.Tests
             };
 
             // act & assert
-            Snapshot.Match<TestMessageInfo>(testMessageInfo);
+            Snapshot.Match(testMessageInfo);
         }
 
         [Fact]

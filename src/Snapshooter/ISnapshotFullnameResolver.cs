@@ -1,5 +1,3 @@
-﻿using Snapshooter.Core;
-
 namespace Snapshooter
 {
     /// <summary>
