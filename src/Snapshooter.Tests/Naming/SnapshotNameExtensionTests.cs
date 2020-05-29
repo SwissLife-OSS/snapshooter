@@ -385,7 +385,7 @@ namespace Snapshooter
             // assert
             thread.Join();
 
-            Assert.Equal("_dateTime_2009-01-12T16-05-34Z", nameExtension);
+            Assert.Equal("_dateTime_2009-01-12T17-05-34Z", nameExtension);
         }
 
         [Theory]
@@ -423,7 +423,7 @@ namespace Snapshooter
             // assert
             thread.Join();
 
-            Assert.Equal("_dateTimeOffset_2020-10-21T13-34-00Z", nameExtension);
+            Assert.Equal("_dateTimeOffset_2020-10-21T18-34-00Z", nameExtension);
         }
         
         private enum Importance
