@@ -425,7 +425,37 @@ namespace Snapshooter
 
             Assert.Equal("_dateTimeOffset_2020-10-21T18-34-00Z", nameExtension);
         }
-        
+
+        [Fact]
+        public void ToParamsString_DateTimeExtensionInCurrentCulture_AlwaysRightString()
+        {
+            // arrange
+            var snapshotNameExtension = SnapshotNameExtension.Create("dateTime",
+                DateTime.ParseExact("12.01.2009 17:05:34", "dd.MM.yyyy HH:mm:ss",
+                    CultureInfo.CurrentCulture));
+
+            // act
+            string nameExtension = snapshotNameExtension.ToParamsString();
+
+            // assert
+            Assert.Equal("_dateTime_2009-01-12T17-05-34Z", nameExtension);
+        }
+
+        [Fact]
+        public void ToParamsString_DateTimeOffsetExtensionInCurrentCulture_AlwaysRightString()
+        {
+            // arrange
+            var snapshotNameExtension = SnapshotNameExtension.Create("dateTimeOffset",
+                DateTimeOffset.ParseExact("10/21/2020 18:34 +05:00", "MM/dd/yyyy HH:mm zzz",
+                    CultureInfo.CurrentCulture));
+
+            // act
+            string nameExtension = snapshotNameExtension.ToParamsString();
+
+            // assert
+            Assert.Equal("_dateTimeOffset_2020-10-21T18-34-00Z", nameExtension);
+        }
+
         private enum Importance
         {
             Regular
