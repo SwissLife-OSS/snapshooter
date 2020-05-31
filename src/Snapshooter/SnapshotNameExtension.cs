@@ -88,12 +88,12 @@ namespace Snapshooter
         {
             if (obj is DateTime dateTime)
             {
-                return dateTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                return dateTime.ToString("yyyy-MM-ddTHH-mm-ssZ", CultureInfo.InvariantCulture);
             }
 
             if (obj is DateTimeOffset dateTimeOffset)
             {
-                return dateTimeOffset.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                return dateTimeOffset.ToString("yyyy-MM-ddTHH-mm-ssZ", CultureInfo.InvariantCulture);
             }
 
             return Convert.ToString(obj, CultureInfo.InvariantCulture);
