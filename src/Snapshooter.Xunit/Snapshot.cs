@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Snapshooter.Core;
 
 namespace Snapshooter.Xunit
@@ -12,7 +13,10 @@ namespace Snapshooter.Xunit
     /// </summary>
     public static class Snapshot
     {
-        /// <summary>        
+        private static AsyncLocal<SnapshotFullName> _snapshotName =
+            new AsyncLocal<SnapshotFullName>();
+
+        /// <summary>
         /// Creates a json snapshot of the given object and compares it with the 
         /// already existing snapshot of the test. 
         /// If no snapshot exists, a new snapshot will be created from the current result
@@ -54,7 +58,7 @@ namespace Snapshooter.Xunit
             T currentResult,
             SnapshotNameExtension snapshotNameExtension,
             Func<MatchOptions, MatchOptions> matchOptions = null)
-        {            
+        {
             Match((object)currentResult, snapshotNameExtension, matchOptions);
         }
 
@@ -77,7 +81,7 @@ namespace Snapshooter.Xunit
             T currentResult,
             string snapshotName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
-        {            
+        {
             Match((object)currentResult, snapshotName, matchOptions);
         }
 
@@ -110,7 +114,7 @@ namespace Snapshooter.Xunit
             string snapshotName,
             SnapshotNameExtension snapshotNameExtension,
             Func<MatchOptions, MatchOptions> matchOptions = null)
-        {            
+        {
             Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
 
@@ -258,7 +262,15 @@ namespace Snapshooter.Xunit
         /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName()
         {
-            return Snapshooter.ResolveSnapshotFullName();
+            SnapshotFullName fullName = _snapshotName.Value;
+
+            if (fullName is null)
+            {
+                fullName = Snapshooter.ResolveSnapshotFullName();
+                _snapshotName.Value = fullName;
+            }
+
+            return fullName;
         }
 
         /// <summary>
@@ -273,7 +285,15 @@ namespace Snapshooter.Xunit
         /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName(string snapshotName)
         {
-            return Snapshooter.ResolveSnapshotFullName(snapshotName);
+            SnapshotFullName fullName = _snapshotName.Value;
+
+            if (fullName is null)
+            {
+                fullName = Snapshooter.ResolveSnapshotFullName(snapshotName);
+                _snapshotName.Value = fullName;
+            }
+
+            return fullName;
         }
 
         /// <summary>
@@ -294,8 +314,16 @@ namespace Snapshooter.Xunit
         public static SnapshotFullName FullName(
             SnapshotNameExtension snapshotNameExtension)
         {
-            return Snapshooter.ResolveSnapshotFullName(
-                snapshotNameExtension: snapshotNameExtension);
+            SnapshotFullName fullName = _snapshotName.Value;
+
+            if (fullName is null)
+            {
+                fullName = Snapshooter.ResolveSnapshotFullName(
+                    snapshotNameExtension: snapshotNameExtension);
+                _snapshotName.Value = fullName;
+            }
+
+            return fullName;
         }
 
         /// <summary>
@@ -321,14 +349,22 @@ namespace Snapshooter.Xunit
         public static SnapshotFullName FullName(
             string snapshotName, SnapshotNameExtension snapshotNameExtension)
         {
-            return Snapshooter.ResolveSnapshotFullName(snapshotName, snapshotNameExtension);
+            SnapshotFullName fullName = _snapshotName.Value;
+
+            if (fullName is null)
+            {
+                fullName = Snapshooter.ResolveSnapshotFullName(snapshotName, snapshotNameExtension);
+                _snapshotName.Value = fullName;
+            }
+
+            return fullName;
         }
 
         private static Snapshooter Snapshooter
         {
             get
             {
-                return 
+                return
                     new Snapshooter(
                         new SnapshotAssert(
                             new SnapshotSerializer(),

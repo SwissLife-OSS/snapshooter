@@ -114,6 +114,25 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
+        public async Task Match_FactMatchSnapshotInAsncMethodWithImplcName_SuccessfulMatch()
+        {
+            // arrange
+            await Task.Delay(1);
+
+            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider().Build();
+
+            await Task.Delay(1);
+
+            Snapshot.FullName();
+
+            // act
+            await AsyncMatchWithImplicitFullName(testPerson);
+
+            // assert
+            await Task.Delay(1);
+        }
+
+        [Fact]
         public async Task Match_FactMatchSnapshotInAsncMethod_OneFieldNotEqual()
         {
             // arrange
@@ -383,6 +402,15 @@ namespace Snapshooter.Xunit.Tests
             await Task.Delay(1);
 
             Snapshot.Match(testPerson, snapshotFullName);
+
+            await Task.Delay(1);
+        }
+
+        private async Task AsyncMatchWithImplicitFullName(TestPerson testPerson)
+        {
+            await Task.Delay(1);
+
+            Snapshot.Match(testPerson);
 
             await Task.Delay(1);
         }

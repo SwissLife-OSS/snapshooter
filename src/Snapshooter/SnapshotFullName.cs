@@ -26,6 +26,6 @@
         /// <summary>
         ///  The folder of the snapshot
         /// </summary>
-        public string FolderPath { get; }        
+        public string FolderPath { get; }
     }
 }

@@ -85,6 +85,8 @@ namespace Snapshooter
                 .ResolveSnapshotFullName(
                     snapshotName, snapshotNameExtension?.ToParamsString());
 
+            
+
             return snapshotFullName;
         }
     }

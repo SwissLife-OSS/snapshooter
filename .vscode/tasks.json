@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Snapshooter.Json.Tests/Snapshooter.Json.Tests.csproj"
+                "${workspaceFolder}/src"
             ],
             "problemMatcher": "$msCompile"
         }
