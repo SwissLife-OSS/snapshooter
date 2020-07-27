@@ -6,7 +6,7 @@ namespace Snapshooter.Xunit
 {
     /// <summary>
     /// The snapshot class creates and compares snapshots of object.
-    /// It creates a json snapshot of the given object and compares it with the 
+    /// It creates a json snapshot of the given object and compares it with the
     /// already existing snapshot of the test. If no snapshot exists already for this
     /// test, then a new snapshot will be created from the current result and saved
     /// in the folder __snapshots__ next to the executing test class file.
@@ -17,8 +17,8 @@ namespace Snapshooter.Xunit
             new AsyncLocal<SnapshotFullName>();
 
         /// <summary>
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
@@ -34,9 +34,9 @@ namespace Snapshooter.Xunit
             Match((object)currentResult, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
@@ -45,8 +45,8 @@ namespace Snapshooter.Xunit
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Generated Snapshotname = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
@@ -62,18 +62,18 @@ namespace Snapshooter.Xunit
             Match((object)currentResult, snapshotNameExtension, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
         /// <typeparam name="T">The type of the result/object to match.</typeparam>
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
-        /// The name of the snapshot. If not set, then the snapshotname 
+        /// The name of the snapshot. If not set, then the snapshotname
         /// will be evaluated automatically from the xunit test name.
-        /// </param> 
+        /// </param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
@@ -85,23 +85,23 @@ namespace Snapshooter.Xunit
             Match((object)currentResult, snapshotName, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
         /// <typeparam name="T">The type of the result/object to match.</typeparam>
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
-        /// The name of the snapshot. If not set, then the snapshotname 
+        /// The name of the snapshot. If not set, then the snapshotname
         /// will be evaluated automatically from the xunit test name.
-        /// </param> 
+        /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Generated Snapshotname = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
@@ -118,9 +118,9 @@ namespace Snapshooter.Xunit
             Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
@@ -138,13 +138,13 @@ namespace Snapshooter.Xunit
             Match((object)currentResult, snapshotFullName, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
-        /// <param name="currentResult">The object to match.</param> 
+        /// <param name="currentResult">The object to match.</param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
@@ -153,11 +153,12 @@ namespace Snapshooter.Xunit
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             Snapshooter.AssertSnapshot(currentResult, FullName(), matchOptions);
+            _snapshotName = new AsyncLocal<SnapshotFullName>();
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
@@ -165,8 +166,8 @@ namespace Snapshooter.Xunit
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Generated Snapshotname = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
@@ -182,17 +183,17 @@ namespace Snapshooter.Xunit
             Match(currentResult, FullName(snapshotNameExtension), matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
-        /// The name of the snapshot. If not set, then the snapshotname 
+        /// The name of the snapshot. If not set, then the snapshotname
         /// will be evaluated automatically from the xunit test name.
-        /// </param>  
+        /// </param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
@@ -204,22 +205,22 @@ namespace Snapshooter.Xunit
             Match(currentResult, FullName(snapshotName), matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
-        /// The name of the snapshot. If not set, then the snapshotname 
+        /// The name of the snapshot. If not set, then the snapshotname
         /// will be evaluated automatically from the xunit test name.
-        /// </param> 
+        /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Generated Snapshotname = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
@@ -236,9 +237,9 @@ namespace Snapshooter.Xunit
             Match(currentResult, FullName(snapshotName, snapshotNameExtension), matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
@@ -254,6 +255,7 @@ namespace Snapshooter.Xunit
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            _snapshotName = new AsyncLocal<SnapshotFullName>();
         }
 
         /// <summary>
@@ -274,14 +276,14 @@ namespace Snapshooter.Xunit
         }
 
         /// <summary>
-        /// Resolves the snapshot name for the running unit test. 
-        /// The default generated snapshot name can be overwritten 
+        /// Resolves the snapshot name for the running unit test.
+        /// The default generated snapshot name can be overwritten
         /// by the given snapshot name.
         /// </summary>
         /// <param name="snapshotName">
-        /// The snapshot name given by the user. This snapshot name will overwrite 
-        /// the automatically generated snapshot name. 
-        /// </param>       
+        /// The snapshot name given by the user. This snapshot name will overwrite
+        /// the automatically generated snapshot name.
+        /// </param>
         /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName(string snapshotName)
         {
@@ -297,15 +299,15 @@ namespace Snapshooter.Xunit
         }
 
         /// <summary>
-        /// Resolves the snapshot name for the running unit test. 
-        /// The default generated snapshot name can be extended by 
+        /// Resolves the snapshot name for the running unit test.
+        /// The default generated snapshot name can be extended by
         /// the snapshot name extensions.
-        /// </summary>       
+        /// </summary>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Snapshot name = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
@@ -327,20 +329,20 @@ namespace Snapshooter.Xunit
         }
 
         /// <summary>
-        /// Resolves the snapshot name for the running unit test. 
-        /// The default generated snapshot name can either be overwritten 
+        /// Resolves the snapshot name for the running unit test.
+        /// The default generated snapshot name can either be overwritten
         /// with a given snapshot name, or can be extended by the snapshot name extensions,
         /// or both.
         /// </summary>
         /// <param name="snapshotName">
-        /// The snapshot name given by the user, this snapshot name will overwrite 
-        /// the automatically generated snapshot name. 
+        /// The snapshot name given by the user, this snapshot name will overwrite
+        /// the automatically generated snapshot name.
         /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Snapshot name = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
