@@ -3,7 +3,7 @@
 namespace Snapshooter
 {
     /// <summary>
-    /// The <see cref="Snapshooter"/> can be used to compare a given object 
+    /// The <see cref="Snapshooter"/> can be used to compare a given object
     /// against a snapshot. If no snapshot exists, a new snapshot will be created from
     /// the current object and saved on the file system.
     /// Snapshooter can also be used to resolve the name of a snapshot within a unit test.
@@ -14,21 +14,21 @@ namespace Snapshooter
         private readonly ISnapshotFullNameResolver _snapshotFullNameResolver;
 
         /// <summary>
-        /// Constructor of the class <see cref="Snapshooter"/> 
+        /// Constructor of the class <see cref="Snapshooter"/>
         /// initializes a new instance.
         /// </summary>
         /// <param name="snapshotAssert">The snapshot asserter.</param>
         /// <param name="snapshotFullNameResolver">The snapshot full name resolver.</param>
-        public Snapshooter(ISnapshotAssert snapshotAssert, 
+        public Snapshooter(ISnapshotAssert snapshotAssert,
             ISnapshotFullNameResolver snapshotFullNameResolver)
         {
             _snapshotAssert = snapshotAssert;
             _snapshotFullNameResolver = snapshotFullNameResolver;
         }
 
-        /// <summary>        
-        /// Creates a snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, given by the snapshot full name.
         /// </summary>
@@ -52,26 +52,26 @@ namespace Snapshooter
             {
                 throw new ArgumentNullException(nameof(snapshotFullName));
             }
-            
+
             _snapshotAssert.AssertSnapshot(
                 currentResult, snapshotFullName, matchOptions);
         }
 
         /// <summary>
-        /// Resolves the snapshot name for the running unit test. 
-        /// The default generated snapshot name can either be overwritten 
+        /// Resolves the snapshot name for the running unit test.
+        /// The default generated snapshot name can either be overwritten
         /// with a given snapshot name, or can be extended by the snapshot name extensions,
         /// or both.
         /// </summary>
         /// <param name="snapshotName">
-        /// The snapshot name given by the user, this snapshot name will overwrite 
-        /// the automatically generated snapshot name. 
+        /// The snapshot name given by the user, this snapshot name will overwrite
+        /// the automatically generated snapshot name.
         /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the snapshot name with
         /// this given extensions. It can be used to make a snapshot name even more
-        /// specific. 
-        /// Example: 
+        /// specific.
+        /// Example:
         /// Snapshot name = 'NumberAdditionTest'
         /// Snapshot name extension = '5', '6', 'Result', '11'
         /// Result: 'NumberAdditionTest_5_6_Result_11'
@@ -84,8 +84,6 @@ namespace Snapshooter
             SnapshotFullName snapshotFullName = _snapshotFullNameResolver
                 .ResolveSnapshotFullName(
                     snapshotName, snapshotNameExtension?.ToParamsString());
-
-            
 
             return snapshotFullName;
         }
