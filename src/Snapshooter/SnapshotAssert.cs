@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
 
@@ -88,13 +88,17 @@ namespace Snapshooter
                         "rerun your tests.");
                 }
 
-                _snapshotFileHandler
-                    .SaveNewSnapshot(snapshotFullName, actualSnapshotSerialized);
-                return;
+                _snapshotFileHandler.SaveNewSnapshot(snapshotFullName, actualSnapshotSerialized);
+
+                savedSnapshotSerialized = _snapshotFileHandler.ReadSnapshot(snapshotFullName);
             }
 
-            CompareSnapshots(actualSnapshotSerialized, savedSnapshotSerialized,
-                    snapshotFullName, matchOptions);
+            CompareSnapshots(
+                actualSnapshotSerialized,
+                savedSnapshotSerialized,
+                snapshotFullName,
+                matchOptions
+            );
         }
 
         private void CompareSnapshots(
