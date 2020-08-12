@@ -11,9 +11,11 @@ namespace Snapshooter.Tests.Data
             Children = new List<TestChild>();
         }
 
+        public static TestPersonBuilder New() => TestPersonBuilder.Create();
+
         public Guid? Id { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public DateTime? CreationDate { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public int? Age { get; set; }
@@ -43,15 +45,15 @@ namespace Snapshooter.Tests.Data
             return this;
         }
 
-        public TestPersonBuilder WithFirstname(string firstname)
+        public TestPersonBuilder WithFirstName(string firstName)
         {
-            _testPerson.Firstname = firstname;
+            _testPerson.FirstName = firstName;
             return this;
         }
 
-        public TestPersonBuilder WithLastname(string lastname)
+        public TestPersonBuilder WithLastName(string lastName)
         {
-            _testPerson.Lastname = lastname;
+            _testPerson.LastName = lastName;
             return this;
         }
 

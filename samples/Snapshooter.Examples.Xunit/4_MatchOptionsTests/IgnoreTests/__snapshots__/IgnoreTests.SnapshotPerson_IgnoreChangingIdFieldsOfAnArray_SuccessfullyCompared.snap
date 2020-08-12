@@ -1,0 +1,49 @@
+{
+  "Id": "c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8",
+  "FirstName": "Foo",
+  "LastName": "Bar",
+  "CreationDate": null,
+  "DateOfBirth": null,
+  "Age": null,
+  "Size": null,
+  "Address": null,
+  "Children": [],
+  "Relatives": [
+    {
+      "Id": "a6a3f97a-a568-4f63-8b9a-b355df421a0c",
+      "FirstName": "Daniela",
+      "LastName": null,
+      "CreationDate": null,
+      "DateOfBirth": null,
+      "Age": null,
+      "Size": null,
+      "Address": null,
+      "Children": [],
+      "Relatives": null
+    },
+    {
+      "Id": "67346ca0-704d-4ec9-8a39-5d7fcf36792f",
+      "FirstName": "Mike",
+      "LastName": null,
+      "CreationDate": null,
+      "DateOfBirth": null,
+      "Age": null,
+      "Size": null,
+      "Address": null,
+      "Children": [],
+      "Relatives": null
+    },
+    {
+      "Id": "6ac79bd5-f3f8-474a-a55d-448dff939e0e",
+      "FirstName": "Sue",
+      "LastName": null,
+      "CreationDate": null,
+      "DateOfBirth": null,
+      "Age": null,
+      "Size": null,
+      "Address": null,
+      "Children": [],
+      "Relatives": null
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "Id": "dbf3b577-d887-4d98-bb01-f0682a0d56ad",
-  "Firstname": "Claudia",
-  "Lastname": "Musterfrau",
+  "Id": "85f53c45-d944-468d-abd6-87e3b21855db",
+  "FirstName": "Claudia",
+  "LastName": "Musterfrau",
   "CreationDate": "2018-06-06T00:00:00",
   "DateOfBirth": "2000-06-25T00:00:00",
   "Age": 30,
@@ -33,8 +33,8 @@
   "Relatives": [
     {
       "Id": "fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de",
-      "Firstname": "Sandra",
-      "Lastname": "Schneider",
+      "FirstName": "Sandra",
+      "LastName": "Schneider",
       "CreationDate": "2019-04-01T00:00:00",
       "DateOfBirth": "1996-02-14T00:00:00",
       "Age": null,

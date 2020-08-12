@@ -1,0 +1,22 @@
+{
+  "Id": "c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8",
+  "FirstName": "Foo",
+  "LastName": "Bar",
+  "DateOfBirth": "2000-06-25T00:00:00",
+  "Age": 30,
+  "Size": 182.5214,
+  "Relatives": [
+    {
+      "Id": "445c7c2c-4c69-4452-98de-32dfb9b3e877",
+      "Name": "Daniela"
+    },
+    {
+      "Id": "ff7efcb7-a40f-4a9c-b4ed-1d4d61072955",
+      "Name": "Mike"
+    },
+    {
+      "Id": "facc4aef-1ced-44ce-ae70-976af8f9c71c",
+      "Name": "Sue"
+    }
+  ]
+}

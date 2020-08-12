@@ -1,0 +1,12 @@
+{
+  "Id": "4bc7c20e-f0d9-49ee-a2bc-0415daef8ec9",
+  "FirstName": "Foo",
+  "LastName": "Bar",
+  "CreationDate": "2018-06-06T00:00:00",
+  "DateOfBirth": "2000-06-25T00:00:00",
+  "Age": 30,
+  "Size": 182.5214,
+  "Address": null,
+  "Children": [],
+  "Relatives": null
+}

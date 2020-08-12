@@ -1,7 +1,7 @@
 {
-  "Id": "7fce2714-55b9-4dbd-8420-f4a3da83b634",
-  "Firstname": "David",
-  "Lastname": "Mustermann",
+  "Id": "c2f9f545-c857-4194-9aab-6e21f6e97292",
+  "FirstName": "David",
+  "LastName": "Mustermann",
   "CreationDate": "2018-06-06T00:00:00",
   "DateOfBirth": "2000-06-25T00:00:00",
   "Age": 30,
@@ -33,8 +33,8 @@
   "Relatives": [
     {
       "Id": "fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de",
-      "Firstname": "Sandra",
-      "Lastname": "Schneider",
+      "FirstName": "Sandra",
+      "LastName": "Schneider",
       "CreationDate": "2019-04-01T00:00:00",
       "DateOfBirth": "1996-02-14T00:00:00",
       "Age": null,

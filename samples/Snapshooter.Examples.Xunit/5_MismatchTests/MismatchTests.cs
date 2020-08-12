@@ -26,7 +26,7 @@ namespace Snapshooter.Quickstarts.Xunit
             // assert
             EqualException exception = 
                 Assert.Throws<EqualException>(() => Snapshot.Match(person));
-            Assert.Contains("Lastname", exception.Message);
+            Assert.Contains("LastName", exception.Message);
         }
     }
 }

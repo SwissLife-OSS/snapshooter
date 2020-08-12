@@ -16,8 +16,8 @@ namespace Snapshooter.Tests.Data
         {
             return TestPersonBuilder.Create()
                     .WithId(id)
-                    .WithFirstname(firstname)
-                    .WithLastname(lastname)
+                    .WithFirstName(firstname)
+                    .WithLastName(lastname)
                     .WithDateOfBirth(DateTime.ParseExact("25.06.2000", "dd.MM.yyyy", CultureInfo.InvariantCulture))
                     .WithCreationDate(DateTime.ParseExact("06.06.2018", "dd.MM.yyyy", CultureInfo.InvariantCulture))
                     .WithAge(30)
@@ -33,8 +33,8 @@ namespace Snapshooter.Tests.Data
         {
             return TestPersonBuilder.Create()
                     .WithId(Guid.Parse("FCF04CA6-D8F2-4214-A3FF-D0DED5BAD4DE"))
-                    .WithFirstname("Sandra")
-                    .WithLastname("Schneider")
+                    .WithFirstName("Sandra")
+                    .WithLastName("Schneider")
                     .WithDateOfBirth(DateTime.ParseExact("14.02.1996", "dd.MM.yyyy", CultureInfo.InvariantCulture))
                     .WithCreationDate(DateTime.ParseExact("01.04.2019", "dd.MM.yyyy", CultureInfo.InvariantCulture))
                     .WithAge(null)

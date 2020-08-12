@@ -1,7 +1,7 @@
 {
   "Id": "1192f21c-8501-4771-a070-c79c7c7ef411",
-  "Firstname": "Albert",
-  "Lastname": "Einstein",
+  "FirstName": "Albert",
+  "LastName": "Einstein",
   "CreationDate": "2018-06-06T00:00:00",
   "DateOfBirth": "2000-06-25T00:00:00",
   "Age": 30,
@@ -33,8 +33,8 @@
   "Relatives": [
     {
       "Id": "fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de",
-      "Firstname": "Sandra",
-      "Lastname": "Schneider",
+      "FirstName": "Sandra",
+      "LastName": "Schneider",
       "CreationDate": "2019-04-01T00:00:00",
       "DateOfBirth": "1996-02-14T00:00:00",
       "Age": null,

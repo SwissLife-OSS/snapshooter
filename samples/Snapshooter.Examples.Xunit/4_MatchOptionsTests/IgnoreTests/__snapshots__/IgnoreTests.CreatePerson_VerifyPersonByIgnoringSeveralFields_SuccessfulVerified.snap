@@ -1,7 +1,7 @@
 {
-  "Id": "f3529808-eb3f-4f76-bed6-8041b0d1afe7",
-  "Firstname": "David",
-  "Lastname": "Mustermann",
+  "Id": "3c9fa09c-1043-4fc2-b0a0-413a8644203d",
+  "FirstName": "David",
+  "LastName": "Mustermann",
   "CreationDate": "2018-06-06T00:00:00",
   "DateOfBirth": "2000-06-25T00:00:00",
   "Age": 30,
@@ -9,7 +9,7 @@
   "Address": {
     "Street": "Rohrstrasse",
     "StreetNumber": 12,
-    "Plz": 6666666666,
+    "Plz": 8304,
     "City": "Wallislellen",
     "Country": {
       "Name": "Switzerland",
@@ -33,8 +33,8 @@
   "Relatives": [
     {
       "Id": "fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de",
-      "Firstname": "Sandra",
-      "Lastname": "Schneider",
+      "FirstName": "Sandra",
+      "LastName": "Schneider",
       "CreationDate": "2019-04-01T00:00:00",
       "DateOfBirth": "1996-02-14T00:00:00",
       "Age": null,
@@ -45,7 +45,7 @@
         "Plz": 8000,
         "City": "Zurich",
         "Country": {
-          "Name": "Switzerland--ChangedValueToIgnore",
+          "Name": "Switzerland",
           "CountryCode": "CH"
         }
       },
