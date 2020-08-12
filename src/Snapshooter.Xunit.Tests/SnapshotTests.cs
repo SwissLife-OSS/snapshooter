@@ -990,6 +990,55 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
+        public void Match_FactMatchScalarEmptyCommentsStringValueSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "/**/";
+
+            // act & assert
+            Snapshot.Match(testText);
+        }
+
+        [Fact]
+        public void Match_FactMatchScalarEmptyCommentsStringValueSnapshot_ChangedInput()
+        {
+            // arrange
+            string testText = "/*";
+
+            // act
+            Action match = () => Snapshot.Match(testText);
+
+            // assert
+            Assert.Contains("*/",
+                Assert.Throws<EqualException>(match).Message);
+        }
+
+        [Fact]
+        public void Match_FactMatchScalarCommentsStringValueSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            string testText = "/*This is a comment string*/";
+
+            // act & assert
+            Snapshot.Match(testText);
+        }
+
+        [Fact]
+        public void Match_FactMatchScalarCommentsStringValueSnapshot_ChangedInput()
+        {
+            // arrange
+            string testText = "/*This is a fest comment string for the" +
+                "snapshot test with a plain string value */";
+
+            // act
+            Action match = () => Snapshot.Match(testText);
+
+            // assert
+            Assert.Contains("fest",
+                Assert.Throws<EqualException>(match).Message);
+        }
+
+        [Fact]
         public void Match_FactMatchScalarIntegerValueSnapshot_SuccessfulMatch()
         {
             // arrange
