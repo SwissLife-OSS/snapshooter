@@ -59,7 +59,7 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
-        public void MatchSnapshot_Null_AssertNotNull()
+        public void MatchSnapshot_Null_Throws()
         {
             // arrange
             TestPerson testPerson = null;
