@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Xunit;
 
 namespace Snapshooter.Xunit
 {
@@ -18,6 +19,7 @@ namespace Snapshooter.Xunit
             this object currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
+            Assert.NotNull(currentResult);
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, matchOptions);
         }
@@ -46,6 +48,7 @@ namespace Snapshooter.Xunit
             SnapshotNameExtension snapshotNameExtension,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
+            Assert.NotNull(currentResult);
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotNameExtension, matchOptions);
         }
@@ -69,6 +72,7 @@ namespace Snapshooter.Xunit
             string snapshotName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
+            Assert.NotNull(currentResult);
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotName, matchOptions);
         }
@@ -102,6 +106,7 @@ namespace Snapshooter.Xunit
             SnapshotNameExtension snapshotNameExtension,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
+            Assert.NotNull(currentResult);
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotName, snapshotNameExtension, matchOptions);
         }
@@ -124,6 +129,7 @@ namespace Snapshooter.Xunit
             SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
+            Assert.NotNull(currentResult);
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotFullName, matchOptions);
         }
