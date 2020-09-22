@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 using FluentAssertions;
 using Snapshooter.Tests.Data;
@@ -55,6 +56,16 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             new { foo = testPerson }.Should().MatchSnapshot();
+        }
+
+        [Fact]
+        public void MatchSnapshot_Null_AssertNotNull()
+        {
+            // arrange
+            TestPerson testPerson = null;
+
+            // act & assert
+            Assert.Throws<ArgumentNullException>(() => testPerson.MatchSnapshot());
         }
     }
 }
