@@ -24,9 +24,9 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match(testPerson);
         }
 
+        [Theory]
         [InlineData("on")]
         [InlineData("true")]
-        [Theory]
         public void Match_With_StrictMode_On_Snapshot_Missing(string value)
         {
             // arrange
@@ -40,9 +40,9 @@ namespace Snapshooter.Xunit.Tests
             Assert.Throws<SnapshotNotFoundException>(action);
         }
 
+        [Theory]
         [InlineData("on")]
         [InlineData("true")]
-        [Theory]
         public void Match_With_StrictMode_On_Snapshot_Exists(string value)
         {
             // arrange
@@ -53,9 +53,9 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match(testPerson);
         }
 
+        [Theory]
         [InlineData("off")]
         [InlineData("false")]
-        [Theory]
         public void Match_With_StrictMode_Off_Snapshot_Not_Exists(string value)
         {
             // arrange
