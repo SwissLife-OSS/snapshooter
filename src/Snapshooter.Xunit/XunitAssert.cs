@@ -26,9 +26,17 @@ namespace Snapshooter.Xunit
             {
                 string expected = expectedData.ElementAtOrDefault(i);
                 string actual = actualData.ElementAtOrDefault(i);
+
                 x.Assert.True(expected.Equals(actual),
-                    $"Missmatch at line {i + 1}\n\t\tExpected:\t{expected}\n\t\tActual:\t\t{actual}");
+                    $"\nMissmatch at line {i + 1} column {GetMissmatchColumn(expected, actual)}\n"
+                    + $"Expected:\t{expected}\n"
+                    + $"Actual:\t\t{actual}\n");
             }
+        }
+
+        private int GetMissmatchColumn(string expected, string actual)
+        {
+            return expected.Zip(actual, (a, b) => a == b).TakeWhile(b => b).Count() + 1;
         }
     }
 }
