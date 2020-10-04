@@ -9,7 +9,7 @@ namespace Snapshooter.Tests.Data
         {
             return TestPersonBuilder.Create()
                     .WithId(Guid.Parse("C78C698F-9EE5-4B4B-9A0E-EF729B1F8EC8"))
-                    .WithFirstname("John")
+                    .WithFirstname("Mark")
                     .WithLastname("Walton")
                     .WithDateOfBirth(DateTime.ParseExact("25.06.2000", "dd.MM.yyyy", CultureInfo.InvariantCulture))
                     .WithCreationDate(DateTime.ParseExact("06.06.2018", "dd.MM.yyyy", CultureInfo.InvariantCulture))
