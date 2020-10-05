@@ -2,6 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Snapshooter.NUnit</AssemblyName>
+    <RootNamespace>Snapshooter.NUnit</RootNamespace>
+    <PackageId>Snapshooter.NUnit</PackageId>
+    <Description>
+      NUnit Snapshooter is a flexible snapshot testing tool for .Net unit tests with NUnit.
+      It creates and asserts snapshots (json format) within NUnit unit tests.
+    </Description>
+    <IsPackable>true</IsPackable>
+    <IsTestProject>false</IsTestProject>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>

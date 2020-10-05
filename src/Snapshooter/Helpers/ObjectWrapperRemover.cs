@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace Snapshooter.Xunit
+namespace Snapshooter
 {
     public static class ObjectWrapperRemover
     {

@@ -37,19 +37,6 @@ namespace Snapshooter.NUnit.Tests
                 $"{nameof(ReadSnapshotFullName_ResolveTestSnapshotFullNameAsync_ResolvedSuccessfully)}"));
         }
 
-        //[Test]
-        //public async Task ReadSnapshotFullName_ResolveViaAsyncHelperMethod_ResolvedSuccessfully()
-        //{
-        //    // arrange
-        //    await Task.Delay(1);
-
-        //    // act
-        //    await AsyncResolveFullNameMethod();
-
-        //    // assert
-        //    await Task.Delay(1);
-        //}
-
         #pragma warning disable xUnit1026 // Theory methods should use all of their parameters
 
         [TestCase("testString1", 5)]
@@ -93,20 +80,5 @@ namespace Snapshooter.NUnit.Tests
         }
 
         #pragma warning restore xUnit1026 // Theory methods should use all of their parameters
-
-        //private async Task<SnapshotFullName> AsyncResolveFullNameMethod()
-        //{
-        //    await Task.Delay(1);
-
-        //    //var snapshotFullNameResolver = new NUnitSnapshotFullNameReader();
-
-        //    //SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
-
-        //    SnapshotFullName snapshotFullName = await NameResolverHelper.AsyncResolveFullNameMethodInHelper();
-
-        //    await Task.Delay(1);
-
-        //    return snapshotFullName;
-        //}
     }
 }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using NUnit.Framework;
-using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
 
 namespace Snapshooter.NUnit.Tests
@@ -13,7 +9,7 @@ namespace Snapshooter.NUnit.Tests
         #region Match Snapshot - Simple Snapshot Tests
 
         [Test]
-        public void Match_FactMatchSingleSnapshot_GoodCase()
+        public void Match_TestMatchSingleSnapshot_GoodCase()
         {
             // arrange
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
@@ -22,62 +18,56 @@ namespace Snapshooter.NUnit.Tests
             Snapshot.Match(testPerson);
         }
 
-        //[Test]
-        //public void Match_FactMatchSingleSnapshot_OneFieldNotEqual()
-        //{
-        //    // arrange
-        //    TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().WithAge(5).Build();
+        [Test]
+        public void Match_TestMatchSingleSnapshot_OneFieldNotEqual()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().WithAge(5).Build();
 
-        //    // act
-        //    Action match = () => Snapshot.Match(testPerson);
+            // act & assert
+            Assert.Throws<AssertionException>(() => Snapshot.Match(testPerson));
+        }
 
-        //    // assert
-        //    Assert.Throws<EqualException>(match);
-        //}
+        [Test]
+        public void Match_TestMatchSingleSnapshot_FieldNotExistInSnapshot()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
-        //[Test]
-        //public void Match_FactMatchSingleSnapshot_FieldNotExistInSnapshot()
-        //{
-        //    // arrange
-        //    TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+            // act & assert
+            Assert.Throws<AssertionException>(() => Snapshot.Match(testPerson));
+        }
 
-        //    // act
-        //    Action match = () => Snapshot.Match(testPerson);
+        [Test]
+        public void Match_TestMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
+        {
+            // arrange
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new NUnitSnapshotFullNameReader());
 
-        //    // assert
-        //    Assert.Throws<EqualException>(match);
-        //}
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
 
-        //[Test]
-        //public void Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
-        //{
-        //    // arrange
-        //    var snapshotFullNameResolver = new SnapshotFullNameResolver(
-        //        new XunitSnapshotFullNameReader());
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
 
-        //    SnapshotFullName snapshotFullName =
-        //        snapshotFullNameResolver.ResolveSnapshotFullName();
+            File.Delete(snapshotFileName);
 
-        //    string snapshotFileName = Path.Combine(
-        //        snapshotFullName.FolderPath,
-        //        FileNames.SnapshotFolderName,
-        //        snapshotFullName.Filename);
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
-        //    File.Delete(snapshotFileName);
+            // act
+            Snapshot.Match(testPerson);
 
-        //    TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
-
-        //    // act
-        //    Snapshot.Match(testPerson);
-
-        //    // assert
-        //    Assert.True(File.Exists(snapshotFileName));
-        //}
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
+        }
 
         [TestCase(36, 189.45)]
         [TestCase(42, 173.16)]
         [TestCase(19, 193.02)]
-        public void Match_TheoryMatchSingleSnapshot_GoodCase(int age, decimal size)
+        public void Match_TestCaseMatchSingleSnapshot_GoodCase(int age, decimal size)
         {
             // arrange
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
@@ -87,62 +77,60 @@ namespace Snapshooter.NUnit.Tests
             Snapshot.Match(testPerson);
         }
 
-        //[TestCase(34, 175)]
-        //[TestCase(36, 177)]
-        //[TestCase(37, 178)]
-        //public void Match_TheoryMatchSingleSnapshot_OneFieldNotEqual(int age, decimal size)
-        //{
-        //    // arrange
-        //    TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
-        //        .WithAge(age).WithSize(size).Build();
+        [TestCase(34, 175)]
+        [TestCase(36, 177)]
+        [TestCase(37, 178)]
+        public void Match_TestCaseMatchSingleSnapshot_OneFieldNotEqual(int age, decimal size)
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+                .WithAge(age).WithSize(size).Build();
 
-        //    testPerson.Address.Country.CountryCode = CountryCode.US;
+            testPerson.Address.Country.CountryCode = CountryCode.DE;
 
-        //    // act & assert
-        //    Assert.Throws<EqualException>(() => Snapshot.Match(
-        //        testPerson, SnapshotNameExtension.Create(age, size)));
-        //}
+            // act & assert
+            Assert.Throws<AssertionException>(() => Snapshot.Match(testPerson));
+        }
 
-        //[TestCase(22, 160)]
-        //[TestCase(23, 164)]
-        //public void Match_TheoryMatchSingleSnapshot_FieldNotExistInSnapshot(int age, decimal size)
-        //{
-        //    // arrange
-        //    TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
-        //        .WithAge(age).WithSize(size).Build();
+        [TestCase(22, 160)]
+        [TestCase(23, 164)]
+        public void Match_TestCaseMatchSingleSnapshot_FieldNotExistInSnapshot(int age, decimal size)
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+                .WithAge(age).WithSize(size).Build();
 
-        //    // act & assert
-        //    Assert.Throws<EqualException>(() => Snapshot.Match(
-        //        testPerson, SnapshotNameExtension.Create(age, size)));
-        //}
+            // act & assert
+            Assert.Throws<AssertionException>(() => Snapshot.Match(testPerson));
+        }
 
-        //[TestCase(19, 162.3)]
-        //[TestCase(17, 112.3)]
-        //public void Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated(int age, decimal size)
-        //{
-        //    // arrange
-        //    var snapshotFullNameResolver = new SnapshotFullNameResolver(
-        //        new XunitSnapshotFullNameReader());
+        [TestCase(19, 162.3)]
+        [TestCase(17, 112.3)]
+        public void Match_TestCaseMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated(int age, decimal size)
+        {
+            // arrange
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new NUnitSnapshotFullNameReader());
 
-        //    SnapshotFullName snapshotFullName =
-        //        snapshotFullNameResolver.ResolveSnapshotFullName();
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
 
-        //    string snapshotFileName = Path.Combine(
-        //        snapshotFullName.FolderPath,
-        //        FileNames.SnapshotFolderName,
-        //        snapshotFullName.Filename);
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
 
-        //    File.Delete(snapshotFileName);
+            File.Delete(snapshotFileName);
 
-        //    TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
-        //        .WithAge(age).WithSize(size).Build();
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+                .WithAge(age).WithSize(size).Build();
 
-        //    // act
-        //    Snapshot.Match(testPerson);
+            // act
+            Snapshot.Match(testPerson);
 
-        //    // assert
-        //    Assert.True(File.Exists(snapshotFileName));
-        //}
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
+        }
 
         #endregion
     }

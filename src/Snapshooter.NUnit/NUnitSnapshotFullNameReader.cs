@@ -26,8 +26,6 @@ namespace Snapshooter.NUnit
         /// <returns>The full name of the snapshot.</returns>
         public SnapshotFullName ReadSnapshotFullName()
         {
-            TestContext.TestAdapter currentTest = TestContext.CurrentContext.Test;
-
             SnapshotFullName snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
             foreach (StackFrame stackFrame in stackFrames)
@@ -64,29 +62,26 @@ namespace Snapshooter.NUnit
                     "Snapshot.Match method.");
             }
 
-            //snapshotFullName = LiveUnitTestingDirectoryResolver
-            //                        .CheckForSession(snapshotFullName);
-
-
-
+            snapshotFullName = LiveUnitTestingDirectoryResolver
+                                    .CheckForSession(snapshotFullName);
 
             return snapshotFullName;
         }
 
         private static bool IsNUnitTestMethod(MemberInfo method)
         {
-            bool isFactTest = IsFactTestMethod(method);
-            bool isTheoryTest = IsTheoryTestMethod(method);
+            bool isFactTest = IsTestMethod(method);
+            bool isTheoryTest = IsTestCaseTestMethod(method);
 
             return isFactTest || isTheoryTest;
         }
 
-        private static bool IsFactTestMethod(MemberInfo method)
+        private static bool IsTestMethod(MemberInfo method)
         {
             return method?.GetCustomAttributes(typeof(TestAttribute))?.Any() ?? false;
         }
 
-        private static bool IsTheoryTestMethod(MemberInfo method)
+        private static bool IsTestCaseTestMethod(MemberInfo method)
         {
             return method?.GetCustomAttributes(typeof(TestCaseAttribute))?.Any() ?? false;
         }
@@ -121,9 +116,6 @@ namespace Snapshooter.NUnit
             ITest test = typeof(TestContext.TestAdapter)
                 .GetField("_test", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(currentTestContext.Test) as ITest;
-
-            //;
-            //Type methodClass = test.Method.MethodInfo.DeclaringType;
 
             string snapshotName = string.Concat(
                 test.TypeInfo.Name.ToString(CultureInfo.InvariantCulture), ".",

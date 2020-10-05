@@ -63,9 +63,6 @@ namespace Snapshooter.Xunit
             snapshotFullName = LiveUnitTestingDirectoryResolver
                                     .CheckForSession(snapshotFullName);
 
-
-
-
             return snapshotFullName;
         }
 

@@ -152,8 +152,7 @@ namespace Snapshooter.NUnit
             object currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshooter.AssertSnapshot(currentResult, FullName(), matchOptions);
-            _snapshotName = new AsyncLocal<SnapshotFullName>();
+            Match(currentResult, FullName(), matchOptions);
         }
 
         /// <summary>
@@ -254,8 +253,17 @@ namespace Snapshooter.NUnit
             SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
-            _snapshotName = new AsyncLocal<SnapshotFullName>();
+            try
+            {
+                Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            }
+            finally
+            {
+                if (_snapshotName != null)
+                {
+                    _snapshotName = new AsyncLocal<SnapshotFullName>();
+                }
+            }
         }
 
         /// <summary>
