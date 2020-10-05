@@ -3,15 +3,20 @@ using System.IO;
 using System.Linq;
 using Snapshooter.Exceptions;
 
-namespace Snapshooter.Xunit
+namespace Snapshooter
 {
     /// <summary>
     /// A class to help resolving the directory in which the test is executed when running
     /// in a Visual Studio Live Unit Testing session
     /// </summary>
-    internal static class LiveUnitTestingDirectoryResolver
+    public static class LiveUnitTestingDirectoryResolver
     {
-        internal static SnapshotFullName TryResolveName(string testname)
+        /// <summary>
+        /// Tries to resolve the snapshot fullname from the live unit testing.
+        /// </summary>
+        /// <param name="testname">The name of the test.</param>
+        /// <returns>The snapshot full name.</returns>
+        public static SnapshotFullName TryResolveName(string testname)
         {
             var currentDir = Directory.GetCurrentDirectory();
             if (currentDir.ToLower().Contains("liveunittest"))
@@ -37,7 +42,12 @@ namespace Snapshooter.Xunit
             return null;
         }
 
-        internal static SnapshotFullName CheckForSession(SnapshotFullName snapshotFullName)
+        /// <summary>
+        /// Checks for a live unit test session.
+        /// </summary>
+        /// <param name="snapshotFullName">The snapshot full name.</param>
+        /// <returns>The resolved snapshot full name.</returns>
+        public static SnapshotFullName CheckForSession(SnapshotFullName snapshotFullName)
         {
             if (string.IsNullOrEmpty(snapshotFullName.FolderPath))
             {

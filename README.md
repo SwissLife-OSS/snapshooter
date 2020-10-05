@@ -10,12 +10,15 @@ To get more detailed information about Snapshooter, go to the [Snapshooter Docs]
 
 ## Getting Started
 
-At the moment _Snapshooter_ only supports the Xunit test framework.
+To get started, install the Snapshooter _Xunit_ or _NUnit_ nuget package:
 
-To get started, install the _Snapshooter Xunit_ nuget package:
-
+### XUnit
 ```bash
 dotnet add package Snapshooter.Xunit
+```
+### NUnit
+```bash
+dotnet add package Snapshooter.NUnit
 ```
 
 [Get Started](https://swisslife-oss.github.io/snapshooter/docs/get-started)
@@ -74,6 +77,24 @@ the actual snapshot which is mismatching with the existing snapshot in the `__sn
 If the snapshot in the mismatching folder `__mismatch__` is correct, just move it to the parent `__snapshots__` folder (override the existing one).
 
 [Read More](https://swisslife-oss.github.io/snapshooter/docs/snapshot-mismatch-handling)
+
+## Different Match-Syntax Possibilities
+The default match syntax for snapshots is:
+```csharp
+    Snapshot.Match(person);
+```
+However, we also could use the fluent syntax:
+```csharp
+    person.MatchSnapshot();
+```
+Or we can use FluentAssertion's should() syntax:
+```csharp
+    person.Should().MatchSnapshot();
+```
+For NUnit we will support the Assert.That syntax (Coming soon):
+```csharp
+    Assert.That(person, Match.Snapshot());
+```
 
 ## Features
 
@@ -164,8 +185,7 @@ Snapshot.Match<Person>(person, > matchOption.Assert(
 
 ```
 
-The Snapshooter assert functionality is not limited to Xunit asserts, it also could be used
-Fluent Assertsions or another assert tool.
+The Snapshooter assert functionality is not limited to Xunit or NUnit asserts, it also could be used Fluent Assertions or another assert tool.
 
 ### Concatenate Ignore & Asserts checks
 
@@ -192,7 +212,7 @@ public void Match_ConcatenateFieldChecksTest_SuccessfulMatch()
 }
 ```
 
-### Using Snapshooter in CI-Builds
+## Using Snapshooter in CI-Builds
 
 When running snapshooter tests in a CI-build you might want to ensure that a snapshots are correctly checked-in since otherwise tests without a snapshot will just create the initial snapshot and become green.
 
