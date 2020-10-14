@@ -1,14 +1,13 @@
 using System;
-using Xunit;
 using FluentAssertions;
+using NUnit.Framework;
 using Snapshooter.Tests.Data;
 
-
-namespace Snapshooter.Xunit.Tests
+namespace Snapshooter.NUnit.Tests
 {
     public class SnapshotExtensionTests
     {
-        [Fact]
+        [Test]
         public void MatchSnapshot_ShouldFluentAssertions_RemovesSubject()
         {
             // arrange
@@ -18,7 +17,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Should().MatchSnapshot();
         }
 
-        [Fact]
+        [Test]
         public void MatchSnapshot_ShouldFluentAssertionsNameOf_RemovesSubject()
         {
             // arrange
@@ -28,7 +27,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Should().MatchSnapshot(nameof(MatchSnapshot_ShouldFluentAssertionsNameOf_RemovesSubject));
         }
 
-        [Fact]
+        [Test]
         public void MatchSnapshot_PlainExtension_CorrectSnapshot()
         {
             // arrange
@@ -38,7 +37,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.MatchSnapshot();
         }
 
-        [Fact]
+        [Test]
         public void MatchSnapshot_PlainExtensionAnonymousType_CorrectSnapshot()
         {
             // arrange
@@ -48,7 +47,7 @@ namespace Snapshooter.Xunit.Tests
             new { foo = testPerson }.MatchSnapshot();
         }
 
-        [Fact]
+        [Test]
         public void MatchSnapshot_ShouldFluentAssertionsAnonymousType_CorrectSnapshot()
         {
             // arrange
@@ -58,11 +57,11 @@ namespace Snapshooter.Xunit.Tests
             new { foo = testPerson }.Should().MatchSnapshot();
         }
 
-        [Fact]
+        [Test]
         public void MatchSnapshot_Null_Throws()
         {
             // arrange
-            TestPerson testPerson = null;
+            TestPerson? testPerson = null;
 
             // act & assert
             Assert.Throws<ArgumentNullException>(() => testPerson.MatchSnapshot());

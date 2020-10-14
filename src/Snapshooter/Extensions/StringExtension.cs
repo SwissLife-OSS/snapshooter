@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+# nullable enable
 
 namespace Snapshooter.Extensions
 {
@@ -46,14 +47,17 @@ namespace Snapshooter.Extensions
         /// Returns true if the string is in a valid json format, otherwise false.
         /// </summary>
         /// <param name="input">The input string to verify.</param>
+        /// <param name="jsonLoadSettings">The optional json load settings</param>
         /// <returns>
         /// True if the string is in a valid json format, otherwise false.
         /// </returns>
-        public static bool IsValidJsonFormat(this string input)
+        public static bool IsValidJsonFormat(
+            this string input,
+            JsonLoadSettings? jsonLoadSettings = null)
         {
             try
             {
-                JToken.Parse(input);
+                JToken.Parse(input, jsonLoadSettings);
                 return true;
             }
             catch (JsonReaderException ex)

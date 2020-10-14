@@ -1,15 +1,18 @@
 using System;
 using System.Reflection;
 
-namespace Snapshooter.Xunit
+namespace Snapshooter
 {
     public static class ObjectWrapperRemover
     {
         public static object RemoveUnwantedWrappers(this object objectToRemoveWrappers)
         {
-            object cleanedObject = objectToRemoveWrappers.RemoveFluentAssertionWrapper();
+            if (objectToRemoveWrappers == null)
+            {
+                throw new ArgumentNullException(nameof(objectToRemoveWrappers));
+            }
 
-            return cleanedObject;
+            return objectToRemoveWrappers.RemoveFluentAssertionWrapper();
         }
 
         private static object RemoveFluentAssertionWrapper(this object objectToRemoveWrappers)

@@ -25,7 +25,7 @@ namespace Snapshooter.Core
         /// <returns>The serialized snapshot.</returns>
         public string SerializeObject(object objectToSnapshot)
         {
-            string snapshotData = null;
+            string snapshotData;
 
             if (objectToSnapshot is string snapshotScalarString)
             {
@@ -36,7 +36,7 @@ namespace Snapshooter.Core
             }
             else
             {
-                // handle objects                
+                // handle objects
                 snapshotData = SerializeToJson(objectToSnapshot)
                     .EnsureLineEnding();
             }
@@ -63,7 +63,7 @@ namespace Snapshooter.Core
         /// <returns></returns>
         public JToken Deserialize(string snapshotJson)
         {
-            bool isValidJson = snapshotJson.IsValidJsonFormat();
+            bool isValidJson = snapshotJson.IsValidJsonFormat(_jsonLoadSettings);
 
             if(!isValidJson)
             {
