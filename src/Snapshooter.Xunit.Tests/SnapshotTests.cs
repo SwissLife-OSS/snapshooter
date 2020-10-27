@@ -711,7 +711,8 @@ namespace Snapshooter.Xunit.Tests
             Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", false.ToString());
 
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
-                .WithSize(0.5m).Build();
+                .WithSize(0.5m)
+                .Build();
 
             // act
             Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
