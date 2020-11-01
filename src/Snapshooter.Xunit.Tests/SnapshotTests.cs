@@ -199,7 +199,8 @@ namespace Snapshooter.Xunit.Tests
         {
             // arrange
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
-                .WithSize(0.5m).Build();
+                .WithSize(0.5m)
+                .Build();
 
             // act & assert
             Snapshot.Match(
@@ -238,8 +239,12 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Assert.Throws<SnapshotFieldException>(() => Snapshot
-                .Match(testPerson, matchOptions => matchOptions.IgnoreField<int>("Age")));
+            string message = Assert.Throws<SnapshotFieldException>(() => Snapshot
+                .Match(testPerson, matchOptions => matchOptions.IgnoreField<int>("Age")))
+                .Message;
+
+            Assert.Contains(
+                "The field 'Age' of the compare context caused an error.", message);
         }
 
         [Fact]
@@ -250,8 +255,12 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
-                testPerson, matchOptions => matchOptions.IgnoreField<decimal>("alt")));
+            string message = Assert.Throws<SnapshotFieldException>(() => Snapshot
+                .Match(testPerson, matchOptions => matchOptions.IgnoreField<decimal>("alt")))
+                .Message;
+
+            Assert.Contains(
+                "The field 'alt' of the compare context caused an error.", message);
         }
 
         [Fact]
@@ -273,7 +282,8 @@ namespace Snapshooter.Xunit.Tests
         {
             // arrange
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
-                .WithSize(1.5m).Build();
+                .WithSize(1.5m)
+                .Build();
 
             // act & assert
             Snapshot.Match(
@@ -408,7 +418,8 @@ namespace Snapshooter.Xunit.Tests
             Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", false.ToString());
 
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
-                .WithSize(0.5m).Build();
+                .WithSize(0.5m)
+                .Build();
 
             // act
             Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
