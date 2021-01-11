@@ -27,7 +27,7 @@ namespace Snapshooter.Core.Serialization
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 Culture = CultureInfo.InvariantCulture,
                 ContractResolver = ChildFirstContractResolver.Instance,
-                Converters = new JsonConverter[] {new StringEnumConverter()}
+                Converters = new List<JsonConverter> {new StringEnumConverter()}
             };
 
         public abstract JsonSerializerSettings Extend(JsonSerializerSettings settings);
