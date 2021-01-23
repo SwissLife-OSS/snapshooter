@@ -12,10 +12,14 @@ namespace Snapshooter.Core.Serialization
 
             var typesExtendingSettings = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && p.IsClass && p.GetConstructor(Type.EmptyTypes) != null)
+                .Where(p => 
+                    type.IsAssignableFrom(p) && 
+                    p.IsClass && 
+                    p.GetConstructor(Type.EmptyTypes) != null)
                 .ToList();
 
-            var extensionTypes = typesExtendingSettings.Select(ext => (SnapshotSerializerSettings)Activator.CreateInstance(ext))
+            var extensionTypes = typesExtendingSettings
+                .Select(ext => (SnapshotSerializerSettings)Activator.CreateInstance(ext))
                 .Where(ext => ext.Active)
                 .OrderBy(ext => ext.Order)
                 .ToList();

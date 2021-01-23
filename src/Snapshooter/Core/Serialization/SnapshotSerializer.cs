@@ -9,32 +9,37 @@ using Snapshooter.Extensions;
 namespace Snapshooter.Core.Serialization
 {
     /// <summary>
-    ///     The class <see cref="SnapshotSerializer" /> is responsible to
-    ///     serialize an object into a snapshot.
+    /// The class <see cref="SnapshotSerializer" /> is responsible to
+    /// serialize an object into a snapshot.
     /// </summary>
     public class SnapshotSerializer : ISnapshotSerializer
     {
         /// <summary>
-        ///     Snapshot json load settings.
+        /// Snapshot json load settings.
         /// </summary>
         private static readonly JsonLoadSettings JsonLoadSettings =
             new JsonLoadSettings
             {
-                CommentHandling = CommentHandling.Ignore, LineInfoHandling = LineInfoHandling.Ignore, DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
+                CommentHandling = CommentHandling.Ignore,
+                LineInfoHandling = LineInfoHandling.Ignore,
+                DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
             };
 
         private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         /// <summary>
+        /// Constructor of <see cref="SnapshotSerializer"/>
         /// </summary>
-        /// <param name="settingsResolver"></param>
+        /// <param name="settingsResolver">
+        /// The snapshot settings resolver to find all snapshot serialization settings.
+        /// </param>
         public SnapshotSerializer(ISnapshotSettingsResolver settingsResolver)
         {
             _jsonSerializerSettings = GetSettings(settingsResolver);
         }
 
         /// <summary>
-        ///     Serializes an object to a snapshot string.
+        /// Serializes an object to a snapshot string.
         /// </summary>
         /// <param name="objectToSnapshot">The object to snapshot.</param>
         /// <returns>The serialized snapshot.</returns>
@@ -60,7 +65,7 @@ namespace Snapshooter.Core.Serialization
         }
 
         /// <summary>
-        ///     Serializes a json token to a snapshot string.
+        /// Serializes a json token to a snapshot string.
         /// </summary>
         /// <param name="jsonToken">The json token to snapshot.</param>
         /// <returns>The serialized snapshot.</returns>
@@ -72,7 +77,7 @@ namespace Snapshooter.Core.Serialization
         }
 
         /// <summary>
-        ///     Deserializes a snapshot string to an token object
+        /// Deserializes a snapshot string to an token object
         /// </summary>
         /// <param name="snapshotJson"></param>
         /// <returns></returns>
@@ -105,19 +110,31 @@ namespace Snapshooter.Core.Serialization
             var jsonSerializer = JsonSerializer.CreateDefault(_jsonSerializerSettings);
 
             var stringBuilder = new StringBuilder(1024);
-            var stringWriter = new StringWriter(stringBuilder, CultureInfo.InvariantCulture) {NewLine = "\n"};
 
-            using var jsonWriter = new JsonTextWriterCrRemove(stringWriter) {Formatting = jsonSerializer.Formatting};
+            var stringWriter = new StringWriter(stringBuilder, CultureInfo.InvariantCulture) 
+            {
+                NewLine = "\n"
+            };
+
+            using var jsonWriter = new JsonTextWriterCrRemove(stringWriter)
+            {
+                Formatting = jsonSerializer.Formatting
+            };
 
             jsonSerializer.Serialize(jsonWriter, value);
 
             return stringWriter.ToString();
         }
 
-        private static JsonSerializerSettings GetSettings(ISnapshotSettingsResolver snapshotSettingsResolver)
+        private static JsonSerializerSettings GetSettings(
+            ISnapshotSettingsResolver snapshotSettingsResolver)
         {
-            JsonSerializerSettings jsonSettings = SnapshotSerializerSettings.DefaultJsonSerializerSettings;
-            IEnumerable<SnapshotSerializerSettings> extensionTypes = snapshotSettingsResolver.GetConfiguration();
+            JsonSerializerSettings jsonSettings = 
+                SnapshotSerializerSettings.DefaultJsonSerializerSettings;
+
+            IEnumerable<SnapshotSerializerSettings> extensionTypes =
+                snapshotSettingsResolver.GetConfiguration();
+
             foreach (SnapshotSerializerSettings extensionType in extensionTypes)
             {
                 jsonSettings = extensionType.Extend(jsonSettings);
@@ -127,13 +144,13 @@ namespace Snapshooter.Core.Serialization
         }
 
         /// <summary>
-        ///     Json text writer, which removes the carriage returns of the string.
+        /// Json text writer, which removes the carriage returns of the string.
         /// </summary>
         private class JsonTextWriterCrRemove : JsonTextWriter
         {
             /// <summary>
-            ///     Constructor of the <see cref="JsonTextWriterCrRemove" /> class to create
-            ///     a new instance.
+            /// Constructor of the <see cref="JsonTextWriterCrRemove" /> class to create
+            /// a new instance.
             /// </summary>
             /// <param name="textWriter">The text writer.</param>
             public JsonTextWriterCrRemove(TextWriter textWriter)
