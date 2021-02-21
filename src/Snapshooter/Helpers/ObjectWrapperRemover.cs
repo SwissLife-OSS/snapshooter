@@ -12,25 +12,23 @@ namespace Snapshooter
                 throw new ArgumentNullException(nameof(objectToRemoveWrappers));
             }
 
-            return objectToRemoveWrappers.RemoveFluentAssertionWrapper();
+            return objectToRemoveWrappers.RemoveFluentAssertionsWrapper();
         }
 
-        private static object RemoveFluentAssertionWrapper(this object objectToRemoveWrappers)
+        private static object RemoveFluentAssertionsWrapper(this object objectToRemoveWrappers)
         {
             Type resultType = objectToRemoveWrappers.GetType();
 
-            if (resultType.Namespace != null
-                && resultType.Name != null
-                && resultType.Namespace.Equals("FluentAssertions.Primitives")
-                && resultType.Name.Equals("ObjectAssertions"))
-            {
-                PropertyInfo prop = resultType.GetProperty("Subject");
-                object actualvalue = prop.GetValue(objectToRemoveWrappers);
+            if (resultType.Namespace == null || !resultType.Namespace.StartsWith("FluentAssertions."))
+                return objectToRemoveWrappers;
 
-                return actualvalue;
-            }
+            PropertyInfo prop = resultType.GetProperty("Subject");
+            if (prop == null)
+                return objectToRemoveWrappers;
 
-            return objectToRemoveWrappers;
+            object actualvalue = prop.GetValue(objectToRemoveWrappers);
+
+            return actualvalue;
         }
     }
 }

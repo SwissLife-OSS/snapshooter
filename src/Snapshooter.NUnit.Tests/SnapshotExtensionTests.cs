@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using Snapshooter.Tests.Data;
@@ -25,6 +26,36 @@ namespace Snapshooter.NUnit.Tests
 
             // act & assert
             testPerson.Should().MatchSnapshot(nameof(MatchSnapshot_ShouldFluentAssertionsNameOf_RemovesSubject));
+        }
+
+        [Test(Description = "Test for issue #118")]
+        public void MatchSnapshot_FluentAssertions_StringValue_ShouldRemovesSubject()
+        {
+            // arrange
+            string testValue = "Some text string";
+
+            // act & assert
+            testValue.Should().MatchSnapshot();
+        }
+
+        [Test(Description = "Test for issue #118")]
+        public void MatchSnapshot_FluentAssertions_DictionaryValue_ShouldRemovesSubject()
+        {
+            // arrange
+            var testCustomer = new List<Dictionary<string, object>>
+            {
+                new Dictionary<string, object>
+                {
+                    { "Id", 1 },
+                    { "Name", "Bla "},
+                    { "EmailAddress", "blabla@blabla.com" },
+                },
+            };
+            var testDictionary = new Dictionary<string, List<Dictionary<string, object>>>();
+            testDictionary.Add("Customer", testCustomer);
+
+            // act & assert
+            testDictionary.Should().MatchSnapshot();
         }
 
         [Test]
