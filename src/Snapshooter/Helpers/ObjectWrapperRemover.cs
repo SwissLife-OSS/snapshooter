@@ -26,11 +26,11 @@ namespace Snapshooter
 
             PropertyInfo prop = resultType.GetProperty("Subject");
             if (prop == null)
+            {
                 return objectToRemoveWrappers;
+            }
 
-            object actualvalue = prop.GetValue(objectToRemoveWrappers);
-
-            return actualvalue;
+            return prop.GetValue(objectToRemoveWrappers);
         }
     }
 }
