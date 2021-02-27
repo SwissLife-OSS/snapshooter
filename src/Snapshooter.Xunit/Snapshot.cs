@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Snapshooter.Core;
+using Snapshooter.Core.Serialization;
 
 namespace Snapshooter.Xunit
 {
@@ -369,13 +370,13 @@ namespace Snapshooter.Xunit
                 return
                     new Snapshooter(
                         new SnapshotAssert(
-                            new SnapshotSerializer(),
+                            new SnapshotSerializer(new GlobalSnapshotSettingsResolver()),
                             new SnapshotFileHandler(),
                             new SnapshotEnvironmentCleaner(
                                 new SnapshotFileHandler()),
                             new JsonSnapshotComparer(
                                 new XunitAssert(),
-                                new SnapshotSerializer())),
+                                new SnapshotSerializer(new GlobalSnapshotSettingsResolver()))),
                         new SnapshotFullNameResolver(
                             new XunitSnapshotFullNameReader()));
             }

@@ -1,23 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using Snapshooter.Extensions;
 
-namespace Snapshooter.Core
+namespace Snapshooter.Core.Serialization
 {
     /// <summary>
-    /// The class <see cref="SnapshotSerializer"/> is responsible to 
+    /// The class <see cref="SnapshotSerializer" /> is responsible to
     /// serialize an object into a snapshot.
     /// </summary>
     public class SnapshotSerializer : ISnapshotSerializer
     {
+        /// <summary>
+        /// Snapshot json load settings.
+        /// </summary>
+        private static readonly JsonLoadSettings JsonLoadSettings =
+            new JsonLoadSettings
+            {
+                CommentHandling = CommentHandling.Ignore,
+                LineInfoHandling = LineInfoHandling.Ignore,
+                DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
+            };
+
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
+
+        /// <summary>
+        /// Constructor of <see cref="SnapshotSerializer"/>
+        /// </summary>
+        /// <param name="settingsResolver">
+        /// The snapshot settings resolver to find all snapshot serialization settings.
+        /// </param>
+        public SnapshotSerializer(ISnapshotSettingsResolver settingsResolver)
+        {
+            _jsonSerializerSettings = GetSettings(settingsResolver);
+        }
+
         /// <summary>
         /// Serializes an object to a snapshot string.
         /// </summary>
@@ -43,7 +63,7 @@ namespace Snapshooter.Core
 
             return snapshotData;
         }
-        
+
         /// <summary>
         /// Serializes a json token to a snapshot string.
         /// </summary>
@@ -63,9 +83,10 @@ namespace Snapshooter.Core
         /// <returns></returns>
         public JToken Deserialize(string snapshotJson)
         {
-            bool isValidJson = snapshotJson.IsValidJsonFormat(_jsonLoadSettings);
+            JsonLoadSettings jsonLoadSettings = JsonLoadSettings;
+            var isValidJson = snapshotJson.IsValidJsonFormat(jsonLoadSettings);
 
-            if(!isValidJson)
+            if (!isValidJson)
             {
                 snapshotJson = snapshotJson
                     .NormalizeLineEndings()
@@ -74,13 +95,13 @@ namespace Snapshooter.Core
                 snapshotJson = JsonConvert.ToString(snapshotJson);
             }
 
-            var snapshotToken = JToken.Parse(snapshotJson, _jsonLoadSettings);
+            var snapshotToken = JToken.Parse(snapshotJson, jsonLoadSettings);
 
             return snapshotToken;
         }
 
         /// <summary>
-        /// Serializes the object to json and removes the carriage returns.
+        ///     Serializes the object to json and removes the carriage returns.
         /// </summary>
         /// <param name="value">The object value to serialize.</param>
         /// <returns>The serialized object in json.</returns>
@@ -89,98 +110,63 @@ namespace Snapshooter.Core
             var jsonSerializer = JsonSerializer.CreateDefault(_jsonSerializerSettings);
 
             var stringBuilder = new StringBuilder(1024);
-            var stringWriter = new StringWriter(
-                stringBuilder, CultureInfo.InvariantCulture);
 
-            stringWriter.NewLine = "\n";
-
-            using (var jsonWriter = new JsonTextWriterCrRemove(stringWriter))
+            var stringWriter = new StringWriter(stringBuilder, CultureInfo.InvariantCulture) 
             {
-                jsonWriter.Formatting = jsonSerializer.Formatting;
+                NewLine = "\n"
+            };
 
-                jsonSerializer.Serialize(jsonWriter, value);
-            }
+            using var jsonWriter = new JsonTextWriterCrRemove(stringWriter)
+            {
+                Formatting = jsonSerializer.Formatting
+            };
+
+            jsonSerializer.Serialize(jsonWriter, value);
 
             return stringWriter.ToString();
         }
 
-        /// <summary>
-        /// Snapshot serialization settings.
-        /// </summary>
-        private static readonly JsonSerializerSettings _jsonSerializerSettings =
-            new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Formatting = Formatting.Indented,
-                NullValueHandling = NullValueHandling.Include,
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                Culture = CultureInfo.InvariantCulture,
-                ContractResolver = ChildFirstContractResolver.Instance,
-                Converters = new JsonConverter[]
-                {
-                    new StringEnumConverter()
-                }
-            };
+        private static JsonSerializerSettings GetSettings(
+            ISnapshotSettingsResolver snapshotSettingsResolver)
+        {
+            JsonSerializerSettings jsonSettings = 
+                SnapshotSerializerSettings.DefaultJsonSerializerSettings;
 
-        /// <summary>
-        /// Snapshot json load settings.
-        /// </summary>
-        private static readonly JsonLoadSettings _jsonLoadSettings =
-            new JsonLoadSettings
+            IEnumerable<SnapshotSerializerSettings> extensionTypes =
+                snapshotSettingsResolver.GetConfiguration();
+
+            foreach (SnapshotSerializerSettings extensionType in extensionTypes)
             {
-                CommentHandling = CommentHandling.Ignore,
-                LineInfoHandling = LineInfoHandling.Ignore,
-                DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
-            };
-        
+                jsonSettings = extensionType.Extend(jsonSettings);
+            }
+
+            return jsonSettings;
+        }
+
         /// <summary>
         /// Json text writer, which removes the carriage returns of the string.
         /// </summary>
         private class JsonTextWriterCrRemove : JsonTextWriter
         {
             /// <summary>
-            /// Constructor of the <see cref="JsonTextWriterCrRemove"/> class to create
+            /// Constructor of the <see cref="JsonTextWriterCrRemove" /> class to create
             /// a new instance.
             /// </summary>
             /// <param name="textWriter">The text writer.</param>
-            public JsonTextWriterCrRemove(TextWriter textWriter) 
+            public JsonTextWriterCrRemove(TextWriter textWriter)
                 : base(textWriter)
             {
             }
 
             /// <summary>
-            /// Writes a string value to the json output.
+            ///     Writes a string value to the json output.
             /// </summary>
             /// <param name="text">The string value.</param>
             public override void WriteValue(string text)
             {
-                string normalisedText = text.NormalizeLineEndings();
+                var normalisedText = text.NormalizeLineEndings();
 
                 base.WriteValue(normalisedText);
-            }
-        }
-
-        private class ChildFirstContractResolver : DefaultContractResolver
-        {
-            static ChildFirstContractResolver() { Instance = new ChildFirstContractResolver(); }
-
-            public static ChildFirstContractResolver Instance { get; private set; }
-
-            protected override IList<JsonProperty> CreateProperties(
-                Type type, MemberSerialization memberSerialization)
-            {
-                IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization);
-
-                if (properties != null)
-                {
-                    properties = properties.OrderBy(p =>
-                    {
-                        IEnumerable<Type> d = p.DeclaringType.BaseTypesAndSelf().ToList();
-                        return 1000 - d.Count();
-                    }).ToList();
-                }
-
-                return properties;
             }
         }
     }
