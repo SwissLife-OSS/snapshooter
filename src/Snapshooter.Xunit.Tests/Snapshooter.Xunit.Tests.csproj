@@ -19,14 +19,12 @@
   <ItemGroup>
     <None Remove="SubfolderTests\__snapshots__\SnapshotSubfolderTests.Match_SubfolderFactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated.snap" />
     <None Remove="SubfolderTests\__snapshots__\SnapshotSubfolderTests.Match_SubfolderFactMatchSingleSnapshot_OneFieldNotEqual.snap" />
-    <None Remove="__snapshots__\SnapshotTests.Match_FactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated.snap" />
-    <None Remove="__snapshots__\SnapshotTests.Match_TheoryMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated.snap" />
     <None Remove="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists.snap" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="coverlet.msbuild" Version="2.9.0" />
     <PackageReference Include="xunit" Version="2.4.1" />

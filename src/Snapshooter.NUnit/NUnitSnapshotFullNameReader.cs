@@ -1,22 +1,24 @@
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
-using Snapshooter.Extensions;
-using Xunit;
 
-namespace Snapshooter.Xunit
+namespace Snapshooter.NUnit
 {
     /// <summary>
-    /// A xunit snapshot full name reader is responsible to get the information  
-    /// for the snapshot file from a xunit test.
+    /// A NUnit snapshot full name reader is responsible to get the information  
+    /// for the snapshot file from a NUnit test.
     /// </summary>
-    public class XunitSnapshotFullNameReader : ISnapshotFullNameReader
+    public class NUnitSnapshotFullNameReader : ISnapshotFullNameReader
     {
         /// <summary>
         /// Evaluates the snapshot full name information.
@@ -29,20 +31,20 @@ namespace Snapshooter.Xunit
             foreach (StackFrame stackFrame in stackFrames)
             {
                 MethodBase method = stackFrame.GetMethod();
-                if (IsXunitTestMethod(method))
+                if (IsNUnitTestMethod(method))
                 {
                     snapshotFullName = new SnapshotFullName(
-                        method.ToName(),
+                        GetCurrentSnapshotName(),
                         Path.GetDirectoryName(stackFrame.GetFileName()));
 
                     break;
                 }
 
                 MethodBase asyncMethod = EvaluateAsynchronMethodBase(method);
-                if (IsXunitTestMethod(asyncMethod))
+                if (IsNUnitTestMethod(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
-                        asyncMethod.ToName(),
+                        GetCurrentSnapshotName(),
                         Path.GetDirectoryName(stackFrame.GetFileName()));
 
                     break;
@@ -66,22 +68,22 @@ namespace Snapshooter.Xunit
             return snapshotFullName;
         }
 
-        private static bool IsXunitTestMethod(MemberInfo method)
+        private static bool IsNUnitTestMethod(MemberInfo method)
         {
-            bool isFactTest = IsFactTestMethod(method);
-            bool isTheoryTest = IsTheoryTestMethod(method);
+            bool isFactTest = IsTestMethod(method);
+            bool isTheoryTest = IsTestCaseTestMethod(method);
 
             return isFactTest || isTheoryTest;
         }
 
-        private static bool IsFactTestMethod(MemberInfo method)
+        private static bool IsTestMethod(MemberInfo method)
         {
-            return method?.GetCustomAttributes(typeof(FactAttribute))?.Any() ?? false;
+            return method?.GetCustomAttributes(typeof(TestAttribute))?.Any() ?? false;
         }
 
-        private static bool IsTheoryTestMethod(MemberInfo method)
+        private static bool IsTestCaseTestMethod(MemberInfo method)
         {
-            return method?.GetCustomAttributes(typeof(TheoryAttribute))?.Any() ?? false;
+            return method?.GetCustomAttributes(typeof(TestCaseAttribute))?.Any() ?? false;
         }
 
         private static MethodBase EvaluateAsynchronMethodBase(MemberInfo method)
@@ -105,6 +107,22 @@ namespace Snapshooter.Xunit
 
             return actualMethodInfo;
 
+        }
+
+        private static string GetCurrentSnapshotName()
+        {
+            TestContext currentTestContext = TestContext.CurrentContext;
+
+            ITest test = typeof(TestContext.TestAdapter)
+                .GetField("_test", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(currentTestContext.Test) as ITest;
+
+            string snapshotName = string.Concat(
+                test.TypeInfo.Name.ToString(CultureInfo.InvariantCulture), ".",
+                currentTestContext.Test.MethodName.ToString(CultureInfo.InvariantCulture),
+                SnapshotNameExtension.Create(currentTestContext.Test.Arguments).ToParamsString());
+
+            return snapshotName;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Threading;
 using Snapshooter.Core;
 using Snapshooter.Core.Serialization;
 
-namespace Snapshooter.Xunit
+namespace Snapshooter.NUnit
 {
     /// <summary>
     /// The snapshot class creates and compares snapshots of object.
@@ -73,7 +73,7 @@ namespace Snapshooter.Xunit
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
         /// The name of the snapshot. If not set, then the snapshotname
-        /// will be evaluated automatically from the xunit test name.
+        /// will be evaluated automatically from the NUnit test name.
         /// </param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
@@ -96,7 +96,7 @@ namespace Snapshooter.Xunit
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
         /// The name of the snapshot. If not set, then the snapshotname
-        /// will be evaluated automatically from the xunit test name.
+        /// will be evaluated automatically from the NUnit test name.
         /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with
@@ -153,8 +153,7 @@ namespace Snapshooter.Xunit
             object currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshooter.AssertSnapshot(currentResult, FullName(), matchOptions);
-            _snapshotName = new AsyncLocal<SnapshotFullName>();
+            Match(currentResult, FullName(), matchOptions);
         }
 
         /// <summary>
@@ -193,7 +192,7 @@ namespace Snapshooter.Xunit
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
         /// The name of the snapshot. If not set, then the snapshotname
-        /// will be evaluated automatically from the xunit test name.
+        /// will be evaluated automatically from the NUnit test name.
         /// </param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
@@ -215,7 +214,7 @@ namespace Snapshooter.Xunit
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
         /// The name of the snapshot. If not set, then the snapshotname
-        /// will be evaluated automatically from the xunit test name.
+        /// will be evaluated automatically from the NUnit test name.
         /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with
@@ -255,8 +254,17 @@ namespace Snapshooter.Xunit
             SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
-            _snapshotName = new AsyncLocal<SnapshotFullName>();
+            try
+            {
+                Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            }
+            finally
+            {
+                if (_snapshotName != null)
+                {
+                    _snapshotName = new AsyncLocal<SnapshotFullName>();
+                }
+            }
         }
 
         /// <summary>
@@ -375,10 +383,10 @@ namespace Snapshooter.Xunit
                             new SnapshotEnvironmentCleaner(
                                 new SnapshotFileHandler()),
                             new JsonSnapshotComparer(
-                                new XunitAssert(),
+                                new NUnitAssert(),
                                 new SnapshotSerializer(new GlobalSnapshotSettingsResolver()))),
                         new SnapshotFullNameResolver(
-                            new XunitSnapshotFullNameReader()));
+                            new NUnitSnapshotFullNameReader()));
             }
         }
     }

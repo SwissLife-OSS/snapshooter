@@ -24,65 +24,6 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match(testPerson);
         }
 
-        [InlineData("on")]
-        [InlineData("true")]
-        [Theory]
-        public void Match_With_StrictMode_On_Snapshot_Missing(string value)
-        {
-            // arrange
-            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
-
-            // act
-            Action action = () => Snapshot.Match(testPerson);
-
-            //assert
-            Assert.Throws<SnapshotNotFoundException>(action);
-        }
-
-        [InlineData("on")]
-        [InlineData("true")]
-        [Theory]
-        public void Match_With_StrictMode_On_Snapshot_Exists(string value)
-        {
-            // arrange
-            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
-
-            // act & assert
-            Snapshot.Match(testPerson);
-        }
-
-        [InlineData("off")]
-        [InlineData("false")]
-        [Theory]
-        public void Match_With_StrictMode_Off_Snapshot_Not_Exists(string value)
-        {
-            // arrange
-            var snapshotFullNameResolver = new SnapshotFullNameResolver(
-                new XunitSnapshotFullNameReader());
-
-            SnapshotFullName snapshotFullName =
-                snapshotFullNameResolver.ResolveSnapshotFullName();
-
-            string snapshotFileName = Path.Combine(
-                snapshotFullName.FolderPath,
-                FileNames.SnapshotFolderName,
-                snapshotFullName.Filename);
-
-            if (File.Exists(snapshotFileName))
-            {
-                File.Delete(snapshotFileName);
-            }
-
-            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
-
-            // act & assert
-            Snapshot.Match(testPerson);
-            File.Delete(snapshotFileName);
-        }
-
         [Fact]
         public void Match_FactMatchSingleSnapshot_OneFieldNotEqual()
         {
@@ -402,7 +343,6 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Children.ElementAt(2).Name = "newName3x";
 
             // act & assert
-
             Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IgnoreFields("Children[*]"));
             Snapshot.Match(testPerson,
@@ -446,6 +386,36 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match(
                 testPersons, matchOptions => matchOptions.IgnoreFields<object>("[*].Firstname"));
+        }
+
+        [Fact]
+        public void Match_IgnoreFieldFailsWithinFirstSnapshotCreation_ThrowsSnapshotFieldException()
+        {
+            // arrange
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader());
+
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            File.Delete(snapshotFileName);
+
+            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", false.ToString());
+
+            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
+                .WithSize(0.5m).Build();
+
+            // act
+            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreField<int>("Size")));
+
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
         }
 
         #endregion
@@ -721,6 +691,37 @@ namespace Snapshooter.Xunit.Tests
                     matchOptions.IsTypeFields<DateTime>("[*].DateOfBirth"));
         }
 
+        [Fact]
+        public void Match_IsTypeIntFailsWithinFirstSnapshotCreation_ThrowsSnapshotFieldException()
+        {
+            // arrange
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader());
+
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            File.Delete(snapshotFileName);
+
+            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", false.ToString());
+
+            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
+                .WithSize(0.5m)
+                .Build();
+
+            // act
+            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IsTypeField<int>("Size")));
+
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
+        }
+
         #endregion
 
         #region Match Snapshots - Assert Fields Tests
@@ -893,6 +894,38 @@ namespace Snapshooter.Xunit.Tests
                         Assert.Null(fieldOption.Field<TestCountry>("Address.Country")))
                     .Assert(fieldOption =>
                         Assert.Null(fieldOption.Field<TestCountry>("Relatives[0].Address.Plz"))));
+        }
+
+        [Fact]
+        public void Match_AssertEqualGuidValueFailsWithinFirstSnapshotCreation_ThrowsSnapshotCompareException()
+        {
+            // arrange
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader());
+
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            File.Delete(snapshotFileName);
+
+            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", false.ToString());
+
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act
+            Assert.Throws<SnapshotCompareException>(
+                () => Snapshot.Match(testPerson,
+                     matchOption => matchOption.Assert(
+                            fieldOption => Assert.Equal(fieldOption.Field<Guid>("Id"),
+                                Guid.Parse("C24C7F55-2C96-442B-B9D5-35B642169E72")))));
+
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
         }
 
         #endregion
@@ -1304,6 +1337,69 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match(testChild, matchOptions =>
                 matchOptions.IgnoreField(nameof(testChild.DateOfBirth)));
+        }
+
+        #endregion
+
+        #region Match Snapshots - Strict mode Tests
+
+        [Theory]
+        [InlineData("on")]
+        [InlineData("true")]
+        public void Match_With_StrictMode_On_Snapshot_Missing(string value)
+        {
+            // arrange
+            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act
+            Action action = () => Snapshot.Match(testPerson);
+
+            //assert
+            Assert.Throws<SnapshotNotFoundException>(action);
+        }
+
+        [Theory]
+        [InlineData("on")]
+        [InlineData("true")]
+        public void Match_With_StrictMode_On_Snapshot_Exists(string value)
+        {
+            // arrange
+            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            Snapshot.Match(testPerson);
+        }
+
+        [Theory]
+        [InlineData("off")]
+        [InlineData("false")]
+        public void Match_With_StrictMode_Off_Snapshot_Not_Exists(string value)
+        {
+            // arrange
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader());
+
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            if (File.Exists(snapshotFileName))
+            {
+                File.Delete(snapshotFileName);
+            }
+
+            Environment.SetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE", value);
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            Snapshot.Match(testPerson);
+            File.Delete(snapshotFileName);
         }
 
         #endregion
