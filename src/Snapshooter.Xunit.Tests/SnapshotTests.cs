@@ -34,7 +34,7 @@ namespace Snapshooter.Xunit.Tests
             Action match = () => Snapshot.Match(testPerson);
 
             // assert
-            Assert.Throws<EqualException>(match);
+            Assert.Throws<TrueException>(match);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Snapshooter.Xunit.Tests
             Action match = () => Snapshot.Match(testPerson);
 
             // assert
-            Assert.Throws<EqualException>(match);
+            Assert.Throws<TrueException>(match);
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace Snapshooter.Xunit.Tests
             testPerson.Address.Country.CountryCode = CountryCode.US;
 
             // act & assert
-            Assert.Throws<EqualException>(() => Snapshot.Match(
+            Assert.Throws<TrueException>(() => Snapshot.Match(
                 testPerson, SnapshotNameExtension.Create(age, size)));
         }
 
@@ -117,7 +117,7 @@ namespace Snapshooter.Xunit.Tests
                 .WithAge(age).WithSize(size).Build();
 
             // act & assert
-            Assert.Throws<EqualException>(() => Snapshot.Match(
+            Assert.Throws<TrueException>(() => Snapshot.Match(
                 testPerson, SnapshotNameExtension.Create(age, size)));
         }
 
@@ -1003,7 +1003,7 @@ namespace Snapshooter.Xunit.Tests
 
             // assert
             Assert.Contains("fest",
-                Assert.Throws<EqualException>(match).Message);
+                Assert.Throws<TrueException>(match).Message);
         }
 
         [Fact]
@@ -1043,7 +1043,7 @@ namespace Snapshooter.Xunit.Tests
 
             // assert
             Assert.Contains("*/",
-                Assert.Throws<EqualException>(match).Message);
+                Assert.Throws<TrueException>(match).Message);
         }
 
         [Fact]
@@ -1068,7 +1068,7 @@ namespace Snapshooter.Xunit.Tests
 
             // assert
             Assert.Contains("fest",
-                Assert.Throws<EqualException>(match).Message);
+                Assert.Throws<TrueException>(match).Message);
         }
 
         [Fact]
@@ -1092,7 +1092,7 @@ namespace Snapshooter.Xunit.Tests
 
             // assert
             Assert.Contains("6",
-                Assert.Throws<EqualException>(match).Message);
+                Assert.Throws<TrueException>(match).Message);
         }
 
         [Fact]
@@ -1150,7 +1150,7 @@ namespace Snapshooter.Xunit.Tests
             Action match = () => Snapshot.Match(testText);
 
             // assert
-            Assert.Throws<EqualException>(match);
+            Assert.Throws<TrueException>(match);
         }
 
         [Fact]
@@ -1239,7 +1239,7 @@ namespace Snapshooter.Xunit.Tests
             Action match = () => Snapshot.Match(testPerson);
 
             // assert
-            Assert.Throws<EqualException>(match);
+            Assert.Throws<TrueException>(match);
         }
 
         [Fact]
@@ -1254,7 +1254,7 @@ namespace Snapshooter.Xunit.Tests
             Action match = () => Snapshot.Match(testPerson);
 
             // assert
-            Assert.Throws<EqualException>(match);
+            Assert.Throws<TrueException>(match);
         }
 
         [Fact]

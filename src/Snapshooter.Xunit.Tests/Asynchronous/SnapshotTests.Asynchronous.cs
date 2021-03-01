@@ -40,7 +40,7 @@ namespace Snapshooter.Xunit.Tests
             Action match = () => Snapshot.Match(testPerson);
 
             // assert
-            Assert.Throws<EqualException>(match);
+            Assert.Throws<TrueException>(match);
 
             await Task.Delay(1);
         }
@@ -83,7 +83,7 @@ namespace Snapshooter.Xunit.Tests
             await Task.Delay(1);
 
             // act
-            Assert.Throws<EqualException>(() => Snapshot.Match(
+            Assert.Throws<TrueException>(() => Snapshot.Match(
                 testPerson, SnapshotNameExtension.Create(age, size)));
 
             // assert
@@ -140,15 +140,15 @@ namespace Snapshooter.Xunit.Tests
 
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
                                                    .WithAge(4055).Build();
-            
+
             SnapshotFullName snapshotFullName = Snapshot.FullName();
 
             // act
             Func<Task> asyncMatch = () => AsyncMatchWithFullName(testPerson, snapshotFullName);
 
             // assert
-            EqualException exception =
-                await Assert.ThrowsAsync<EqualException>(asyncMatch);
+            TrueException exception =
+                await Assert.ThrowsAsync<TrueException>(asyncMatch);
             Assert.Contains("4055", exception.Message);
 
             await Task.Delay(1);
@@ -166,7 +166,7 @@ namespace Snapshooter.Xunit.Tests
             Func<Task> asyncMatch = () => AsyncMatch(testPerson);
 
             // assert
-            SnapshotTestException exception = 
+            SnapshotTestException exception =
                 await Assert.ThrowsAsync<SnapshotTestException>(asyncMatch);
             Assert.Contains("async", exception.Message);
 
@@ -182,8 +182,8 @@ namespace Snapshooter.Xunit.Tests
 
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
                 .WithAge(age).WithSize(size).Build();
-            
-            SnapshotFullName snapshotFullName = 
+
+            SnapshotFullName snapshotFullName =
                 Snapshot.FullName(SnapshotNameExtension.Create(age, size));
 
             // act
@@ -212,8 +212,8 @@ namespace Snapshooter.Xunit.Tests
             Func<Task> asyncMatch = () => AsyncMatchWithFullName(testPerson, snapshotFullName);
 
             // assert
-            EqualException exception =
-                await Assert.ThrowsAsync<EqualException>(asyncMatch);
+            TrueException exception =
+                await Assert.ThrowsAsync<TrueException>(asyncMatch);
             Assert.Contains(CountryCode.US.ToString(), exception.Message);
         }
 
@@ -226,23 +226,23 @@ namespace Snapshooter.Xunit.Tests
 
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
                 .WithAge(age).WithSize(size).Build();
-            
+
             await Task.Delay(1);
 
             // act
             Func<Task> asyncMatch = () => AsyncMatchWithNameExtension(
                 testPerson, SnapshotNameExtension.Create(age, size));
-            
+
             // assert
             SnapshotTestException exception =
                 await Assert.ThrowsAsync<SnapshotTestException>(asyncMatch);
             Assert.Contains("async", exception.Message);
-            
+
             await Task.Delay(1);
         }
 
         #endregion
-        
+
         #region Match Snapshot - In Asyc Class Helper Method Tests
 
         [Fact]
@@ -252,7 +252,7 @@ namespace Snapshooter.Xunit.Tests
             await Task.Delay(1);
 
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider().Build();
-            
+
             SnapshotFullName snapshotFullName = Snapshot.FullName();
 
             var testClass = new AsyncSnapshotMatchTestClass();
@@ -278,12 +278,12 @@ namespace Snapshooter.Xunit.Tests
             var testClass = new AsyncSnapshotMatchTestClass();
 
             // act
-            Func<Task> asyncMatch = 
+            Func<Task> asyncMatch =
                 () => testClass.AsyncMatchMethodWithFullName(testPerson, snapshotFullName);
 
             // assert
-            EqualException exception =
-                await Assert.ThrowsAsync<EqualException>(asyncMatch);
+            TrueException exception =
+                await Assert.ThrowsAsync<TrueException>(asyncMatch);
             Assert.Contains("255", exception.Message);
 
             await Task.Delay(1);
@@ -350,12 +350,12 @@ namespace Snapshooter.Xunit.Tests
             var testClass = new AsyncSnapshotMatchTestClass();
 
             // act
-            Func<Task> asyncMatch = 
+            Func<Task> asyncMatch =
                 () => testClass.AsyncMatchMethodWithFullName(testPerson, snapshotFullName);
 
             // assert
-            EqualException exception =
-                await Assert.ThrowsAsync<EqualException>(asyncMatch);
+            TrueException exception =
+                await Assert.ThrowsAsync<TrueException>(asyncMatch);
             Assert.Contains(CountryCode.EN.ToString(), exception.Message);
         }
 
