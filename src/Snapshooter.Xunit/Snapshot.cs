@@ -255,8 +255,14 @@ namespace Snapshooter.Xunit
             SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
-            _snapshotName = new AsyncLocal<SnapshotFullName>();
+            try
+            {
+                Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            }
+            finally
+            {
+                _snapshotName = new AsyncLocal<SnapshotFullName>();
+            }
         }
 
         /// <summary>
