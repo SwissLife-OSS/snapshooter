@@ -33,7 +33,6 @@ namespace Snapshooter.Tests.Core
         private enum MyEnum
         {
             FirstValue = 1,
-            // ReSharper disable once UnusedMember.Local
             SecondValue = 2,
             LastValue = 99
         }
