@@ -153,8 +153,14 @@ namespace Snapshooter.Xunit
             object currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshooter.AssertSnapshot(currentResult, FullName(), matchOptions);
-            _snapshotName = new AsyncLocal<SnapshotFullName>();
+            try
+            {
+                Snapshooter.AssertSnapshot(currentResult, FullName(), matchOptions);
+            }
+            finally
+            {
+                _snapshotName = new AsyncLocal<SnapshotFullName>();
+            }
         }
 
         /// <summary>
