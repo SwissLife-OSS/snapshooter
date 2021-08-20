@@ -45,23 +45,23 @@ namespace Snapshooter.Core.Serialization
         /// <returns>The serialized snapshot.</returns>
         public string SerializeObject(object objectToSnapshot)
         {
-            string snapshotData;
+            if (objectToSnapshot is byte[] snapshotByteArray)
+            {
+                // handle byte arrays
+                return snapshotByteArray.ToFormattedHex();
+            }
 
             if (objectToSnapshot is string snapshotScalarString)
             {
                 // handle strings separately
-                snapshotData = snapshotScalarString
+                return snapshotScalarString
                     .NormalizeLineEndings()
                     .EnsureLineEnding();
             }
-            else
-            {
-                // handle objects
-                snapshotData = SerializeToJson(objectToSnapshot)
-                    .EnsureLineEnding();
-            }
-
-            return snapshotData;
+            
+            // handle objects
+            return SerializeToJson(objectToSnapshot)
+                .EnsureLineEnding();
         }
 
         /// <summary>

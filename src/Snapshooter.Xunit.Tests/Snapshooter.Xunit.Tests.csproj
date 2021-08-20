@@ -22,7 +22,6 @@
     <None Remove="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists.snap" />
   </ItemGroup>
 
-
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
@@ -39,6 +38,11 @@
   <ItemGroup>
     <Folder Include="Asynchronous\__snapshots__\" />
     <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
+    <Folder Include="BinaryFiles\__snapshots__\__mismatch__\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="BinaryFiles\SnapshotTests.ByteArray.cs" />
   </ItemGroup>
 
 </Project>
