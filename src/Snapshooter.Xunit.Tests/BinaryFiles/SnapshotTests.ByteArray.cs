@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Snapshooter.Xunit.Tests
 {
@@ -55,6 +57,17 @@ namespace Snapshooter.Xunit.Tests
 
             // act & assert
             Snapshot.Match(testByteArray);
+        }
+
+        [Fact]
+        public void Match_ByteArrayFromImage_Mismatch()
+        {
+            // arrange
+            var testByteArray = ReadTestSourceFile("binaryFile.png");
+
+            // act & assert
+            Assert.Throws<EqualException>(() =>
+                Snapshot.Match(testByteArray));
         }
 
         #region Test Helpers
