@@ -86,6 +86,16 @@ namespace Snapshooter
             return this;
         }
 
+        public MatchOptions IgnoreAllFieldsByName(string name)
+        {
+            Func<FieldOption, IEnumerable<object>> fieldsOption = 
+                option => option.GetAllFieldsByName<IEnumerable<object>>(name);
+
+            Ignore(fieldsOption);
+
+            return this;
+        }
+
         /// <summary>
         /// With the <see cref="Ignore"/> option, you can ignore the given field during snapshot
         /// comparison. Therefore the field will just be skipped during compare.

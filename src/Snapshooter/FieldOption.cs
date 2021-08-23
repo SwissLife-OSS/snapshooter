@@ -28,7 +28,7 @@ namespace Snapshooter
         /// <summary>
         /// The path of the field, which was requested.
         /// </summary>
-        public string FieldPath { get; private set; }
+        public string[] FieldPaths { get; private set; }
 
         /// <summary>
         /// Retrieves the field value by the field path.
@@ -40,8 +40,8 @@ namespace Snapshooter
         {
             try
             {
-                FieldPath = fieldPath;
-                                
+                FieldPaths = new[] { fieldPath };
+
                 if (_snapshotData is JValue jValue)
                 {
                     throw new SnapshotFieldException($"No snapshot match options are " +
@@ -49,7 +49,7 @@ namespace Snapshooter
                         $"match option with field '{fieldPath}' is not allowed.");
                 }
                                 
-                IEnumerable<JToken> fields = _snapshotData.SelectTokens(FieldPath, true);
+                IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
 
                 if (fields == null || fields.Count() == 0)
                 {
@@ -70,7 +70,7 @@ namespace Snapshooter
             }
             catch (Exception err)
             {
-                throw new SnapshotFieldException($"The field '{FieldPath}' of " +
+                throw new SnapshotFieldException($"The field '{fieldPath}' of " +
                     $"the compare context caused an error. {err.Message}", err);
             }
         }
@@ -85,7 +85,7 @@ namespace Snapshooter
         {
             try
             {
-                FieldPath = fieldPath;
+                FieldPaths = new[] { fieldPath };
 
                 if (_snapshotData is JValue jValue)
                 {
@@ -94,7 +94,7 @@ namespace Snapshooter
                         $"match option with field '{fieldPath}' is not allowed.");
                 }
 
-                IEnumerable<JToken> fields = _snapshotData.SelectTokens(FieldPath, true);
+                IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
 
                 if (fields == null || fields.Count() == 0)
                 {
@@ -108,7 +108,43 @@ namespace Snapshooter
             }
             catch (Exception err)
             {
-                throw new SnapshotFieldException($"The fields of '{FieldPath}' of " +
+                throw new SnapshotFieldException($"The fields of '{fieldPath}' of " +
+                    $"the compare context caused an error. {err.Message}", err);
+            }
+        }
+
+        public T[] GetAllFieldsByName<T>(string name)
+        {
+            try
+            {
+                if (_snapshotData is JValue jValue)
+                {
+                    throw new SnapshotFieldException($"No snapshot match options are " +
+                        $"supported for snapshots with scalar values. Therefore the " +
+                        $"match option with field name '{name}' is not allowed.");
+                }
+
+                List<JProperty> properties = ((JContainer)_snapshotData)
+                    .Descendants()
+                    .OfType<JProperty>()
+                    .Where(jprop => jprop.Name == "Name")
+                    .ToList();
+
+                T[] fieldValues = properties
+                    .Select(jprop => ConvertToType<T>(jprop.Value))
+                    .ToArray();
+
+                string[] fieldPaths = properties
+                    .Select(jprop => jprop.Path)
+                    .ToArray();
+
+                FieldPaths = fieldPaths;
+
+                return fieldValues;
+            }
+            catch (Exception err)
+            {
+                throw new SnapshotFieldException($"The field with name '{name}' of " +
                     $"the compare context caused an error. {err.Message}", err);
             }
         }
