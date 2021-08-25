@@ -113,6 +113,12 @@ namespace Snapshooter
             }
         }
 
+        /// <summary>
+        /// Retrieves all field values from all fields with the given name.
+        /// </summary>
+        /// <typeparam name="T">The type of the field value.</typeparam>
+        /// <param name="name">The name of the field.</param>
+        /// <returns></returns>
         public T[] GetAllFieldsByName<T>(string name)
         {
             try
@@ -127,7 +133,7 @@ namespace Snapshooter
                 List<JProperty> properties = ((JContainer)_snapshotData)
                     .Descendants()
                     .OfType<JProperty>()
-                    .Where(jprop => jprop.Name == "Name")
+                    .Where(jprop => jprop.Name == name)
                     .ToList();
 
                 T[] fieldValues = properties
