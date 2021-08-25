@@ -11,6 +11,19 @@ namespace Snapshooter.Tests.Data
                 Guid.Parse("C78C698F-9EE5-4B4B-9A0E-EF729B1F8EC8"), "Mark", "Walton");
         }
 
+        public static TestPersonBuilder TestPersonSandraSchneider()
+        {
+            return TestPersonBuilder.Create()
+                    .WithId(Guid.Parse("FCF04CA6-D8F2-4214-A3FF-D0DED5BAD4DE"))
+                    .WithFirstname("Sandra")
+                    .WithLastname("Schneider")
+                    .WithDateOfBirth(DateTime.ParseExact("14.02.1996", "dd.MM.yyyy", CultureInfo.InvariantCulture))
+                    .WithCreationDate(DateTime.ParseExact("01.04.2019", "dd.MM.yyyy", CultureInfo.InvariantCulture))
+                    .WithAge(null)
+                    .WithSize(165.23m)
+                    .AddAddress(TestAddressZurich().Build());
+        }
+
         public static TestPersonBuilder TestPerson(
             Guid id, string firstname, string lastname)
         {
@@ -27,19 +40,6 @@ namespace Snapshooter.Tests.Data
                     .AddChild(TestChildNull().Build())
                     .AddChild(TestChildHanna().Build())
                     .AddRelative(TestPersonSandraSchneider().Build());
-        }
-
-        public static TestPersonBuilder TestPersonSandraSchneider()
-        {
-            return TestPersonBuilder.Create()
-                    .WithId(Guid.Parse("FCF04CA6-D8F2-4214-A3FF-D0DED5BAD4DE"))
-                    .WithFirstname("Sandra")
-                    .WithLastname("Schneider")
-                    .WithDateOfBirth(DateTime.ParseExact("14.02.1996", "dd.MM.yyyy", CultureInfo.InvariantCulture))
-                    .WithCreationDate(DateTime.ParseExact("01.04.2019", "dd.MM.yyyy", CultureInfo.InvariantCulture))
-                    .WithAge(null)
-                    .WithSize(165.23m)
-                    .AddAddress(TestAddressZurich().Build());
         }
 
         public static TestAddressBuilder TestAddressWallisellen()
