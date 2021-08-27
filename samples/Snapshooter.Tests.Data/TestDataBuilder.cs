@@ -21,7 +21,8 @@ namespace Snapshooter.Tests.Data
                     .WithCreationDate(DateTime.ParseExact("01.04.2019", "dd.MM.yyyy", CultureInfo.InvariantCulture))
                     .WithAge(null)
                     .WithSize(165.23m)
-                    .AddAddress(TestAddressZurich().Build());
+                    .AddAddress(TestAddressZurich()
+                        .Build());
         }
 
         public static TestPersonBuilder TestPerson(

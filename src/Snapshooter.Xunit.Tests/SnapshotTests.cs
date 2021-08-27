@@ -200,7 +200,7 @@ namespace Snapshooter.Xunit.Tests
             // arrange
             TestPerson testPerson = TestDataBuilder
                 .TestPersonSandraSchneider()
-                .WithSize(0.5m)
+                .WithSize(1.5m)
                 .Build();
 
             // act & assert
@@ -214,7 +214,7 @@ namespace Snapshooter.Xunit.Tests
             // arrange
             TestPerson testPerson = TestDataBuilder
                 .TestPersonSandraSchneider()
-                .WithSize(0.5m)
+                .WithSize(1.5m)
                 .Build();
 
             // act & assert
