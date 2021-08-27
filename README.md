@@ -133,6 +133,24 @@ Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Relativ
 
 // Ignores the field 'Name' of all 'Children' nodes of the person
 Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Children[*].Name"));
+
+// Ignores all fields with name 'Id'
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("**.Id"));
+```
+
+#### Ignore All Fields by name
+If we want to ignore all fields by a specific name, then we have two options:
+
+Option 1: Use the ignore match option 'IgnoreAllFields(<fieldName>)' and add the name.
+```csharp
+// Ignores all fields with name 'Id'
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreAllFields("Id"));
+```
+
+Option 2: Use the default ignore match option 'IgnoreFields(**.<fieldName>)' with the following JsonPath syntax **.<fieldName> 
+```csharp
+// Ignores all fields with name 'Id'
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreFields("**.Id"));
 ```
 
 ### Assert Fields in Snapshots Matches
