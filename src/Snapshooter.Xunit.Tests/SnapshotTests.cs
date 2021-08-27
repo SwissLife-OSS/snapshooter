@@ -198,8 +198,10 @@ namespace Snapshooter.Xunit.Tests
         public void Match_IgnoreScalarField_SuccessfulIgnored()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
-                .WithSize(0.5m).Build();
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
+                .WithSize(1.5m)
+                .Build();
 
             // act & assert
             Snapshot.Match(
@@ -207,10 +209,25 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
+        public void Match_IgnoreScalarFields_SuccessfulIgnored()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
+                .WithSize(1.5m)
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreFields("Size"));
+        }
+
+        [Fact]
         public void Match_IgnoreScalarNullIntField_SuccessfulIgnored()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
                 .Build();
 
             // act & assert
@@ -222,7 +239,8 @@ namespace Snapshooter.Xunit.Tests
         public void Match_IgnoreScalarNullStringField_SuccessfulIgnored()
         {
             // arrange
-            TestChild testChild = TestDataBuilder.TestChildNull()
+            TestChild testChild = TestDataBuilder
+                .TestChildNull()
                 .Build();
 
             // act & assert
@@ -234,7 +252,8 @@ namespace Snapshooter.Xunit.Tests
         public void Match_IgnoreScalarFieldNullConvertError_ThrowsSnapshotFieldException()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
                 .Build();
 
             // act & assert
@@ -246,7 +265,8 @@ namespace Snapshooter.Xunit.Tests
         public void Match_IgnoreScalarFieldPathNotExist_ThrowsSnapshotFieldException()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
                 .Build();
 
             // act & assert
@@ -258,7 +278,8 @@ namespace Snapshooter.Xunit.Tests
         public void Match_IgnoreComplexObjectField_SuccessfulIgnored()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
                 .Build();
 
             testPerson.Address = null;
@@ -272,8 +293,10 @@ namespace Snapshooter.Xunit.Tests
         public void Match_IgnoreScalarFieldInAllWays_SuccessfulIgnored()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider()
-                .WithSize(1.5m).Build();
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
+                .WithSize(1.5m)
+                .Build();
 
             // act & assert
             Snapshot.Match(
@@ -282,6 +305,14 @@ namespace Snapshooter.Xunit.Tests
                 testPerson, matchOptions => matchOptions.IgnoreField<decimal>("Size"));
             Snapshot.Match(
                 testPerson, matchOptions => matchOptions.Ignore(option => option.Field<decimal>("Size")));
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreFields("Size"));
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreFields<decimal>("Size"));
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.Ignore(option => option.Fields<decimal>("Size")));
+
+            Assert.Throws<EqualException>(() => Snapshot.Match(testPerson));
         }
 
         [Fact]
@@ -328,6 +359,12 @@ namespace Snapshooter.Xunit.Tests
                 matchOptions => matchOptions.IgnoreFields<string>("Children[*].Name"));
             Snapshot.Match(testPerson,
                 matchOptions => matchOptions.Ignore(option => option.Fields<string>("Children[*].Name")));
+            Snapshot.Match(testPerson,
+                matchOptions => matchOptions.IgnoreField("Children[*].Name"));
+            Snapshot.Match(testPerson,
+                matchOptions => matchOptions.IgnoreField<string>("Children[*].Name"));
+
+            Assert.Throws<EqualException>(() => Snapshot.Match(testPerson));
         }
 
         [Fact]
@@ -351,6 +388,8 @@ namespace Snapshooter.Xunit.Tests
                 matchOptions => matchOptions.Ignore(option => option.Fields<TestChild>("Children[*]")));
             Snapshot.Match(testPerson,
                 matchOptions => matchOptions.IgnoreField("Children"));
+            Snapshot.Match(testPerson,
+                matchOptions => matchOptions.IgnoreField<TestChild>("Children[*]"));
         }
 
         [Fact]
@@ -370,6 +409,8 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match(
                 testPersons, matchOptions => matchOptions.IgnoreFields<object>("[*]"));
+            Snapshot.Match(
+                testPersons, matchOptions => matchOptions.IgnoreField<object>("[*]"));
         }
 
         [Fact]
@@ -386,6 +427,24 @@ namespace Snapshooter.Xunit.Tests
             // act & assert
             Snapshot.Match(
                 testPersons, matchOptions => matchOptions.IgnoreFields<object>("[*].Firstname"));
+            Snapshot.Match(
+                testPersons, matchOptions => matchOptions.IgnoreField<object>("[*].Firstname"));
+        }
+
+        [Fact]
+        public void Match_IgnoreArrayFieldPersonFirstname_SuccessfulIgnored()
+        {
+            // arrange
+            object[] testPersons = new object[]
+            {
+                TestDataBuilder.TestPersonMarkWalton().Build(),
+                TestDataBuilder.TestPersonSandraSchneider().Build(),
+                TestDataBuilder.TestPersonMarkWalton().Build()
+            };
+
+            // act & assert
+            Snapshot.Match(
+                testPersons, matchOptions => matchOptions.IgnoreField<object>("[*].Firstname"));
         }
 
         [Fact]
@@ -416,6 +475,216 @@ namespace Snapshooter.Xunit.Tests
 
             // assert
             Assert.True(File.Exists(snapshotFileName));
+        }
+
+        #endregion
+
+        #region Match Snapshots - Ignore All Fields Tests
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthFields_SuccessfulIgnored()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreAllFields("DateOfBirth"));
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthFieldsByWildcard_SuccessfulIgnored()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreField("**.DateOfBirth"));
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreFields("**.DateOfBirth"));
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthFields_SuccessfulIgnoredAndTypeChecked()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreAllFields<DateTime>("DateOfBirth"));
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthFieldsByWildcard_SuccessfulIgnoredAndTypeChecked()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreField<DateTime>("**.DateOfBirth"));
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreFields<DateTime>("**.DateOfBirth"));
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthFields_ThrowsSnapshotException()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act
+            Action match = () => Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreAllFields("DateOfBirth"));
+
+            // assert
+            EqualException exception = Assert.Throws<EqualException>(match);
+            Assert.Contains("2019-04-01T00:00:01", exception.Message);
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthFields_ThrowsWrongFieldTypeException()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act
+            Action match = () => Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreAllFields<decimal>("DateOfBirth"));
+
+            // assert
+            SnapshotFieldException exception = Assert.Throws<SnapshotFieldException>(match);
+            Assert.Contains("DateOfBirth", exception.Message);
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthAndIdFields_SuccessfulIgnored()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions
+                    .IgnoreAllFields("DateOfBirth")
+                    .IgnoreAllFields("Id"));
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthAndIdFields_SuccessfulIgnoredAndTypeChecked()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions
+                    .IgnoreAllFields<DateTime>("DateOfBirth")
+                    .IgnoreAllFields<Guid>("Id"));
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthAndIdFields_ThrowsEqualException()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Action match = () => Snapshot.Match(
+                testPerson, matchOptions => matchOptions
+                    .IgnoreAllFields("DateOfBirth")
+                    .IgnoreAllFields("Id"));
+
+            // assert
+            EqualException exception = Assert.Throws<EqualException>(match);
+            Assert.Contains("8001", exception.Message);
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthAndIdFields_ThrowsWrongFieldTypeException()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act
+            Action match = () => Snapshot.Match(
+                testPerson, matchOptions => matchOptions
+                    .IgnoreAllFields<DateTime>("DateOfBirth")
+                    .IgnoreAllFields<DateTime>("Id"));
+
+            // assert
+            SnapshotFieldException exception = Assert.Throws<SnapshotFieldException>(match);
+            Assert.Contains("Id", exception.Message);
+        }
+
+        [Fact]
+        public void Match_IgnoreAllDateOfBirthFieldsOfAnArray_SuccessfulIgnored()
+        {
+            // arrange
+            object[] testPersons = new object[]
+            {
+                TestDataBuilder.TestPersonMarkWalton().Build(),
+                TestDataBuilder.TestPersonSandraSchneider().Build(),
+                TestDataBuilder.TestPersonMarkWalton().Build(),
+                TestDataBuilder.TestChildJames().Build(),
+                TestDataBuilder.TestChildHanna().Build(),
+                TestDataBuilder.TestCountrySwitzerland().Build()
+            };
+
+            // act & assert
+            Snapshot.Match(
+                testPersons, matchOptions => matchOptions
+                .IgnoreAllFields("CreationDate"));
+        }
+
+        [Fact]
+        public void Match_IgnoreAllNotExistingFields_SuccessfulIgnored()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions
+                .IgnoreAllFields("NotExistingField"));
+        }
+
+        [Fact]
+        public void Match_IgnoreAllNotExistingFields_NoIgnoreNoTypeCheck()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions
+                .IgnoreAllFields<DateTime>("NotExistingField"));
         }
 
         #endregion

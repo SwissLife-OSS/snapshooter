@@ -45,8 +45,11 @@ namespace Snapshooter.Core
 
             if (matchOptions != null)
             {
-                ExecuteFieldMatchActions(originalActualSnapshotToken,
-                    actualSnapshotToken, expectedSnapshotToken, matchOptions);
+                ExecuteFieldMatchActions(
+                    originalActualSnapshotToken,
+                    actualSnapshotToken,
+                    expectedSnapshotToken,
+                    matchOptions);
             }
 
             string actualSnapshotToCompare = _snapshotSerializer
@@ -71,8 +74,8 @@ namespace Snapshooter.Core
                 {
                     FieldOption fieldOption = matchOperator.ExecuteMatch(originalActualSnapshot);
 
-                    RemoveFieldFromSnapshot(fieldOption.FieldPath, actualSnapshot);
-                    RemoveFieldFromSnapshot(fieldOption.FieldPath, expectedSnapshot);
+                    RemoveFieldFromSnapshot(fieldOption, actualSnapshot);
+                    RemoveFieldFromSnapshot(fieldOption, expectedSnapshot);
                 }
             }
             catch (SnapshotFieldException)
@@ -89,29 +92,32 @@ namespace Snapshooter.Core
         /// <summary>
         ///  Removes a field from the snapshot.
         /// </summary>
-        /// <param name="fieldPath">The field path of the field to remove.</param>
+        /// <param name="fieldOption">The field option of the field to remove.</param>
         /// <param name="snapshot">The snapshot from which the field shall be removed.</param>
-        private static void RemoveFieldFromSnapshot(string fieldPath, JToken snapshot)
+        private static void RemoveFieldFromSnapshot(FieldOption fieldOption, JToken snapshot)
         {            
-            if (snapshot is JValue jValue)
+            if (snapshot is JValue)
             {                
                 throw new NotSupportedException($"No snapshot match options are " +
                     $"supported for snapshots with scalar values. Therefore the " +
-                    $"match option with field '{fieldPath}' is not allowed.");                
+                    $"match options are not allowed.");
             }
 
-            IEnumerable<JToken> actualTokens = snapshot.SelectTokens(fieldPath, false);
-            if (actualTokens != null)
+            foreach (var fieldPath in fieldOption.FieldPaths)
             {
-                foreach (JToken actual in actualTokens.ToList())
+                IEnumerable<JToken> actualTokens = snapshot.SelectTokens(fieldPath, false);
+                if (actualTokens != null)
                 {
-                    if (actual.Parent is JArray array)
+                    foreach (JToken actual in actualTokens.ToList())
                     {
-                        array.Remove(actual);
-                    }
-                    else
-                    {
-                        actual.Parent.Remove();
+                        if (actual.Parent is JArray array)
+                        {
+                            array.Remove(actual);
+                        }
+                        else
+                        {
+                            actual.Parent.Remove();
+                        }
                     }
                 }
             }

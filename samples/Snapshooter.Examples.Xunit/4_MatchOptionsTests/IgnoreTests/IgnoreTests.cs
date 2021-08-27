@@ -76,5 +76,47 @@ namespace Snapshooter.Quickstarts.Xunit
                     .IgnoreField("Address.Plz")
                     .IgnoreField("Relatives[0].Address.Country.Name"));
         }
+
+        /// <summary>
+        /// Tests if the new created person is valid. We ignore all
+        /// fields of the name 'Id' from the object.
+        /// The path to the id is given by a json path.
+        /// </summary>
+        [Fact]
+        public void CreatePerson_VerifyPersonByIgnoringAllFieldsOfASpecificName_SuccessfulVerified()
+        {
+            // arrange
+            TestPerson person = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act
+            person.Id = Guid.NewGuid();
+            person.Relatives[0].Id = Guid.NewGuid();
+
+            // assert
+            Snapshot.Match(person, matchOptions => matchOptions.IgnoreField<Guid>("**.Id"));
+        }
+
+        /// <summary>
+        /// Tests if the new created person is valid. We ignore all
+        /// fields of the name 'Id' from the object.
+        /// The path to the id is given by a json path.
+        /// </summary>
+        [Fact]
+        public void CreatePerson_VerifyPersonByIgnoringAllIdFields_SuccessfulVerified()
+        {
+            // arrange
+            TestPerson person = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act
+            person.Id = Guid.NewGuid();
+            person.Relatives[0].Id = Guid.NewGuid();
+
+            // assert
+            Snapshot.Match(person, matchOptions => matchOptions.IgnoreAllFields<Guid>("Id"));
+        }
     }
 }

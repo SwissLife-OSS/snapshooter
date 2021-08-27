@@ -8,8 +8,9 @@ namespace Snapshooter.Core
         private Func<FieldOption, T> _fieldOption;
         private Action<T> _fieldAction;
 
-        public FieldMatchOperator(Func<FieldOption, T> fieldOption,
-                             Action<T> fieldAction)
+        public FieldMatchOperator(
+            Func<FieldOption, T> fieldOption,
+            Action<T> fieldAction)
         {
             _fieldOption = fieldOption;
             _fieldAction = fieldAction;
