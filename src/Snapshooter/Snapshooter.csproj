@@ -4,7 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Snapshooter core functionalities to create and assert snapshots in .Net unit tests.</Description>
     <IsPackable>true</IsPackable>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
