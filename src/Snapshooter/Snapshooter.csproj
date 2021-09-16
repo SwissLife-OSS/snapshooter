@@ -4,10 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Snapshooter core functionalities to create and assert snapshots in .Net unit tests.</Description>
     <IsPackable>true</IsPackable>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -7,6 +7,7 @@
       It creates and asserts snapshots (json format) within NUnit unit tests.
     </Description>
     <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
