@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -42,7 +42,7 @@ namespace Snapshooter
             {
                 FieldPaths = new[] { fieldPath };
 
-                if (_snapshotData is JValue jValue)
+                if (_snapshotData is JValue)
                 {
                     throw new SnapshotFieldException($"No snapshot match options are " +
                         $"supported for snapshots with scalar values. Therefore the " +
@@ -87,7 +87,7 @@ namespace Snapshooter
             {
                 FieldPaths = new[] { fieldPath };
 
-                if (_snapshotData is JValue jValue)
+                if (_snapshotData is JValue)
                 {
                     throw new SnapshotFieldException($"No snapshot match options are " +
                         $"supported for snapshots with scalar values. Therefore the " +
@@ -123,7 +123,7 @@ namespace Snapshooter
         {
             try
             {
-                if (_snapshotData is JValue jValue)
+                if (_snapshotData is JValue)
                 {
                     throw new SnapshotFieldException($"No snapshot match options are " +
                         $"supported for snapshots with scalar values. Therefore the " +
