@@ -246,7 +246,7 @@ namespace Snapshooter.Json.Tests
 
             // act & assert
             Snapshot.Match(
-                new List<object>() { markWalton, sandraSchneider, hanna }, snapshotName);
+                new List<object> { markWalton, sandraSchneider, hanna }, snapshotName);
         }
 
         #endregion

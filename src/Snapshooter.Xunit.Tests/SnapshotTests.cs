@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -187,7 +187,7 @@ namespace Snapshooter.Xunit.Tests
             TestChild hanna = TestDataBuilder.TestChildHanna().Build();
 
             // act & assert
-            Snapshot.Match(new List<object>() { markWalton, sandraSchneider, hanna });
+            Snapshot.Match(new List<object> { markWalton, sandraSchneider, hanna });
         }
 
         #endregion
@@ -1566,7 +1566,7 @@ namespace Snapshooter.Xunit.Tests
         public void Match_FactMatchSnapshotWithCrLfStringJsonWithinComplexObject_SuccessfulMatch()
         {
             // arrange
-            var testMessageInfo = new TestMessageInfo()
+            var testMessageInfo = new TestMessageInfo
             {
                 Name = "Name of the test message",
                 Content = "{\r\n  \"Id\": \"c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8\",\r\n  \"Firstname\": \"Mark\",\r\n  \"Lastname\": \"last \\r\\n name \\r with \r\n carriage return\",\r\n  \"CreationDate\": \"2018-06-06T00:00:00\",\r\n  \"DateOfBirth\": \"2000-06-25T00:00:00\",\r\n  \"Age\": 30,\r\n  \"Size\": 182.5214,\r\n  \"Address\": {\r\n    \"Street\": \"Rohrstrasse\",\r\n    \"StreetNumber\": 12,\r\n    \"Plz\": 8304,\r\n    \"City\": \"Wallislellen\",\r\n    \"Country\": {\r\n      \"Name\": \"Switzerland\",\r\n      \"CountryCode\": \"CH\"\r\n    }\r\n  },\r\n  \"Children\": [\r\n    {\r\n      \"Name\": \"\\r\\nJames\r\n\",\r\n      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r\n    },\r\n    {\r\n      \"Name\": null,\r\n      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r\n    },\r\n    {\r\n      \"Name\": \"Hanna\",\r\n      \"DateOfBirth\": \"2012-03-20T00:00:00\"\r\n    }\r\n  ],\r\n  \"Relatives\": [\r\n    {\r\n      \"Id\": \"fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de\",\r\n      \"Firstname\": \"Sandra\",\r\n      \"Lastname\": \"Schneider\",\r\n      \"CreationDate\": \"2019-04-01T00:00:00\",\r\n      \"DateOfBirth\": \"1996-02-14T00:00:00\",\r\n      \"Age\": null,\r\n      \"Size\": 165.23,\r\n      \"Address\": {\r\n        \"Street\": \"Bahnhofstrasse\",\r\n        \"StreetNumber\": 450,\r\n        \"Plz\": 8000,\r\n        \"City\": \"Zurich\",\r\n        \"Country\": {\r\n          \"Name\": \"Switzerland\",\r\n          \"CountryCode\": \"CH\"\r\n        }\r\n      },\r\n      \"Children\": [],\r\n      \"Relatives\": null\r\n    }\r\n  ]\r\n}",
@@ -1581,7 +1581,7 @@ namespace Snapshooter.Xunit.Tests
         public void Match_FactMatchSnapshotWithCrStringJsonWithinComplexObject_SuccessfulMatch()
         {
             // arrange
-            var testMessageInfo = new TestMessageInfo()
+            var testMessageInfo = new TestMessageInfo
             {
                 Name = "Name of the test message",
                 Content = "{\r  \"Id\": \"c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8\",\r  \"Firstname\": \"Mark\",\r  \"Lastname\": \"last \\r name \r with \\r carriage return\",\r  \"CreationDate\": \"2018-06-06T00:00:00\",\r  \"DateOfBirth\": \"2000-06-25T00:00:00\",\r  \"Age\": 30,\r  \"Size\": 182.5214,\r  \"Address\": {\r    \"Street\": \"Rohrstrasse\",\r    \"StreetNumber\": 12,\r    \"Plz\": 8304,\r    \"City\": \"Wallislellen\",\r    \"Country\": {\r      \"Name\": \"Switzerland\",\r      \"CountryCode\": \"CH\"\r    }\r  },\r  \"Children\": [\r    {\r      \"Name\": \"\\rJames\r\",\r      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r    },\r    {\r      \"Name\": null,\r      \"DateOfBirth\": \"2015-02-12T00:00:00\"\r    },\r    {\r      \"Name\": \"Hanna\",\r      \"DateOfBirth\": \"2012-03-20T00:00:00\"\r    }\r  ],\r  \"Relatives\": [\r    {\r      \"Id\": \"fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de\",\r      \"Firstname\": \"Sandra\",\r      \"Lastname\": \"Schneider\",\r      \"CreationDate\": \"2019-04-01T00:00:00\",\r      \"DateOfBirth\": \"1996-02-14T00:00:00\",\r      \"Age\": null,\r      \"Size\": 165.23,\r      \"Address\": {\r        \"Street\": \"Bahnhofstrasse\",\r        \"StreetNumber\": 450,\r        \"Plz\": 8000,\r        \"City\": \"Zurich\",\r        \"Country\": {\r          \"Name\": \"Switzerland\",\r          \"CountryCode\": \"CH\"\r        }\r      },\r      \"Children\": [],\r      \"Relatives\": null\r    }\r  ]\r}",

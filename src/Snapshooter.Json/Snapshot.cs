@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Snapshooter.Core;
 using Snapshooter.Core.Serialization;
 
@@ -90,7 +90,6 @@ namespace Snapshooter.Json
         /// no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown in the assert exception.
         /// </summary>
-        /// <typeparam name="T">The type of the result/object to match.</typeparam>
         /// <param name="currentResult">The object to match.</param>
         ///  /// <param name="snapshotName">
         /// The name of the snapshot. If not set, then the snapshotname
