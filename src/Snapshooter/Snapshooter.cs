@@ -1,4 +1,5 @@
 ﻿using System;
+using Snapshooter.Core;
 
 namespace Snapshooter
 {
@@ -11,6 +12,7 @@ namespace Snapshooter
     public class Snapshooter
     {
         private readonly ISnapshotAssert _snapshotAssert;
+        private readonly ISnapshotFileHandler _snapshotFileHandler;
         private readonly ISnapshotFullNameResolver _snapshotFullNameResolver;
 
         /// <summary>
@@ -18,11 +20,15 @@ namespace Snapshooter
         /// initializes a new instance.
         /// </summary>
         /// <param name="snapshotAssert">The snapshot asserter.</param>
+        /// <param name="snapshotFileHandler">The snapshot file manager.</param>
         /// <param name="snapshotFullNameResolver">The snapshot full name resolver.</param>
-        public Snapshooter(ISnapshotAssert snapshotAssert,
+        public Snapshooter(
+            ISnapshotAssert snapshotAssert,
+            ISnapshotFileHandler snapshotFileHandler,
             ISnapshotFullNameResolver snapshotFullNameResolver)
         {
             _snapshotAssert = snapshotAssert;
+            _snapshotFileHandler = snapshotFileHandler;
             _snapshotFullNameResolver = snapshotFullNameResolver;
         }
 
@@ -55,6 +61,23 @@ namespace Snapshooter
 
             _snapshotAssert.AssertSnapshot(
                 currentResult, snapshotFullName, matchOptions);
+        }
+
+        /// <summary>
+        /// Deletes the given snapshot file.
+        /// If no snapshot file exists, nothing will happen.
+        /// </summary>
+        /// <param name="snapshotFullName">
+        /// The full name of a snapshot with folder and file name.
+        /// </param>
+        public void DeleteSnapshot(SnapshotFullName snapshotFullName)
+        {
+            if (snapshotFullName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotFullName));
+            }
+
+            _snapshotFileHandler.DeleteSnapshot(snapshotFullName);
         }
 
         /// <summary>

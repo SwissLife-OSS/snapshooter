@@ -268,6 +268,65 @@ namespace Snapshooter.NUnit
         }
 
         /// <summary>
+        /// Deletes the current snapshot (file) of the test.
+        /// If no snapshot exists, no delete will be executed.
+        /// </summary>
+        public static void Delete()
+        {
+            Delete(FullName());
+        }
+
+        /// <summary>
+        /// Deletes the current snapshot (file) of the test.
+        /// If no snapshot exists, no delete will be executed.
+        /// </summary>
+        /// <param name="snapshotNameExtension">
+        /// The snapshot name extension will extend the generated snapshot name with
+        /// this given extensions. It can be used to make a snapshot name even more
+        /// specific.
+        /// Example:
+        /// Generated Snapshotname = 'NumberAdditionTest'
+        /// Snapshot name extension = '5', '6', 'Result', '11'
+        /// Result: 'NumberAdditionTest_5_6_Result_11'
+        /// </param>
+        public static void Delete(SnapshotNameExtension snapshotNameExtension)
+        {
+            Delete(FullName(snapshotNameExtension));
+        }
+
+        /// <summary>
+        /// Deletes the current snapshot (file) of the test.
+        /// If no snapshot exists, no delete will be executed.
+        /// </summary>
+        /// <param name="snapshotName">
+        /// The name of the snapshot. If not set, then the snapshotname
+        /// will be evaluated automatically from the unit test name.
+        /// </param>
+        public static void Delete(string snapshotName)
+        {
+            Delete(FullName(snapshotName));
+        }
+
+        /// <summary>
+        /// Deletes the current snapshot (file) of the test.
+        /// If no snapshot exists, no delete will be executed.
+        /// </summary>
+        /// <param name="snapshotFullName">
+        /// The full name of a snapshot with folder and file name.
+        /// </param>
+        public static void Delete(SnapshotFullName snapshotFullName)
+        {
+            try
+            {
+                Snapshooter.DeleteSnapshot(snapshotFullName);
+            }
+            finally
+            {
+                _snapshotName = new AsyncLocal<SnapshotFullName>();
+            }
+        }
+
+        /// <summary>
         /// Resolves automatically the snapshot name for the running unit test.
         /// </summary>
         /// <returns>The full name of a snapshot.</returns>
@@ -385,6 +444,7 @@ namespace Snapshooter.NUnit
                             new JsonSnapshotComparer(
                                 new NUnitAssert(),
                                 new SnapshotSerializer(new GlobalSnapshotSettingsResolver()))),
+                        new SnapshotFileHandler(),
                         new SnapshotFullNameResolver(
                             new NUnitSnapshotFullNameReader()));
             }

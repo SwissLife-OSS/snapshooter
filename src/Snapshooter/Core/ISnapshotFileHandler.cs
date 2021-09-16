@@ -34,12 +34,17 @@
         string ReadSnapshot(SnapshotFullName snapshotFullName);
 
         /// <summary>
+        /// Deletes the current snapshot if exists from the __snapshots__ folder.
+        /// </summary>
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
+        void DeleteSnapshot(SnapshotFullName snapshotFullName);
+
+        /// <summary>
         /// Deletes the given subfolder of the __snapshots__ folder of the current snapshot test.
         /// </summary>
         /// <param name="snapshotFullName">The location of the running snapshot test.</param>
         /// <param name="subfolderName">The subfolder to delete.</param>
         void DeleteSnapshotSubfolder(
             SnapshotFullName snapshotFullName, string subfolderName);
-
     }
 }

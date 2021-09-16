@@ -133,5 +133,117 @@ namespace Snapshooter.NUnit.Tests
         }
 
         #endregion
+
+        #region Delete Snapshots - By Different Names Tests
+
+        [Test]
+        public void Delete_DeleteSnapshotByDefaultName_GoodCase()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton().Build();
+
+            Snapshot.Match(testPerson);
+
+            SnapshotFullName snapshotFullName = Snapshot.FullName();
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            Assert.True(File.Exists(snapshotFileName));
+
+            // act
+            Snapshot.Delete();
+
+            // assert
+            Assert.False(File.Exists(snapshotFileName));
+        }
+
+        [Test]
+        public void Delete_DeleteSnapshotByDefaultNameAndNameExtension_GoodCase()
+        {
+            // arrange
+            SnapshotNameExtension snapshotNameExtension =
+                SnapshotNameExtension.Create(1, 2, 3, 4);
+
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton().Build();
+
+            SnapshotFullName snapshotFullName =
+                Snapshot.FullName(snapshotNameExtension);
+
+            Snapshot.Match(testPerson, snapshotNameExtension);
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            Assert.True(File.Exists(snapshotFileName));
+
+            // act
+            Snapshot.Delete(snapshotNameExtension);
+
+            // assert
+            Assert.False(File.Exists(snapshotFileName));
+        }
+
+        [Test]
+        public void Delete_DeleteSnapshotBySpecifiedFileName_GoodCase()
+        {
+            // arrange
+            string specifiedFileName = "SnapshotFileNameXYZ-Foo";
+
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton().Build();
+
+            SnapshotFullName snapshotFullName =
+                Snapshot.FullName(specifiedFileName);
+
+            Snapshot.Match(testPerson, specifiedFileName);
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            Assert.True(File.Exists(snapshotFileName));
+
+            // act
+            Snapshot.Delete(specifiedFileName);
+
+            // assert
+            Assert.False(File.Exists(snapshotFileName));
+        }
+
+        [Test]
+        public void Delete_DeleteSnapshotBySnapshotFullName_GoodCase()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton().Build();
+
+            SnapshotFullName snapshotFullName =
+                Snapshot.FullName("FullNameTest");
+
+            Snapshot.Match(testPerson, snapshotFullName);
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            Assert.True(File.Exists(snapshotFileName));
+
+            // act
+            Snapshot.Delete(snapshotFullName);
+
+            // assert
+            Assert.False(File.Exists(snapshotFileName));
+        }
+
+        #endregion
     }
 }
