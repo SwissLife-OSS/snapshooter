@@ -38,8 +38,9 @@ namespace Snapshooter
         /// <summary>
         /// The <see cref="IgnoreField(string)"/> option ignores the existing field(s) by the given 
         /// json path. The field(s) will be ignored during snapshot comparison.
-        /// 
-        /// Example:
+        /// </summary>
+        /// <example>
+        /// <code>
         /// {
         ///     "UserId": "0A332E69-FDDB-46B9-8E42-C411C3F633AC",
         ///     "Firstname": "David",
@@ -57,21 +58,25 @@ namespace Snapshooter
         ///         },
         ///     ]
         /// }
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField("Firstname"))
-        /// >> This will ignore the 'Firstname' field in the root element. ('David')
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField("Relatives[0].Firstname"))
-        /// >> This will ignore the first 'Firstname' field of the Relatives element. ('Mark')
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField("Relatives[*].Firstname"))
-        /// >> This will ignore all 'Firstname' fields of the Relatives element. ('Mark' and 'Jenny')
-        /// 
-        /// To ignore all fields of a specific name, use the syntax '**.fieldName'
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField("**.Firstname"))
-        /// >> This will ignore all 'Firstname' fields of the entire json. ('David', 'Mark' and 'Jenny')
-        /// 
-        /// </summary>
+        /// </code>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField("Firstname"))</c>
+        ///     - This will ignore the 'Firstname' field in the root element. ('David')
+        /// </para>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField("Relatives[0].Firstname"))</c>
+        ///     - This will ignore the first 'Firstname' field of the Relatives element. ('Mark')
+        /// </para>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField("Relatives[*].Firstname"))</c>
+        ///     - This will ignore all 'Firstname' fields of the Relatives element. ('Mark' and 'Jenny')
+        /// </para>
+        /// <para>
+        ///     To ignore all fields of a specific name, use the syntax '**.fieldName'
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField("**.Firstname"))</c>
+        ///     - This will ignore all 'Firstname' fields of the entire json. ('David', 'Mark' and 'Jenny')
+        /// </para>
+        /// </example>
         /// <param name="fieldPath">The json path to the field(s) to ignore.</param>
         public MatchOptions IgnoreField(string fieldPath)
         {
@@ -81,8 +86,9 @@ namespace Snapshooter
         /// <summary>
         /// The <see cref="IgnoreFields(string)"/> option ignores the existing field(s) by the given 
         /// json path. The field(s) will be ignored during snapshot comparison.
-        ///
-        /// Example:
+        /// </summary>
+        /// <example>
+        /// <code>
         /// {
         ///     "UserId": "0A332E69-FDDB-46B9-8E42-C411C3F633AC",
         ///     "Firstname": "David",
@@ -100,21 +106,25 @@ namespace Snapshooter
         ///         },
         ///     ]
         /// }
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields("Firstname"))
-        /// >> This will ignore the 'Firstname' field in the root element. ('David')
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields("Relatives[0].Firstname"))
-        /// >> This will ignore the first 'Firstname' field of the Relatives element. ('Mark')
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields("Relatives[*].Firstname"))
-        /// >> This will ignore all 'Firstname' fields of the Relatives element. ('Mark' and 'Jenny')
-        /// 
-        /// To ignore all fields of a specific name, use the syntax '**.fieldName'
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields("**.Firstname"))
-        /// >> This will ignore all 'Firstname' fields of the entire json. ('David', 'Mark' and 'Jenny')
-        /// 
-        /// </summary>
+        /// </code>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields("Firstname"))</c>
+        ///     - This will ignore the 'Firstname' field in the root element. ('David')
+        /// </para>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields("Relatives[0].Firstname"))</c>
+        ///     - This will ignore the first 'Firstname' field of the Relatives element. ('Mark')
+        /// </para>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields("Relatives[*].Firstname"))</c>
+        ///     - This will ignore all 'Firstname' fields of the Relatives element. ('Mark' and 'Jenny')
+        /// </para>
+        /// <para>
+        ///     To ignore all fields of a specific name, use the syntax '**.fieldName'
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields("**.Firstname"))</c>
+        ///     - This will ignore all 'Firstname' fields of the entire json. ('David', 'Mark' and 'Jenny')
+        /// </para>
+        /// </example>
         /// <param name="fieldsPath">The json path to the field(s) to ignore.</param>
         public MatchOptions IgnoreFields(string fieldsPath)
         {
@@ -125,8 +135,9 @@ namespace Snapshooter
         /// The <see cref="IgnoreField{T}(string)"/> option ignores the existing field(s) by the given 
         /// json path. The field(s) will be ignored during snapshot comparison.
         /// In addition, it will be checked if the value of the ignored field is of the given type T.
-        /// 
-        /// Example:
+        /// </summary>
+        /// <example>
+        /// <code>
         /// {
         ///     "UserId": "0A332E69-FDDB-46B9-8E42-C411C3F633AC",
         ///     "Firstname": "David",
@@ -144,21 +155,25 @@ namespace Snapshooter
         ///         },
         ///     ]
         /// }
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField{string}("Firstname"))
-        /// >> This will ignore the 'Firstname' field in the root element. ('David')
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField{string}("Relatives[0].Firstname"))
-        /// >> This will ignore the first 'Firstname' field of the Relatives element. ('Mark')
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField{string}("Relatives[*].Firstname"))
-        /// >> This will ignore all 'Firstname' fields of the Relatives element. ('Mark' and 'Jenny')
-        /// 
-        /// To ignore all fields of a specific name, use the syntax '**.fieldName'
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField{string}("**.Firstname"))
-        /// >> This will ignore all 'Firstname' fields of the entire json. ('David', 'Mark' and 'Jenny')
-        /// 
-        /// </summary>
+        /// </code>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField{string}("Firstname"))</c>
+        ///     - This will ignore the 'Firstname' field in the root element. ('David')
+        /// </para>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField{string}("Relatives[0].Firstname"))</c>
+        ///     - This will ignore the first 'Firstname' field of the Relatives element. ('Mark')
+        /// </para>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField{string}("Relatives[*].Firstname"))</c>
+        ///     - This will ignore all 'Firstname' fields of the Relatives element. ('Mark' and 'Jenny')
+        /// </para>
+        /// <para>
+        ///     To ignore all fields of a specific name, use the syntax '**.fieldName'
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreField{string}("**.Firstname"))</c>
+        ///     - This will ignore all 'Firstname' fields of the entire json. ('David', 'Mark' and 'Jenny')
+        /// </para>
+        /// </example>
         /// <typeparam name="T">The type of which the field value has to be.</typeparam>
         /// <param name="fieldPath">The json path to the field(s) to ignore.</param>
         public MatchOptions IgnoreField<T>(string fieldPath)
@@ -170,8 +185,9 @@ namespace Snapshooter
         /// The <see cref="IgnoreFields{T}(string)"/> option ignores the existing field(s) by the given 
         /// json path. The field(s) will be ignored during snapshot comparison.
         /// In addition, it will be checked if the value of the ignored field is of the given type T.
-        /// 
-        /// Example:
+        /// </summary>
+        /// <example>
+        /// <code>
         /// {
         ///     "UserId": "0A332E69-FDDB-46B9-8E42-C411C3F633AC",
         ///     "Firstname": "David",
@@ -189,21 +205,25 @@ namespace Snapshooter
         ///         },
         ///     ]
         /// }
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields{string}("Firstname"))
-        /// >> This will ignore the 'Firstname' field in the root element. ('David')
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields{string}("Relatives[0].Firstname"))
-        /// >> This will ignore the first 'Firstname' field of the Relatives element. ('Mark')
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields{string}("Relatives[*].Firstname"))
-        /// >> This will ignore all 'Firstname' fields of the Relatives element. ('Mark' and 'Jenny')
-        /// 
-        /// To ignore all fields of a specific name, use the syntax '**.fieldName'
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields{string}("**.Firstname"))
-        /// >> This will ignore all 'Firstname' fields of the entire json. ('David', 'Mark' and 'Jenny')
-        /// 
-        /// </summary>
+        /// </code>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields{string}("Firstname"))</c>
+        ///     - This will ignore the 'Firstname' field in the root element. ('David')
+        /// </para>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields{string}("Relatives[0].Firstname"))</c>
+        ///     - This will ignore the first 'Firstname' field of the Relatives element. ('Mark')
+        /// </para>
+        /// <para>
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields{string}("Relatives[*].Firstname"))</c>
+        ///     - This will ignore all 'Firstname' fields of the Relatives element. ('Mark' and 'Jenny')
+        /// </para>
+        /// <para>
+        ///     To ignore all fields of a specific name, use the syntax '**.fieldName'
+        ///     <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreFields{string}("**.Firstname"))</c>
+        ///     - This will ignore all 'Firstname' fields of the entire json. ('David', 'Mark' and 'Jenny')
+        /// </para>
+        /// </example>
         /// <typeparam name="T">The type of which the field value has to be.</typeparam>
         /// <param name="fieldsPath">The json path to the field(s) to ignore.</param>
         public MatchOptions IgnoreFields<T>(string fieldsPath)
@@ -215,13 +235,14 @@ namespace Snapshooter
 
             return IgnoreFieldsByPath<T>(fieldsPath);
         }
-        
+
         /// <summary>
         /// The <see cref="IgnoreAllFields(string)"/> option ignores all available 
         /// fields by the given name. All fields with the given name will be ignored
         /// during snapshot comparison.
-        /// 
-        /// Example:
+        /// </summary>
+        /// <example>
+        /// <code>
         /// {
         ///     "UserId": "0A332E69-FDDB-46B9-8E42-C411C3F633AC",
         ///     "Firstname": "David",
@@ -239,16 +260,17 @@ namespace Snapshooter
         ///         },
         ///     ]
         /// }
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreAllFields("UserId")
+        /// </code>
+        /// <para>
+        /// <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreAllFields("UserId")</c>
         /// 
         /// This configured match option has the effect, that all 'UserId' fields 
         /// will be ignored within the json. (Therefore all 3 UserIds)
         /// 
         /// Only one 'name' per <see cref="IgnoreAllFields"/> option is allowed. 
         /// (No concatenated name strings)
-        /// 
-        /// </summary>
+        /// </para>
+        /// </example>
         /// <param name="name">The name of the field(s) to be ignored.</param>
         public MatchOptions IgnoreAllFields(string name)
         {
@@ -260,8 +282,9 @@ namespace Snapshooter
         /// fields by the given name. All fields with the given name will be ignored
         /// during snapshot comparison.
         /// In addition, it will be checked if the value of the ignored fields is of the given type T.
-        /// 
-        /// Example:
+        /// </summary>
+        /// <example>
+        /// <code>
         /// {
         ///     "UserId": "0A332E69-FDDB-46B9-8E42-C411C3F633AC",
         ///     "Firstname": "David",
@@ -279,16 +302,17 @@ namespace Snapshooter
         ///         },
         ///     ]
         /// }
-        /// 
-        /// Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreAllFields{Guid}("UserId")
+        /// </code>
+        /// <para>
+        /// <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.IgnoreAllFields{Guid}("UserId")</c>
         /// 
         /// This configured match option has the effect, that all 'UserId' fields 
         /// will be ignored within the json, but the value type of the 'UserId' 
         /// fields will be verified. (Therefore all 3 UserIds)
         /// 
         /// Only one name per <see cref="IgnoreAllFields{T}(string)"/> option is allowed.
-        /// 
-        /// </summary>
+        /// </para>
+        /// </example>
         /// <typeparam name="T">The type which the field value has to be.</typeparam>
         /// <param name="name">The name of the field(s) to be ignored.</param>
         public MatchOptions IgnoreAllFields<T>(string name)
