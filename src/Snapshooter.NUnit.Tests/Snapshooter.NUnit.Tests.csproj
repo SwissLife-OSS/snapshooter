@@ -1,9 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>Snapshooter.NUnit.Tests</AssemblyName>
-    <RootNamespace>Snapshooter.NUnit.Tests</RootNamespace>
     <nullable>enable</nullable>
     <IsPackable>false</IsPackable>
     <LangVersion>8.0</LangVersion>

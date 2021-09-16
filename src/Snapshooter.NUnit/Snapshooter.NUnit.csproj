@@ -1,10 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Snapshooter.NUnit</AssemblyName>
-    <RootNamespace>Snapshooter.NUnit</RootNamespace>
-    <PackageId>Snapshooter.NUnit</PackageId>
     <Description>
       NUnit Snapshooter is a flexible snapshot testing tool for .Net unit tests with NUnit.
       It creates and asserts snapshots (json format) within NUnit unit tests.

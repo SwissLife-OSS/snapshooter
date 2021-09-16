@@ -1,9 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>Snapshooter.Json.Tests</AssemblyName>
-    <RootNamespace>Snapshooter.Json.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

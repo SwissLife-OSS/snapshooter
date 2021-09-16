@@ -1,9 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Snapshooter.Tests.Data</AssemblyName>
-    <RootNamespace>Snapshooter.Tests.Data</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
