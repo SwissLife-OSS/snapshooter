@@ -199,7 +199,11 @@ Snapshot.Match<Person>(person, > matchOption.Assert(
 
 // Asserts every 'Id' field of all the 'Relatives' of the person
 Snapshot.Match<Person>(person, > matchOption.Assert(
-                    fieldOption => Assert.NotNull(fieldOption.Field<string>("Relatives[*].Id"))));
+                    fieldOption => Assert.NotNull(fieldOption.Fields<string>("Relatives[*].Id"))));
+ 
+// Asserts 'Relatives' array is not empty
+Snapshot.Match<Person>(person, > matchOption.Assert(
+                    fieldOption => Assert.NotNull(fieldOption.Fields<TestPerson>("Relatives[*]"))));
 
 ```
 
