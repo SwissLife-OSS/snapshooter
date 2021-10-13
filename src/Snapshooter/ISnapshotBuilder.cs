@@ -2,6 +2,9 @@ using System;
 
 namespace Snapshooter
 {
+    /// <summary>
+    /// A builder to configure the snapshot
+    /// </summary>
     public interface ISnapshotBuilder
     {
         /// <summary>
