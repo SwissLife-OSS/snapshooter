@@ -1,3 +1,5 @@
+using static Snapshooter.Xunit.Snapshot;
+
 namespace Snapshooter.Xunit
 {
     internal class XUnitSnapshotBuilder : SnapshotBuilder
@@ -9,14 +11,13 @@ namespace Snapshooter.Xunit
 
         public override void Match()
         {
-            SnapshotFullName snapshotName =
-                (_snapshotName: SnapshotName, snapshotNameExtension: SnapshotNameExtension) switch
-                {
-                    ({ }, null) => Snapshot.FullName(SnapshotName),
-                    (null, { }) => Snapshot.FullName(SnapshotNameExtension),
-                    ({ }, { }) => Snapshot.FullName(SnapshotName, SnapshotNameExtension),
-                    _ => Snapshot.FullName(),
-                };
+            SnapshotFullName snapshotName = (SnapshotName, SnapshotNameExtension) switch
+            {
+                ({ }, null) => FullName(SnapshotName),
+                (null, { }) => FullName(SnapshotNameExtension),
+                ({ }, { }) => FullName(SnapshotName, SnapshotNameExtension),
+                _ => FullName()
+            };
 
             Snapshot.Match(Target, snapshotName, ConfigureOptions);
         }
