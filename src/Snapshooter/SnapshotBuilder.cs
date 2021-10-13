@@ -53,7 +53,7 @@ namespace Snapshooter
         {
             SnapshotName = extensions;
             return this;
-        }
+        }symotion-F2)
 
         /// <summary>
         /// Configures the name extension

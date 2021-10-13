@@ -16,7 +16,8 @@ namespace Snapshooter
         /// initializes a new instance.
         /// </summary>
         /// <param name="snapshotFullNameReader">The filename.</param>
-        public SnapshotFullNameResolver(ISnapshotFullNameReader snapshotFullNameReader)
+        public SnapshotFullNameResolver(
+            ISnapshotFullNameReader snapshotFullNameReader)
         {
             _snapshotFullNameReader = snapshotFullNameReader;
         }
@@ -40,7 +41,8 @@ namespace Snapshooter
         /// the automatically generated snapshot name.
         /// </param>
         /// <returns>The full name of a snapshot.</returns>
-        public SnapshotFullName ResolveSnapshotFullName(string snapshotName)
+        public SnapshotFullName ResolveSnapshotFullName(
+            string snapshotName)
         {
             return ResolveSnapshotFullName(snapshotName, null);
         }
@@ -62,8 +64,7 @@ namespace Snapshooter
         /// </param>
         /// <returns>The full name of a snapshot.</returns>
         public SnapshotFullName ResolveSnapshotFullName(
-            string snapshotName,
-            string snapshotNameExtension)
+            string snapshotName, string snapshotNameExtension)
         {
             SnapshotFullName snapshotFullName =
                 _snapshotFullNameReader.ReadSnapshotFullName();
@@ -74,8 +75,8 @@ namespace Snapshooter
                     "The snapshot full name could not be evaluated.");
             }
 
-            if (string.IsNullOrWhiteSpace(snapshotFullName.Filename) &&
-                string.IsNullOrWhiteSpace(snapshotName))
+            if(string.IsNullOrWhiteSpace(snapshotFullName.Filename) &&
+               string.IsNullOrWhiteSpace(snapshotName))
             {
                 throw new SnapshotTestException(
                     "No snapshot name could be resolved.");
@@ -97,14 +98,14 @@ namespace Snapshooter
             if (!snapshotName.EndsWith(FileNames.SnapshotFileExtension))
             {
                 snapshotName = string.Concat(
-                    snapshotName,
-                    FileNames.SnapshotFileExtension);
+                    snapshotName, FileNames.SnapshotFileExtension);
             }
 
             return snapshotName;
         }
 
-        private string AddSnapshotNameExtension(string snapshotName, string snapshotNameExtension)
+        private string AddSnapshotNameExtension(
+            string snapshotName, string snapshotNameExtension)
         {
             if (snapshotNameExtension != null)
             {

@@ -149,6 +149,13 @@ namespace Snapshooter
             return builder.ConfigureOptions(x => x.Assert(assertAction));
         }
 
+        /// <summary>
+        /// Configures the name extension. The value passed as <paramref name="extensions"/> will be
+        /// added to the
+        /// </summary>
+        /// <param name="extensions">The name of the extension</param>
+        /// <param name="builder">The builder</param>
+        /// <returns></returns>
         public static ISnapshotBuilder NameExtension(
             this ISnapshotBuilder builder,
             string extensions)
