@@ -79,6 +79,49 @@ namespace Snapshooter.NUnit.Tests
                 $"_{param1}_{param2}"));
         }
 
+        [TestCaseSource(nameof(TestCases))]
+        public void ReadSnapshotFullName_ResolveTheoryDataSnapshotName_NameResolvedWithoutInlineDataParameters(
+           string param1, int param2)
+        {
+            // arrange
+            var snapshotFullNameResolver = new NUnitSnapshotFullNameReader();
+
+            // act
+            SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
+
+            // assert
+            Assert.That(snapshotFullName.Filename, Is.EqualTo(
+                $"{nameof(NUnitSnapshotFullNameReaderTests)}." +
+                $"{nameof(ReadSnapshotFullName_ResolveTheoryDataSnapshotName_NameResolvedWithoutInlineDataParameters)}" +
+                $"_{param1}_{param2}"));
+        }
+
+        [TestCaseSource(nameof(TestCases))]
+        public async Task ReadSnapshotFullName_ResolveTheoryDataSnapshotNameAsync_NameResolvedWithoutInlineDataParameters(
+           string param1, int param2)
+        {
+            // arrange
+            var snapshotFullNameResolver = new NUnitSnapshotFullNameReader();
+            await Task.Delay(1);
+
+            // act
+            SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
+
+            // assert
+            await Task.Delay(1);
+            Assert.That(snapshotFullName.Filename, Is.EqualTo(
+                $"{nameof(NUnitSnapshotFullNameReaderTests)}." +
+                $"{nameof(ReadSnapshotFullName_ResolveTheoryDataSnapshotNameAsync_NameResolvedWithoutInlineDataParameters)}" +
+                $"_{param1}_{param2}"));
+        }
+
+        private static object[] TestCases => new object[]
+        {
+            new object[] { "testString1", 5 },
+            new object[] { "testString2", 6 },
+            new object[] { "testString3", 7 }
+        };
+
         #pragma warning restore xUnit1026 // Theory methods should use all of their parameters
     }
 }
