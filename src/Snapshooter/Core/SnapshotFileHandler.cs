@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using Snapshooter.Exceptions;
+
+#nullable enable
 
 namespace Snapshooter.Core
 {
@@ -73,10 +76,29 @@ namespace Snapshooter.Core
 
         /// <summary>
         /// Reads the current snapshot from the __snapshots__ folder.
+        /// If the snapshot does not exists, an exception is thrown.
         /// </summary>
         /// <param name="snapshotFullName">The full name of the snapshot.</param> 
         /// <returns>The expected snapshot.</returns>
         public string ReadSnapshot(SnapshotFullName snapshotFullName)
+        {
+            string? snapshotData = TryReadSnapshot(snapshotFullName);
+
+            if(snapshotData == null)
+            {
+                throw new SnapshotNotFoundException(
+                    $"Snapshot '{snapshotFullName.Filename}' could not be found.");
+            }
+
+            return snapshotData;
+        }
+
+        /// <summary>
+        /// Reads the current snapshot from the __snapshots__ folder.
+        /// </summary>
+        /// <param name="snapshotFullName">The full name of the snapshot.</param> 
+        /// <returns>The expected snapshot.</returns>
+        public string? TryReadSnapshot(SnapshotFullName snapshotFullName)
         {
             if (snapshotFullName == null)
             {
@@ -87,7 +109,7 @@ namespace Snapshooter.Core
 
             string fullSnapshotName = Path.Combine(snapshotFolderPath, snapshotFullName.Filename);
 
-            string snapshotData = null;
+            string? snapshotData = null;
 
             if (File.Exists(fullSnapshotName))
             {

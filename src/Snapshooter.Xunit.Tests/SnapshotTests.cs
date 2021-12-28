@@ -689,6 +689,49 @@ namespace Snapshooter.Xunit.Tests
 
         #endregion
 
+        #region Match Snapshots - Accept All Fields Tests
+
+        [Fact]
+        public void Match_AcceptScalarSizeField_SuccessfulIgnored()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
+                .WithSize(1.5m)
+               // .WithAge(34)
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.AcceptField<decimal>("Size", keepOriginalValue: true));
+        }
+
+        //// test acceptField with all scalar types (DateTime, int, short, bool etc.) with keepOriginal
+        //// test acceptField with a complex type also with keepOriginal.
+        //// test acceptField with an array field also with keepOriginal.
+        //// test a existing snapshot that its overwritten if the original flag changes
+        //// test is the object to snapshot is a scalar "string, int etc." --> in already exising region for scalar tests.
+
+        //// unbedingt ein test wo kein snapshot existiert, snapshot ein scalar und snapshot mit einem Pfad der nicht stimmt.
+
+        //[Fact]
+        //public void Match_AcceptComplexAddressField_SuccessfulIgnored()
+        //{
+        //    // arrange
+        //    TestPerson testPerson = TestDataBuilder
+        //        .TestPersonSandraSchneider()
+        //        .WithSize(1.5m)
+        //        .Build();
+
+        //    // act & assert
+        //    // AcceptAny<bool>("Bar", true)
+        //    // AcceptAny<int>("Id", 15)
+        //    Snapshot.Match(
+        //        testPerson, matchOptions => matchOptions.AcceptField<TestAddress>("Address", true));
+        //}
+
+        #endregion
+
         #region Match Snapshots - IsType Fields Tests
 
         [Fact]
@@ -1074,6 +1117,34 @@ namespace Snapshooter.Xunit.Tests
             Snapshot.Match(testChild,
                 matchOption => matchOption.Assert(fieldOption =>
                     Assert.Null(fieldOption.Field<string>("Children[1].Name"))));
+        }
+
+        [Fact]
+        public void Match_AssertArrayNotEmpty_SuccessfulMatch()
+        {
+            // arrange
+            TestPerson testChild = TestDataBuilder
+                .TestPersonSandraWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(testChild,
+                matchOption => matchOption.Assert(fieldOption =>
+                    Assert.NotEmpty(fieldOption.Fields<TestPerson>("Relatives[*]"))));
+        }
+
+        [Fact]
+        public void Match_AssertArrayEmpty_SuccessfulMatch()
+        {
+            // arrange
+            TestPerson testChild = TestDataBuilder
+                .TestPersonSandraSchneider()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(testChild,
+                matchOption => matchOption.Assert(fieldOption =>
+                    Assert.Empty(fieldOption.Fields<TestChild>("Children[*]"))));
         }
 
         [Fact]

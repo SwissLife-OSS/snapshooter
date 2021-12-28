@@ -51,7 +51,7 @@ namespace Snapshooter
                                 
                 IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
 
-                if (fields == null || fields.Count() == 0)
+                if (fields == null)
                 {
                     throw new SnapshotFieldException(
                         $"The field of the path '{fieldPath}' could not be found.");
@@ -96,7 +96,7 @@ namespace Snapshooter
 
                 IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
 
-                if (fields == null || fields.Count() == 0)
+                if (fields == null)
                 {
                     throw new SnapshotFieldException(
                         $"No fields of the path '{fieldPath}' could not be found.");

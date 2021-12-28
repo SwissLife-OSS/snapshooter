@@ -375,16 +375,20 @@ namespace Snapshooter.NUnit
         {
             get
             {
+                var snapshotSerializer =
+                    new SnapshotSerializer(new GlobalSnapshotSettingsResolver());
+
                 return
                     new Snapshooter(
                         new SnapshotAssert(
-                            new SnapshotSerializer(new GlobalSnapshotSettingsResolver()),
+                            snapshotSerializer,
                             new SnapshotFileHandler(),
                             new SnapshotEnvironmentCleaner(
                                 new SnapshotFileHandler()),
                             new JsonSnapshotComparer(
                                 new NUnitAssert(),
-                                new SnapshotSerializer(new GlobalSnapshotSettingsResolver()))),
+                                snapshotSerializer),
+                            new SnapshotFormatter(snapshotSerializer)),
                         new SnapshotFullNameResolver(
                             new NUnitSnapshotFullNameReader()));
             }
