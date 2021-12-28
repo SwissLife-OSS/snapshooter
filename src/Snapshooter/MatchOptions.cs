@@ -4,6 +4,7 @@ using System.Globalization;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
+using Snapshooter.Extensions;
 
 namespace Snapshooter
 {
@@ -453,17 +454,34 @@ namespace Snapshooter
             string fieldsPath,
             bool keepOriginalValue = false)
         {
-            Func<FieldOption, T> fieldOption =
-                option => option.Field<T>(fieldsPath);
+            Func<FieldOption, object> fieldOption =
+                option => option.Field<object>(fieldsPath);
 
-            _matchOperators.Add(new FieldMatchOperator<T>(fieldOption,
+            _matchOperators.Add(new FieldMatchOperator<object>(fieldOption,
                 field =>
                 {
+                    if(typeof(T) == typeof(double) || 
+                       typeof(T) == typeof(double?) ||
+                       typeof(T) == typeof(decimal) ||
+                       typeof(T) == typeof(decimal?) ||
+                       typeof(T) == typeof(float) ||
+                       typeof(T) == typeof(float?))
+                    {
+                        if(field is double || 
+                           field is decimal ||
+                           field is float)
+                        {
+                            return;
+                        }
+                    }
+
                     if (!(field is T))
                     {
-                        throw new SnapshotFieldException($"{nameof(IsType)} failed, " +
-                            $"because the field " +
-                            $"with value '{field}' is not of type {typeof(T)}.");
+                        string typeAlias = typeof(T).GetAliasName();
+
+                        throw new SnapshotFieldException($"Accept match option failed, " +
+                            $"because the field '{fieldsPath}' with value '{field}' " +
+                            $"is not of type {typeAlias}.");
                     }
                 },
                 field =>
@@ -474,7 +492,9 @@ namespace Snapshooter
                         originalValue = $"(original: '{field}')";
                     }
 
-                    field.Replace(new JValue($"AcceptAny<{typeof(T).Name}>{originalValue}"));
+                    string typeAlias = typeof(T).GetAliasName();
+                    
+                    field.Replace(new JValue($"AcceptAny<{typeAlias}>{originalValue}"));
                 }));
 
             return this;

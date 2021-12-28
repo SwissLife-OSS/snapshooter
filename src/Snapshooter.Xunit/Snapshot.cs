@@ -392,7 +392,7 @@ namespace Snapshooter.Xunit
                             new JsonSnapshotComparer(
                                 new XunitAssert(),
                                 snapshotSerializer),
-                            new SnapshotFormatter(snapshotSerializer)),
+                            new JsonSnapshotFormatter(snapshotSerializer)),
                         new SnapshotFullNameResolver(
                             new XunitSnapshotFullNameReader()));
             }

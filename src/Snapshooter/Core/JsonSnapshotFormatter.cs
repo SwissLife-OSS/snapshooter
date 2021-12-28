@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
@@ -12,15 +12,15 @@ namespace Snapshooter.Core
     /// the snapshot fields will be formatted according to this format action of the
     /// match option.
     /// </summary>
-    public class SnapshotFormatter : ISnapshotFormatter
+    public class JsonSnapshotFormatter : ISnapshotFormatter
     {
         private readonly ISnapshotSerializer _snapshotSerializer;
 
         /// <summary>
-        /// The constructor to create an instance of <see cref="SnapshotFormatter"/>
+        /// The constructor to create an instance of <see cref="JsonSnapshotFormatter"/>
         /// </summary>
         /// <param name="snapshotSerializer">The snapshot serializer.</param>
-        public SnapshotFormatter(ISnapshotSerializer snapshotSerializer)
+        public JsonSnapshotFormatter(ISnapshotSerializer snapshotSerializer)
         {
             _snapshotSerializer = snapshotSerializer;
         }

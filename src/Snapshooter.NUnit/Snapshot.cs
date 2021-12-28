@@ -388,7 +388,7 @@ namespace Snapshooter.NUnit
                             new JsonSnapshotComparer(
                                 new NUnitAssert(),
                                 snapshotSerializer),
-                            new SnapshotFormatter(snapshotSerializer)),
+                            new JsonSnapshotFormatter(snapshotSerializer)),
                         new SnapshotFullNameResolver(
                             new NUnitSnapshotFullNameReader()));
             }

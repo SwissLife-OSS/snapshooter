@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Snapshooter.Xunit.Tests</AssemblyName>
     <RootNamespace>Snapshooter.Xunit.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AcceptMatchOption\__snapshots__\__mismatch__\" />
     <Folder Include="Asynchronous\__snapshots__\" />
     <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
   </ItemGroup>

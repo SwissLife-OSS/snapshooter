@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
 using Snapshooter.Exceptions;
@@ -118,7 +118,30 @@ namespace Snapshooter.Core
 
             return snapshotData;
         }
-                
+
+        /// <summary>
+        /// Deletes the current snapshot if exists from the __snapshots__ folder.
+        /// </summary>
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
+        public void DeleteSnapshot(SnapshotFullName snapshotFullName)
+        {
+            if (snapshotFullName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotFullName));
+            }
+
+            string snapshotFolderPath =
+                EnsureSnapshotFolder(snapshotFullName);
+
+            string fullSnapshotName =
+                Path.Combine(snapshotFolderPath, snapshotFullName.Filename);
+
+            if (File.Exists(fullSnapshotName))
+            {
+                File.Delete(fullSnapshotName);
+            }
+        }
+
         /// <summary>
         /// Deletes the given subfolder of the __snapshots__ folder of the current snapshot test.
         /// </summary>

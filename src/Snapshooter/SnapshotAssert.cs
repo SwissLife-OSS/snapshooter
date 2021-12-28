@@ -78,12 +78,15 @@ namespace Snapshooter
 
             if (savedSnapshotSerialized == null)
             {
+                string formattedSnapshotSerialized = _snapshotFormatter
+                    .FormatSnapshot(actualSnapshotSerialized, matchOptions);
+
                 string value = Environment.GetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE");
                 if (string.Equals(value, "on", StringComparison.Ordinal)
                     || (bool.TryParse(value, out bool b) && b))
                 {
                     _snapshotFileHandler
-                        .SaveMismatchSnapshot(snapshotFullName, actualSnapshotSerialized);
+                        .SaveMismatchSnapshot(snapshotFullName, formattedSnapshotSerialized);
 
                     throw new SnapshotNotFoundException(
                         "Strict mode is enabled and no snapshot has been found " +
@@ -91,12 +94,11 @@ namespace Snapshooter
                         "rerun your tests.");
                 }
 
-                string formattedSnapshotSerialized = _snapshotFormatter
-                    .FormatSnapshot(actualSnapshotSerialized, matchOptions);
+                _snapshotFileHandler
+                    .SaveNewSnapshot(snapshotFullName, formattedSnapshotSerialized);
 
-                _snapshotFileHandler.SaveNewSnapshot(snapshotFullName, formattedSnapshotSerialized);
-
-                savedSnapshotSerialized = _snapshotFileHandler.ReadSnapshot(snapshotFullName);
+                savedSnapshotSerialized = _snapshotFileHandler
+                    .ReadSnapshot(snapshotFullName);
             }
 
             ExecuteSnapshotComparison(
@@ -115,7 +117,9 @@ namespace Snapshooter
             try
             {
                 _snapshotComparer.CompareSnapshots(
-                    savedSnapshotSerialized, actualSnapshotSerialized, matchOptions);
+                    savedSnapshotSerialized,
+                    actualSnapshotSerialized,
+                    matchOptions);
 
                 //string actualFormattedSnapshot = _snapshotFormatter
                 //    .FormatSnapshot(actualSnapshotSerialized, matchOptions);
