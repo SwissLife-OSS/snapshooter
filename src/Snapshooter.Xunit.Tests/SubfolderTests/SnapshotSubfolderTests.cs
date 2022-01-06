@@ -28,7 +28,7 @@ namespace Snapshooter.Xunit.Tests.Subfolder
             Action match = () => Snapshot.Match(testPerson);
 
             // assert
-            Assert.Throws<EqualException>(match);
+            Assert.Throws<TrueException>(match);
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace Snapshooter.Xunit.Tests.Subfolder
 
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
-            // act 
+            // act
             Snapshot.Match(testPerson);
 
             // assert

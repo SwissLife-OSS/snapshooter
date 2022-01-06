@@ -13,7 +13,7 @@ namespace Snapshooter.Xunit.Tests
             var snapshotAssert = new XunitAssert();
 
             // act & assert
-            snapshotAssert.Assert("{Same}", "{Same}");         
+            snapshotAssert.Assert("{Same}", "{Same}");
         }
 
         [Fact]
@@ -22,11 +22,11 @@ namespace Snapshooter.Xunit.Tests
             // arrange
             var snapshotAssert = new XunitAssert();
 
-            // act 
+            // act
             Action action = () => snapshotAssert.Assert("{Same}", "{Sme}");
 
-            // assert    
-            Assert.Throws<EqualException>(action);
+            // assert
+            Assert.Throws<TrueException>(action);
         }
     }
 }
