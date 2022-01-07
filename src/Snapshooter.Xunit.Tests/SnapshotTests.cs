@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -470,11 +470,12 @@ namespace Snapshooter.Xunit.Tests
                 .WithSize(0.5m).Build();
 
             // act
-            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
-                testPerson, matchOptions => matchOptions.IgnoreField<int>("Size")));
+            Action action = () => Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreField<int>("Size"));
 
             // assert
-            Assert.True(File.Exists(snapshotFileName));
+            Assert.Throws<SnapshotFieldException>(action);
+            Assert.False(File.Exists(snapshotFileName));
         }
 
         #endregion
@@ -984,11 +985,12 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act
-            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
-                testPerson, matchOptions => matchOptions.IsTypeField<int>("Size")));
+            Action action = () => Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IsTypeField<int>("Size"));
 
             // assert
-            Assert.True(File.Exists(snapshotFileName));
+            Assert.Throws<SnapshotFieldException>(action);
+            Assert.False(File.Exists(snapshotFileName));
         }
 
         #endregion
@@ -1215,14 +1217,14 @@ namespace Snapshooter.Xunit.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act
-            Assert.Throws<SnapshotCompareException>(
-                () => Snapshot.Match(testPerson,
-                     matchOption => matchOption.Assert(
-                            fieldOption => Assert.Equal(fieldOption.Field<Guid>("Id"),
-                                Guid.Parse("C24C7F55-2C96-442B-B9D5-35B642169E72")))));
+            Action action = () => Snapshot.Match(testPerson,
+                matchOption => matchOption.Assert(
+                    fieldOption => Assert.Equal(fieldOption.Field<Guid>("Id"),
+                        Guid.Parse("C24C7F55-2C96-442B-B9D5-35B642169E72"))));
 
             // assert
-            Assert.True(File.Exists(snapshotFileName));
+            Assert.Throws<SnapshotCompareException>(action);
+            Assert.False(File.Exists(snapshotFileName));
         }
 
         #endregion

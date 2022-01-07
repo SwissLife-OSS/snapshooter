@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -14,6 +14,7 @@
     <EmbeddedResource Remove="__snapshots__\__mismatch__\**" />
     <None Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
     <None Remove="__snapshots__\__mismatch__\**" />
+    <None Remove="AcceptMatchOption\AcceptDecimal\__snapshots__\__mismatch__\**" />
   </ItemGroup>
 
   <ItemGroup>

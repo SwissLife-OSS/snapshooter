@@ -1,11 +1,11 @@
-﻿{
+{
   "Id": "fcf04ca6-d8f2-4214-a3ff-d0ded5bad4de",
   "Firstname": "Sandra",
   "Lastname": "Schneider",
   "CreationDate": "2019-04-01T00:00:00",
   "DateOfBirth": "1996-02-14T00:00:00",
   "Age": null,
-  "Size": "AcceptAny<Decimal?>(original: '')",
+  "Size": "AcceptAny<Decimal?>(original: '1236.1236')",
   "Address": {
     "Street": "Bahnhofstrasse",
     "StreetNumber": 450,

@@ -82,41 +82,42 @@ namespace Snapshooter.Core
         /// <returns>The expected snapshot.</returns>
         public string ReadSnapshot(SnapshotFullName snapshotFullName)
         {
-            string? snapshotData = TryReadSnapshot(snapshotFullName);
-
-            if(snapshotData == null)
+            if(TryReadSnapshot(snapshotFullName, out string? snapshotData))
             {
-                throw new SnapshotNotFoundException(
-                    $"Snapshot '{snapshotFullName.Filename}' could not be found.");
+                return snapshotData!;
             }
 
-            return snapshotData;
+            throw new SnapshotNotFoundException(
+                $"Snapshot '{snapshotFullName.Filename}' could not be found.");
         }
 
         /// <summary>
         /// Reads the current snapshot from the __snapshots__ folder.
         /// </summary>
         /// <param name="snapshotFullName">The full name of the snapshot.</param> 
-        /// <returns>The expected snapshot.</returns>
-        public string? TryReadSnapshot(SnapshotFullName snapshotFullName)
+        /// <param name="snapshotData">The loaded snapshot data.</param>
+        /// <returns>True if the snapshot could be found.</returns>
+        public bool TryReadSnapshot(SnapshotFullName snapshotFullName, out string snapshotData)
         {
             if (snapshotFullName == null)
             {
                 throw new ArgumentNullException(nameof(snapshotFullName));
             }
-                
+
+            snapshotData = string.Empty;
+
             string snapshotFolderPath = EnsureSnapshotFolder(snapshotFullName);
 
             string fullSnapshotName = Path.Combine(snapshotFolderPath, snapshotFullName.Filename);
 
-            string? snapshotData = null;
-
             if (File.Exists(fullSnapshotName))
             {
                 snapshotData = File.ReadAllText(fullSnapshotName, Encoding.UTF8);
+
+                return true;
             }
 
-            return snapshotData;
+            return false;
         }
 
         /// <summary>

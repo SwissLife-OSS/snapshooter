@@ -37,11 +37,12 @@ namespace Snapshooter.Core
         string ReadSnapshot(SnapshotFullName snapshotFullName);
 
         /// <summary>
-        /// Reads the current snapshot from the __snapshots__ folder.
+        /// Tries to read the current snapshot from the __snapshots__ folder.
         /// </summary>
-        /// <param name="snapshotFullName">The full name of the snapshot.</param> 
-        /// <returns>The expected snapshot.</returns>
-        string? TryReadSnapshot(SnapshotFullName snapshotFullName);
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
+        /// <param name="snapshotData">The loaded snapshot data.</param>
+        /// <returns>True if the snapshot could be found.</returns>
+        bool TryReadSnapshot(SnapshotFullName snapshotFullName, out string snapshotData);
 
         /// <summary>
         /// Deletes the current snapshot if exists from the __snapshots__ folder.

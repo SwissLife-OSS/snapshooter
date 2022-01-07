@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +83,28 @@ namespace Snapshooter.Extensions
                 yield return type;
                 type = type.BaseType;
             }
+        }
+
+        /// <summary>
+        /// Checks if the type T is nullable or not.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type to find out if nullable or not.
+        /// </typeparam>
+        /// <returns>True if nullable, false if not.</returns>
+        public static bool IsNullable(this Type type)
+        {
+            if (!type.IsValueType)
+            {
+                return true;
+            }
+
+            if (Nullable.GetUnderlyingType(type) != null)
+            {
+                return true;
+            }
+                
+            return false;
         }
     }
 }

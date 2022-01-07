@@ -73,10 +73,13 @@ namespace Snapshooter
 
             _snapshotEnvironmentCleaner.Cleanup(snapshotFullName);
 
-            string actualSnapshotSerialized = _snapshotSerializer.SerializeObject(currentResult);
-            string? savedSnapshotSerialized = _snapshotFileHandler.TryReadSnapshot(snapshotFullName);
+            string actualSnapshotSerialized = _snapshotSerializer
+                .SerializeObject(currentResult);
 
-            if (savedSnapshotSerialized == null)
+            bool snapshotAlreadyExists = _snapshotFileHandler
+                .TryReadSnapshot(snapshotFullName, out string? savedSnapshotSerialized);
+            
+            if (!snapshotAlreadyExists)
             {
                 string formattedSnapshotSerialized = _snapshotFormatter
                     .FormatSnapshot(actualSnapshotSerialized, matchOptions);
@@ -102,6 +105,7 @@ namespace Snapshooter
             }
 
             ExecuteSnapshotComparison(
+                snapshotAlreadyExists,
                 actualSnapshotSerialized,
                 savedSnapshotSerialized,
                 snapshotFullName,
@@ -109,6 +113,7 @@ namespace Snapshooter
         }
 
         private void ExecuteSnapshotComparison(
+            bool snapshotAlreadyExists,
             string actualSnapshotSerialized,
             string savedSnapshotSerialized,
             SnapshotFullName snapshotFullName,
@@ -137,6 +142,11 @@ namespace Snapshooter
 
                 _snapshotFileHandler
                     .SaveMismatchSnapshot(snapshotFullName, actualFormattedSnapshot);
+
+                if(!snapshotAlreadyExists)
+                {
+                    _snapshotFileHandler.DeleteSnapshot(snapshotFullName);
+                }
 
                 throw;
             }

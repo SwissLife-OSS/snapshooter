@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Newtonsoft.Json.Linq;
@@ -454,48 +454,8 @@ namespace Snapshooter
             string fieldsPath,
             bool keepOriginalValue = false)
         {
-            Func<FieldOption, object> fieldOption =
-                option => option.Field<object>(fieldsPath);
-
-            _matchOperators.Add(new FieldMatchOperator<object>(fieldOption,
-                field =>
-                {
-                    if(typeof(T) == typeof(double) || 
-                       typeof(T) == typeof(double?) ||
-                       typeof(T) == typeof(decimal) ||
-                       typeof(T) == typeof(decimal?) ||
-                       typeof(T) == typeof(float) ||
-                       typeof(T) == typeof(float?))
-                    {
-                        if(field is double || 
-                           field is decimal ||
-                           field is float)
-                        {
-                            return;
-                        }
-                    }
-
-                    if (!(field is T))
-                    {
-                        string typeAlias = typeof(T).GetAliasName();
-
-                        throw new SnapshotFieldException($"Accept match option failed, " +
-                            $"because the field '{fieldsPath}' with value '{field}' " +
-                            $"is not of type {typeAlias}.");
-                    }
-                },
-                field =>
-                {
-                    string originalValue = string.Empty;
-                    if (keepOriginalValue)
-                    {
-                        originalValue = $"(original: '{field}')";
-                    }
-
-                    string typeAlias = typeof(T).GetAliasName();
-                    
-                    field.Replace(new JValue($"AcceptAny<{typeAlias}>{originalValue}"));
-                }));
+            _matchOperators.Add(
+                new AcceptMatchOperator<T>(fieldsPath, keepOriginalValue));
 
             return this;
         }
