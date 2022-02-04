@@ -7,7 +7,7 @@ using Xunit;
 
 #nullable enable
 
-namespace Snapshooter.Xunit.Tests.AcceptMatchOption
+namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Decimal
 {
     public class SnapshotTests
     {
@@ -336,6 +336,8 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption
 
         #endregion
 
+        #region Private Test Helpers
+
         private static void Match_AcceptDecimal_WithRightType_Successful<T>(
             bool insertNull = false,
             bool keepOriginalValue = false)
@@ -406,6 +408,8 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption
                 snapshotFileHandler.ReadSnapshot(originalFullName));
         }
 
+        #endregion
+
         // DONE test that the snapshot format is always correct if newly generated.
 
         // DONE test all with decimal, double, float
@@ -418,13 +422,18 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption
         // DONE test all with byte[]
         // DONE test all with List decimal
         // test all with List empty
-        // DONE test all with complex object
+        // DONE test all with complex class object
         // DONE test with a value and nullable decimal, green
         // DONE test with a null value and a decimal --> error
         // DONE test with a null value and a nullable decimal
 
-        // test if the first time the snapshot is wrong, then only write the snapshot to the mismatch folder.
+        // DONE test with a specific enum (CountryCode = de)
+        // test with a struct
+        // test with a record
+
+        // DONE test if the first time the snapshot is wrong, then only write the snapshot to the mismatch folder.
         // test if the first snapshot is with accept double and the secound with accept decimal, then the snapshot has to be overwritten.
+        // test if the snapshot is with an ignor and the user changes it to an accept, then the snapshot has to be overwritten.
 
         // a list with values, replace all values with one json path.
         // a test where multiple pathes are used, but not everyone fits to a field
@@ -437,6 +446,7 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption
         //// test is the object to snapshot is a scalar "string, int etc." --> in already exising region for scalar tests.
 
         // test AcceptAllFields und mit **.
+        // -- here create a **. test and a AcceptAllFields test.
 
         // test ein snapshot existiert schon mit ignore, jetzt wird noch ein accept hinzugefügt, jetzt sollte der snapshot überschrieben werden.
         // test several accepts in one snapshot

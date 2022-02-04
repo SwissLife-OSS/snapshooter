@@ -8,10 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AcceptMatchOption\__snapshots__\**" />
     <Compile Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
     <Compile Remove="__snapshots__\__mismatch__\**" />
+    <EmbeddedResource Remove="AcceptMatchOption\__snapshots__\**" />
     <EmbeddedResource Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
     <EmbeddedResource Remove="__snapshots__\__mismatch__\**" />
+    <None Remove="AcceptMatchOption\__snapshots__\**" />
     <None Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
     <None Remove="__snapshots__\__mismatch__\**" />
     <None Remove="AcceptMatchOption\AcceptDecimal\__snapshots__\__mismatch__\**" />
@@ -38,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AcceptMatchOption\__snapshots__\__mismatch__\" />
+    <Folder Include="AcceptMatchOption\AcceptDouble\__snapshots__\__mismatch__\" />
     <Folder Include="Asynchronous\__snapshots__\" />
     <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
   </ItemGroup>
