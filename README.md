@@ -236,7 +236,7 @@ public void Match_ConcatenateFieldChecksTest_SuccessfulMatch()
 
 ## Using Snapshooter in CI-Builds
 
-When running snapshooter tests in a CI-build you might want to ensure that a snapshots are correctly checked-in since otherwise tests without a snapshot will just create the initial snapshot and become green.
+When running snapshooter tests in a CI-build you might want to ensure that snapshots are correctly checked-in since otherwise tests without a snapshot will just create the initial snapshot and become green.
 
 In order to fail tests that are without a snapshot on your CI-build you can set the snapshooter behavior to strict-mode by setting the environment variable `SNAPSHOOTER_STRICT_MODE` to `on` or `true`.
 
