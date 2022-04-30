@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 
 namespace Snapshooter.Tests.Data
 {
@@ -80,6 +81,13 @@ namespace Snapshooter.Tests.Data
             return TestChildBuilder.Create()
                 .WithName(null)
                 .WithDateOfBirth(DateTime.ParseExact("12.02.2015", "dd.MM.yyyy", CultureInfo.InvariantCulture));
+        }
+
+        public static TestImageBuilder TestImage()
+        {
+            return TestImageBuilder.Create()
+                .WithName("Foo")
+                .WithData(File.ReadAllBytes("./Data/mona-lisa.jpg"));
         }
     }
 }
