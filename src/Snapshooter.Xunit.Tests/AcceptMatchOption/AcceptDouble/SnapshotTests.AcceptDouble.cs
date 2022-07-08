@@ -399,11 +399,9 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Double
         private void Match_AcceptDouble_WithRightType_Successful<T>(
             bool insertNull = false,
             bool keepOriginalValue = false)
-        {
-            // arrange            
+        {       
             AcceptTypeTestee<double?> testee = CreateDoubleAcceptTestee(insertNull);
                 
-            // act & assert
             Snapshot.Match(
                 testee, matchOptions => matchOptions
                     .AcceptField<T>(nameof(testee.Value), keepOriginalValue));
@@ -413,35 +411,11 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Double
             bool insertNull = false,
             bool keepOriginalValue = false,
             string typeName = "NotDefined")
-        {
-            // arrange            
+        {           
             AcceptTypeTestee<double?> testee = CreateDoubleAcceptTestee(insertNull);
-            
-            // act
-            Action action = () => Snapshot.Match(
-                testee, matchOptions => matchOptions
-                    .AcceptField<T>(nameof(testee.Value), keepOriginalValue: keepOriginalValue));
 
-            // assert
-            SnapshotFieldException exception =
-                Assert.Throws<SnapshotFieldException>(action);
-
-            if (insertNull)
-            {
-                Assert.Equal(exception.Message,
-                   $"Accept match option failed, " +
-                   $"because the field value of '{nameof(testee.Value)}' " +
-                   $"is 'Null', " +
-                   $"but defined accept type '{typeName}' is not nullable.");
-            }
-            else
-            {
-                Assert.Equal(exception.Message,
-                    $"Accept match option failed, " +
-                    $"because the field value of '{nameof(testee.Value)}' " +
-                    $"is '{testee.Value}', " +
-                    $"and therefore not of type '{typeName}'.");
-            }
+            AcceptAssert.AssertAcceptWrongTypeExceptionCase<T, double?>(
+                insertNull, keepOriginalValue, typeName, testee);
         }
         
         private AcceptTypeTestee<double?> CreateDoubleAcceptTestee(bool insertNull)

@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
 using Snapshooter.Extensions;
@@ -25,9 +26,11 @@ namespace Snapshooter.Core
             string originalValue = string.Empty;
             if (_keepOriginalValue)
             {
-                var fieldValue = field.ToString();
+                var fieldValue = field
+                    .ToString(Formatting.None)
+                    .Replace("\"", string.Empty);
 
-                if(string.IsNullOrEmpty(fieldValue))
+                if(fieldValue == "null") // TODO remove this and execute all tests
                 {
                     fieldValue = "Null";
                 }
@@ -64,6 +67,7 @@ namespace Snapshooter.Core
 
         private void VerifyFieldType(object field)
         {
+            // TODO here limit if T is byte and the number is bigger or smaller, than exception
             if (typeof(T) == typeof(double) || typeof(T) == typeof(double?) ||
                 typeof(T) == typeof(decimal) || typeof(T) == typeof(decimal?) ||
                 typeof(T) == typeof(float) || typeof(T) == typeof(float?))
@@ -74,7 +78,19 @@ namespace Snapshooter.Core
                 }
             }
 
-            if(field == null)
+            // TODO here limit if T is byte and the number is bigger or smaller, than exception
+            if (typeof(T) == typeof(int) || typeof(T) == typeof(int?) ||
+                typeof(T) == typeof(long) || typeof(T) == typeof(long?) ||
+                typeof(T) == typeof(short) || typeof(T) == typeof(short?) ||
+                typeof(T) == typeof(byte) || typeof(T) == typeof(byte?))
+            {
+                if (field is int || field is long || field is short || field is byte)
+                {
+                    return;
+                }
+            }
+
+            if (field == null)
             {
                 if(!typeof(T).IsNullable())
                 {
@@ -85,6 +101,22 @@ namespace Snapshooter.Core
                 }
 
                 return;
+            }
+
+            if(typeof(T) == typeof(Guid) || typeof(T) == typeof(Guid?))
+            {
+                if(Guid.TryParse(field.ToString(), out Guid value))
+                {
+                    return;
+                }
+            }
+
+            if (typeof(T) == typeof(byte[]) && field is string stringField)
+            {
+                if(stringField.IsBase64String())
+                {
+                    return;
+                }
             }
 
             if (!(field is T))

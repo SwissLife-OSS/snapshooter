@@ -7,6 +7,8 @@ using Snapshooter.Core;
 using Snapshooter.Exceptions;
 using Xunit;
 
+#nullable enable
+
 namespace Snapshooter.Xunit.Tests.AcceptMatchOption.TestHelpers
 {
     public static class AcceptAssert
@@ -33,7 +35,8 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.TestHelpers
             bool insertNull,
             bool keepOriginalValue,
             string typeName,
-            AcceptTypeTestee<TTestee> testee)
+            AcceptTypeTestee<TTestee> testee,
+            string? testeeValue = null)
         {
             // arrange
 
@@ -59,7 +62,7 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.TestHelpers
                 Assert.Equal(exception.Message,
                     $"Accept match option failed, " +
                     $"because the field value of '{nameof(testee.Value)}' " +
-                    $"is '{testee.Value}', " +
+                    $"is '{testeeValue ?? testee.Value!.ToString()}', " +
                     $"and therefore not of type '{typeName}'.");
             }
         }

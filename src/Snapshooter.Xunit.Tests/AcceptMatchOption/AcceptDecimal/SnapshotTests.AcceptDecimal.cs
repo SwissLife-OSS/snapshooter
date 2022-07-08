@@ -419,17 +419,17 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Decimal
         // DONE test all with DateTime
         // DONE test all with bool,
         // DONE test all with byte 
-        // DONE test all with byte[]
-        // DONE test all with List decimal
-        // test all with List empty
-        // DONE test all with complex class object
+        // DONE test all with byte[]--->
+        // DONE test all with List decimal, class, recors -->
+        // test all with List empty -->
+        // DONE test all with complex class object --> 1. AcceptClass
         // DONE test with a value and nullable decimal, green
         // DONE test with a null value and a decimal --> error
         // DONE test with a null value and a nullable decimal
 
-        // DONE test with a specific enum (CountryCode = de)
-        // test with a struct
-        // test with a record
+        // DONE test with a specific enum (CountryCode = de) --> 2. Accecpt Enum
+        // test with a struct --> 3. Accept Struct
+        // test with a record --> 4. Accept Record
 
         // DONE test if the first time the snapshot is wrong, then only write the snapshot to the mismatch folder.
         // test if the first snapshot is with accept double and the secound with accept decimal, then the snapshot has to be overwritten.
@@ -439,7 +439,7 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Decimal
         // a test where multiple pathes are used, but not everyone fits to a field
 
 
-        //// test acceptField with all scalar types (DateTime, int, short, bool etc.) with keepOriginal
+        //// test acceptField with all/many scalar types (DateTime, int, short, bool etc.) with keepOriginal
         //// test acceptField with a complex type also with keepOriginal.
         //// test acceptField with an array/list/dictionary field also with keepOriginal.
         //// test a existing snapshot that its overwritten if the original flag changes

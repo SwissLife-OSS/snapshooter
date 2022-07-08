@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
     <AssemblyName>Snapshooter.Xunit.Tests</AssemblyName>
     <RootNamespace>Snapshooter.Xunit.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
+    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,7 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AcceptMatchOption\AcceptDateTime\__snapshots__\__mismatch__\" />
     <Folder Include="AcceptMatchOption\AcceptDouble\__snapshots__\__mismatch__\" />
+    <Folder Include="AcceptMatchOption\AcceptString\__snapshots__\__mismatch__\" />
     <Folder Include="Asynchronous\__snapshots__\" />
     <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
   </ItemGroup>

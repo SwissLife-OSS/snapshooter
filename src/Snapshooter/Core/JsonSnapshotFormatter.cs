@@ -63,7 +63,7 @@ namespace Snapshooter.Core
             {
                 return actualSnapshot;
             }
-
+                        
             // TODO first check if any format action is set, if not return actualSnapshot
 
             JToken actualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);

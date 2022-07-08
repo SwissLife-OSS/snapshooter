@@ -399,11 +399,9 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Float
         private void Match_AcceptFloat_WithRightType_Successful<T>(
             bool insertNull = false,
             bool keepOriginalValue = false)
-        {
-            // arrange            
+        {           
             AcceptTypeTestee<float?> testee = CreateFloatAcceptTestee(insertNull);
                 
-            // act & assert
             Snapshot.Match(
                 testee, matchOptions => matchOptions
                     .AcceptField<T>(nameof(testee.Value), keepOriginalValue));
@@ -413,8 +411,7 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Float
             bool insertNull = false,
             bool keepOriginalValue = false,
             string typeName = "NotDefined")
-        {
-            // arrange            
+        {           
             AcceptTypeTestee<float?> testee = CreateFloatAcceptTestee(insertNull);
 
             AcceptAssert.AssertAcceptWrongTypeExceptionCase<T, float?>(
