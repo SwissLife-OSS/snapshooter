@@ -1,6 +1,9 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
+using Snapshooter.Exceptions;
+
+#nullable enable
 
 namespace Snapshooter.Core
 {
@@ -73,28 +76,71 @@ namespace Snapshooter.Core
 
         /// <summary>
         /// Reads the current snapshot from the __snapshots__ folder.
+        /// If the snapshot does not exists, an exception is thrown.
         /// </summary>
         /// <param name="snapshotFullName">The full name of the snapshot.</param>
         /// <returns>The expected snapshot.</returns>
         public string ReadSnapshot(SnapshotFullName snapshotFullName)
+        {
+            if (TryReadSnapshot(snapshotFullName, out string? snapshotData))
+            {
+                return snapshotData!;
+            }
+
+            throw new SnapshotNotFoundException(
+                $"Snapshot '{snapshotFullName.Filename}' could not be found.");
+        }
+
+        /// <summary>
+        /// Reads the current snapshot from the __snapshots__ folder.
+        /// </summary>
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
+        /// <param name="snapshotData">The loaded snapshot data.</param>
+        /// <returns>True if the snapshot could be found.</returns>
+        public bool TryReadSnapshot(SnapshotFullName snapshotFullName, out string snapshotData)
         {
             if (snapshotFullName == null)
             {
                 throw new ArgumentNullException(nameof(snapshotFullName));
             }
 
+            snapshotData = string.Empty;
+
             string snapshotFolderPath = EnsureSnapshotFolder(snapshotFullName);
 
             string fullSnapshotName = Path.Combine(snapshotFolderPath, snapshotFullName.Filename);
 
-            string snapshotData = null;
-
             if (File.Exists(fullSnapshotName))
             {
                 snapshotData = File.ReadAllText(fullSnapshotName, Encoding.UTF8);
+
+                return true;
             }
 
-            return snapshotData;
+            return false;
+        }
+
+        /// <summary>
+        /// Deletes the current snapshot if exists from the __snapshots__ folder.
+        /// </summary>
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
+        public void DeleteSnapshot(SnapshotFullName snapshotFullName)
+        {
+            if (snapshotFullName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotFullName));
+            }
+
+            string snapshotFolderPath =
+                EnsureSnapshotFolder(snapshotFullName);
+
+            string fullSnapshotName =
+                Path.Combine(snapshotFolderPath, snapshotFullName.Filename);
+
+            if (File.Exists(fullSnapshotName))
+            {
+                File.Delete(fullSnapshotName);
+            }
         }
 
         /// <summary>

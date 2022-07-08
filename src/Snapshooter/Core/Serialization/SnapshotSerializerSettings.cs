@@ -5,6 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Snapshooter.Extensions;
 
 namespace Snapshooter.Core.Serialization
 {

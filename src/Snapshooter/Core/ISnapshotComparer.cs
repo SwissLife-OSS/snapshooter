@@ -1,5 +1,7 @@
 ﻿using System;
 
+#nullable enable
+
 namespace Snapshooter.Core
 {
     /// <summary>
@@ -21,7 +23,9 @@ namespace Snapshooter.Core
         /// <param name="actualSnapshot">
         /// The actual (modifiable) snapshot of the current result.
         /// </param>    
-        void CompareSnapshots(string expectedSnapshot, string actualSnapshot, 
-                              Func<MatchOptions, MatchOptions> matchOptions);
+        void CompareSnapshots(
+            string expectedSnapshot,
+            string actualSnapshot,
+            Func<MatchOptions, MatchOptions>? matchOptions = null);
     }
 }

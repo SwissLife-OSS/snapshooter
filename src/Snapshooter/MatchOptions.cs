@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
+using Snapshooter.Extensions;
 
 namespace Snapshooter
 {
@@ -30,9 +32,43 @@ namespace Snapshooter
         /// <summary>
         /// Returns all configured field match operators.
         /// </summary>
-        public IEnumerable<FieldMatchOperator> MatchOperators
+        public IReadOnlyCollection<FieldMatchOperator> MatchOperators
         {
             get { return _matchOperators.AsReadOnly(); }
+        }
+
+        /// <summary>
+        /// The <see cref="AcceptField{T}(string)"/> match option accepts a snapshot field, if the
+        /// type of the field is equal to the given Type. The value of the field will NOT be 
+        /// compared with the original snapshot.
+        /// In addition, the field will be replaced by the text 'AcceptAny{T}()'"
+        /// </summary>
+        /// <typeparam name="T">The type to check the field for.</typeparam>
+        /// <param name="fieldPath">The json path to the field(s) to ignore.</param>
+        public MatchOptions AcceptField<T>(string fieldPath)
+        {
+            return Accept<T>(fieldPath);
+        }
+
+        /// <summary>
+        /// The <see cref="AcceptField{T}(string)"/> match option accepts a snapshot field, if the
+        /// type of the field is equal to the given Type. The value of the field will NOT be 
+        /// compared with the original snapshot.
+        /// In addition, the field will be replaced by the following text 'AcceptAny{T}()'.
+        /// If we enable the keep original value flag, then the value from the first original 
+        /// snapshot will always be included into the output 'AcceptAny{T}(1235.218)'.
+        /// </summary>
+        /// <typeparam name="T">The type to check the field for.</typeparam>
+        /// <param name="fieldPath">
+        /// The json path to the field(s) to ignore.
+        /// </param>
+        /// <param name="keepOriginalValue">
+        /// The flag, which defines if the original value 
+        /// of the field shall be kept in the snapshot.
+        /// </param>
+        public MatchOptions AcceptField<T>(string fieldPath, bool keepOriginalValue = false)
+        {
+            return Accept<T>(fieldPath, keepOriginalValue);
         }
 
         /// <summary>
@@ -434,6 +470,16 @@ namespace Snapshooter
                 option => option.Fields<T>(fieldsPath);
 
             Ignore(fieldOption);
+
+            return this;
+        }
+
+        private MatchOptions Accept<T>(
+            string fieldsPath,
+            bool keepOriginalValue = false)
+        {
+            _matchOperators.Add(
+                new AcceptMatchOperator<T>(fieldsPath, keepOriginalValue));
 
             return this;
         }

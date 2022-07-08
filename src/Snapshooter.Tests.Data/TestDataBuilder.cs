@@ -23,6 +23,24 @@ namespace Snapshooter.Tests.Data
                     .AddRelative(TestPersonSandraSchneider().Build());
         }
 
+        public static TestPersonBuilder TestPersonSandraWalton()
+        {
+            return TestPersonBuilder.Create()
+                .WithId(Guid.Parse("4FA8995F-95FC-4BB6-AD71-46F90D088A37"))
+                .WithFirstname("Sandra")
+                .WithLastname("Walton")
+                .WithDateOfBirth(DateTime.ParseExact("11.02.2002", "dd.MM.yyyy", CultureInfo.InvariantCulture))
+                .WithCreationDate(DateTime.ParseExact("07.07.2020", "dd.MM.yyyy", CultureInfo.InvariantCulture))
+                .WithAge(28)
+                .WithSize(165.5m)
+                .AddAddress(TestAddressWallisellen().Build())
+                .AddChild(TestChildJames().Build())
+                .AddChild(TestChildNull().Build())
+                .AddChild(TestChildHanna().Build())
+                .AddRelative(TestPersonSandraSchneider().Build())
+                .AddRelative(TestPersonMarkWalton().Build());
+        }
+
         public static TestPersonBuilder TestPersonSandraSchneider()
         {
             return TestPersonBuilder.Create()
