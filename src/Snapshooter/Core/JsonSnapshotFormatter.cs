@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 namespace Snapshooter.Core
 {
     /// <summary>
-    /// Formats the snapshot output according the match options. 
+    /// Formats the snapshot output according the match options.
     /// Each match option has a specific format action (or no format action) and
     /// the snapshot fields will be formatted according to this format action of the
     /// match option.
@@ -26,7 +26,7 @@ namespace Snapshooter.Core
         }
 
         /// <summary>
-        /// Formats the snapshot output according the match options. 
+        /// Formats the snapshot output according the match options.
         /// Each match option has a specific format action (or no format action) and
         /// the snapshot fields will be formatted according to this format action of the
         /// match option.
@@ -42,9 +42,9 @@ namespace Snapshooter.Core
             string snapshot,
             Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
-            if(matchOptions is { })
+            if (matchOptions is { })
             {
-                string transformedSnapshot = 
+                string transformedSnapshot =
                     ExecuteFieldFormatActions(snapshot, matchOptions);
 
                 return transformedSnapshot;
@@ -63,7 +63,7 @@ namespace Snapshooter.Core
             {
                 return actualSnapshot;
             }
-                        
+
             // TODO first check if any format action is set, if not return actualSnapshot
 
             JToken actualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
@@ -97,7 +97,7 @@ namespace Snapshooter.Core
 
             foreach (var fieldPath in fieldOption.FieldPaths)
             {
-                IEnumerable<JToken> actualTokens = 
+                IEnumerable<JToken> actualTokens =
                     actualSnapshotToken.SelectTokens(fieldPath, false);
 
                 if (actualTokens is { })

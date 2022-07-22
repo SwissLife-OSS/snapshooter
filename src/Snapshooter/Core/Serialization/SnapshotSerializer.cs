@@ -97,6 +97,8 @@ namespace Snapshooter.Core.Serialization
                 snapshotJson = JsonConvert.ToString(snapshotJson);
             }
 
+            //JToken.FromObject()
+
             var snapshotToken = JToken.Parse(snapshotJson, jsonLoadSettings);
 
             return snapshotToken;
@@ -169,20 +171,6 @@ namespace Snapshooter.Core.Serialization
                 var normalisedText = text.NormalizeLineEndings();
 
                 base.WriteValue(normalisedText);
-            }
-
-            public override void WriteValue(byte[] value)
-            {
-                string binaryHash = SHA256CheckSum(value);
-
-                base.WriteValue(binaryHash);
-            }
-
-            public string SHA256CheckSum(byte[] value)
-            {
-                using var SHA256 = System.Security.Cryptography.SHA256.Create();
-
-                return Convert.ToBase64String(SHA256.ComputeHash(value));
             }
         }
     }

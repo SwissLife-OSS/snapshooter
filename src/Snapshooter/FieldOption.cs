@@ -16,7 +16,7 @@ namespace Snapshooter
         private JToken _snapshotData;
 
         /// <summary>
-        /// Constructor of the class <see cref="FieldOption"/> 
+        /// Constructor of the class <see cref="FieldOption"/>
         /// initializes a new instance.
         /// </summary>
         /// <param name="snapshotData">The snapshot json data.</param>
@@ -48,7 +48,7 @@ namespace Snapshooter
                         $"supported for snapshots with scalar values. Therefore the " +
                         $"match option with field '{fieldPath}' is not allowed.");
                 }
-                                
+
                 IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
 
                 if (fields == null)
@@ -101,7 +101,7 @@ namespace Snapshooter
                     throw new SnapshotFieldException(
                         $"No fields of the path '{fieldPath}' could not be found.");
                 }
-                
+
                 T[] fieldValues = fields.Select(f => ConvertToType<T>(f)).ToArray();
 
                 return fieldValues;
@@ -160,7 +160,7 @@ namespace Snapshooter
             if (typeof(T) == typeof(int))
             {
                 // This is a workaround, because the json method ToObject<> rounds
-                // decimal values to integer values, which is wrong. 
+                // decimal values to integer values, which is wrong.
                 return JsonConvert.DeserializeObject<T>(field.Value<string>());
             }
             //if(typeof(T) == typeof(string))
@@ -175,7 +175,7 @@ namespace Snapshooter
             //            $"converted to requested type 'typeof(T)'.");
             //    }
             //}
-             
+
             return field.ToObject<T>();
         }
     }

@@ -34,10 +34,51 @@ namespace Snapshooter.Json.Tests
             string snapshotName = nameof(SnapshotTests) + "." +
                                   nameof(Match_BinaryData);
 
-            TestImage testImage = TestDataBuilder.TestImage().Build();
+            TestImage testImage = TestDataBuilder.TestImageMonaLisa().Build();
 
             // act & assert
             Snapshot.Match(testImage, snapshotName);
+        }
+
+        [Fact]
+        public void Match_BinaryData_HashField()
+        {
+            // arrange
+            string snapshotName = nameof(SnapshotTests) + "." +
+                                  nameof(Match_BinaryData_HashField);
+
+            TestImage testImage = TestDataBuilder.TestImageMonaLisa().Build();
+
+            // act & assert
+            Snapshot.Match(testImage, snapshotName, o => o.HashField("Data"));
+        }
+
+        [Fact]
+        public void DoesNotMatch_BinaryData_HashField()
+        {
+            // arrange
+            string snapshotName = nameof(SnapshotTests) + "." +
+                                  nameof(Match_BinaryData_HashField);
+
+            TestImage testImage = TestDataBuilder.TestImageMonaLisaFake().Build();
+
+            // act & assert
+            Action act = () => Snapshot.Match(testImage, snapshotName, o => o.HashField("Data"));
+
+            act.Should().Throw<SnapshotCompareException>();
+        }
+
+        [Fact]
+        public void Match_BinaryData_AcceptField()
+        {
+            // arrange
+            string snapshotName = nameof(SnapshotTests) + "." +
+                                  nameof(Match_BinaryData_AcceptField);
+
+            TestImage testImage = TestDataBuilder.TestImageMonaLisa().Build();
+
+            // act & assert
+            Snapshot.Match(testImage, snapshotName, o => o.AcceptField<byte[]>("Data"));
         }
 
         [Fact]

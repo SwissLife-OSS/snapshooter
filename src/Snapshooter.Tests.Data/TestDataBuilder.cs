@@ -101,11 +101,18 @@ namespace Snapshooter.Tests.Data
                 .WithDateOfBirth(DateTime.ParseExact("12.02.2015", "dd.MM.yyyy", CultureInfo.InvariantCulture));
         }
 
-        public static TestImageBuilder TestImage()
+        public static TestImageBuilder TestImageMonaLisa()
         {
             return TestImageBuilder.Create()
-                .WithName("Foo")
+                .WithName("Mona Lisa")
                 .WithData(File.ReadAllBytes("./Data/mona-lisa.jpg"));
+        }
+
+        public static TestImageBuilder TestImageMonaLisaFake()
+        {
+            return TestImageBuilder.Create()
+                .WithName("Mona Lisa")
+                .WithData(File.ReadAllBytes("./Data/mona-lisa-fake.jpg"));
         }
     }
 }
