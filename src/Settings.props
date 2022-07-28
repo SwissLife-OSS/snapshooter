@@ -1,8 +1,0 @@
-<Project>
-
-  <PropertyGroup>
-    <LangVersion>9</LangVersion>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
-
-</Project>
