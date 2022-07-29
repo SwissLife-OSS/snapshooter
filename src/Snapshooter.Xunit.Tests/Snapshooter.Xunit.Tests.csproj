@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
     <AssemblyName>Snapshooter.Xunit.Tests</AssemblyName>
     <RootNamespace>Snapshooter.Xunit.Tests</RootNamespace>
-    <IsPackable>false</IsPackable>
-    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,15 +25,6 @@
     <None Remove="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists.snap" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
-    <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="coverlet.msbuild" Version="2.9.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
     <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
@@ -47,6 +36,21 @@
     <Folder Include="AcceptMatchOption\AcceptString\__snapshots__\__mismatch__\" />
     <Folder Include="Asynchronous\__snapshots__\" />
     <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="coverlet.collector" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Update="FluentAssertions" Version="6.7.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+    <PackageReference Update="Moq" Version="4.18.1" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

@@ -83,6 +83,7 @@ namespace Snapshooter.Core
         public string ReadSnapshot(SnapshotFullName snapshotFullName)
         {
             if (TryReadSnapshot(snapshotFullName, out string? snapshotData))
+
             {
                 return snapshotData!;
             }
