@@ -465,6 +465,21 @@ namespace Snapshooter
             return this;
         }
 
+        /// <summary>
+        /// The <see cref="HashField(string)"/> option hashes (SHA256) the value of an existing snapshot field(s),
+        /// given by the json path <paramref name="fieldPath"/>.
+        /// Only this generated hash will be saved within the snapshot and also only the hash will be compared
+        /// between snapshots.
+        /// </summary>
+        /// <param name="fieldPath">The json path to the field(s) to hash.</param>
+        public MatchOptions HashField(string fieldPath)
+        {
+            _matchOperators.Add(
+                new HashMatchOperator(fieldPath));
+
+            return this;
+        }
+
         private MatchOptions IgnoreFieldsByPath<T>(string fieldsPath)
         {
             Func<FieldOption, object> fieldOption =
@@ -483,14 +498,6 @@ namespace Snapshooter
                 new AcceptMatchOperator<T>(fieldsPath, keepOriginalValue));
 
             return this;
-        }
-
-        public MatchOptions HashField(string fieldPath)
-        {
-            _matchOperators.Add(
-                new HashMatchOperator(fieldPath));
-
-            return this;
-        }
+        }        
     }
 }
