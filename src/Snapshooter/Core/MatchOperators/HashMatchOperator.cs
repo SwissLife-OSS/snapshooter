@@ -23,7 +23,7 @@ namespace Snapshooter.Core
             var fieldValue = field
                 .ToString(Formatting.None);
 
-            var hash = SHA256Hash.Hash(fieldValue);
+            var hash = fieldValue.ToHashSHA256();
 
             field.Replace(new JValue(hash));
 

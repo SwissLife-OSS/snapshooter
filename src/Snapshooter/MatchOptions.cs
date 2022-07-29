@@ -498,6 +498,6 @@ namespace Snapshooter
                 new AcceptMatchOperator<T>(fieldsPath, keepOriginalValue));
 
             return this;
-        }        
+        }
     }
 }
