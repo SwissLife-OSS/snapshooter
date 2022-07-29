@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29613.14
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BC88894B-F8D1-4AB5-9F5A-8D7372F14E2C}"
 EndProject
@@ -18,9 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snapshooter.Tests", "Snapsh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snapshooter.Tests.Data", "Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj", "{A7094CE2-DC27-45C5-94B1-FBB262203CCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snapshooter.NUnit", "Snapshooter.NUnit\Snapshooter.NUnit.csproj", "{37A500BF-5B82-435F-9CC8-6D9313A7E3CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snapshooter.NUnit", "Snapshooter.NUnit\Snapshooter.NUnit.csproj", "{37A500BF-5B82-435F-9CC8-6D9313A7E3CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snapshooter.NUnit.Tests", "Snapshooter.NUnit.Tests\Snapshooter.NUnit.Tests.csproj", "{126EE69D-36B4-4E61-8E94-FAC9720A71D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snapshooter.NUnit.Tests", "Snapshooter.NUnit.Tests\Snapshooter.NUnit.Tests.csproj", "{126EE69D-36B4-4E61-8E94-FAC9720A71D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

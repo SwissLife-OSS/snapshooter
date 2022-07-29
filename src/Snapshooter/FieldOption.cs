@@ -51,7 +51,7 @@ namespace Snapshooter
                                 
                 IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
 
-                if (fields == null || fields.Count() == 0)
+                if (fields == null)
                 {
                     throw new SnapshotFieldException(
                         $"The field of the path '{fieldPath}' could not be found.");
@@ -96,7 +96,7 @@ namespace Snapshooter
 
                 IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
 
-                if (fields == null || fields.Count() == 0)
+                if (fields == null)
                 {
                     throw new SnapshotFieldException(
                         $"No fields of the path '{fieldPath}' could not be found.");
@@ -163,10 +163,20 @@ namespace Snapshooter
                 // decimal values to integer values, which is wrong. 
                 return JsonConvert.DeserializeObject<T>(field.Value<string>());
             }
-            else
-            {
-                return field.ToObject<T>();
-            }
-        }        
+            //if(typeof(T) == typeof(string))
+            //{
+            //    if(field.Type != JTokenType.String ||
+            //       field.Type != JTokenType.Object ||
+            //       field.Type != JTokenType.Null)
+            //    {
+            //        throw new SnapshotFieldException(
+            //            $"The snapshot field with value '{field}' " +
+            //            $"is of Type '{field.Type}' and can not be " +
+            //            $"converted to requested type 'typeof(T)'.");
+            //    }
+            //}
+             
+            return field.ToObject<T>();
+        }
     }
 }

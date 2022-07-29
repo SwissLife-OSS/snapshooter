@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
@@ -65,6 +66,28 @@ namespace Snapshooter.Extensions
                 Debug.WriteLine(ex);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Verifies if the given string is in correct base64 format.
+        /// Returns true if the string is in a valid base64 format, otherwise false.
+        /// </summary>
+        /// <param name="base64String">The input string to verify.</param>
+        /// <returns>
+        /// True if the string is in a valid base64 format, otherwise false.
+        /// </returns>
+        public static bool IsBase64String(this string base64String)
+        {
+            try
+            {
+                Convert.FromBase64String(base64String);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }            
         }
     }
 }

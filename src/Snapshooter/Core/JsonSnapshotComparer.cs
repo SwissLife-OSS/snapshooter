@@ -4,6 +4,8 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
 
+#nullable enable
+
 namespace Snapshooter.Core
 {
     /// <summary>
@@ -37,13 +39,13 @@ namespace Snapshooter.Core
         public void CompareSnapshots(
             string expectedSnapshot,
             string actualSnapshot,
-            Func<MatchOptions, MatchOptions> matchOptions)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             JToken originalActualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
             JToken actualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
             JToken expectedSnapshotToken = _snapshotSerializer.Deserialize(expectedSnapshot);
 
-            if (matchOptions != null)
+            if (matchOptions is { })
             {
                 ExecuteFieldMatchActions(
                     originalActualSnapshotToken,
@@ -106,7 +108,8 @@ namespace Snapshooter.Core
             foreach (var fieldPath in fieldOption.FieldPaths)
             {
                 IEnumerable<JToken> actualTokens = snapshot.SelectTokens(fieldPath, false);
-                if (actualTokens != null)
+
+                if (actualTokens is { })
                 {
                     foreach (JToken actual in actualTokens.ToList())
                     {
@@ -116,7 +119,7 @@ namespace Snapshooter.Core
                         }
                         else
                         {
-                            actual.Parent.Remove();
+                            actual.Parent?.Remove();
                         }
                     }
                 }
