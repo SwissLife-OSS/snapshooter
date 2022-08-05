@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Snapshooter.Core;
 using Snapshooter.Core.Serialization;
 
@@ -26,11 +26,15 @@ namespace Snapshooter.Json
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the comparison
         /// </param>
-        public static void Match<T>(T currentResult,
-                                    string snapshotName,
-                                    Func<MatchOptions, MatchOptions> matchOptions = null)
+        public static void Match<T>(
+            T currentResult,
+            string snapshotName,
+            Func<MatchOptions<T>, MatchOptions<T>> matchOptions = null)
         {
-            Match((object)currentResult, snapshotName, matchOptions);
+            Match(
+                (object)currentResult,
+                snapshotName,
+                o => matchOptions == null ? o : matchOptions(new MatchOptions<T>(o)));
         }
 
         /// <summary>
@@ -56,12 +60,17 @@ namespace Snapshooter.Json
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the comparison
         /// </param>
-        public static void Match<T>(T currentResult,
-                                    string snapshotName,
-                                    SnapshotNameExtension snapshotNameExtension,
-                                    Func<MatchOptions, MatchOptions> matchOptions = null)
+        public static void Match<T>(
+            T currentResult,
+            string snapshotName,
+            SnapshotNameExtension snapshotNameExtension,
+            Func<MatchOptions<T>, MatchOptions<T>> matchOptions = null)
         {
-            Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
+            Match(
+                (object)currentResult,
+                snapshotName,
+                snapshotNameExtension,
+                o => matchOptions == null ? o : matchOptions(new MatchOptions<T>(o)));
         }
 
         /// <summary>

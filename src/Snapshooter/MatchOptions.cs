@@ -508,7 +508,7 @@ namespace Snapshooter
             return this;
         }
 
-        private MatchOptions Accept<T>(
+        protected MatchOptions Accept<T>(
             string fieldsPath,
             bool keepOriginalValue = false)
         {

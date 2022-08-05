@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +19,7 @@ namespace Snapshooter.Tests.Data
         public int? Age { get; set; }
         public decimal? Size { get; set; }
         public TestAddress Address { get; set; }
-        public IEnumerable<TestChild> Children { get; set; }
+        public IList<TestChild> Children { get; set; }
         public TestPerson[] Relatives { get; set; }
     }
 

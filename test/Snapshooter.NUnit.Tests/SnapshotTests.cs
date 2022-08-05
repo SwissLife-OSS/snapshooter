@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using NUnit.Framework;
 using Snapshooter.Tests.Data;
 
@@ -130,6 +130,16 @@ namespace Snapshooter.NUnit.Tests
 
             // assert
             Assert.True(File.Exists(snapshotFileName));
+        }
+
+        [Test]
+        public void Match_WithLambdaExpression_Works()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            Snapshot.Match(testPerson, o => o.AcceptField(t => t.Age));
         }
 
         #endregion

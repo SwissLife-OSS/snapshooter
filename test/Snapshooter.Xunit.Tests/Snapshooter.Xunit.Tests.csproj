@@ -41,6 +41,7 @@
     <Folder Include="MatchOptions\HashField\__snapshots__\__mismatch__\" />
     <Folder Include="MatchOptions\IncludeField\__snapshots__\" />
     <Folder Include="MatchOptions\IncludeField\__snapshots__\__mismatch__\" />
+    <Folder Include="LambdaExpressionsTests\__snapshots__\" />
   </ItemGroup>
 
 </Project>

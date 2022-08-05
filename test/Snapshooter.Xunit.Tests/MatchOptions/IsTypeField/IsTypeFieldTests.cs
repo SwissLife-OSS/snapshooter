@@ -225,7 +225,7 @@ namespace Snapshooter.Xunit.Tests.MatchOptions.IsTypeField
             };
 
             // act & assert
-            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match<object>(theThing,
+            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(theThing,
                 matchOptions => matchOptions.IsTypeFields<DateTime>("**.Value")));
         }
 
