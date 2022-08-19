@@ -1,5 +1,5 @@
 using System;
-using FluentAssertions.Primitives;
+using FluentAssertions;
 using Snapshooter.Tests.Data;
 using Xunit;
 

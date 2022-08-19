@@ -1,5 +1,7 @@
+using FluentAssertions.Primitives;
+
 // Extension of Fluent assertion to not loose type information of asserted object
-namespace FluentAssertions.Primitives;
+namespace FluentAssertions;
 
 public class TypedAssertions<T> : ObjectAssertions<T, TypedAssertions<T>>
 {

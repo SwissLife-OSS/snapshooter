@@ -1,5 +1,5 @@
 using System;
-using FluentAssertions.Primitives;
+using FluentAssertions;
 
 namespace Snapshooter.Xunit
 {
