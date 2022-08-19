@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Snapshooter.Core;
 using Snapshooter.Core.Serialization;
-using Snapshooter.MatchOptionsOfModel.cs;
 
 namespace Snapshooter.Xunit
 {

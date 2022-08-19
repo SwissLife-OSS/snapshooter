@@ -1,3 +1,4 @@
+using System;
 using FluentAssertions.Primitives;
 using Snapshooter.Tests.Data;
 using Xunit;
@@ -31,6 +32,18 @@ namespace Snapshooter.Xunit.Tests.LambdaExpressionsTests
                     .AcceptField(m => m.DateOfBirth)
                     .IgnoreFields(m => m.Children['*'].Name)
                 );
+        }
+
+        [Fact]
+        public void MatchSnapshot_FieldWithRandomInput_IgnoreField()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+            testPerson.Age = new Random().Next(0, 100);
+
+            // act & assert
+            Snapshot.Match(testPerson, options => options
+                .IgnoreField(m => m.Age));
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using FluentAssertions.Primitives;
-using Snapshooter.MatchOptionsOfModel.cs;
 
 namespace Snapshooter.Xunit
 {
