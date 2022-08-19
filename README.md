@@ -153,6 +153,35 @@ Option 2: Use the default ignore match option 'IgnoreFields(**.<fieldName>)' wit
 Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreFields("**.Id"));
 ```
 
+#### Ignore using a lambda expression
+
+We also support ignoring fields using lambda expressions instead of json paths.
+
+```csharp
+// Ignores the Id field of the person
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField(person => person.Id));
+```
+
+### Assert the type of a field but ignore its value
+
+Using the `.AcceptField()` and `.AcceptFields()` syntax we can assert that a certain field contains a value of a given type.
+Unlike ignore the snapshot file will not contain the field value but instead the type assertion, for example: `"Field": "AcceptAny<String>"`.
+This is desirable because the snapshot will not change when it is recreated at a later time.
+
+#### Example with json path syntax
+
+```csharp
+// Assert that the id field is a guid and writes "AcceptAny<Guid>" into the snapshot file
+Snapshot.Match<Person>(person, matchOptions => matchOptions.AcceptField<Guid>("id"));
+```
+
+#### Examle with lambda expressions
+
+```csharp
+// Assert that the id field is a guid and writes "AcceptAny<Guid>" into the snapshot file
+Snapshot.Match<Person>(person, matchOptions => matchOptions.AcceptField(person => person.Id));
+```
+
 ### Assert Fields in Snapshots Matches
 
 Sometimes there are fields in a snapshot, which you want to assert separately against another value.
