@@ -18,5 +18,19 @@ namespace Snapshooter.Xunit.Tests.LambdaExpressionsTests
                 .AcceptField(m => m.DateOfBirth)
                 .IgnoreFields(m => m.Children['*'].Name));
         }
+
+        [Fact]
+        public void MatchSnapshot_SnapshotMatchAssertions_RemovesSubject()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            Snapshot.Match(testPerson, options => options
+                    .AcceptField(m => m.Firstname)
+                    .AcceptField(m => m.DateOfBirth)
+                    .IgnoreFields(m => m.Children['*'].Name)
+                );
+        }
     }
 }

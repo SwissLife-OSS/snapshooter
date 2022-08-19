@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Threading;
 using Snapshooter.Core;
 using Snapshooter.Core.Serialization;
+using Snapshooter.MatchOptionsOfModel.cs;
 
 namespace Snapshooter.Xunit
 {
@@ -30,9 +31,11 @@ namespace Snapshooter.Xunit
         /// </param>
         public static void Match<T>(
             T currentResult,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions<T>, MatchOptions<T>> matchOptions = null)
         {
-            Match((object)currentResult, matchOptions);
+            Match(
+                (object)currentResult,
+                o => matchOptions == null ? o : matchOptions(new MatchOptions<T>(o)));
         }
 
         /// <summary>
@@ -58,9 +61,12 @@ namespace Snapshooter.Xunit
         public static void Match<T>(
             T currentResult,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions<T>, MatchOptions<T>> matchOptions = null)
         {
-            Match((object)currentResult, snapshotNameExtension, matchOptions);
+            Match(
+                (object)currentResult,
+                snapshotNameExtension,
+                o => matchOptions == null ? o : matchOptions(new MatchOptions<T>(o)));
         }
 
         /// <summary>
@@ -81,9 +87,12 @@ namespace Snapshooter.Xunit
         public static void Match<T>(
             T currentResult,
             string snapshotName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions<T>, MatchOptions<T>> matchOptions = null)
         {
-            Match((object)currentResult, snapshotName, matchOptions);
+            Match(
+                (object)currentResult,
+                snapshotName,
+                o => matchOptions == null ? o : matchOptions(new MatchOptions<T>(o)));
         }
 
         /// <summary>
@@ -114,9 +123,13 @@ namespace Snapshooter.Xunit
             T currentResult,
             string snapshotName,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions<T>, MatchOptions<T>> matchOptions = null)
         {
-            Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
+            Match(
+                (object)currentResult,
+                snapshotName,
+                snapshotNameExtension,
+                o => matchOptions == null ? o : matchOptions(new MatchOptions<T>(o)));
         }
 
         /// <summary>
@@ -134,9 +147,12 @@ namespace Snapshooter.Xunit
         public static void Match<T>(
             T currentResult,
             SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions<T>, MatchOptions<T>> matchOptions = null)
         {
-            Match((object)currentResult, snapshotFullName, matchOptions);
+            Match(
+                (object)currentResult,
+                snapshotFullName,
+                o => matchOptions == null ? o : matchOptions(new MatchOptions<T>(o)));
         }
 
         /// <summary>
