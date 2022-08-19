@@ -199,6 +199,19 @@ namespace Snapshooter.Json.Tests
             Assert.True(File.Exists(snapshotFileName));
         }
 
+        [Fact]
+        public void Match_WithLambdaExpression_Works()
+        {
+            // arrange
+            string snapshotName = nameof(SnapshotTests) + "." +
+                                  nameof(Match_FactMatchSingleSnapshot_GoodCase);
+
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            Snapshot.Match(testPerson, snapshotName, o => o.AcceptField(p => p.Age));
+        }
+
         #endregion
 
         #region Match Snapshot - Multiple Objects Tests
