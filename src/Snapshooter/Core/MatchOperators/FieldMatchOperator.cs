@@ -23,7 +23,7 @@ namespace Snapshooter.Core
 
         public override JToken FormatField(JToken field)
         {
-            if(_fieldFormatAction is { })
+            if (_fieldFormatAction is { })
             {
                 _fieldFormatAction(field);
             }
@@ -39,7 +39,7 @@ namespace Snapshooter.Core
             return fieldOption;
         }
 
-        public override FieldOption ExecuteMatch(JToken snapshotData)
+        public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
         {
             FieldOption fieldOption = new FieldOption(snapshotData);
             T fieldValue = _fieldOption(fieldOption);
@@ -58,7 +58,7 @@ namespace Snapshooter.Core
     public abstract class FieldMatchOperator
     {
         public abstract FieldOption GetFieldOption(JToken snapshotData);
-        public abstract FieldOption ExecuteMatch(JToken snapshotData);
+        public abstract FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData);
         public abstract JToken FormatField(JToken snapshotData);
         public abstract bool IsFormatActionSet();
     }

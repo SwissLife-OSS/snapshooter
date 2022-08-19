@@ -21,7 +21,8 @@ namespace Snapshooter.Core
         public override JToken FormatField(JToken field)
         {
             var fieldValue = field
-                .ToString(Formatting.None);
+                .ToString(Formatting.None)
+                .Replace("\"", string.Empty);
 
             var hash = fieldValue.ToHashSHA256();
 
@@ -39,8 +40,21 @@ namespace Snapshooter.Core
             return fieldOption;
         }
 
-        public override FieldOption ExecuteMatch(JToken snapshotData)
+        public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
         {
+            var actualFieldOption = new FieldOption(snapshotData);
+            var actualvalue = actualFieldOption.Field<string>(_fieldsPath);
+
+            var actualHash = actualvalue.ToHashSHA256();
+
+            var expectedFieldOption = new FieldOption(expectedSnapshotData);
+            var expectedHash = expectedFieldOption.Field<string>(_fieldsPath);
+
+            if (!string.Equals(actualHash, expectedHash, StringComparison.Ordinal))
+            {
+                throw new SnapshotCompareException($"The hash in field '{_fieldsPath}' does not match with snapshot.");
+            }
+
             return GetFieldOption(snapshotData);
         }
     }

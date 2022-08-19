@@ -74,17 +74,9 @@ namespace Snapshooter.Core
 
                 foreach (FieldMatchOperator matchOperator in configMatchOptions.MatchOperators)
                 {
-                    if (matchOperator is HashMatchOperator)
-                    {
-                        FieldOption fieldOption = matchOperator.GetFieldOption(originalActualSnapshot);
-                        FormatFieldOnSnapshot(fieldOption, actualSnapshot, matchOperator);
-                    }
-                    else
-                    {
-                        FieldOption fieldOption = matchOperator.ExecuteMatch(originalActualSnapshot);
-                        RemoveFieldFromSnapshot(fieldOption, actualSnapshot);
-                        RemoveFieldFromSnapshot(fieldOption, expectedSnapshot);
-                    }
+                    FieldOption fieldOption = matchOperator.ExecuteMatch(originalActualSnapshot, expectedSnapshot);
+                    RemoveFieldFromSnapshot(fieldOption, actualSnapshot);
+                    RemoveFieldFromSnapshot(fieldOption, expectedSnapshot);
                 }
             }
             catch (SnapshotFieldException)
@@ -128,29 +120,6 @@ namespace Snapshooter.Core
                         {
                             actual.Parent?.Remove();
                         }
-                    }
-                }
-            }
-        }
-
-        private static void FormatFieldOnSnapshot(FieldOption fieldOption, JToken snapshot, FieldMatchOperator matchOperator)
-        {
-            if (snapshot is JValue)
-            {
-                throw new NotSupportedException($"No snapshot match options are " +
-                    $"supported for snapshots with scalar values. Therefore the " +
-                    $"match options are not allowed.");
-            }
-
-            foreach (var fieldPath in fieldOption.FieldPaths ?? new string[] { })
-            {
-                IEnumerable<JToken> actualTokens = snapshot.SelectTokens(fieldPath, false);
-
-                if (actualTokens is { })
-                {
-                    foreach (JToken actual in actualTokens.ToList())
-                    {
-                        matchOperator.FormatField(actual);
                     }
                 }
             }
