@@ -36,6 +36,7 @@
     <Folder Include="AcceptMatchOption\AcceptString\__snapshots__\__mismatch__\" />
     <Folder Include="Asynchronous\__snapshots__\" />
     <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
+    <Folder Include="LambdaExpressionsTests\__snapshots__\" />
   </ItemGroup>
 
   <ItemGroup>
