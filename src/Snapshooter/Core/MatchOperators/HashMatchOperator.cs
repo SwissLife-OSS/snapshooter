@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
@@ -43,16 +42,25 @@ namespace Snapshooter.Core
         public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
         {
             var actualFieldOption = new FieldOption(snapshotData);
-            var actualvalue = actualFieldOption.Field<string>(_fieldsPath);
-
-            var actualHash = actualvalue.ToHashSHA256();
+            var actualValues = actualFieldOption.Fields<string>(_fieldsPath);
 
             var expectedFieldOption = new FieldOption(expectedSnapshotData);
-            var expectedHash = expectedFieldOption.Field<string>(_fieldsPath);
+            var expectedHashes = expectedFieldOption.Fields<string>(_fieldsPath);
 
-            if (!string.Equals(actualHash, expectedHash, StringComparison.Ordinal))
+            if (actualValues.Length != expectedHashes.Length)
             {
-                throw new SnapshotCompareException($"The hash in field '{_fieldsPath}' does not match with snapshot.");
+                throw new SnapshotCompareException(
+                    $"The hashed field(s) '{_fieldsPath}' does not match with snapshot.");
+            }
+
+            for (var i = 0; i < actualValues.Length; i++)
+            {
+                var actualHash = actualValues[i].ToHashSHA256();
+                if (!string.Equals(actualHash, expectedHashes[i], StringComparison.Ordinal))
+                {
+                    throw new SnapshotCompareException(
+                        $"The hashed field(s) '{_fieldsPath}' does not match with snapshot.");
+                }
             }
 
             return GetFieldOption(snapshotData);
