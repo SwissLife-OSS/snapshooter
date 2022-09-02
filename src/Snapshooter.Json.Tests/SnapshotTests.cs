@@ -82,6 +82,23 @@ namespace Snapshooter.Json.Tests
         }
 
         [Fact]
+        public void Match_HashFields()
+        {
+            // arrange
+            string snapshotName = nameof(SnapshotTests) + "." +
+                                  nameof(Match_HashFields);
+
+            TestPerson testObj = TestPersonBuilder
+                .Create()
+                .AddChild(TestChildBuilder.Create().WithName("John").Build())
+                .AddChild(TestChildBuilder.Create().WithName("Ann").Build())
+                .Build();
+
+            // act & assert
+            Snapshot.Match(testObj, snapshotName, o => o.HashField("Children[*].Name"));
+        }
+
+        [Fact]
         public async Task Match_FactMatchSingleSnapshotAsync_SuccessfulMatch()
         {
             // arrange

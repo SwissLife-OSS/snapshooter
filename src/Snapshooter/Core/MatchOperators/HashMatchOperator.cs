@@ -34,7 +34,7 @@ namespace Snapshooter.Core
         {
             FieldOption fieldOption = new FieldOption(snapshotData);
 
-            fieldOption.Field<object>(_fieldsPath);
+            fieldOption.Fields<object>(_fieldsPath);
 
             return fieldOption;
         }
