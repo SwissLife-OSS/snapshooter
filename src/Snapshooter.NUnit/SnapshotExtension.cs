@@ -1,4 +1,5 @@
 using System;
+using static Snapshooter.NUnit.Snapshot;
 
 namespace Snapshooter.NUnit
 {
@@ -19,7 +20,7 @@ namespace Snapshooter.NUnit
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
-            Snapshot.Match(cleanedObject, matchOptions);
+            Match(cleanedObject, matchOptions);
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace Snapshooter.NUnit
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
-            Snapshot.Match(cleanedObject, snapshotNameExtension, matchOptions);
+            Match(cleanedObject, snapshotNameExtension, matchOptions);
         }
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace Snapshooter.NUnit
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
-            Snapshot.Match(cleanedObject, snapshotName, matchOptions);
+            Match(cleanedObject, snapshotName, matchOptions);
         }
 
         /// <summary>
@@ -103,18 +104,18 @@ namespace Snapshooter.NUnit
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
-            Snapshot.Match(cleanedObject, snapshotName, snapshotNameExtension, matchOptions);
+            Match(cleanedObject, snapshotName, snapshotNameExtension, matchOptions);
         }
 
-        /// <summary>        
-        /// Creates a json snapshot of the given object and compares it with the 
-        /// already existing snapshot of the test. 
+        /// <summary>
+        /// Creates a json snapshot of the given object and compares it with the
+        /// already existing snapshot of the test.
         /// If no snapshot exists, a new snapshot will be created from the current result
         /// and saved under a certain file path, which will shown within the test message.
         /// </summary>
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotFullName">
-        /// The full name of a snapshot with folder and file name. 
+        /// The full name of a snapshot with folder and file name.
         /// To get a SnapshotFullName use Snapshot.FullName(). </param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison.
@@ -125,7 +126,15 @@ namespace Snapshooter.NUnit
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
-            Snapshot.Match(cleanedObject, snapshotFullName, matchOptions);
+            Match(cleanedObject, snapshotFullName, matchOptions);
         }
+
+        /// <summary>
+        /// Initializes a builder to configure the snapshot
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static ISnapshotBuilder Snapshot(this object target) =>
+            new NUnitSnapshotBuilder(target);
     }
 }
