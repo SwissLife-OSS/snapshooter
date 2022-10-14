@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
-  
+
   <PropertyGroup>
     <AssemblyName>Snapshooter.NUnit</AssemblyName>
     <RootNamespace>Snapshooter.NUnit</RootNamespace>
@@ -8,7 +8,7 @@
     <Description>
       NUnit Snapshooter is a flexible snapshot testing tool for .Net unit tests with NUnit.
       It creates and asserts snapshots (json format) within NUnit unit tests.
-    </Description>    
+    </Description>
     <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 

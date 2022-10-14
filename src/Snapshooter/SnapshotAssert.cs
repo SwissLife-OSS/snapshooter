@@ -78,7 +78,7 @@ namespace Snapshooter
 
             bool snapshotAlreadyExists = _snapshotFileHandler
                 .TryReadSnapshot(snapshotFullName, out string? savedSnapshotSerialized);
-            
+
             if (!snapshotAlreadyExists)
             {
                 string formattedSnapshotSerialized = _snapshotFormatter
@@ -143,7 +143,7 @@ namespace Snapshooter
                 _snapshotFileHandler
                     .SaveMismatchSnapshot(snapshotFullName, actualFormattedSnapshot);
 
-                if(!snapshotAlreadyExists)
+                if (!snapshotAlreadyExists)
                 {
                     _snapshotFileHandler.DeleteSnapshot(snapshotFullName);
                 }

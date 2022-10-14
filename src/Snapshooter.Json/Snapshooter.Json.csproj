@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
-  
+
   <PropertyGroup>
     <AssemblyName>Snapshooter.Json</AssemblyName>
     <RootNamespace>Snapshooter.Json</RootNamespace>

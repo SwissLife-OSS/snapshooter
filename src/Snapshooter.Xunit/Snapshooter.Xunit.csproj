@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
-  
+
   <PropertyGroup>
     <AssemblyName>Snapshooter.Xunit</AssemblyName>
     <RootNamespace>Snapshooter.Xunit</RootNamespace>
@@ -8,7 +8,7 @@
     <Description>
       Xunit Snapshooter is a flexible snapshot testing tool for .Net unit tests with Xunit.
       It creates and asserts snapshots (json) within Xunit unit tests.
-    </Description>    
+    </Description>
     <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 

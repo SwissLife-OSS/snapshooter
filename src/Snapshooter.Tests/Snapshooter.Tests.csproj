@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <AssemblyName>Snapshooter.Tests</AssemblyName>
-    <RootNamespace>Snapshooter.Tests</RootNamespace>    
+    <RootNamespace>Snapshooter.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

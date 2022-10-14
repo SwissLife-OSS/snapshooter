@@ -30,7 +30,7 @@ namespace Snapshooter.Core
                     .ToString(Formatting.None)
                     .Replace("\"", string.Empty);
 
-                if(fieldValue == "null") // TODO remove this and execute all tests
+                if (fieldValue == "null") // TODO remove this and execute all tests
                 {
                     fieldValue = "Null";
                 }
@@ -54,7 +54,7 @@ namespace Snapshooter.Core
             return fieldOption;
         }
 
-        public override FieldOption ExecuteMatch(JToken snapshotData)
+        public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
         {
             FieldOption fieldOption = new FieldOption(snapshotData);
 
@@ -92,7 +92,7 @@ namespace Snapshooter.Core
 
             if (field == null)
             {
-                if(!typeof(T).IsNullable())
+                if (!typeof(T).IsNullable())
                 {
                     throw new SnapshotFieldException(
                     CreateAcceptExceptionMessage(field,
@@ -103,9 +103,9 @@ namespace Snapshooter.Core
                 return;
             }
 
-            if(typeof(T) == typeof(Guid) || typeof(T) == typeof(Guid?))
+            if (typeof(T) == typeof(Guid) || typeof(T) == typeof(Guid?))
             {
-                if(Guid.TryParse(field.ToString(), out Guid value))
+                if (Guid.TryParse(field.ToString(), out Guid value))
                 {
                     return;
                 }
@@ -113,7 +113,7 @@ namespace Snapshooter.Core
 
             if (typeof(T) == typeof(byte[]) && field is string stringField)
             {
-                if(stringField.IsBase64String())
+                if (stringField.IsBase64String())
                 {
                     return;
                 }

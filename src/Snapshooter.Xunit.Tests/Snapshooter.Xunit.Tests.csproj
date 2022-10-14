@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
-  
+
   <PropertyGroup>
     <AssemblyName>Snapshooter.Xunit.Tests</AssemblyName>
     <RootNamespace>Snapshooter.Xunit.Tests</RootNamespace>

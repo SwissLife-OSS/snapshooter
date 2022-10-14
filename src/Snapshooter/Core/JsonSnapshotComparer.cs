@@ -33,9 +33,9 @@ namespace Snapshooter.Core
         /// Compares the current snapshot with the expected snapshot and applies
         /// the compare rules of the compare actions.
         /// </summary>
-        /// <param name="matchOptions">The compare actions, which will be used for special comparion.</param>
         /// <param name="expectedSnapshot">The original snapshot of the current result.</param>
         /// <param name="actualSnapshot">The actual (modifiable) snapshot of the current result.</param>
+        /// <param name="matchOptions">The compare actions, which will be used for special comparion.</param>
         public void CompareSnapshots(
             string expectedSnapshot,
             string actualSnapshot,
@@ -61,7 +61,7 @@ namespace Snapshooter.Core
 
             _snapshotAssert.Assert(expectedSnapshotToCompare, actualSnapshotToCompare);
         }
-        
+
         private void ExecuteFieldMatchActions(
             JToken originalActualSnapshot,
             JToken actualSnapshot,
@@ -74,8 +74,7 @@ namespace Snapshooter.Core
 
                 foreach (FieldMatchOperator matchOperator in configMatchOptions.MatchOperators)
                 {
-                    FieldOption fieldOption = matchOperator.ExecuteMatch(originalActualSnapshot);
-
+                    FieldOption fieldOption = matchOperator.ExecuteMatch(originalActualSnapshot, expectedSnapshot);
                     RemoveFieldFromSnapshot(fieldOption, actualSnapshot);
                     RemoveFieldFromSnapshot(fieldOption, expectedSnapshot);
                 }
@@ -97,15 +96,15 @@ namespace Snapshooter.Core
         /// <param name="fieldOption">The field option of the field to remove.</param>
         /// <param name="snapshot">The snapshot from which the field shall be removed.</param>
         private static void RemoveFieldFromSnapshot(FieldOption fieldOption, JToken snapshot)
-        {            
+        {
             if (snapshot is JValue)
-            {                
+            {
                 throw new NotSupportedException($"No snapshot match options are " +
                     $"supported for snapshots with scalar values. Therefore the " +
                     $"match options are not allowed.");
             }
 
-            foreach (var fieldPath in fieldOption.FieldPaths)
+            foreach (var fieldPath in fieldOption.FieldPaths ?? new string[] { })
             {
                 IEnumerable<JToken> actualTokens = snapshot.SelectTokens(fieldPath, false);
 
