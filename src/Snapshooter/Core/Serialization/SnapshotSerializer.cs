@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -96,8 +96,6 @@ namespace Snapshooter.Core.Serialization
 
                 snapshotJson = JsonConvert.ToString(snapshotJson);
             }
-
-            //JToken.FromObject()
 
             var snapshotToken = JToken.Parse(snapshotJson, jsonLoadSettings);
 
