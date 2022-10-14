@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
@@ -21,7 +20,8 @@ namespace Snapshooter.Core
         public override JToken FormatField(JToken field)
         {
             var fieldValue = field
-                .ToString(Formatting.None);
+                .ToString(Formatting.None)
+                .Replace("\"", string.Empty);
 
             var hash = fieldValue.ToHashSHA256();
 
@@ -34,13 +34,35 @@ namespace Snapshooter.Core
         {
             FieldOption fieldOption = new FieldOption(snapshotData);
 
-            fieldOption.Field<object>(_fieldsPath);
+            fieldOption.Fields<object>(_fieldsPath);
 
             return fieldOption;
         }
 
-        public override FieldOption ExecuteMatch(JToken snapshotData)
+        public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
         {
+            var actualFieldOption = new FieldOption(snapshotData);
+            var actualValues = actualFieldOption.Fields<string>(_fieldsPath);
+
+            var expectedFieldOption = new FieldOption(expectedSnapshotData);
+            var expectedHashes = expectedFieldOption.Fields<string>(_fieldsPath);
+
+            if (actualValues.Length != expectedHashes.Length)
+            {
+                throw new SnapshotCompareException(
+                    $"The hashed field(s) '{_fieldsPath}' does not match with snapshot.");
+            }
+
+            for (var i = 0; i < actualValues.Length; i++)
+            {
+                var actualHash = actualValues[i].ToHashSHA256();
+                if (!string.Equals(actualHash, expectedHashes[i], StringComparison.Ordinal))
+                {
+                    throw new SnapshotCompareException(
+                        $"The hashed field(s) '{_fieldsPath}' does not match with snapshot.");
+                }
+            }
+
             return GetFieldOption(snapshotData);
         }
     }
