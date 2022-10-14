@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Framework Versions">
-    <TestProjectTargetFrameworks>net6.0</TestProjectTargetFrameworks>
-    <ResourceProjectTargetFrameworks>net6.0</ResourceProjectTargetFrameworks>
+    <TestProjectTargetFrameworks>netcoreapp3.1;net6.0</TestProjectTargetFrameworks>
+    <ResourceProjectTargetFrameworks>netcoreapp3.1;net6.0</ResourceProjectTargetFrameworks>
   </PropertyGroup>
 </Project>
