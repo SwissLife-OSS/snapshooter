@@ -4,8 +4,14 @@
   <PropertyGroup>
     <AssemblyName>Snapshooter.Xunit.Tests</AssemblyName>
     <RootNamespace>Snapshooter.Xunit.Tests</RootNamespace>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
+    <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
+  </ItemGroup>
+  
   <ItemGroup>
     <Compile Remove="AcceptMatchOption\__snapshots__\**" />
     <Compile Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
@@ -26,31 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
-    <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="AcceptMatchOption\AcceptDateTime\__snapshots__\__mismatch__\" />
     <Folder Include="AcceptMatchOption\AcceptDouble\__snapshots__\__mismatch__\" />
     <Folder Include="AcceptMatchOption\AcceptString\__snapshots__\__mismatch__\" />
     <Folder Include="Asynchronous\__snapshots__\" />
     <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="coverlet.collector" Version="3.1.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Update="FluentAssertions" Version="6.7.0" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
-    <PackageReference Update="Moq" Version="4.18.1" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,6 @@
     <TargetFrameworks>$(ResourceProjectTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Snapshooter</RootNamespace>
     <IsPackable>true</IsPackable>
-	<LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -16,9 +15,5 @@
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="xunit.core" Version="$(xUnitVersion)" />
-  </ItemGroup>
 
 </Project>
