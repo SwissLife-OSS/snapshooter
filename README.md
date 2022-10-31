@@ -19,6 +19,10 @@ dotnet add package Snapshooter.Xunit
 ### NUnit
 ```bash
 dotnet add package Snapshooter.NUnit
+
+### MSTest
+```bash
+dotnet add package Snapshooter.MSTest
 ```
 
 [Get Started](https://swisslife-oss.github.io/snapshooter/docs/get-started)
