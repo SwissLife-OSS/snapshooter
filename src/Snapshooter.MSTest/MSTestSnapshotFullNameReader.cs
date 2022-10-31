@@ -63,7 +63,7 @@ namespace Snapshooter.MSTest
             }
 
             snapshotFullName = LiveUnitTestingDirectoryResolver
-                                    .CheckForSession(snapshotFullName);
+                .CheckForSession(snapshotFullName);
 
             return snapshotFullName;
         }
@@ -124,8 +124,11 @@ namespace Snapshooter.MSTest
                 dataTestMethodRowIndex[method.Name] += 1;
             }
 
-            IEnumerable<DataRowAttribute> dataRowAttributes = method.GetCustomAttributes<DataRowAttribute>();
-            DataRowAttribute currentRow = dataRowAttributes.ElementAt(dataTestMethodRowIndex[method.Name]);
+            IEnumerable<DataRowAttribute> dataRowAttributes =
+                method.GetCustomAttributes<DataRowAttribute>();
+
+            DataRowAttribute currentRow =
+                dataRowAttributes.ElementAt(dataTestMethodRowIndex[method.Name]);
 
             return $"{method.DeclaringType.Name}." +
                 method.Name +
