@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
@@ -19,7 +20,7 @@ namespace Snapshooter.Core
             _keepOriginalValue = keepOriginalValue;
         }
 
-        public override bool IsFormatActionSet() => true;
+        public override bool HasFormatAction() => true;
 
         public override JToken FormatField(JToken field)
         {
@@ -30,7 +31,7 @@ namespace Snapshooter.Core
                     .ToString(Formatting.None)
                     .Replace("\"", string.Empty);
 
-                if (fieldValue == "null") // TODO remove this and execute all tests
+                if (fieldValue == "null")
                 {
                     fieldValue = "Null";
                 }
@@ -43,6 +44,13 @@ namespace Snapshooter.Core
             field.Replace(new JValue($"AcceptAny<{typeAlias}>{originalValue}"));
 
             return field;
+        }
+
+        public override IEnumerable<JToken> GetFieldTokens(JToken snapshotData)
+        {
+            FieldOption fieldOption = new FieldOption(snapshotData);
+
+            return fieldOption.FindFieldTokens(_fieldsPath);
         }
 
         public override FieldOption GetFieldOption(JToken snapshotData)

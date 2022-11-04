@@ -262,7 +262,7 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
-        public void Match_IgnoreScalarFieldPathNotExist_ThrowsSnapshotFieldException()
+        public void Match_IgnoreScalarFieldPathNotExist_SnapshotComparedWithoutIgnoredField()
         {
             // arrange
             TestPerson testPerson = TestDataBuilder
@@ -270,8 +270,7 @@ namespace Snapshooter.Xunit.Tests
                 .Build();
 
             // act & assert
-            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(
-                testPerson, matchOptions => matchOptions.IgnoreField<decimal>("alt")));
+            Snapshot.Match(testPerson, matchOptions => matchOptions.IgnoreField<decimal>("alt"));
         }
 
         [Fact]
@@ -476,6 +475,36 @@ namespace Snapshooter.Xunit.Tests
             // assert
             Assert.Throws<SnapshotFieldException>(action);
             Assert.False(File.Exists(snapshotFileName));
+        }
+
+        [Fact]
+        public void Match_IgnoreFieldNewSingleSnapshot_ExpectedSnapshotHasBeenCreated()
+        {
+            // arrange
+            var snapshotFullNameResolver = new SnapshotFullNameResolver(
+                new XunitSnapshotFullNameReader());
+
+            SnapshotFullName snapshotFullName =
+                snapshotFullNameResolver.ResolveSnapshotFullName();
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            File.Delete(snapshotFileName);
+
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
+                .WithSize(1.5m)
+                .Build();
+
+            // act 
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.IgnoreField("Size"));
+
+            // assert
+            Assert.True(File.Exists(snapshotFileName));
         }
 
         #endregion

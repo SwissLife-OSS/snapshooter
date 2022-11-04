@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,7 +11,7 @@ namespace Snapshooter.Extensions
     /// <summary>
     /// Some string extensions to support the snapshot testing.
     /// </summary>
-    public static class StringExtension
+    internal static class StringExtension
     {
         /// <summary>
         /// Ensures that the given string ends with a line ending '\n'.
@@ -88,6 +89,28 @@ namespace Snapshooter.Extensions
                 Debug.WriteLine(ex);
                 return false;
             }            
+        }
+
+        /// <summary>
+        /// Checks if the fields path starts with '**.' and if yes then it
+        /// returns true and the fieldName is set.
+        /// </summary>
+        /// <param name="fieldsPath">The fields json path.</param>
+        /// <param name="fieldName">The fields name.</param>
+        /// <returns>True if the fields path starts with '**.' .</returns>
+        public static bool TryFindFieldsByName(this string fieldsPath, out string fieldName)
+        {
+            if (fieldsPath.StartsWith(
+                Wellknown.FindByNamePrefix,
+                ignoreCase: true,
+                CultureInfo.InvariantCulture))
+            {
+                fieldName = fieldsPath.Remove(0, 3);
+                return true;
+            }
+
+            fieldName = fieldsPath;
+            return false;
         }
     }
 }

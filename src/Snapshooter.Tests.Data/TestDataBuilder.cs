@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
 
@@ -104,15 +104,34 @@ namespace Snapshooter.Tests.Data
         public static TestImageBuilder TestImageMonaLisa()
         {
             return TestImageBuilder.Create()
+                .WithId(3450987)
+                .WithOwnerId(Guid.Parse("0680FAEF-6E89-4D52-BAD8-291053C66696"))
                 .WithName("Mona Lisa")
-                .WithData(File.ReadAllBytes("./Data/mona-lisa.jpg"));
+                .WithCreationDate(DateTime.Parse("2020-11-10T20:23:09.036Z"))
+                .WithPrice(951868484.345m)
+                .WithData(File.ReadAllBytes("./__testsources__/mona-lisa.jpg"));
         }
 
         public static TestImageBuilder TestImageMonaLisaFake()
         {
             return TestImageBuilder.Create()
+                .WithId(3450987)
+                .WithOwnerId(Guid.Parse("0680FAEF-6E89-4D52-BAD8-291053C66696"))
                 .WithName("Mona Lisa")
-                .WithData(File.ReadAllBytes("./Data/mona-lisa-fake.jpg"));
+                .WithCreationDate(DateTime.Parse("2020-11-10T20:23:09.036Z"))
+                .WithPrice(951868484.345m)                
+                .WithData(File.ReadAllBytes("./__testsources__/mona-lisa-fake.jpg"));
+        }
+
+        public static TestImageBuilder TestImageMonaLisaThumbnail()
+        {
+            return TestImageBuilder.Create()
+                .WithId(89)
+                .WithOwnerId(Guid.Parse("D95DFDE9-6BC0-47D5-B19E-925A36550A27"))
+                .WithName("Mona Lisa Thumbnail")
+                .WithCreationDate(DateTime.Parse("2021-12-25T08:56:54.112Z"))
+                .WithPrice(954.99999m)
+                .WithData(File.ReadAllBytes("./__testsources__/mona-lisa.jpg"));
         }
     }
 }

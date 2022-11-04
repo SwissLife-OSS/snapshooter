@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
@@ -19,6 +21,10 @@ namespace Snapshooter.Core
             _fieldOption = fieldOption;
             _fieldCompareAction = fieldCompareAction;
             _fieldFormatAction = fieldFormatAction;
+        }
+        public override bool HasFormatAction()
+        {
+            return _fieldFormatAction is { };
         }
 
         public override JToken FormatField(JToken field)
@@ -49,17 +55,18 @@ namespace Snapshooter.Core
             return fieldOption;
         }
 
-        public override bool IsFormatActionSet()
+        public override IEnumerable<JToken> GetFieldTokens(JToken snapshotData)
         {
-            return _fieldFormatAction is { };
+            return new List<JToken>();
         }
     }
 
     public abstract class FieldMatchOperator
     {
+        public abstract bool HasFormatAction();
+        public abstract IEnumerable<JToken> GetFieldTokens(JToken snapshotData);
         public abstract FieldOption GetFieldOption(JToken snapshotData);
         public abstract FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData);
         public abstract JToken FormatField(JToken snapshotData);
-        public abstract bool IsFormatActionSet();
     }
 }

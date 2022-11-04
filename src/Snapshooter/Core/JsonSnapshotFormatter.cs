@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
@@ -42,18 +43,15 @@ namespace Snapshooter.Core
             string snapshot,
             Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
-            if (matchOptions is { })
+            if (matchOptions == null)
             {
-                string transformedSnapshot =
-                    ExecuteFieldFormatActions(snapshot, matchOptions);
-
-                return transformedSnapshot;
+                return snapshot;
             }
 
-            return snapshot;
+            return FormatSnapshotFields(snapshot, matchOptions);
         }
 
-        private string ExecuteFieldFormatActions(
+        private string FormatSnapshotFields(
             string actualSnapshot,
             Func<MatchOptions, MatchOptions> matchOptions)
         {
@@ -64,53 +62,47 @@ namespace Snapshooter.Core
                 return actualSnapshot;
             }
 
-            // TODO first check if any format action is set, if not return actualSnapshot
+            if(configMatchOptions.MatchOperators.All(matchop => !matchop.HasFormatAction()))
+            {
+                return actualSnapshot;
+            }
 
             JToken actualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
 
+            // TODO Performance: here could a fieldFormatted bool be used to check if a format has been done in the snapshot, if not, then just return the actualSnapshot.
+
             foreach (FieldMatchOperator matchOperator in configMatchOptions.MatchOperators)
             {
-                if (matchOperator.IsFormatActionSet())
+                if (matchOperator.HasFormatAction())
                 {
-                    FieldOption fieldOption = matchOperator
-                        .GetFieldOption(actualSnapshotToken);
-
-                    TransformSnapshotField(
-                        matchOperator, fieldOption, actualSnapshotToken);
+                    TransformSnapshotFields(
+                        actualSnapshotToken,
+                        matchOperator);
                 }
             }
 
             return _snapshotSerializer.SerializeObject(actualSnapshotToken);
         }
 
-        private bool TransformSnapshotField(
-            FieldMatchOperator matchOperator,
-            FieldOption fieldOption,
-            JToken actualSnapshotToken)
+        private bool TransformSnapshotFields(
+            JToken actualSnapshotToken,
+            FieldMatchOperator matchOperator)
         {
             bool formatExecuted = false;
 
-            if (fieldOption.FieldPaths == null)
-            {
-                return formatExecuted;
-            }
+            IEnumerable<JToken> fieldTokens = matchOperator
+                .GetFieldTokens(actualSnapshotToken);
 
-            foreach (var fieldPath in fieldOption.FieldPaths)
+            if (fieldTokens is { })
             {
-                IEnumerable<JToken> actualTokens =
-                    actualSnapshotToken.SelectTokens(fieldPath, false);
-
-                if (actualTokens is { })
+                foreach (JToken actual in fieldTokens)
                 {
-                    foreach (JToken actual in actualTokens)
-                    {
-                        matchOperator.FormatField(actual);
+                    matchOperator.FormatField(actual);
 
-                        formatExecuted = true;
-                    }
+                    formatExecuted = true;
                 }
             }
-
+            
             return formatExecuted;
         }
     }
