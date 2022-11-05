@@ -4,11 +4,11 @@
     <Product>Snapshooter</Product>
     <Authors>Swiss Life authors and contributors</Authors>
     <Company>Swiss Life</Company>
-    <Copyright>Copyright © 2019 Swiss Life</Copyright>
+    <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
     <PackageLicenseUrl>https://github.com/SwissLife-OSS/Snapshooter/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/SwissLife-OSS/Snapshooter</PackageProjectUrl>
     <PackageReleaseNotes>Release notes: https://github.com/SwissLife-OSS/Snapshooter/releases/$(Version)</PackageReleaseNotes>
-    <PackageTags>XUnit SwissLife Snapshot UnitTest Test .Net</PackageTags>
+    <PackageTags>XUnit SwissLife Snapshot UnitTest Test IntegrationTest SystemTest DatabaseTest .Net</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIconUrl>https://github.com/SwissLife-OSS/snapshooter/raw/master/logo.png</PackageIconUrl>
     <IsPackable>false</IsPackable>
@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>

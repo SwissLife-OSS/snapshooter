@@ -1,10 +1,6 @@
 <Project>
-  <PropertyGroup Label="Package Versions">
-    <xUnitVersion>2.4.1</xUnitVersion>
-  </PropertyGroup>
-
   <PropertyGroup Label="Framework Versions">
-    <TestProjectTargetFrameworks>net6.0</TestProjectTargetFrameworks>
-    <ResourceProjectTargetFrameworks>net6.0</ResourceProjectTargetFrameworks>
+    <TestProjectTargetFrameworks>netcoreapp3.1;net6.0</TestProjectTargetFrameworks>
+    <ResourceProjectTargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0</ResourceProjectTargetFrameworks>
   </PropertyGroup>
 </Project>

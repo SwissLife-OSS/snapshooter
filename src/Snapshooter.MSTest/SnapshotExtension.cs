@@ -1,6 +1,6 @@
 using System;
 
-namespace Snapshooter.Xunit
+namespace Snapshooter.MSTest
 {
     public static class SnapshotExtension
     {
@@ -59,7 +59,7 @@ namespace Snapshooter.Xunit
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
         /// The name of the snapshot. If not set, then the snapshotname
-        /// will be evaluated automatically from the xunit test name.
+        /// will be evaluated automatically from the mstest test name.
         /// </param>
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
@@ -82,7 +82,7 @@ namespace Snapshooter.Xunit
         /// <param name="currentResult">The object to match.</param>
         /// <param name="snapshotName">
         /// The name of the snapshot. If not set, then the snapshotname
-        /// will be evaluated automatically from the xunit test name.
+        /// will be evaluated automatically from the mstest test name.
         /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the generated snapshot name with

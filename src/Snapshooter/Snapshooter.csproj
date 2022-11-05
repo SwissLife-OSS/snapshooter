@@ -6,6 +6,7 @@
     <RootNamespace>Snapshooter</RootNamespace>
     <PackageId>Snapshooter</PackageId>
     <Description>Snapshooter core functionalities to create and assert snapshots in .Net unit tests.</Description>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -14,10 +15,6 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

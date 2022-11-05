@@ -1,25 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
+  <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
 
   <PropertyGroup>
     <AssemblyName>Snapshooter.Tests.Data</AssemblyName>
     <RootNamespace>Snapshooter.Tests.Data</RootNamespace>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Update="coverlet.collector" Version="3.1.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Update="FluentAssertions" Version="6.7.0" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
-    <PackageReference Update="Moq" Version="4.18.1" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="__testsources__\*" />
