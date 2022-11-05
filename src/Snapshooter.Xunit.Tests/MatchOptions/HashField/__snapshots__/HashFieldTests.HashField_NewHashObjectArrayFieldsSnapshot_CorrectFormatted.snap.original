@@ -1,11 +1,11 @@
-﻿[
+[
   {
     "Id": 89,
     "OwnerId": "d95dfde9-6bc0-47d5-b19e-925a36550a27",
     "Name": "09DYo6p9TTk7Fw6sfXqYaNYN+2TnJYoC8+1Yglv/ZVc=",
     "CreationDate": "2021-12-25T09:56:54.112+01:00",
     "Price": 954.99999,
-    "Data": "NbzlteR4XpcAqmqdmgbzjJ8LDJNa4VYHTMnQtLqKXBY=",
+    "Data": "m+sQR9KG9WpgYoQiRASPkt9FLJOLsjK86UuiXKVRzas=",
     "SubImage": null
   },
   {
@@ -14,21 +14,21 @@
     "Name": "nBpm3r7qghnHLDWb+rpODWL5024pVC71UHvsSWG3Qkg=",
     "CreationDate": "2020-11-10T21:23:09.036+01:00",
     "Price": 951868484.345,
-    "Data": "NbzlteR4XpcAqmqdmgbzjJ8LDJNa4VYHTMnQtLqKXBY=",
+    "Data": "m+sQR9KG9WpgYoQiRASPkt9FLJOLsjK86UuiXKVRzas=",
     "SubImage": {
       "Id": 89,
       "OwnerId": "d95dfde9-6bc0-47d5-b19e-925a36550a27",
       "Name": "Mona Lisa Thumbnail",
       "CreationDate": "2021-12-25T09:56:54.112+01:00",
       "Price": 954.99999,
-      "Data": "NbzlteR4XpcAqmqdmgbzjJ8LDJNa4VYHTMnQtLqKXBY=",
+      "Data": "m+sQR9KG9WpgYoQiRASPkt9FLJOLsjK86UuiXKVRzas=",
       "SubImage": {
         "Id": "ZfwwyZgvnI4cRkrRtkf69JQD2RnAruTvaZ+vqRztwKI=",
         "OwnerId": "0680faef-6e89-4d52-bad8-291053c66696",
         "Name": "Mona Lisa",
         "CreationDate": "2020-11-10T21:23:09.036+01:00",
         "Price": 951868484.345,
-        "Data": "oWL9FlUrgvC89ILyIfmIekGD18+tJqkzTWYnHoaA/Eg=",
+        "Data": "vLcJw2m1kRsulUMwmX0yW46OyeAKA280Z6yMPWeqZTQ=",
         "SubImage": null
       }
     }
@@ -39,7 +39,7 @@
     "Name": "nBpm3r7qghnHLDWb+rpODWL5024pVC71UHvsSWG3Qkg=",
     "CreationDate": "2020-11-10T21:23:09.036+01:00",
     "Price": 951868484.345,
-    "Data": "oWL9FlUrgvC89ILyIfmIekGD18+tJqkzTWYnHoaA/Eg=",
+    "Data": "vLcJw2m1kRsulUMwmX0yW46OyeAKA280Z6yMPWeqZTQ=",
     "SubImage": null
   }
 ]

@@ -92,6 +92,31 @@ namespace Snapshooter.Extensions
         }
 
         /// <summary>
+        /// Verifies if the given string is in correct base64 format.
+        /// Returns true if the string is in a valid base64 format, otherwise false.
+        /// </summary>
+        /// <param name="base64String">The input string to verify.</param>
+        /// <returns>
+        /// True if the string is in a valid base64 format, otherwise false.
+        /// </returns>
+        public static bool IsBase64(this string base64String)
+        {
+            if (string.IsNullOrEmpty(base64String) ||
+                base64String.Length % 4 != 0 ||
+                base64String.Contains(" ") ||
+                base64String.Contains("\t") ||
+                base64String.Contains("\r") ||
+                base64String.Contains("\n") ||
+                base64String.Contains("null"))
+            {
+                return false;
+            }
+
+            Span<byte> buffer = new Span<byte>(new byte[base64String.Length]);
+            return Convert.TryFromBase64String(base64String, buffer, out int bytesParsed);
+        }
+
+        /// <summary>
         /// Checks if the fields path starts with '**.' and if yes then it
         /// returns true and the fieldName is set.
         /// </summary>

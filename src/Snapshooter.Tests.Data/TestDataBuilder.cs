@@ -109,7 +109,7 @@ namespace Snapshooter.Tests.Data
                 .WithName("Mona Lisa")
                 .WithCreationDate(DateTime.Parse("2020-11-10T20:23:09.036Z"))
                 .WithPrice(951868484.345m)
-                .WithData(File.ReadAllBytes("./__testsources__/mona-lisa.jpg"));
+                .WithData(TestFileLoader.LoadBinaryFile("mona-lisa.jpg"));
         }
 
         public static TestImageBuilder TestImageMonaLisaFake()
@@ -120,7 +120,7 @@ namespace Snapshooter.Tests.Data
                 .WithName("Mona Lisa")
                 .WithCreationDate(DateTime.Parse("2020-11-10T20:23:09.036Z"))
                 .WithPrice(951868484.345m)                
-                .WithData(File.ReadAllBytes("./__testsources__/mona-lisa-fake.jpg"));
+                .WithData(TestFileLoader.LoadBinaryFile("mona-lisa-fake.jpg"));
         }
 
         public static TestImageBuilder TestImageMonaLisaThumbnail()
@@ -131,7 +131,7 @@ namespace Snapshooter.Tests.Data
                 .WithName("Mona Lisa Thumbnail")
                 .WithCreationDate(DateTime.Parse("2021-12-25T08:56:54.112Z"))
                 .WithPrice(954.99999m)
-                .WithData(File.ReadAllBytes("./__testsources__/mona-lisa.jpg"));
+                .WithData(TestFileLoader.LoadBinaryFile("mona-lisa.jpg"));
         }
     }
 }

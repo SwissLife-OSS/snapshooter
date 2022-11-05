@@ -9,5 +9,7 @@ namespace Snapshooter
     internal class Wellknown
     {
         public const string FindByNamePrefix = "**.";
+
+        public const string DateTimeISO8601Format = "yyyy-MM-ddTHH:mm:ss.fffZ";
     }
 }

@@ -2,10 +2,6 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace Snapshooter.Extensions
 {
@@ -22,19 +18,20 @@ namespace Snapshooter.Extensions
         /// <returns>The SHA256 hash.</returns>
         public static string ToSHA256(this JToken jtoken)
         {
-            var json = JsonConvert
-                .SerializeObject(jtoken, Formatting.None, new JsonSerializerSettings
-                {
-                    DateFormatString = "yyyy-MM-ddTHH:mm:ss.fffZ",
-                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                })
-                .Trim('\"');
-                        
-            var hash = json.ToSHA256();
+            var value = jtoken.ConvertToValueString();
+
+            if (value.IsBase64())
+            {
+                byte[] binaryValue = Convert.FromBase64String(value);
+
+                return binaryValue.ToSHA256();
+            }
+
+            var hash = value.ToSHA256();
 
             return hash;
         }
-
+        
         /// <summary>
         /// Creates a SHA256 hash out of the string value.
         /// </summary>
@@ -42,10 +39,20 @@ namespace Snapshooter.Extensions
         /// <returns>The SHA256 hash.</returns>
         public static string ToSHA256(this string value)
         {
+            return ToSHA256(Encoding.UTF8.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Creates a SHA256 hash out of the byte array value.
+        /// </summary>
+        /// <param name="value">The string value to hash.</param>
+        /// <returns>The SHA256 hash.</returns>
+        public static string ToSHA256(this byte[] value)
+        {
             using var sha256 = SHA256.Create();
 
             return Convert.ToBase64String(
-                sha256.ComputeHash(Encoding.UTF8.GetBytes(value)));
+                sha256.ComputeHash(value));
         }
     }
 }

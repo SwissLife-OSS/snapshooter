@@ -22,9 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="__testsources__/*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="__testsources__\*" />
   </ItemGroup>
 
 </Project>
