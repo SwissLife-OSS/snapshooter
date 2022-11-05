@@ -84,9 +84,8 @@ namespace Snapshooter.Extensions
                 Convert.FromBase64String(base64String);
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.WriteLine(ex);
                 return false;
             }            
         }
@@ -112,8 +111,12 @@ namespace Snapshooter.Extensions
                 return false;
             }
 
-            Span<byte> buffer = new Span<byte>(new byte[base64String.Length]);
-            return Convert.TryFromBase64String(base64String, buffer, out int bytesParsed);
+            #if NETCOREAPP3_1_OR_GREATER
+                Span<byte> buffer = new Span<byte>(new byte[base64String.Length]);
+                return Convert.TryFromBase64String(base64String, buffer, out int bytesParsed);
+            #else
+                return IsBase64String(base64String);
+            #endif
         }
 
         /// <summary>
