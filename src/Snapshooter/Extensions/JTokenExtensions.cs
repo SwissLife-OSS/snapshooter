@@ -21,6 +21,7 @@ namespace Snapshooter.Extensions
                 {
                     DateFormatString = Wellknown.DateTimeISO8601Format,
                     DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 })
                 .Trim('\"');
         }
