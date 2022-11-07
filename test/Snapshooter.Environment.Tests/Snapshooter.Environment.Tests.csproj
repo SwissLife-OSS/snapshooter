@@ -6,10 +6,10 @@
     <RootNamespace>Snapshooter.Environment.Tests</RootNamespace>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
-
+  
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
     <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
-    <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
   </ItemGroup>
 
 </Project>

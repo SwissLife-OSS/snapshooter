@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snapshooter\Snapshooter.csproj" />
+    <ProjectReference Include="..\..\src\Snapshooter\Snapshooter.csproj" />
   </ItemGroup>
 
   <ItemGroup>

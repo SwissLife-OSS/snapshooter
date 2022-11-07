@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
-    <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
+    <ProjectReference Include="..\..\src\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
   </ItemGroup>
   
   <ItemGroup>

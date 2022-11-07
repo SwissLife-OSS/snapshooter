@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>$(TestProjectTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Snapshooter</RootNamespace>    
-    <IsPackable>false</IsPackable>
+    <IsPackable>false</IsPackable>   
+    <LangVersion>9.0</LangVersion>  
   </PropertyGroup>
 
   <ItemGroup>
