@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Data/*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="__testsources__\*" />
   </ItemGroup>
 
 </Project>

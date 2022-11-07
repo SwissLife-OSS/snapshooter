@@ -332,19 +332,19 @@ namespace Snapshooter.Json.Tests
         }
 
         [Fact]
-        public void Match_IgnoreScalarFieldPathNotExist_ThrowsSnapshotFieldException()
+        public void Match_IgnoreScalarFieldPathNotExist_SnapshotComparedWithoutIgnoredField()
         {
             // arrange
             string snapshotName =
                 nameof(SnapshotTests) + "." +
-                nameof(Match_IgnoreScalarFieldPathNotExist_ThrowsSnapshotFieldException);
+                nameof(Match_IgnoreScalarFieldPathNotExist_SnapshotComparedWithoutIgnoredField);
 
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
                 .Build();
 
             // act & assert
-            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match(testPerson,
-                snapshotName, matchOptions => matchOptions.IgnoreField<decimal>("alt")));
+            Snapshot.Match(testPerson,
+                snapshotName, matchOptions => matchOptions.IgnoreField<decimal>("alt"));
         }
 
         [Fact]

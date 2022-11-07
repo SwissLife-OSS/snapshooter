@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using Newtonsoft.Json.Linq;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
-using Snapshooter.Extensions;
 
 namespace Snapshooter
 {
@@ -116,7 +113,7 @@ namespace Snapshooter
         /// <param name="fieldPath">The json path to the field(s) to ignore.</param>
         public MatchOptions IgnoreField(string fieldPath)
         {
-            return IgnoreFields<object>(fieldPath);
+            return AddIgnoreMatchOperator<object>(fieldPath);
         }
 
         /// <summary>
@@ -164,7 +161,7 @@ namespace Snapshooter
         /// <param name="fieldsPath">The json path to the field(s) to ignore.</param>
         public MatchOptions IgnoreFields(string fieldsPath)
         {
-            return IgnoreFields<object>(fieldsPath);
+            return AddIgnoreMatchOperator<object>(fieldsPath);
         }
 
         /// <summary>
@@ -214,7 +211,7 @@ namespace Snapshooter
         /// <param name="fieldPath">The json path to the field(s) to ignore.</param>
         public MatchOptions IgnoreField<T>(string fieldPath)
         {
-            return IgnoreFields<T>(fieldPath);
+            return AddIgnoreMatchOperator<T>(fieldPath);
         }
 
         /// <summary>
@@ -264,12 +261,7 @@ namespace Snapshooter
         /// <param name="fieldsPath">The json path to the field(s) to ignore.</param>
         public MatchOptions IgnoreFields<T>(string fieldsPath)
         {
-            if (fieldsPath.StartsWith("**.", true, CultureInfo.InvariantCulture))
-            {
-                return IgnoreAllFields<T>(fieldsPath.Remove(0, 3));
-            }
-
-            return IgnoreFieldsByPath<T>(fieldsPath);
+            return AddIgnoreMatchOperator<T>(fieldsPath);
         }
 
         /// <summary>
@@ -310,7 +302,7 @@ namespace Snapshooter
         /// <param name="name">The name of the field(s) to be ignored.</param>
         public MatchOptions IgnoreAllFields(string name)
         {
-            return IgnoreAllFields<object>(name);
+            return AddIgnoreMatchOperator<object>(Wellknown.FindByNamePrefix + name);
         }
 
         /// <summary>
@@ -353,12 +345,7 @@ namespace Snapshooter
         /// <param name="name">The name of the field(s) to be ignored.</param>
         public MatchOptions IgnoreAllFields<T>(string name)
         {
-            Func<FieldOption, object> fieldsOption =
-                option => option.GetAllFieldsByName<T>(name);
-
-            Ignore(fieldsOption);
-
-            return this;
+            return AddIgnoreMatchOperator<T>(Wellknown.FindByNamePrefix + name);
         }
 
         /// <summary>
@@ -366,10 +353,11 @@ namespace Snapshooter
         /// comparison. Therefore the field will just be skipped during compare.
         /// </summary>
         /// <param name="ignoreFieldOption">The snapshot field to ignore.</param>
+        [Obsolete("Ignore method is deprecated, please use the IgnoreField method instead")]
         public MatchOptions Ignore(Func<FieldOption, object> ignoreFieldOption)
         {
             _matchOperators.Add(
-                new FieldMatchOperator<object>(ignoreFieldOption, field => { }));
+                new IgnoreMatchOperator<object>(ignoreFieldOption));
 
             return this;
         }
@@ -382,6 +370,7 @@ namespace Snapshooter
         /// </summary>
         /// <typeparam name="T">The type which the field should have.</typeparam>
         /// <param name="isTypeField">The field to check.</param>
+        [Obsolete("IsType<T> method is deprecated, please use the IsTypeField<T> method instead")]
         public MatchOptions IsType<T>(Func<FieldOption, T> isTypeField)
         {
             _matchOperators.Add(new FieldMatchOperator<T>(isTypeField, field =>
@@ -405,6 +394,7 @@ namespace Snapshooter
         /// </summary>
         /// <typeparam name="T">The type which the field should have.</typeparam>
         /// <param name="isTypeField">The field to check.</param>
+        [Obsolete("IsType<T> method is deprecated, please use the IsTypeField<T> method instead")]
         public MatchOptions IsType<T>(Func<FieldOption, T[]> isTypeField)
         {
             IsType<T[]>(isTypeField);
@@ -480,12 +470,10 @@ namespace Snapshooter
             return this;
         }
 
-        private MatchOptions IgnoreFieldsByPath<T>(string fieldsPath)
+        private MatchOptions AddIgnoreMatchOperator<T>(string fieldsPath)
         {
-            Func<FieldOption, object> fieldOption =
-                option => option.Fields<T>(fieldsPath);
-
-            Ignore(fieldOption);
+            _matchOperators.Add(
+                new IgnoreMatchOperator<T>(fieldsPath));
 
             return this;
         }

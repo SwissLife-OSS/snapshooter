@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
+  
+  <PropertyGroup>
+    <AssemblyName>Snapshooter.Environment.Tests</AssemblyName>
+    <RootNamespace>Snapshooter.Environment.Tests</RootNamespace>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
+    <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
+  </ItemGroup>
+
+</Project>
