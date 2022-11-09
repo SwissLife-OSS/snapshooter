@@ -373,15 +373,8 @@ namespace Snapshooter
         [Obsolete("IsType<T> method is deprecated, please use the IsTypeField<T> method instead")]
         public MatchOptions IsType<T>(Func<FieldOption, T> isTypeField)
         {
-            _matchOperators.Add(new FieldMatchOperator<T>(isTypeField, field =>
-            {
-                if (!(field is T))
-                {
-                    throw new SnapshotFieldException($"{nameof(IsType)} failed, " +
-                        $"because the field " +
-                        $"with value '{field}' is not of type {typeof(T)}.");
-                }
-            }));
+            _matchOperators.Add(
+                new IsTypeMatchOperator<T>(isTypeField));
 
             return this;
         }
@@ -397,7 +390,8 @@ namespace Snapshooter
         [Obsolete("IsType<T> method is deprecated, please use the IsTypeField<T> method instead")]
         public MatchOptions IsType<T>(Func<FieldOption, T[]> isTypeField)
         {
-            IsType<T[]>(isTypeField);
+            _matchOperators.Add(
+                new IsTypeMatchOperator<T[]>(isTypeField));
 
             return this;
         }
@@ -412,9 +406,8 @@ namespace Snapshooter
         /// <param name="fieldPath">The json path of the field to check for the type.</param>
         public MatchOptions IsTypeField<T>(string fieldPath)
         {
-            Func<FieldOption, T> fieldOption = option => option.Field<T>(fieldPath);
-
-            IsType(fieldOption);
+            _matchOperators
+                .Add(new IsTypeMatchOperator<T>(fieldPath));
 
             return this;
         }
@@ -429,10 +422,9 @@ namespace Snapshooter
         /// <param name="fieldsPath">The json path of the fields to check for the type.</param>
         public MatchOptions IsTypeFields<T>(string fieldsPath)
         {
-            Func<FieldOption, T[]> fieldsOption = option => option.Fields<T>(fieldsPath);
-
-            IsType<T[]>(fieldsOption);
-
+            _matchOperators
+                .Add(new IsTypeMatchOperator<T>(fieldsPath));
+            
             return this;
         }
 

@@ -65,7 +65,7 @@ namespace Snapshooter.Core
     {
         public abstract bool HasFormatAction();
         public abstract IEnumerable<JToken> GetFieldTokens(JToken snapshotData);
-        public abstract FieldOption GetFieldOption(JToken snapshotData);
+        public abstract FieldOption GetFieldOption(JToken snapshotData); // TODO try to remove
         public abstract FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData);
         public abstract JToken FormatField(JToken snapshotData);
     }
