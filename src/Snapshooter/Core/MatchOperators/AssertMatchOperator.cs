@@ -30,11 +30,6 @@ namespace Snapshooter.Core
             return Array.Empty<JToken>();
         }
 
-        public override FieldOption GetFieldOption(JToken snapshotData)
-        {
-            return new FieldOption(snapshotData);
-        }
-
         public override FieldOption ExecuteMatch(
             JToken snapshotData,
             JToken expectedSnapshotData)
