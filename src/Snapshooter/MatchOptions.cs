@@ -440,9 +440,11 @@ namespace Snapshooter
         /// </param>
         public MatchOptions Assert(Action<FieldOption> assertAction)
         {
-            Func<FieldOption, FieldOption> fieldOption = option => option;
+            //Func<FieldOption, FieldOption> fieldOption = option => option;
 
-            _matchOperators.Add(new FieldMatchOperator<FieldOption>(fieldOption, assertAction));
+            //_matchOperators.Add(new FieldMatchOperator<FieldOption>(fieldOption, assertAction));
+
+            _matchOperators.Add(new AssertMatchOperator(assertAction));
 
             return this;
         }
