@@ -1,23 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using Newtonsoft.Json.Linq;
+using Snapshooter.Exceptions;
+using Snapshooter.Extensions;
 
 #nullable enable
 
 namespace Snapshooter.Core
 {
-    public class IgnoreMatchOperator<T> : FieldMatchOperator
+    public class IsTypeMatchOperator<T> : FieldMatchOperator
     {
-        private readonly string _fieldPath;
+        private readonly string _fieldsPath;
         private readonly Func<FieldOption, T>? _fieldOption;
 
-        public IgnoreMatchOperator(string fieldPath)
+        public IsTypeMatchOperator(string fieldsPath)
         {
-            _fieldPath = fieldPath;
+            _fieldsPath = fieldsPath;
         }
 
         [Obsolete("Use the other constructor with the field path string.")]
-        public IgnoreMatchOperator(Func<FieldOption, T> fieldOption)
+        public IsTypeMatchOperator(Func<FieldOption, T> fieldOption)
         {
             _fieldOption = fieldOption;
         }
@@ -33,7 +36,7 @@ namespace Snapshooter.Core
         {
             FieldOption fieldOption = new FieldOption(snapshotData);
 
-            return fieldOption.FindFieldTokens(_fieldPath);
+            return fieldOption.FindFieldTokens(_fieldsPath);
         }
 
         public override FieldOption ExecuteMatch(
@@ -42,13 +45,28 @@ namespace Snapshooter.Core
         {
             FieldOption fieldOption = new FieldOption(snapshotData);
 
+            object? fields = null;
             if (_fieldOption is { })
             {
-                _fieldOption(fieldOption);
+                fields = _fieldOption(fieldOption);
             }
             else
             {
-                fieldOption.FindAllFields<T>(_fieldPath);
+                fields = fieldOption.FindAllFields<T>(_fieldsPath);
+            }
+
+            bool isType = fields is T
+                or T[]
+                or IEnumerable<T>
+                or IList<T>
+                or ICollection<T>;
+
+            if (!isType)
+            {
+                throw new SnapshotFieldException($"" +
+                    $"IsType match option failed, " +
+                    $"because the field with value " +
+                    $"'{fields}' is not of type {typeof(T)}.");
             }
 
             return fieldOption;

@@ -33,15 +33,6 @@ namespace Snapshooter.Core
             return fieldOption.FindFieldTokens(_fieldsPath);
         }
 
-        public override FieldOption GetFieldOption(JToken snapshotData)
-        {
-            FieldOption fieldOption = new FieldOption(snapshotData);
-
-            fieldOption.FindAllFields<object>(_fieldsPath);
-
-            return fieldOption;
-        }
-
         public override FieldOption ExecuteMatch(
             JToken snapshotData,
             JToken expectedSnapshotData)
@@ -69,7 +60,7 @@ namespace Snapshooter.Core
                 }
             }
 
-            return GetFieldOption(snapshotData);
+            return actualFieldOption;
         }
     }
 }
