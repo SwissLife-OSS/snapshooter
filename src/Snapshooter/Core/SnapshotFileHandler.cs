@@ -28,11 +28,6 @@ namespace Snapshooter.Core
                 throw new ArgumentNullException(nameof(snapshotFullName));
             }
 
-            if (string.IsNullOrWhiteSpace(snapshotData))
-            {
-                throw new ArgumentException("Must not be empty", nameof(snapshotData));
-            }
-
             string snapshotSubfolderPath = EnsureSnapshotFolder(snapshotFullName);
 
             string fullSnapshotFilename = Path.Combine(
@@ -98,14 +93,14 @@ namespace Snapshooter.Core
         /// <param name="snapshotFullName">The full name of the snapshot.</param>
         /// <param name="snapshotData">The loaded snapshot data.</param>
         /// <returns>True if the snapshot could be found.</returns>
-        public bool TryReadSnapshot(SnapshotFullName snapshotFullName, out string snapshotData)
+        public bool TryReadSnapshot(SnapshotFullName snapshotFullName, out string? snapshotData)
         {
             if (snapshotFullName == null)
             {
                 throw new ArgumentNullException(nameof(snapshotFullName));
             }
 
-            snapshotData = string.Empty;
+            snapshotData = null;
 
             string snapshotFolderPath = EnsureSnapshotFolder(snapshotFullName);
 

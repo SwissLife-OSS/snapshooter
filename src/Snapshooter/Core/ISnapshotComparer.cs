@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 #nullable enable
 
@@ -26,6 +26,6 @@ namespace Snapshooter.Core
         void CompareSnapshots(
             string expectedSnapshot,
             string actualSnapshot,
-            Func<MatchOptions, MatchOptions>? matchOptions = null);
+            MatchOptions matchOptions);
     }
 }

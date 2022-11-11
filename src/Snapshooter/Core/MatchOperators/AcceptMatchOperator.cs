@@ -11,6 +11,7 @@ namespace Snapshooter.Core
     {
         private readonly string _fieldsPath;
         private readonly bool _keepOriginalValue;
+        private readonly Dictionary<string, object> _fields;
 
         public AcceptMatchOperator(
             string fieldsPath,
@@ -18,11 +19,36 @@ namespace Snapshooter.Core
         {
             _fieldsPath = fieldsPath;
             _keepOriginalValue = keepOriginalValue;
+            _fields = new();
         }
 
         public override bool HasFormatAction() => true;
 
-        public override JToken FormatField(JToken field)
+        public override void FormatFields(JToken snapshotData)
+        {
+            FieldOption fieldOption = new FieldOption(snapshotData);
+
+            foreach (JToken fieldToken in fieldOption.FindFieldTokens(_fieldsPath))
+            {
+                FormatField(fieldToken);
+            }
+        }
+
+        public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
+        {
+            foreach (KeyValuePair<string, object> field in _fields)
+            {
+                VerifyFieldType(field.Key, field.Value);
+            }
+            
+            var fieldOption = new FieldOption(snapshotData);
+
+            fieldOption.FindAllFields(_fieldsPath);
+
+            return fieldOption;
+        }
+
+        private JToken FormatField(JToken field)
         {
             string originalValue = string.Empty;
             if (_keepOriginalValue)
@@ -39,6 +65,8 @@ namespace Snapshooter.Core
                 originalValue = $"(original: '{fieldValue}')";
             }
 
+            _fields.Add(field.Path, FieldOption.ConvertToType<object>(field));
+
             string typeAlias = typeof(T).GetAliasName();
 
             field.Replace(new JValue($"AcceptAny<{typeAlias}>{originalValue}"));
@@ -46,25 +74,7 @@ namespace Snapshooter.Core
             return field;
         }
 
-        public override IEnumerable<JToken> GetFieldTokens(JToken snapshotData)
-        {
-            FieldOption fieldOption = new FieldOption(snapshotData);
-
-            return fieldOption.FindFieldTokens(_fieldsPath);
-        }
-
-        public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
-        {
-            FieldOption fieldOption = new FieldOption(snapshotData);
-
-            object fieldValue = fieldOption.Field<object>(_fieldsPath);
-
-            VerifyFieldType(fieldValue);
-
-            return fieldOption;
-        }
-
-        private void VerifyFieldType(object field)
+        private void VerifyFieldType(string path, object field)
         {
             // TODO here limit if T is byte and the number is bigger or smaller, than exception
             if (typeof(T) == typeof(double) || typeof(T) == typeof(double?) ||
@@ -94,7 +104,8 @@ namespace Snapshooter.Core
                 if (!typeof(T).IsNullable())
                 {
                     throw new SnapshotFieldException(
-                    CreateAcceptExceptionMessage(field,
+                    CreateAcceptExceptionMessage(
+                        path, field,
                         $"but defined accept type " +
                         $"'{typeof(T).GetAliasName()}' is not nullable."));
                 }
@@ -121,17 +132,19 @@ namespace Snapshooter.Core
             if (!(field is T))
             {
                 throw new SnapshotFieldException(
-                    CreateAcceptExceptionMessage(field,
+                    CreateAcceptExceptionMessage(
+                        path, field,
                         $"and therefore not of type " +
                         $"'{typeof(T).GetAliasName()}'."));
             }
         }
 
-        private string CreateAcceptExceptionMessage(object field, string message)
+        private string CreateAcceptExceptionMessage(
+            string path, object field, string message)
         {
             return
                 $"Accept match option failed, " +
-                $"because the field value of '{_fieldsPath}' is " +
+                $"because the field value of '{path}' is " +
                 $"'{GetAcceptFieldValueString(field)}', " +
                 $"{message}";
         }

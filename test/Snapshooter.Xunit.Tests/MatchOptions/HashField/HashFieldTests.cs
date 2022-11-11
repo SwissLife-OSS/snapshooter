@@ -81,7 +81,7 @@ namespace Snapshooter.Xunit.Tests.MatchOptions.HashField
             TestImage testImage = TestDataBuilder
                 .TestImageMonaLisaFake()
                 .Build();
-
+            
             // act
             Action act = () => Snapshot.Match(testImage, o => o.HashField("Data"));
 

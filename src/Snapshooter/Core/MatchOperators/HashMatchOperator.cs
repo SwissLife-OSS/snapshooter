@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
 using Snapshooter.Extensions;
@@ -16,21 +15,15 @@ namespace Snapshooter.Core
         }
 
         public override bool HasFormatAction() => true;
-
-        public override JToken FormatField(JToken field)
-        {            
-            var hash = field.ToSHA256();
-
-            field.Replace(new JValue(hash));
-
-            return field;
-        }
-
-        public override IEnumerable<JToken> GetFieldTokens(JToken snapshotData)
+        
+        public override void FormatFields(JToken snapshotData)
         {
             FieldOption fieldOption = new FieldOption(snapshotData);
 
-            return fieldOption.FindFieldTokens(_fieldsPath);
+            foreach (JToken fieldToken in fieldOption.FindFieldTokens(_fieldsPath))
+            {
+                FormatField(fieldToken);
+            }
         }
 
         public override FieldOption ExecuteMatch(
@@ -52,7 +45,7 @@ namespace Snapshooter.Core
             for (var i = 0; i < expectedHashes.Length; i++)
             {
                 var expectedHash = expectedHashes[i].Value<string>();
-                var actualHash = actualValues[i].ToSHA256();
+                var actualHash = actualValues[i].Value<string>();
                 if (!string.Equals(actualHash, expectedHash, StringComparison.Ordinal))
                 {
                     throw new SnapshotCompareException(
@@ -61,6 +54,15 @@ namespace Snapshooter.Core
             }
 
             return actualFieldOption;
+        }
+
+        private JToken FormatField(JToken field)
+        {
+            var hash = field.ToSHA256();
+
+            field.Replace(new JValue(hash));
+
+            return field;
         }
     }
 }
