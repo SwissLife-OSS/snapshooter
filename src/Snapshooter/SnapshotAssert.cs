@@ -1,6 +1,6 @@
 using System;
 using Snapshooter.Core;
-using Snapshooter.Exceptions;
+using Snapshooter.Core.Validators;
 
 #nullable enable
 
@@ -61,21 +61,6 @@ public class SnapshotAssert : ISnapshotAssert
         SnapshotFullName snapshotFullName,
         MatchOptions matchOptions)
     {
-        if (currentResult == null)
-        {
-            throw new ArgumentNullException(nameof(currentResult));
-        }
-
-        if (snapshotFullName == null)
-        {
-            throw new ArgumentNullException(nameof(snapshotFullName));
-        }
-
-        if (matchOptions == null)
-        {
-            throw new ArgumentNullException(nameof(matchOptions));
-        }
-
         _snapshotEnvironmentCleaner.Cleanup(snapshotFullName);
 
         string objectSnapshotSerialized = _snapshotSerializer
@@ -105,8 +90,9 @@ public class SnapshotAssert : ISnapshotAssert
         MatchOptions matchOptions)
     {
         try
-        {                
-            CheckStrictMode(originalSnapshotExists);
+        {
+            EnvironmentValidator.CheckStrictMode(
+                originalSnapshotExists);
             
             _snapshotComparer.CompareSnapshots(
                 originalSnapshotSerialized,
@@ -127,23 +113,6 @@ public class SnapshotAssert : ISnapshotAssert
                 actualSnapshotSerialized);
 
             throw;
-        }
-    }
-
-    private void CheckStrictMode(bool originalSnapshotExists)
-    {
-        if (!originalSnapshotExists)
-        {
-            string value = Environment.GetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE");
-
-            if (string.Equals(value, "on", StringComparison.Ordinal)
-                || (bool.TryParse(value, out bool b) && b))
-            {
-                throw new SnapshotNotFoundException(
-                    "Strict mode is enabled and no snapshot has been found " +
-                    "for the current test. Create a new snapshot locally and " +
-                    "rerun your tests.");
-            }
         }
     }
 }
