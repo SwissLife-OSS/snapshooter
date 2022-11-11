@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Snapshooter
 {
@@ -27,6 +27,6 @@ namespace Snapshooter
         void AssertSnapshot(
             object currentResult,
             SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null);
+            MatchOptions matchOptions);
     }
 }

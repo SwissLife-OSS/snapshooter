@@ -52,7 +52,7 @@ namespace Snapshooter.Core
             for (var i = 0; i < expectedHashes.Length; i++)
             {
                 var expectedHash = expectedHashes[i].Value<string>();
-                var actualHash = actualValues[i].ToSHA256();
+                var actualHash = actualValues[i].Value<string>();
                 if (!string.Equals(actualHash, expectedHash, StringComparison.Ordinal))
                 {
                     throw new SnapshotCompareException(

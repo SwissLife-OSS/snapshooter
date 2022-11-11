@@ -117,7 +117,9 @@ namespace Snapshooter
             {
                 IEnumerable<JToken> fields = GetTokensByPath(fieldPath);
 
-                T[] fieldValues = fields.Select(f => ConvertToType<T>(f)).ToArray();
+                T[] fieldValues = fields
+                    .Select(f => ConvertToType<T>(f))
+                    .ToArray();
 
                 return fieldValues;
             }
@@ -206,7 +208,7 @@ namespace Snapshooter
             return jTokens.ToArray();
         }
 
-        private static T ConvertToType<T>(JToken field)
+        public static T ConvertToType<T>(JToken field)
         {
             if (typeof(T) == typeof(int))
             {
@@ -214,18 +216,6 @@ namespace Snapshooter
                 // decimal values to integer values, which is wrong.
                 return JsonConvert.DeserializeObject<T>(field.Value<string>());
             }
-            //if(typeof(T) == typeof(string))
-            //{
-            //    if(field.Type != JTokenType.String ||
-            //       field.Type != JTokenType.Object ||
-            //       field.Type != JTokenType.Null)
-            //    {
-            //        throw new SnapshotFieldException(
-            //            $"The snapshot field with value '{field}' " +
-            //            $"is of Type '{field.Type}' and can not be " +
-            //            $"converted to requested type 'typeof(T)'.");
-            //    }
-            //}
 
             return field.ToObject<T>();
         }

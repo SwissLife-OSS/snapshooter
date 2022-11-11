@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 #nullable enable
 
@@ -25,8 +25,6 @@ namespace Snapshooter.Core
         /// The match options, which contain the format actions.
         /// </param>
         /// <returns>The formatted snapshot.</returns>
-        string FormatSnapshot(
-            string snapshot,
-            Func<MatchOptions, MatchOptions>? matchOptions = null);
+        string FormatSnapshot(string snapshot, MatchOptions matchOptions);
     }
 }

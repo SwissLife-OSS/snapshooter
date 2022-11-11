@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -39,20 +39,15 @@ namespace Snapshooter.Core
         public void CompareSnapshots(
             string expectedSnapshot,
             string actualSnapshot,
-            Func<MatchOptions, MatchOptions>? matchOptions = null)
-        {
-            JToken originalActualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
+            MatchOptions matchOptions)
+        {            
             JToken actualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
             JToken expectedSnapshotToken = _snapshotSerializer.Deserialize(expectedSnapshot);
-
-            if (matchOptions is { })
-            {
-                ExecuteFieldMatchActions(
-                    originalActualSnapshotToken,
-                    actualSnapshotToken,
-                    expectedSnapshotToken,
-                    matchOptions);
-            }
+                        
+            ExecuteFieldMatchActions(
+                actualSnapshotToken,
+                expectedSnapshotToken,
+                matchOptions);            
 
             string actualSnapshotToCompare = _snapshotSerializer
                 .SerializeJsonToken(actualSnapshotToken);
@@ -63,18 +58,17 @@ namespace Snapshooter.Core
         }
 
         private void ExecuteFieldMatchActions(
-            JToken originalActualSnapshot,
             JToken actualSnapshot,
             JToken expectedSnapshot,
-            Func<MatchOptions, MatchOptions> matchOptions)
+            MatchOptions matchOptions)
         {
             try
             {
-                MatchOptions configMatchOptions = matchOptions(new MatchOptions());
-
-                foreach (FieldMatchOperator matchOperator in configMatchOptions.MatchOperators)
+                foreach (FieldMatchOperator matchOperator in matchOptions.MatchOperators)
                 {
-                    FieldOption fieldOption = matchOperator.ExecuteMatch(originalActualSnapshot, expectedSnapshot);
+                    FieldOption fieldOption = matchOperator
+                        .ExecuteMatch(actualSnapshot, expectedSnapshot);
+
                     RemoveFieldFromSnapshot(fieldOption, actualSnapshot);
                     RemoveFieldFromSnapshot(fieldOption, expectedSnapshot);
                 }

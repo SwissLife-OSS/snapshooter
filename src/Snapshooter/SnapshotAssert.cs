@@ -4,151 +4,145 @@ using Snapshooter.Exceptions;
 
 #nullable enable
 
-namespace Snapshooter
+namespace Snapshooter;
+
+/// <summary>
+/// The class <see cref="SnapshotAssert"/> can be used to compare a given object
+/// against a snapshot. If no snapshot exists, a new snapshot will be created from
+/// the current object and saved on the file system.
+/// </summary>
+public class SnapshotAssert : ISnapshotAssert
 {
+    private readonly ISnapshotSerializer _snapshotSerializer;
+    private readonly ISnapshotFileHandler _snapshotFileHandler;
+    private readonly ISnapshotEnvironmentCleaner _snapshotEnvironmentCleaner;
+    private readonly ISnapshotComparer _snapshotComparer;
+    private readonly ISnapshotFormatter _snapshotFormatter;
+
     /// <summary>
-    /// The class <see cref="SnapshotAssert"/> can be used to compare a given object
-    /// against a snapshot. If no snapshot exists, a new snapshot will be created from
-    /// the current object and saved on the file system.
+    /// Initializes a new instance of the <see cref="SnapshotAssert"/> class.
     /// </summary>
-    public class SnapshotAssert : ISnapshotAssert
+    /// <param name="snapshotSerializer">The serializer of the snapshot object.</param>
+    /// <param name="snapshotFileHandler">The snapshot file handler.</param>
+    /// <param name="snapshotEnvironmentCleaner">The environment cleanup utility.</param>
+    /// <param name="snapshotComparer">The snaspshot text comparer.</param>
+    /// <param name="snapshotFormatter">Transforms the snapshot to the right output format.</param>
+    public SnapshotAssert(
+        ISnapshotSerializer snapshotSerializer,
+        ISnapshotFileHandler snapshotFileHandler,
+        ISnapshotEnvironmentCleaner snapshotEnvironmentCleaner,
+        ISnapshotComparer snapshotComparer,
+        ISnapshotFormatter snapshotFormatter)
     {
-        private readonly ISnapshotSerializer _snapshotSerializer;
-        private readonly ISnapshotFileHandler _snapshotFileHandler;
-        private readonly ISnapshotEnvironmentCleaner _snapshotEnvironmentCleaner;
-        private readonly ISnapshotComparer _snapshotComparer;
-        private readonly ISnapshotFormatter _snapshotFormatter;
+        _snapshotSerializer = snapshotSerializer;
+        _snapshotFileHandler = snapshotFileHandler;
+        _snapshotEnvironmentCleaner = snapshotEnvironmentCleaner;
+        _snapshotComparer = snapshotComparer;
+        _snapshotFormatter = snapshotFormatter;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SnapshotAssert"/> class.
-        /// </summary>
-        /// <param name="snapshotSerializer">The serializer of the snapshot object.</param>
-        /// <param name="snapshotFileHandler">The snapshot file handler.</param>
-        /// <param name="snapshotEnvironmentCleaner">The environment cleanup utility.</param>
-        /// <param name="snapshotComparer">The snaspshot text comparer.</param>
-        /// <param name="snapshotFormatter">Transforms the snapshot to the right output format.</param>
-        public SnapshotAssert(
-            ISnapshotSerializer snapshotSerializer,
-            ISnapshotFileHandler snapshotFileHandler,
-            ISnapshotEnvironmentCleaner snapshotEnvironmentCleaner,
-            ISnapshotComparer snapshotComparer,
-            ISnapshotFormatter snapshotFormatter)
+    /// <summary>
+    /// Compares the snapshot against the given result object. If the snapshot is
+    /// new then it will be saved directly. If the snapshot is not matching with the
+    /// given result object, then the given result object will be snapshot and saved
+    /// in the given folder.
+    /// </summary>
+    /// <param name="currentResult">
+    /// The object to compare.
+    /// </param>
+    /// <param name="snapshotFullName">
+    /// The name and folder of the snapshot.
+    /// </param>
+    /// <param name="matchOptions">
+    /// Additional match actions, which can be applied during the comparison
+    /// </param>
+    public void AssertSnapshot(
+        object currentResult,
+        SnapshotFullName snapshotFullName,
+        MatchOptions matchOptions)
+    {
+        if (currentResult == null)
         {
-            _snapshotSerializer = snapshotSerializer;
-            _snapshotFileHandler = snapshotFileHandler;
-            _snapshotEnvironmentCleaner = snapshotEnvironmentCleaner;
-            _snapshotComparer = snapshotComparer;
-            _snapshotFormatter = snapshotFormatter;
+            throw new ArgumentNullException(nameof(currentResult));
         }
 
-        /// <summary>
-        /// Compares the snapshot against the given result object. If the snapshot is
-        /// new then it will be saved directly. If the snapshot is not matching with the
-        /// given result object, then the given result object will be snapshot and saved
-        /// in the given folder.
-        /// </summary>
-        /// <param name="currentResult">
-        /// The object to compare.
-        /// </param>
-        /// <param name="snapshotFullName">
-        /// The name and folder of the snapshot.
-        /// </param>
-        /// <param name="matchOptions">
-        /// Additional match actions, which can be applied during the comparison
-        /// </param>
-        public void AssertSnapshot(
-            object currentResult,
-            SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions>? matchOptions = null)
+        if (snapshotFullName == null)
         {
-            if (currentResult == null)
-            {
-                throw new ArgumentNullException(nameof(currentResult));
-            }
+            throw new ArgumentNullException(nameof(snapshotFullName));
+        }
 
-            if (snapshotFullName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotFullName));
-            }
+        if (matchOptions == null)
+        {
+            throw new ArgumentNullException(nameof(matchOptions));
+        }
 
-            _snapshotEnvironmentCleaner.Cleanup(snapshotFullName);
+        _snapshotEnvironmentCleaner.Cleanup(snapshotFullName);
 
-            string actualSnapshotSerialized = _snapshotSerializer
-                .SerializeObject(currentResult);
+        string objectSnapshotSerialized = _snapshotSerializer
+            .SerializeObject(currentResult);
 
-            bool snapshotAlreadyExists = _snapshotFileHandler
-                .TryReadSnapshot(snapshotFullName, out string? savedSnapshotSerialized);
+        string actualSnapshotSerialized = _snapshotFormatter
+            .FormatSnapshot(objectSnapshotSerialized, matchOptions);
 
-            if (!snapshotAlreadyExists)
-            {
-                string formattedSnapshotSerialized = _snapshotFormatter
-                    .FormatSnapshot(actualSnapshotSerialized, matchOptions);
+        bool originalSnapshotExists = _snapshotFileHandler
+            .TryReadSnapshot(snapshotFullName, out string? originalSnapshotSerialized);
+                
+        originalSnapshotSerialized ??= actualSnapshotSerialized;
+        
+        ExecuteSnapshotComparison(
+            originalSnapshotExists,
+            actualSnapshotSerialized,
+            originalSnapshotSerialized,
+            snapshotFullName,
+            matchOptions);
+    }        
 
-                string value = Environment.GetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE");
-                if (string.Equals(value, "on", StringComparison.Ordinal)
-                    || (bool.TryParse(value, out bool b) && b))
-                {
-                    _snapshotFileHandler
-                        .SaveMismatchSnapshot(snapshotFullName, formattedSnapshotSerialized);
-
-                    throw new SnapshotNotFoundException(
-                        "Strict mode is enabled and no snapshot has been found " +
-                        "for the current test. Create a new snapshot locally and " +
-                        "rerun your tests.");
-                }
-
-                _snapshotFileHandler
-                    .SaveNewSnapshot(snapshotFullName, formattedSnapshotSerialized);
-
-                savedSnapshotSerialized = _snapshotFileHandler
-                    .ReadSnapshot(snapshotFullName);
-            }
-
-            ExecuteSnapshotComparison(
-                snapshotAlreadyExists,
+    private void ExecuteSnapshotComparison(
+        bool originalSnapshotExists,
+        string actualSnapshotSerialized,
+        string originalSnapshotSerialized,
+        SnapshotFullName snapshotFullName,
+        MatchOptions matchOptions)
+    {
+        try
+        {                
+            CheckStrictMode(originalSnapshotExists);
+            
+            _snapshotComparer.CompareSnapshots(
+                originalSnapshotSerialized,
                 actualSnapshotSerialized,
-                savedSnapshotSerialized,
-                snapshotFullName,
                 matchOptions);
-        }
 
-        private void ExecuteSnapshotComparison(
-            bool snapshotAlreadyExists,
-            string actualSnapshotSerialized,
-            string savedSnapshotSerialized,
-            SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions>? matchOptions = null)
-        {
-            try
+            if (!originalSnapshotExists)
             {
-                _snapshotComparer.CompareSnapshots(
-                    savedSnapshotSerialized,
-                    actualSnapshotSerialized,
-                    matchOptions);
-
-                //string actualFormattedSnapshot = _snapshotFormatter
-                //    .FormatSnapshot(actualSnapshotSerialized, matchOptions);
-
-                //if (savedSnapshotSerialized != actualFormattedSnapshot)
-                //{
-                //    _snapshotFileHandler
-                //        .SaveNewSnapshot(snapshotFullName, actualFormattedSnapshot);
-                //}
+                _snapshotFileHandler.SaveNewSnapshot(
+                    snapshotFullName,
+                    actualSnapshotSerialized);
             }
-            catch (Exception)
+        }
+        catch (Exception)
+        {
+            _snapshotFileHandler.SaveMismatchSnapshot(
+                snapshotFullName,
+                actualSnapshotSerialized);
+
+            throw;
+        }
+    }
+
+    private void CheckStrictMode(bool originalSnapshotExists)
+    {
+        if (!originalSnapshotExists)
+        {
+            string value = Environment.GetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE");
+
+            if (string.Equals(value, "on", StringComparison.Ordinal)
+                || (bool.TryParse(value, out bool b) && b))
             {
-                string actualFormattedSnapshot = _snapshotFormatter
-                    .FormatSnapshot(actualSnapshotSerialized, matchOptions);
-
-                _snapshotFileHandler
-                    .SaveMismatchSnapshot(snapshotFullName, actualFormattedSnapshot);
-
-                if (!snapshotAlreadyExists)
-                {
-                    _snapshotFileHandler.DeleteSnapshot(snapshotFullName);
-                }
-
-                throw;
+                throw new SnapshotNotFoundException(
+                    "Strict mode is enabled and no snapshot has been found " +
+                    "for the current test. Create a new snapshot locally and " +
+                    "rerun your tests.");
             }
         }
     }

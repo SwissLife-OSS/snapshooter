@@ -208,6 +208,28 @@ namespace Snapshooter.Xunit.Tests.MatchOptions.IsTypeField
         }
 
         [Fact]
+        public void Match_IsTypeWildcardScalarFieldsArrayDifferentTypes_Error()
+        {
+            // arrange
+            object theThing = new
+            {
+                Value = DateTime.Parse("2015-08-17"),
+                Under = new
+                {
+                    Value = "Smith",
+                    Upper = new
+                    {
+                        Value = DateTime.Parse("2017-08-17")
+                    }
+                }
+            };
+
+            // act & assert
+            Assert.Throws<SnapshotFieldException>(() => Snapshot.Match<object>(theThing,
+                matchOptions => matchOptions.IsTypeFields<DateTime>("**.Value")));
+        }
+
+        [Fact]
         public void Match_IsTypeWildcardScalarFieldsOneEntry_SuccessfulMatch()
         {
             // arrange
