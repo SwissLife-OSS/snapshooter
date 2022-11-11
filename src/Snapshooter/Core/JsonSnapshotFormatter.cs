@@ -56,46 +56,20 @@ namespace Snapshooter.Core
         }
 
         private string FormatSnapshotFields(
-            string actualSnapshot,
+            string actualSnapshotSerialized,
             MatchOptions matchOptions)
         {
-            JToken actualSnapshotToken = _snapshotSerializer.Deserialize(actualSnapshot);
-
-            // TODO Performance: here could a fieldFormatted bool be used to check if a format has been done in the snapshot, if not, then just return the actualSnapshot.
+            JToken actualSnapshot = _snapshotSerializer.Deserialize(actualSnapshotSerialized);
 
             foreach (FieldMatchOperator matchOperator in matchOptions.MatchOperators)
             {
                 if (matchOperator.HasFormatAction())
                 {
-                    TransformSnapshotFields(
-                        actualSnapshotToken,
-                        matchOperator);
+                    matchOperator.FormatFields(actualSnapshot);
                 }
             }
 
-            return _snapshotSerializer.SerializeObject(actualSnapshotToken);
-        }
-
-        private bool TransformSnapshotFields(
-            JToken actualSnapshotToken,
-            FieldMatchOperator matchOperator)
-        {
-            bool formatExecuted = false;
-
-            IEnumerable<JToken> fieldTokens = matchOperator
-                .GetFieldTokens(actualSnapshotToken);
-
-            if (fieldTokens is { })
-            {
-                foreach (JToken actual in fieldTokens)
-                {
-                    matchOperator.FormatField(actual);
-
-                    formatExecuted = true;
-                }
-            }
-            
-            return formatExecuted;
-        }
+            return _snapshotSerializer.SerializeObject(actualSnapshot);
+        }        
     }
 }

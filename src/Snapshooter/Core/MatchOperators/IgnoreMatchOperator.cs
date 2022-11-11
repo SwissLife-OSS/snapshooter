@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
@@ -24,16 +23,8 @@ namespace Snapshooter.Core
 
         public override bool HasFormatAction() => false;
 
-        public override JToken FormatField(JToken field)
+        public override void FormatFields(JToken snapshotData)
         {
-            return field;
-        }
-
-        public override IEnumerable<JToken> GetFieldTokens(JToken snapshotData)
-        {
-            FieldOption fieldOption = new FieldOption(snapshotData);
-
-            return fieldOption.FindFieldTokens(_fieldPath);
         }
 
         public override FieldOption ExecuteMatch(

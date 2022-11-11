@@ -24,7 +24,31 @@ namespace Snapshooter.Core
 
         public override bool HasFormatAction() => true;
 
-        public override JToken FormatField(JToken field)
+        public override void FormatFields(JToken snapshotData)
+        {
+            FieldOption fieldOption = new FieldOption(snapshotData);
+
+            foreach (JToken fieldToken in fieldOption.FindFieldTokens(_fieldsPath))
+            {
+                FormatField(fieldToken);
+            }
+        }
+
+        public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
+        {
+            foreach (KeyValuePair<string, object> field in _fields)
+            {
+                VerifyFieldType(field.Key, field.Value);
+            }
+            
+            var fieldOption = new FieldOption(snapshotData);
+
+            fieldOption.FindAllFields(_fieldsPath);
+
+            return fieldOption;
+        }
+
+        private JToken FormatField(JToken field)
         {
             string originalValue = string.Empty;
             if (_keepOriginalValue)
@@ -48,27 +72,6 @@ namespace Snapshooter.Core
             field.Replace(new JValue($"AcceptAny<{typeAlias}>{originalValue}"));
 
             return field;
-        }
-
-        public override IEnumerable<JToken> GetFieldTokens(JToken snapshotData)
-        {
-            FieldOption fieldOption = new FieldOption(snapshotData);
-
-            return fieldOption.FindFieldTokens(_fieldsPath);
-        }
-
-        public override FieldOption ExecuteMatch(JToken snapshotData, JToken expectedSnapshotData)
-        {
-            foreach (KeyValuePair<string, object> field in _fields)
-            {
-                VerifyFieldType(field.Key, field.Value);
-            }
-            
-            var fieldOption = new FieldOption(snapshotData);
-
-            fieldOption.FindAllFields(_fieldsPath);
-
-            return fieldOption;
         }
 
         private void VerifyFieldType(string path, object field)
