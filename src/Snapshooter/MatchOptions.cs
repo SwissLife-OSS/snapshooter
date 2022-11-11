@@ -440,10 +440,6 @@ namespace Snapshooter
         /// </param>
         public MatchOptions Assert(Action<FieldOption> assertAction)
         {
-            //Func<FieldOption, FieldOption> fieldOption = option => option;
-
-            //_matchOperators.Add(new FieldMatchOperator<FieldOption>(fieldOption, assertAction));
-
             _matchOperators.Add(new AssertMatchOperator(assertAction));
 
             return this;
@@ -463,6 +459,21 @@ namespace Snapshooter
 
             return this;
         }
+
+        /// <summary>
+        /// The <see cref="ExcludeField(string)"/> option removes (excludes) a field(s) from the snapshot.
+        /// The field(s) to exclude is given by the json path <paramref name="fieldPath"/>.
+        /// The field(s) will not appear in the snapshot.
+        /// </summary>
+        /// <param name="fieldPath">The json path to the field(s) to exclude.</param>
+        public MatchOptions ExcludeField(string fieldPath)
+        {
+            _matchOperators.Add(
+                new ExcludeMatchOperator(fieldPath));
+
+            return this;
+        }
+
 
         private MatchOptions AddIgnoreMatchOperator<T>(string fieldsPath)
         {
