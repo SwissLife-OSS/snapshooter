@@ -4,7 +4,7 @@
     <TargetFrameworks>$(TestProjectTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Snapshooter</RootNamespace>    
     <IsPackable>false</IsPackable>   
-    <LangVersion>9.0</LangVersion>  
+    <LangVersion>10.0</LangVersion>  
   </PropertyGroup>
 
   <ItemGroup>
