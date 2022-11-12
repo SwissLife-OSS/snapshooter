@@ -26,6 +26,7 @@ namespace Snapshooter.Xunit
         {
             SnapshotFullName snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
+
             foreach (StackFrame stackFrame in stackFrames)
             {
                 MethodBase method = stackFrame.GetMethod();
@@ -33,7 +34,7 @@ namespace Snapshooter.Xunit
                 {
                     snapshotFullName = new SnapshotFullName(
                         method.ToName(),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        ExtractFolderPath(stackFrame));
 
                     break;
                 }
@@ -42,12 +43,14 @@ namespace Snapshooter.Xunit
                 if (IsXunitTestMethod(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
-                        asyncMethod.ToName(),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        method.ToName(),
+                        ExtractFolderPath(stackFrame));
 
                     break;
                 }
             }
+
+            
 
             if (snapshotFullName == null)
             {
@@ -64,6 +67,17 @@ namespace Snapshooter.Xunit
                                     .CheckForSession(snapshotFullName);
 
             return snapshotFullName;
+        }
+
+        private static string ExtractFolderPath(StackFrame stackFrame)
+        {
+            var folderPath = Path.GetDirectoryName(stackFrame.GetFileName());
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                folderPath = stackFrame.GetFileName().GetDirectoryName();
+            }
+
+            return folderPath;
         }
 
         private static bool IsXunitTestMethod(MemberInfo method)
