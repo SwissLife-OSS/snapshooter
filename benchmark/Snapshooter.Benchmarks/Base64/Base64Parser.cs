@@ -1,4 +1,4 @@
-namespace Snapshooter.Benchmarks;
+namespace Snapshooter.Benchmarks.Base64;
 
 public class Base64Parser
 {
@@ -15,10 +15,10 @@ public class Base64Parser
         }
     }
 
-    public static bool IsBase64TryFromBase64String(string base64String)
+    public bool IsBase64TryFromBase64String(string base64String)
     {
-        Span<byte> buffer = new Span<byte>(new byte[base64String.Length]);
-        bool isBase64 = Convert.TryFromBase64String(base64String, buffer, out int bytesParsed);
+        var buffer = new Span<byte>(new byte[base64String.Length]);
+        var isBase64 = Convert.TryFromBase64String(base64String, buffer, out var bytesParsed);
 
         return isBase64;
     }
