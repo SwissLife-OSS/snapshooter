@@ -8,8 +8,8 @@ namespace Snapshooter.Benchmarks.DirectoryName;
 [RankColumn(NumeralSystem.Arabic)]
 public class DirectoryNameResolverBenchmarks
 {
-    private static string absoluteFileNameBackSlash = "C:\\temp\\user\\snapshot\\testing\\snapshotfile.snap";
-    private static string absoluteFileNameSlash = "C:/temp/user/snapshot/testing/snapshotfile.snap";
+    private static string absoluteFileNameBackSlash = "C:\\somewhere\\snapshot\\testing\\snapshotfile.snap";
+    private static string absoluteFileNameSlash = "C:/somewhere/snapshot/testing/snapshotfile.snap";
 
     private static readonly DirectoryNameResolver _directoryNameResolver = new DirectoryNameResolver();
 
