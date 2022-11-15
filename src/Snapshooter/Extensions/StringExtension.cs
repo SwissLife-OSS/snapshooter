@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,7 +13,7 @@ namespace Snapshooter.Extensions
     /// <summary>
     /// Some string extensions to support the snapshot testing.
     /// </summary>
-    internal static class StringExtension
+    public static class StringExtension
     {
         /// <summary>
         /// Ensures that the given string ends with a line ending '\n'.
@@ -139,6 +141,54 @@ namespace Snapshooter.Extensions
 
             fieldName = fieldsPath;
             return false;
+        }
+
+        /// <summary>
+        /// Gets the directory path of a filename. The Path.GetDirectoryName
+        /// returns an empty string if it runs on wsl ubuntu if a windows file path
+        /// is given. This method has a fallback if this is the case. If
+        /// Path.GetDirectoryName returns an empty string, then this method tries
+        /// to get the folder path manually.
+        /// and thus with c:\\dir1\\dir\\filename.cs (as example)
+        /// </summary>
+        /// <param name="filenameFullPath">The filenameFullPath string.</param>
+        /// <returns>The folder path.</returns>
+        public static string GetDirectoryName(this string filenameFullPath)
+        {
+            var folderPath = Path.GetDirectoryName(filenameFullPath);
+
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                folderPath = filenameFullPath.RemoveFilename();
+            }
+
+            return folderPath;
+        }
+
+        /// <summary>
+        /// Removes the last part of a file path after the folder separator
+        /// if any. This is the filename and its extension, if any.
+        /// This is meant as a fallback for the Path.GetDirectoryName when executed
+        /// in WSL but with a directory from xUnit (run in Windows subsystem)
+        /// and thus with c:\\dir1\\dir\\filename.cs (as example)
+        /// </summary>
+        /// <param name="filenameFullPath">The filenameFullPath string.</param>
+        /// <returns>The text string without the filename.</returns>
+        public static string RemoveFilename(this string filenameFullPath)
+        {
+            int index = filenameFullPath.LastIndexOf('\\');
+
+            if (index < 0)
+            {
+                index = filenameFullPath.LastIndexOf('/');
+
+                if(index < 0)
+                {
+                    return string.Empty;
+                }
+            }
+
+            return filenameFullPath.Remove(index);
         }
     }
 }

@@ -11,6 +11,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
+using Snapshooter.Extensions;
 
 namespace Snapshooter.NUnit
 {
@@ -35,7 +36,7 @@ namespace Snapshooter.NUnit
                 {
                     snapshotFullName = new SnapshotFullName(
                         GetCurrentSnapshotName(),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }
@@ -45,7 +46,7 @@ namespace Snapshooter.NUnit
                 {
                     snapshotFullName = new SnapshotFullName(
                         GetCurrentSnapshotName(),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }

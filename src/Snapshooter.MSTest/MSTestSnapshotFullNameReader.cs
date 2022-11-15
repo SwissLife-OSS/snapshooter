@@ -35,7 +35,7 @@ namespace Snapshooter.MSTest
                 {
                     snapshotFullName = new SnapshotFullName(
                         GetMethodSnapshotName(method),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }
@@ -45,7 +45,7 @@ namespace Snapshooter.MSTest
                 {
                     snapshotFullName = new SnapshotFullName(
                         GetMethodSnapshotName(asyncMethod),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }

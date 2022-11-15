@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -34,7 +33,7 @@ namespace Snapshooter.Xunit
                 {
                     snapshotFullName = new SnapshotFullName(
                         method.ToName(),
-                        ExtractFolderPath(stackFrame));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }
@@ -43,15 +42,13 @@ namespace Snapshooter.Xunit
                 if (IsXunitTestMethod(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
-                        method.ToName(),
-                        ExtractFolderPath(stackFrame));
+                        asyncMethod.ToName(),
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }
             }
-
             
-
             if (snapshotFullName == null)
             {
                 throw new SnapshotTestException(
@@ -64,20 +61,9 @@ namespace Snapshooter.Xunit
             }
 
             snapshotFullName = LiveUnitTestingDirectoryResolver
-                                    .CheckForSession(snapshotFullName);
+                .CheckForSession(snapshotFullName);
 
             return snapshotFullName;
-        }
-
-        private static string ExtractFolderPath(StackFrame stackFrame)
-        {
-            var folderPath = Path.GetDirectoryName(stackFrame.GetFileName());
-            if (string.IsNullOrEmpty(folderPath))
-            {
-                folderPath = stackFrame.GetFileName().GetDirectoryName();
-            }
-
-            return folderPath;
         }
 
         private static bool IsXunitTestMethod(MemberInfo method)
