@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
 using Snapshooter.Extensions;
@@ -14,7 +13,8 @@ namespace Snapshooter
     /// </summary>
     public class FieldOption
     {
-        private JToken _snapshotData;
+        private readonly JToken _snapshotData;
+        private readonly List<string> _fieldPaths;
 
         /// <summary>
         /// Constructor of the class <see cref="FieldOption"/>
@@ -24,12 +24,13 @@ namespace Snapshooter
         public FieldOption(JToken snapshotData)
         {
             _snapshotData = snapshotData;
+            _fieldPaths = new List<string>();
         }
 
         /// <summary>
         /// The path of the field, which was requested.
         /// </summary>
-        public string[] FieldPaths { get; private set; }
+        public string[] FieldPaths => _fieldPaths.ToArray();
 
         /// <summary>
         /// Finds all jtokens by the given field path. if the field path
@@ -94,7 +95,7 @@ namespace Snapshooter
                         $"Please use the FieldOption for fields array (Fields).");
                 }
 
-                T fieldValue = ConvertToType<T>(fields.Single());
+                T fieldValue = fields.Single().ConvertToType<T>();
 
                 return fieldValue;
             }
@@ -118,7 +119,7 @@ namespace Snapshooter
                 IEnumerable<JToken> fields = GetTokensByPath(fieldPath);
 
                 T[] fieldValues = fields
-                    .Select(f => ConvertToType<T>(f))
+                    .Select(field => field.ConvertToType<T>())
                     .ToArray();
 
                 return fieldValues;
@@ -144,7 +145,7 @@ namespace Snapshooter
                     GetPropertiesByName(name);
 
                 T[] fieldValues = properties
-                    .Select(jprop => ConvertToType<T>(jprop.Value))
+                    .Select(jprop => jprop.Value.ConvertToType<T>())
                     .ToArray();
                 
                 return fieldValues;
@@ -178,16 +179,15 @@ namespace Snapshooter
                 .Where(jprop => jprop.Name == name)
                 .ToArray();
 
-            FieldPaths = properties
-                .Select(jprop => jprop.Path)
-                .ToArray();
+            _fieldPaths.AddRange(
+                properties.Select(jprop => jprop.Path)) ;
 
             return properties;
         }
 
         private JToken[] GetTokensByPath(string fieldPath)
         {
-            FieldPaths = new[] { fieldPath };
+            _fieldPaths.Add(fieldPath);
 
             if (_snapshotData is JValue)
             {
@@ -206,18 +206,6 @@ namespace Snapshooter
             }
 
             return jTokens.ToArray();
-        }
-
-        public static T ConvertToType<T>(JToken field)
-        {
-            if (typeof(T) == typeof(int))
-            {
-                // This is a workaround, because the json method ToObject<> rounds
-                // decimal values to integer values, which is wrong.
-                return JsonConvert.DeserializeObject<T>(field.Value<string>());
-            }
-
-            return field.ToObject<T>();
-        }
+        }        
     }
 }

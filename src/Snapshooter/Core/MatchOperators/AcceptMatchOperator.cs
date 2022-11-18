@@ -48,7 +48,7 @@ namespace Snapshooter.Core
             return fieldOption;
         }
 
-        private JToken FormatField(JToken field)
+        private void FormatField(JToken field)
         {
             string originalValue = string.Empty;
             if (_keepOriginalValue)
@@ -65,13 +65,11 @@ namespace Snapshooter.Core
                 originalValue = $"(original: '{fieldValue}')";
             }
 
-            _fields.Add(field.Path, FieldOption.ConvertToType<object>(field));
+            _fields.Add(field.Path, field.ConvertToType<object>());
 
             string typeAlias = typeof(T).GetAliasName();
 
             field.Replace(new JValue($"AcceptAny<{typeAlias}>{originalValue}"));
-
-            return field;
         }
 
         private void VerifyFieldType(string path, object field)

@@ -25,5 +25,23 @@ namespace Snapshooter.Extensions
                 })
                 .Trim('\"');
         }
+
+        /// <summary>
+        /// Converts a JToken to a specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to convert to.</typeparam>
+        /// <param name="field">The JToken field to convert.</param>
+        /// <returns>The converted value.</returns>
+        public static T ConvertToType<T>(this JToken field)
+        {
+            if (typeof(T) == typeof(int))
+            {
+                // This is a workaround, because the json method ToObject<> rounds
+                // decimal values to integer values, which is wrong.
+                return JsonConvert.DeserializeObject<T>(field.Value<string>());
+            }
+
+            return field.ToObject<T>();
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
@@ -117,13 +117,13 @@ namespace Snapshooter.Xunit.Tests
         public async Task Match_FactMatchSnapshotInAsncMethodWithImplcName_SuccessfulMatch()
         {
             // arrange
+            Snapshot.FullName();
+
             await Task.Delay(1);
 
             TestPerson testPerson = TestDataBuilder.TestPersonSandraSchneider().Build();
 
-            await Task.Delay(1);
-
-            Snapshot.FullName();
+            await Task.Delay(1);            
 
             // act
             await AsyncMatchWithImplicitFullName(testPerson);
