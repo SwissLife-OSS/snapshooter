@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup Label="Framework Versions">
-    <TestProjectTargetFrameworks>netcoreapp3.1;net6.0</TestProjectTargetFrameworks>
+    <TestProjectTargetFrameworks>netcoreapp3.1;net6.0;net7.0</TestProjectTargetFrameworks>
   </PropertyGroup>
 </Project>
