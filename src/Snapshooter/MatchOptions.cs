@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
 
@@ -474,6 +475,30 @@ namespace Snapshooter
             return this;
         }
 
+        /// <summary>
+        /// The <see cref="IncludeField(string)"/> option includes only the field(s) in a snapshot,
+        /// which have been defined by the fieldPath.
+        /// The field(s) to include is given by the json path <paramref name="fieldPath"/>.
+        /// Only these fields will appear in the snapshot.
+        /// </summary>
+        /// <param name="fieldPath">The json path to the field(s) to include.</param>
+        public MatchOptions IncludeField(string fieldPath)
+        {
+            FieldMatchOperator fieldMatchOperator =
+                _matchOperators.SingleOrDefault(op => op is IncludeMatchOperator);
+
+            if (fieldMatchOperator == null)
+            {
+                fieldMatchOperator = new IncludeMatchOperator();
+                _matchOperators.Add(fieldMatchOperator);
+            }
+
+            var includeMatchOperator = (IncludeMatchOperator)fieldMatchOperator;
+
+            includeMatchOperator.AddFieldPath(fieldPath);
+
+            return this;
+        }
 
         private MatchOptions AddIgnoreMatchOperator<T>(string fieldsPath)
         {

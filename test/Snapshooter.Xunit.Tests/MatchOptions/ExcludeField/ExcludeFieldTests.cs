@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using FluentAssertions;
 using Snapshooter.Tests.Data;
 using Snapshooter.Xunit.Tests.Helpers;
@@ -158,5 +159,40 @@ public class ExcludeFieldsTests
         // assert
         act.Should().Throw<EqualException>()
             .Which.Message.Should().Contain("CountryCode");
+    }
+
+    [Fact]
+    public void ExcludeField_DuplicateExcludeFieldsSnapshot_SuccessfullyCompared()
+    {
+        // arrange
+        TestPerson testPerson = TestDataBuilder
+            .TestPersonMarkWalton()
+            .Build();
+
+        // act & assert
+        Snapshot.Match(testPerson, options => options
+            .ExcludeField("Firstname")
+            .ExcludeField("DateOfBirth")
+            .ExcludeField("Size")
+            .ExcludeField("Address.Country.CountryCode")
+            .ExcludeField("Children")
+            .ExcludeField("Relatives[*].Relatives")
+            .ExcludeField("Relatives[*].Address")
+            .ExcludeField("Relatives[*].Address")
+            .ExcludeField("**.Size")
+            .ExcludeField("**.CountryCode"));
+    }
+
+    [Fact]
+    public void ExcludeField_ExcludeArrayFieldSnapshot_SuccessfullyCompared()
+    {
+        // arrange
+        TestPerson testPerson = TestDataBuilder
+            .TestPersonMarkWalton()
+            .Build();
+
+        // act & assert
+        Snapshot.Match(testPerson, options => options
+            .ExcludeField("Children[0]"));
     }
 }

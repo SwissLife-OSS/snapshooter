@@ -1,0 +1,12 @@
+﻿{
+  "Address": {
+    "Street": "Rohrstrasse",
+    "StreetNumber": 12,
+    "Plz": 8304,
+    "City": "Wallislellen",
+    "Country": {
+      "Name": "Switzerland",
+      "CountryCode": "CH"
+    }
+  }
+}
