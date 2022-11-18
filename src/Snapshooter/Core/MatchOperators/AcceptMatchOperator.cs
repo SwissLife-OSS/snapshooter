@@ -65,7 +65,7 @@ namespace Snapshooter.Core
                 originalValue = $"(original: '{fieldValue}')";
             }
 
-            _fields.Add(field.Path, FieldOption.ConvertToType<object>(field));
+            _fields.Add(field.Path, field.ConvertToType<object>());
 
             string typeAlias = typeof(T).GetAliasName();
 

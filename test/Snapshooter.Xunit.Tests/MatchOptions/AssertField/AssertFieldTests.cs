@@ -3,6 +3,7 @@ using System.IO;
 using FluentAssertions;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
+using Snapshooter.Xunit.Tests.Helpers;
 using Xunit;
 
 namespace Snapshooter.Xunit.Tests.MatchOptions.AssertField
@@ -237,6 +238,95 @@ namespace Snapshooter.Xunit.Tests.MatchOptions.AssertField
             // assert
             Assert.Throws<SnapshotCompareException>(action);
             Assert.False(File.Exists(snapshotFileName));
+        }
+
+        [Fact]
+        public void Match_AssertTwoFieldsAgainstEachOtherWithinSnapshot_SuccessfulAssert()
+        {
+            // arrange
+            TestPerson testChild = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(testChild,
+                matchOption => matchOption.Assert(fieldOption =>
+                    Assert.Equal(
+                        fieldOption.Field<string>("Address.Country.Name"),
+                        fieldOption.Field<string>("Relatives[0].Address.Country.Name"))));
+        }
+
+        [Fact]
+        public void Match_AssertTwoUnequalFieldsAgainstEachOtherWithinSnapshot_FailedAssert()
+        {
+            // arrange
+            TestPerson testChild = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act
+            Action action = () => Snapshot.Match(testChild,
+                matchOption => matchOption.Assert(fieldOption =>
+                    Assert.Equal(
+                        fieldOption.Field<string>("Lastname"),
+                        fieldOption.Field<string>("Relatives[0].Lastname"))));
+
+            // assert
+            Assert.Throws<SnapshotCompareException>(action);
+        }
+
+        [Fact]
+        public void Match_AssertTwoRandomFieldsAgainstEachOtherWithinSnapshot_SuccessfulAssert()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()                
+                .Build();
+
+            Guid id = Guid.NewGuid();
+
+            testPerson.Id = id;
+            testPerson.Relatives[0].Id = id;
+
+            // act & assert
+            Snapshot.Match(testPerson,
+                matchOption => matchOption.Assert(fieldOption =>
+                    Assert.Equal(
+                        fieldOption.Field<string>("Id"),
+                        fieldOption.Field<string>("Relatives[0].Id"))));
+        }
+
+        [Fact]
+        public void Match_AssertMultipleTwoFieldCompares_Success()
+        {
+            // arrange
+            string snapshotFileName =
+                SnapshotDefaultNameResolver.ResolveSnapshotDefaultName();
+
+            string expectedSnapshot =
+                File.ReadAllText(snapshotFileName + ".original");
+
+            // act & assert
+            Snapshot.Match(expectedSnapshot, matchOptions => matchOptions
+                    .Assert(fieldOption => Assert.Equal(
+                        fieldOption.Field<Guid>("changeSets[0].DocumentInstanceId"),
+                        fieldOption.Field<Guid>("docInstances[0].Id")))
+                    .Assert(fieldOption => Assert.Equal(
+                        fieldOption.Field<Guid>("audits[0].DocumentInstanceId"),
+                        fieldOption.Field<Guid>("docInstances[0].Id")))
+                    .Assert(fieldOption => Assert.Equal(
+                        fieldOption.Field<Guid>("changeSets[0].UserId"),
+                        fieldOption.Field<Guid>("users[0].UserId")))
+                    .Assert(fieldOption => Assert.Equal(
+                        fieldOption.Field<Guid>("users[0].UserId"),
+                        fieldOption.Field<Guid>("audits[0].UserId")))
+                    .IsTypeFields<Guid>("changeSets[*].UserId")
+                    .IsTypeField<Guid>("changeSets[*].Id")
+                    .IsTypeField<DateTime>("changeSets[*].ChangeDate")
+                    .IsTypeField<Guid>("changeSets[*].DocumentInstanceId")
+                    .IsTypeField<DateTime>("audits[*].TimeStamp")
+                    .IsTypeField<Guid>("audits[*].Id")
+                );
         }
     }
 }

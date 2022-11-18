@@ -64,14 +64,21 @@ namespace Snapshooter.Core
         {
             try
             {
+                List<FieldOption> fieldOptions = new List<FieldOption>();
+
                 foreach (FieldMatchOperator matchOperator in matchOptions.MatchOperators)
                 {
                     FieldOption fieldOption = matchOperator
                         .ExecuteMatch(actualSnapshot, expectedSnapshot);
 
+                    fieldOptions.Add(fieldOption);
+                }
+
+                foreach (FieldOption fieldOption in fieldOptions)
+                {
                     RemoveFieldFromSnapshot(fieldOption, actualSnapshot);
                     RemoveFieldFromSnapshot(fieldOption, expectedSnapshot);
-                }
+                }                
             }
             catch (SnapshotFieldException)
             {
