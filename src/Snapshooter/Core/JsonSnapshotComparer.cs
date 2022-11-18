@@ -78,7 +78,7 @@ namespace Snapshooter.Core
                 {
                     RemoveFieldFromSnapshot(fieldOption, actualSnapshot);
                     RemoveFieldFromSnapshot(fieldOption, expectedSnapshot);
-                }                
+                }
             }
             catch (SnapshotFieldException)
             {
