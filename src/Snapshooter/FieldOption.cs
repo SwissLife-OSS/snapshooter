@@ -13,8 +13,8 @@ namespace Snapshooter
     /// </summary>
     public class FieldOption
     {
-        private JToken _snapshotData;
-        private List<string> _fieldPaths;
+        private readonly JToken _snapshotData;
+        private readonly List<string> _fieldPaths;
 
         /// <summary>
         /// Constructor of the class <see cref="FieldOption"/>

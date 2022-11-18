@@ -57,7 +57,7 @@ namespace Snapshooter.Core
             _snapshotAssert.Assert(expectedSnapshotToCompare, actualSnapshotToCompare);
         }
 
-        private void ExecuteFieldMatchActions(
+        private static void ExecuteFieldMatchActions(
             JToken actualSnapshot,
             JToken expectedSnapshot,
             MatchOptions matchOptions)
@@ -105,22 +105,27 @@ namespace Snapshooter.Core
                     $"match options are not allowed.");
             }
 
-            foreach (var fieldPath in fieldOption.FieldPaths ?? new string[] { })
+            foreach (var fieldPath in fieldOption.FieldPaths ?? Array.Empty<string>())
             {
                 IEnumerable<JToken> actualTokens = snapshot.SelectTokens(fieldPath, false);
 
-                if (actualTokens is { })
+                RemoveFields(actualTokens);
+            }
+        }
+
+        private static void RemoveFields(IEnumerable<JToken> actualTokens)
+        {
+            if (actualTokens is { })
+            {
+                foreach (JToken actual in actualTokens.ToList())
                 {
-                    foreach (JToken actual in actualTokens.ToList())
+                    if (actual.Parent is JArray array)
                     {
-                        if (actual.Parent is JArray array)
-                        {
-                            array.Remove(actual);
-                        }
-                        else
-                        {
-                            actual.Parent?.Remove();
-                        }
+                        array.Remove(actual);
+                    }
+                    else
+                    {
+                        actual.Parent?.Remove();
                     }
                 }
             }
