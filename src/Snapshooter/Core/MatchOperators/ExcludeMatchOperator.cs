@@ -32,7 +32,11 @@ public class ExcludeMatchOperator : FieldMatchOperator
 
     private JToken FormatField(JToken field)
     {
-        if (field.Parent is { } parent)
+        if (field.Parent is JArray array)
+        {
+            array.Remove(field);
+        }
+        else if (field.Parent is { } parent)
         {
             parent.Remove();
         }
