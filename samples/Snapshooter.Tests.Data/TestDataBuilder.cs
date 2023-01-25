@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 
 namespace Snapshooter.Tests.Data
@@ -88,6 +88,28 @@ namespace Snapshooter.Tests.Data
             return TestChildBuilder.Create()
                 .WithName(null)
                 .WithDateOfBirth(DateTime.ParseExact("12.02.2015", "dd.MM.yyyy", CultureInfo.InvariantCulture));
+        }
+
+        public static TestImageBuilder TestImageMonaLisa()
+        {
+            return TestImageBuilder.Create()
+                .WithId(3450987)
+                .WithOwnerId(Guid.Parse("0680FAEF-6E89-4D52-BAD8-291053C66696"))
+                .WithName("Mona Lisa")
+                .WithCreationDate(DateTime.Parse("2020-11-10T20:23:09.036Z"))
+                .WithPrice(951868484.345m)
+                .WithData(TestFileLoader.LoadBinaryFile("mona-lisa.jpg"));
+        }
+
+        public static TestImageBuilder TestImageMonaLisaFake()
+        {
+            return TestImageBuilder.Create()
+                .WithId(3450987)
+                .WithOwnerId(Guid.Parse("0680FAEF-6E89-4D52-BAD8-291053C66696"))
+                .WithName("Mona Lisa")
+                .WithCreationDate(DateTime.Parse("2020-11-10T20:23:09.036Z"))
+                .WithPrice(951868484.345m)
+                .WithData(TestFileLoader.LoadBinaryFile("mona-lisa-fake.jpg"));
         }
     }
 }

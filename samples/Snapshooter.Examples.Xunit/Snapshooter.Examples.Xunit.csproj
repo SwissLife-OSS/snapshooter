@@ -10,8 +10,11 @@
 
   <ItemGroup>
     <Compile Remove="2_IgnoreTests\**" />
+    <Compile Remove="4_MatchOptionsTests\IgnoreTests\**" />
     <EmbeddedResource Remove="2_IgnoreTests\**" />
+    <EmbeddedResource Remove="4_MatchOptionsTests\IgnoreTests\**" />
     <None Remove="2_IgnoreTests\**" />
+    <None Remove="4_MatchOptionsTests\IgnoreTests\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +36,10 @@
     <Folder Include="1_SimpleTests\__snapshots__\" />
     <Folder Include="1_SimpleTests\__snapshots__\__mismatch__\" />
     <Folder Include="2_NamingTests\__snapshots__\" />
+    <Folder Include="4_MatchOptionsTests\AcceptTests\__snapshots__\" />
+    <Folder Include="4_MatchOptionsTests\ExcludeTests\__snapshots__\__mismatch__\" />
+    <Folder Include="4_MatchOptionsTests\HashTests\__snapshots__\" />
+    <Folder Include="4_MatchOptionsTests\IncludeTests\__snapshots__\" />
   </ItemGroup>
 
 </Project>
