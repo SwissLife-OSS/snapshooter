@@ -1,0 +1,1 @@
+"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/devenv.exe" /diff "C:/temp/test.json" "C:/temp/ddd.txt"
