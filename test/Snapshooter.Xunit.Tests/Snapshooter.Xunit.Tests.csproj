@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
 
   <PropertyGroup>
@@ -29,6 +29,13 @@
     <None Remove="SubfolderTests\__snapshots__\SnapshotSubfolderTests.Match_SubfolderFactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated.snap" />
     <None Remove="SubfolderTests\__snapshots__\SnapshotSubfolderTests.Match_SubfolderFactMatchSingleSnapshot_OneFieldNotEqual.snap" />
     <None Remove="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists.snap" />
+    <None Remove="__testsources__\mona-lisa.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="__testsources__\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
