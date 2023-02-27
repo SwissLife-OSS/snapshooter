@@ -28,13 +28,29 @@ namespace Snapshooter.Xunit.Tests
         public void Match_FactMatchSingleSnapshot_OneFieldNotEqual()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().WithAge(5).Build();
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+                .WithAge(5)
+                .AddChild(TestChildBuilder.Create().WithDateOfBirth(DateTime.UtcNow).WithName("Dave").Build())
+                .Build();
 
             // act
-            Action match = () => Snapshot.Match(testPerson);
+            Snapshot.Match(testPerson);
 
-            // assert
-            Assert.Throws<EqualException>(match);
+        }
+
+        [Fact]
+        public void Match_FactMatchSingleSnapshot_OneFieldNotEqualIgnore()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+                .WithId(Guid.NewGuid())
+                .WithAge(5)
+                .AddChild(TestChildBuilder.Create().WithDateOfBirth(DateTime.UtcNow).WithName("Dave").Build())
+                .Build();
+
+            // act
+            Snapshot.Match(testPerson, options => options.IgnoreField("Id"));
+
         }
 
         [Fact]

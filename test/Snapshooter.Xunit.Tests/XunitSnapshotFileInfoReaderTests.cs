@@ -1,5 +1,6 @@
 using Xunit;
 using System.Threading.Tasks;
+using Xunit.Sdk;
 
 namespace Snapshooter.Xunit.Tests
 {
@@ -83,6 +84,27 @@ namespace Snapshooter.Xunit.Tests
                 snapshotFullName.Filename);
         }
 
-        #pragma warning restore xUnit1026 // Theory methods should use all of their parameters
+        [Fact]
+        public void ReadSnapshotFullName_ResolveSnapddshotFileName_ResolvedSuccessfully()
+        {
+            // arrange
+           
+            var snapshotFullNameResolver = new XunitSnapshotFullNameReader();
+
+            // act
+            SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
+            var d = new XunitException("kdfjkdjfdjf")
+            {
+                HelpLink = "C:/temp"
+            };
+            throw d;
+            // assert
+            Assert.Equal(
+                $"{nameof(XunitSnapshotFullNameReaderTests)}." +
+                $"{nameof(ReadSnapshotFullName_ResolveSnapshotFileName_ResolvedSuccessfully)}",
+                snapshotFullName.Filename);
+        }
+
+#pragma warning restore xUnit1026 // Theory methods should use all of their parameters
     }
 }

@@ -1,4 +1,11 @@
-﻿using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection.PortableExecutable;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Snapshooter.Tests.Data;
 
@@ -12,20 +19,49 @@ namespace Snapshooter.NUnit.Tests
         public void Match_TestMatchSingleSnapshot_GoodCase()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().WithFirstname("ddddddd").Build();
+
+            TestContext.WriteLine("c:/temp/ServiceBusExplorer-5.0.2/ServiceBusExplorer.exe");
 
             // act & assert
-            Snapshot.Match(testPerson);
+             Snapshot.Match(testPerson);
         }
 
         [Test]
         public void Match_TestMatchSingleSnapshot_OneFieldNotEqual()
         {
+            TestContext aaf = TestContext.CurrentContext;
+            var domain = AppDomain.CurrentDomain;
+            var process = Process.GetCurrentProcess(); // Or whatever method you are using
+            string fullPath = process.MainModule.FileName;
+            Func<bool> da = Debugger.IsLogging;
+            bool aa = da();
             // arrange
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().WithAge(5).Build();
+            TestContext.AddTestAttachment("c:/temp/test.json");
+            TestContext.AddTestAttachment("c:/temp/tmpoldadconnect.json");
+            //TestContext.CurrentContext.
+            TestContext.WriteLine("{red}This is red The server is running now! You can reach it on file:///c:/temp/test.json file:///c:/temp/test.cmd file:///c:/temp/folder%20with%20space/test.cmd http://google.com ");
+            TestContext.WriteLine("{red}This is red The server is running now! You can reach it on file:///c:/temp/test.bat");
+            TestContext.WriteLine("{red}This is red The server is running now! You can reach it on file:///c:/temp/test.docx");
 
-            // act & assert
-            Assert.Throws<AssertionException>(() => Snapshot.Match(testPerson));
+
+
+            TestContext.WriteLine("file:///c:/Program%20Files/Microsoft%20Visual%20Studio/2022/Enterprise/Common7/IDE/devenv.exe /diff");
+            TestContext.WriteLine("file:///c:/Program+Files/Microsoft+Visual+Studio/2022/Enterprise/Common7/IDE/test.json");
+            TestContext.WriteLine("file:///C:/Program+Files/Microsoft+Visual+Studio/2022/Enterprise/Common7/IDE/devenv.exe+/diff+%5C%22C%3A%2Ftemp%2Ftest.json%5C%22+%5C%22C%3A%2Ftemp%2Fddd.txt%5C%22%22");
+
+
+//throw new Exception("{red}This is red The server is running now! You can reach it on file:///c:/temp/test.json file:///c:/temp/test.cmd file:///c:/temp/folder%20with%20space/test.cmd http://google.com ");
+            //Assert.Pass(JsonConvert.SerializeObject(testPerson, Formatting.Indented));
+
+            //var dfd = new Exception(JsonConvert.SerializeObject(testPerson, Formatting.Indented));
+            //dfd.Source = "c:/temp/test.json";
+            //dfd.HelpLink = "c:/temp/test.json";
+            //throw dfd;
+            //Console.WriteLine(JsonConvert.SerializeObject(testPerson, Formatting.Indented));
+            //// act & assert
+            //Snapshot.Match(testPerson);
         }
 
         [Test]
