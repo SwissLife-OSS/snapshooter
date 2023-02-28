@@ -55,6 +55,13 @@ namespace Snapshooter.Tests.Data
 
         private static T LoadResourceFile<T>(string fileName, Func<Stream, T> streamConverter)
         {
+            Stream resourceStream = LoadResourceFile(fileName);
+
+            return streamConverter(resourceStream);
+        }
+
+        private static Stream LoadResourceFile(string fileName)
+        {
             Assembly assembly = typeof(TestFileLoader).GetTypeInfo().Assembly;
 
             var resourceNames = assembly.GetManifestResourceNames().ToList();
@@ -79,8 +86,7 @@ namespace Snapshooter.Tests.Data
                     $"for file {resourceName} could be found.");
             }
 
-            return streamConverter(resourceStream);
-
+            return resourceStream;
         }
     }
 }

@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using FluentAssertions;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
+using Snapshooter.Xunit.Tests.Helpers;
 using Xunit;
 using Xunit.Sdk;
 
@@ -897,6 +899,117 @@ namespace Snapshooter.Xunit.Tests
             // assert
             Assert.Contains("6",
                 Assert.Throws<SnapshotFieldException>(match).Message);
+        }
+
+        #endregion
+
+        #region Match Snapshots - Stream Types Tests
+
+        [Fact]
+        public void Match_FactMatchMemoryStreamSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            MemoryStream testMemoryStream =
+                new MemoryStream(Encoding.ASCII.GetBytes("Foo Bar 35"));
+
+            // act & assert
+            Snapshot.Match(testMemoryStream);
+        }
+
+        [Fact]
+        public void Match_FactMatchObjectWithMemoryStreamSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            var testUser = new
+            {
+                FirstName = "Foo",
+                Age = 35,
+                Picture = new MemoryStream(Encoding.ASCII.GetBytes("Foo Bar 35"))
+            };
+
+            // act & assert
+            Snapshot.Match(testUser);
+        }
+
+        [Fact]
+        public void Match_FactMatchStreamSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            Stream testStream =
+                TestFileLoader.LoadFileStream("mona-lisa.jpg");
+
+            // act & assert
+            Snapshot.Match(testStream);
+        }
+
+        [Fact]
+        public void Match_FactMatchObjectWithStreamSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            var testUser = new
+            {
+                FirstName = "Foo",
+                Age = 35,
+                Picture = TestFileLoader.LoadFileStream("mona-lisa.jpg")
+            };
+
+            // act & assert
+            Snapshot.Match(testUser);
+        }
+
+        [Fact]
+        public void Match_FactMatchFileStreamSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            string folderPath = SnapshotDefaultNameResolver
+                .ResolveSnapshotDefaultFullName()
+                .FolderPath;
+
+            Stream testStream = 
+                File.OpenRead($"{folderPath}/__testsources__/mona-lisa.jpg");
+
+            // act & assert
+            Snapshot.Match(testStream);
+        }
+
+        [Fact]
+        public void Match_FactMatchObjectWithFileStreamSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            string folderPath = SnapshotDefaultNameResolver
+                .ResolveSnapshotDefaultFullName()
+                .FolderPath;
+
+            var testUser = new
+            {
+                FirstName = "Foo",
+                Age = 35,
+                Picture = File.OpenRead($"{folderPath}/__testsources__/mona-lisa.jpg")
+            };
+
+            // act & assert
+            Snapshot.Match(testUser);
+        }
+
+        [Fact]
+        public void Match_FactMatchObjectWithAllStreamsSnapshot_SuccessfulMatch()
+        {
+            // arrange
+            string folderPath = SnapshotDefaultNameResolver
+                .ResolveSnapshotDefaultFullName()
+                .FolderPath;
+
+            var testUser = new
+            {
+                FirstName = "Foo",
+                Age = 35,
+                MemoryStreamName = new MemoryStream(Encoding.ASCII.GetBytes("Foo Bar 35")),
+                EmbeddedStreamPicture = TestFileLoader.LoadFileStream("mona-lisa.jpg"),
+                FileStreamPicture = File.OpenRead($"{folderPath}/__testsources__/mona-lisa.jpg")
+            };
+
+            // act & assert
+            Snapshot.Match(testUser);
         }
 
         #endregion
