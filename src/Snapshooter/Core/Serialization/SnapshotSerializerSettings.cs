@@ -41,22 +41,22 @@ public abstract class SnapshotSerializerSettings
 
     private class ChildFirstContractResolver : DefaultContractResolver
     {
-        static ChildFirstContractResolver() { Instance = new ChildFirstContractResolver(); }
-
         public static ChildFirstContractResolver Instance { get; }
+            = new ChildFirstContractResolver();
 
         protected override IList<JsonProperty> CreateProperties(
             Type type, MemberSerialization memberSerialization)
         {
-            IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization);
+            IList<JsonProperty> properties =
+                base.CreateProperties(type, memberSerialization);
 
             if (properties != null)
             {
-                properties = properties.OrderBy(p =>
-                {
-                    IEnumerable<Type> d = ((Type)p.DeclaringType).BaseTypesAndSelf().ToList();
-                    return 1000 - d.Count();
-                }).ToList();
+                properties = properties
+                    .OrderBy(p => 1000 - ((Type)p.DeclaringType)
+                        .BaseTypesAndSelf()
+                        .Count())
+                    .ToList();
             }
 
             return properties;
