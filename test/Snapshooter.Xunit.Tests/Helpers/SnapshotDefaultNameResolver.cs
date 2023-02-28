@@ -1,15 +1,23 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snapshooter.Xunit.Tests.Helpers
 {
     internal static class SnapshotDefaultNameResolver
     {
         public static string ResolveSnapshotDefaultName()
+        {
+            SnapshotFullName snapshotFullName =
+                ResolveSnapshotDefaultFullName();
+
+            string snapshotFileName = Path.Combine(
+                snapshotFullName.FolderPath,
+                FileNames.SnapshotFolderName,
+                snapshotFullName.Filename);
+
+            return snapshotFileName;
+        }
+
+        public static SnapshotFullName ResolveSnapshotDefaultFullName()
         {
             var snapshotFullNameResolver =
                 new SnapshotFullNameResolver(
@@ -18,12 +26,7 @@ namespace Snapshooter.Xunit.Tests.Helpers
             SnapshotFullName snapshotFullName =
                 snapshotFullNameResolver.ResolveSnapshotFullName();
 
-            string snapshotFileName = Path.Combine(
-                snapshotFullName.FolderPath,
-                FileNames.SnapshotFolderName,
-                snapshotFullName.Filename);
-
-            return snapshotFileName;
+            return snapshotFullName;
         }
     }
 }

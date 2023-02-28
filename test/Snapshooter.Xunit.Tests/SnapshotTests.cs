@@ -6,6 +6,7 @@ using System.Text;
 using FluentAssertions;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
+using Snapshooter.Xunit.Tests.Helpers;
 using Xunit;
 using Xunit.Sdk;
 
@@ -960,8 +961,12 @@ namespace Snapshooter.Xunit.Tests
         public void Match_FactMatchFileStreamSnapshot_SuccessfulMatch()
         {
             // arrange
+            string folderPath = SnapshotDefaultNameResolver
+                .ResolveSnapshotDefaultFullName()
+                .FolderPath;
+
             Stream testStream = 
-                File.OpenRead("./__testsources__/mona-lisa.jpg");
+                File.OpenRead($"{folderPath}/__testsources__/mona-lisa.jpg");
 
             // act & assert
             Snapshot.Match(testStream);
@@ -971,11 +976,15 @@ namespace Snapshooter.Xunit.Tests
         public void Match_FactMatchObjectWithFileStreamSnapshot_SuccessfulMatch()
         {
             // arrange
+            string folderPath = SnapshotDefaultNameResolver
+                .ResolveSnapshotDefaultFullName()
+                .FolderPath;
+
             var testUser = new
             {
                 FirstName = "Foo",
                 Age = 35,
-                Picture = File.OpenRead("./__testsources__/mona-lisa.jpg")
+                Picture = File.OpenRead($"{folderPath}/__testsources__/mona-lisa.jpg")
             };
 
             // act & assert
@@ -986,13 +995,17 @@ namespace Snapshooter.Xunit.Tests
         public void Match_FactMatchObjectWithAllStreamsSnapshot_SuccessfulMatch()
         {
             // arrange
+            string folderPath = SnapshotDefaultNameResolver
+                .ResolveSnapshotDefaultFullName()
+                .FolderPath;
+
             var testUser = new
             {
                 FirstName = "Foo",
                 Age = 35,
                 MemoryStreamName = new MemoryStream(Encoding.ASCII.GetBytes("Foo Bar 35")),
                 EmbeddedStreamPicture = TestFileLoader.LoadFileStream("mona-lisa.jpg"),
-                FileStreamPicture = File.OpenRead("./__testsources__/mona-lisa.jpg")
+                FileStreamPicture = File.OpenRead($"{folderPath}/__testsources__/mona-lisa.jpg")
             };
 
             // act & assert
