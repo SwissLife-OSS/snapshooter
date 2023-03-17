@@ -127,6 +127,5 @@ namespace Snapshooter.NUnit
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotFullName, matchOptions);
         }
-
     }
 }
