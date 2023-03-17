@@ -16,7 +16,7 @@ public class MatchOptions<TModel> : MatchOptions
     /// </summary>
     public MatchOptions(MatchOptions predecessor)
     {
-        _matchOperators = predecessor.MatchOperators.ToList();
+        _matchOperators = predecessor.MatchOperatorsInternal;
     }
 
     /// <summary>

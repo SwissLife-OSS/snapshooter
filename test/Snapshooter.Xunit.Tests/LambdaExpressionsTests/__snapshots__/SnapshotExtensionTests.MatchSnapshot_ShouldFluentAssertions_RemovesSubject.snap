@@ -1,6 +1,4 @@
-
-
-{
+﻿{
   "Id": "c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8",
   "Firstname": "AcceptAny<String>",
   "Lastname": "Walton",
@@ -20,7 +18,7 @@
   },
   "Children": [
     {
-      "Name": "James123",
+      "Name": "James",
       "DateOfBirth": "2015-02-12T00:00:00"
     },
     {

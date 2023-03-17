@@ -1,10 +1,10 @@
 ﻿{
   "Id": "c78c698f-9ee5-4b4b-9a0e-ef729b1f8ec8",
-  "Firstname": "Mark",
+  "Firstname": "AcceptAny<String>",
   "Lastname": "Walton",
   "CreationDate": "2018-06-06T00:00:00",
-  "DateOfBirth": "2000-06-25T00:00:00",
-  "Age": "AcceptAny<Integer?>",
+  "DateOfBirth": "AcceptAny<DateTime?>",
+  "Age": 30,
   "Size": 182.5214,
   "Address": {
     "Street": "Rohrstrasse",
