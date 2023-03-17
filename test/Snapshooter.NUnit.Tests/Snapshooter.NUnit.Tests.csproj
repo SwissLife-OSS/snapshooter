@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Snapshooter.NUnit\Snapshooter.NUnit.csproj" />
+    <ProjectReference Include="..\..\src\Snapshooter.NUnit.TypedFluentAssertions\Snapshooter.NUnit.TypedFluentAssertions.csproj" />
     <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
   </ItemGroup>
 
