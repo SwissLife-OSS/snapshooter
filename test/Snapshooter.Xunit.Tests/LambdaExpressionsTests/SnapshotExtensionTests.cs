@@ -11,7 +11,7 @@ namespace Snapshooter.Xunit.Tests.LambdaExpressionsTests
         public void MatchSnapshot_ShouldFluentAssertions_RemovesSubject()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+            TestPerson testPerson = CreateTestPersonWithRandomData();
 
             // act & assert
             testPerson.Should().MatchSnapshot(o => o
@@ -24,7 +24,7 @@ namespace Snapshooter.Xunit.Tests.LambdaExpressionsTests
         public void MatchSnapshot_SnapshotMatchAssertions_RemovesSubject()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+            TestPerson testPerson = CreateTestPersonWithRandomData();
 
             // act & assert
             Snapshot.Match(testPerson, options => options
@@ -34,12 +34,27 @@ namespace Snapshooter.Xunit.Tests.LambdaExpressionsTests
                 );
         }
 
+        private static TestPerson CreateTestPersonWithRandomData()
+        {
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+                .WithFirstname(new Random().Next().ToString())
+                .WithDateOfBirth(DateTime.Now)
+                .Build();
+
+            foreach (var testPersonChild in testPerson.Children)
+            {
+                testPersonChild.Name = new Random().Next().ToString();
+            }
+
+            return testPerson;
+        }
+
         [Fact]
         public void MatchSnapshot_FieldWithRandomInput_IgnoreField()
         {
             // arrange
-            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
-            testPerson.Age = new Random().Next(0, 100);
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton()
+                .WithAge(new Random().Next(0, 100)).Build();
 
             // act & assert
             Snapshot.Match(testPerson, options => options
