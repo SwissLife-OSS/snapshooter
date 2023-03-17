@@ -153,7 +153,7 @@ namespace Snapshooter.Xunit.Tests
         }
 
         [Fact]
-        public void Match_WithLambdaExpression_Works()
+        public void Match_WithLambdaExpressionAndProvidedSnapshotName_Works()
         {
             // arrange
             string snapshotName = nameof(SnapshotTests) + "." +
