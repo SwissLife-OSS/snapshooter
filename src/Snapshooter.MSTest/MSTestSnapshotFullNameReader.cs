@@ -132,7 +132,7 @@ namespace Snapshooter.MSTest
 
             return $"{method.DeclaringType.Name}." +
                 method.Name +
-                $"_{string.Join("_", currentRow.Data.Select(d => d.ToString()))}";
+                $"_{string.Join("_", currentRow.Data.Select(d => d is null ? "null" : d.ToString()))}";
         }
     }
 }
