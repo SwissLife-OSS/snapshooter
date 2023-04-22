@@ -1,4 +1,6 @@
-﻿namespace Snapshooter
+using System.IO;
+
+namespace Snapshooter
 {
     /// <summary>
     /// The snapshot full name instance contains the file name and the path
@@ -14,6 +16,13 @@
         /// <param name="folderPath">The folder path.</param>
         public SnapshotFullName(string fileName, string folderPath)
         {
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+
+            foreach (char invalidChar in invalidChars)
+            {
+                fileName = fileName.Replace(invalidChar, '_');
+            }
+
             Filename = fileName;
             FolderPath = folderPath;
         }
