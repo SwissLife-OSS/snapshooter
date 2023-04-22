@@ -116,6 +116,14 @@ namespace Snapshooter.MSTest
                 return method.ToName();
             }
 
+            DataTestMethodAttribute dataTestMethodAttribute =
+                method.GetCustomAttribute<DataTestMethodAttribute>();
+
+            if (!string.IsNullOrWhiteSpace(dataTestMethodAttribute.DisplayName))
+            {
+                return $"{method.DeclaringType.Name}.{dataTestMethodAttribute.DisplayName}";
+            }
+
             if (!dataTestMethodRowIndex.ContainsKey(method.Name))
             {
                 dataTestMethodRowIndex[method.Name] = 0;
