@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -138,6 +139,27 @@ namespace Snapshooter.MSTest.Tests
                 $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
                 $"{nameof(ReadSnapshotFullName_ResolveTheorySnapshotNameAsync_NameResolvedWithNullParameters)}" +
                 $"_{param1}_{(param2 is null ? "null" : param2)}");
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { })]
+        [DataRow(new string[] { "a" })]
+        public async Task ReadSnapshotFullName_ResolveTheorySnapshotNameAsync_NameResolvedCollectionParameters(
+           object param)
+        {
+            // arrange
+            var snapshotFullNameResolver = new MSTestSnapshotFullNameReader();
+            await Task.Delay(1);
+
+            // act
+            SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
+
+            // assert
+            await Task.Delay(1);
+            Assert.AreEqual(snapshotFullName.Filename,
+                $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
+                $"{nameof(ReadSnapshotFullName_ResolveTheorySnapshotNameAsync_NameResolvedCollectionParameters)}" +
+                $"_[{string.Join("_", (IEnumerable<object>)param)}]");
         }
 
         private static object[] TestCases => new object[]
