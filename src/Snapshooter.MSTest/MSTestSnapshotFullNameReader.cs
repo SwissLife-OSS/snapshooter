@@ -116,14 +116,6 @@ namespace Snapshooter.MSTest
                 return method.ToName();
             }
 
-            DataTestMethodAttribute dataTestMethodAttribute =
-                method.GetCustomAttribute<DataTestMethodAttribute>();
-
-            if (!string.IsNullOrWhiteSpace(dataTestMethodAttribute.DisplayName))
-            {
-                return $"{method.DeclaringType.Name}.{dataTestMethodAttribute.DisplayName}";
-            }
-
             if (!dataTestMethodRowIndex.ContainsKey(method.Name))
             {
                 dataTestMethodRowIndex[method.Name] = 0;
@@ -138,6 +130,11 @@ namespace Snapshooter.MSTest
 
             DataRowAttribute currentRow =
                 dataRowAttributes.ElementAt(dataTestMethodRowIndex[method.Name]);
+
+            if (!string.IsNullOrEmpty(currentRow.DisplayName))
+            {
+                return $"{method.DeclaringType.Name}.{currentRow.DisplayName}";
+            }
 
             return $"{method.DeclaringType.Name}." +
                 method.Name +
