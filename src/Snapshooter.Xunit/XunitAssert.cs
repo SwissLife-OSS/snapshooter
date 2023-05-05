@@ -1,4 +1,5 @@
-﻿using Snapshooter.Core;
+using Snapshooter.Core;
+using Xunit.Sdk;
 using x = Xunit;
 
 namespace Snapshooter.Xunit
@@ -16,7 +17,15 @@ namespace Snapshooter.Xunit
         /// <param name="actualSnapshot">The actual snapshot.</param>
         public void Assert(string expectedSnapshot, string actualSnapshot)
         {
-            x.Assert.Equal(expectedSnapshot, actualSnapshot);
+            try
+            {
+                x.Assert.Equal(expectedSnapshot, actualSnapshot);
+            }
+            catch (EqualException ex)
+            {
+                string displayableDiff = DiffGenerator.GenerateDiff(expectedSnapshot, actualSnapshot);
+                throw new EqualException($"Assert.Equal failed. {displayableDiff}", ex);
+            }
         }
     }
 }
