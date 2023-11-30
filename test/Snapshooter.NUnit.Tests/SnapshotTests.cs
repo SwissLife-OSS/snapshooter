@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using NUnit.Framework;
 using Snapshooter.Tests.Data;
 
@@ -61,7 +61,7 @@ namespace Snapshooter.NUnit.Tests
             Snapshot.Match(testPerson);
 
             // assert
-            Assert.True(File.Exists(snapshotFileName));
+            Assert.That(File.Exists(snapshotFileName));
         }
 
         [TestCase(36, 189.45)]
@@ -129,7 +129,7 @@ namespace Snapshooter.NUnit.Tests
             Snapshot.Match(testPerson);
 
             // assert
-            Assert.True(File.Exists(snapshotFileName));
+            Assert.That(File.Exists(snapshotFileName));
         }
 
         #endregion
