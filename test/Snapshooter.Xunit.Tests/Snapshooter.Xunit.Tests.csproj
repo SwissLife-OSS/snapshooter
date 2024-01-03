@@ -11,7 +11,7 @@
     <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
     <ProjectReference Include="..\..\src\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Compile Remove="AcceptMatchOption\__snapshots__\**" />
     <Compile Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
