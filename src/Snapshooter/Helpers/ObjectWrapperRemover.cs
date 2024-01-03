@@ -19,7 +19,7 @@ namespace Snapshooter
         {
             Type resultType = objectToRemoveWrappers.GetType();
 
-            if (resultType.Namespace == null || !resultType.Namespace.StartsWith("FluentAssertions."))
+            if (resultType.Namespace == null || !resultType.Namespace.StartsWith("FluentAssertions"))
             {
                 return objectToRemoveWrappers;
             }

@@ -35,6 +35,11 @@ namespace Snapshooter
             get { return _matchOperators.AsReadOnly(); }
         }
 
+        internal List<FieldMatchOperator> MatchOperatorsInternal
+        {
+            get { return _matchOperators; }
+        }
+
         /// <summary>
         /// The <see cref="AcceptField{T}(string)"/> match option accepts a snapshot field, if the
         /// type of the field is equal to the given Type. The value of the field will NOT be
@@ -508,7 +513,7 @@ namespace Snapshooter
             return this;
         }
 
-        private MatchOptions Accept<T>(
+        protected MatchOptions Accept<T>(
             string fieldsPath,
             bool keepOriginalValue = false)
         {

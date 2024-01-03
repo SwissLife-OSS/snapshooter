@@ -97,5 +97,18 @@ namespace Snapshooter.NUnit.Tests
             // act & assert
             Assert.Throws<ArgumentNullException>(() => testPerson.MatchSnapshot());
         }
+
+        [Test]
+        public void MatchSnapshot_ShouldFluentAssertionsWithLambda_RemovesSubject()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
+
+            // act & assert
+            testPerson.Should().MatchSnapshot(o => o
+                .AcceptField(m => m.Firstname)
+                .AcceptField(m => m.DateOfBirth)
+                .IgnoreFields(m => m.Children['*'].Name));
+        }
     }
 }

@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
     <ProjectReference Include="..\..\src\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
+    <ProjectReference Include="..\..\src\Snapshooter.Xunit.TypedFluentAssertions\Snapshooter.Xunit.TypedFluentAssertions.csproj" />
   </ItemGroup>
   
   <ItemGroup>
@@ -41,6 +42,7 @@
     <Folder Include="MatchOptions\HashField\__snapshots__\__mismatch__\" />
     <Folder Include="MatchOptions\IncludeField\__snapshots__\" />
     <Folder Include="MatchOptions\IncludeField\__snapshots__\__mismatch__\" />
+    <Folder Include="LambdaExpressionsTests\__snapshots__\" />
   </ItemGroup>
 
 </Project>

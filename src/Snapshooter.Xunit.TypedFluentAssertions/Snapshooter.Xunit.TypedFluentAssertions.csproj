@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
+
+  <PropertyGroup>
+    <AssemblyName>Snapshooter.Xunit.TypedFluentAssertions</AssemblyName>
+    <RootNamespace>Snapshooter.Xunit.TypedFluentAssertions</RootNamespace>
+    <PackageId>Snapshooter.Xunit.TypedFluentAssertions</PackageId>
+    <Description>
+      TypedFluentAssertions is an extention to FluentAssertions and Snapshooter.Xunit. 
+      It allows to configure snapshots in a type save and fluent way.      
+    </Description>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snapshooter.Xunit\Snapshooter.Xunit.csproj" />
+  </ItemGroup>
+
+</Project>
