@@ -1,4 +1,3 @@
-﻿using System.Diagnostics;
 using NUnit.Framework;
 using Snapshooter.Core;
 using NAssert = NUnit.Framework.Assert;
@@ -18,7 +17,15 @@ namespace Snapshooter.NUnit
         /// <param name="actualSnapshot">The actual snapshot.</param>
         public void Assert(string expectedSnapshot, string actualSnapshot)
         {
-            NAssert.That(actualSnapshot, Is.EqualTo(expectedSnapshot));
+            try
+            {
+                NAssert.That(actualSnapshot, Is.EqualTo(expectedSnapshot));
+            } catch (AssertionException ex)
+            {
+                string displayableDiff = DiffGenerator.GenerateDiff(expectedSnapshot, actualSnapshot);
+
+                throw new AssertionException($"Assert.That failed. {displayableDiff}", ex);
+            }
         }
     }
 }
