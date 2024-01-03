@@ -1,0 +1,29 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: ['master']
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            6
+            7
+      - name: Build, Test and Sonar
+        uses: swisslife-oss/actions/pull-request@main
+        with:
+          sonar_token: ${{ secrets.SONAR_TOKEN }}
+          sonar_project_key: 'SwissLife-OSS_Snapshooter'
+          sonar_project_name: 'snapshooter'
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_source_branch: ${{ github.head_ref }}
+          pr_target_branch: ${{ github.base_ref }}
+          github_repository: ${{ github.repository }}
+          sonar_exclusions: ${{ vars.SONAR_EXCLUSIONS }}
