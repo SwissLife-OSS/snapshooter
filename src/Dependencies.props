@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup Label="Framework Versions">
-    <ResourceProjectTargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</ResourceProjectTargetFrameworks>
+    <ResourceProjectTargetFrameworks>netstandard2.0;net6.0;net7.0;net8.0</ResourceProjectTargetFrameworks>
   </PropertyGroup>
 </Project>
