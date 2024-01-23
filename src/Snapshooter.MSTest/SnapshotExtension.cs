@@ -14,6 +14,7 @@ namespace Snapshooter.MSTest
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void MatchSnapshot(
             this object currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
@@ -41,6 +42,7 @@ namespace Snapshooter.MSTest
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void MatchSnapshot(
             this object currentResult,
             SnapshotNameExtension snapshotNameExtension,
@@ -64,6 +66,7 @@ namespace Snapshooter.MSTest
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void MatchSnapshot(
             this object currentResult,
             string snapshotName,
@@ -96,6 +99,7 @@ namespace Snapshooter.MSTest
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison.
         /// </param>
+        [AssertionMethod]
         public static void MatchSnapshot(
             this object currentResult,
             string snapshotName,
@@ -119,6 +123,7 @@ namespace Snapshooter.MSTest
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison.
         /// </param>
+        [AssertionMethod]
         public static void MatchSnapshot(
             this object currentResult,
             SnapshotFullName snapshotFullName,
