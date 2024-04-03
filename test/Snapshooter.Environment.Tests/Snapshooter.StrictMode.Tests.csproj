@@ -2,8 +2,8 @@
   <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
   
   <PropertyGroup>
-    <AssemblyName>Snapshooter.Environment.Tests</AssemblyName>
-    <RootNamespace>Snapshooter.Environment.Tests</RootNamespace>
+    <AssemblyName>Snapshooter.StrictMode.Tests</AssemblyName>
+    <RootNamespace>Snapshooter.StrictMode.Tests</RootNamespace>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   

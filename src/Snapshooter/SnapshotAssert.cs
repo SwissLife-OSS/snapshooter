@@ -69,37 +69,36 @@ public class SnapshotAssert : ISnapshotAssert
         string actualSnapshotSerialized = _snapshotFormatter
             .FormatSnapshot(objectSnapshotSerialized, matchOptions);
 
-        bool originalSnapshotExists = _snapshotFileHandler
-            .TryReadSnapshot(snapshotFullName, out string? originalSnapshotSerialized);
+        bool expectedSnapshotExists = _snapshotFileHandler
+            .TryReadSnapshot(snapshotFullName, out string? expectedSnapshotSerialized);
                 
-        originalSnapshotSerialized ??= actualSnapshotSerialized;
+        expectedSnapshotSerialized ??= actualSnapshotSerialized;
         
         ExecuteSnapshotComparison(
-            originalSnapshotExists,
+            expectedSnapshotExists,
+            expectedSnapshotSerialized,
             actualSnapshotSerialized,
-            originalSnapshotSerialized,
             snapshotFullName,
             matchOptions);
     }        
 
     private void ExecuteSnapshotComparison(
-        bool originalSnapshotExists,
+        bool expectedSnapshotExists,
+        string expectedSnapshotSerialized,
         string actualSnapshotSerialized,
-        string originalSnapshotSerialized,
         SnapshotFullName snapshotFullName,
         MatchOptions matchOptions)
     {
         try
         {
-            EnvironmentValidator.CheckStrictMode(
-                originalSnapshotExists);
-            
+            StrictModeValidator.CheckStrictMode(expectedSnapshotExists, matchOptions);
+
             _snapshotComparer.CompareSnapshots(
-                originalSnapshotSerialized,
+                expectedSnapshotSerialized,
                 actualSnapshotSerialized,
                 matchOptions);
 
-            if (!originalSnapshotExists)
+            if (!expectedSnapshotExists)
             {
                 _snapshotFileHandler.SaveNewSnapshot(
                     snapshotFullName,

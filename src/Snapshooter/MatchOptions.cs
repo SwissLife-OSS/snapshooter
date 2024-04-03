@@ -19,6 +19,11 @@ namespace Snapshooter
         protected List<FieldMatchOperator> _matchOperators;
 
         /// <summary>
+        /// Flag if strict mode should be used.
+        /// </summary>
+        protected bool _useStrictMode;
+
+        /// <summary>
         /// Constructor of the <see cref="MatchOptions"/> class to create
         /// a new instance.
         /// </summary>
@@ -498,6 +503,28 @@ namespace Snapshooter
             includeMatchOperator.AddFieldPath(fieldPath);
 
             return this;
+        }
+
+        /// <summary>
+        /// The <see cref="SetStrictMode"/> method allows you to turn Strict Mode on or off.
+        /// If enabled the comparison will throw a <see cref="SnapshotNotFoundException"/> when no snapshot was found.
+        /// </summary>
+        /// <param name="useStrictMode">The flag that turns Strict Mode on or off.</param>
+        /// <returns></returns>
+        public MatchOptions SetStrictMode(bool useStrictMode = false)
+        {
+            _useStrictMode = useStrictMode;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Flag if Strict Mode is on or off.
+        /// If Strict Mode is on the comparison will throw a <see cref="SnapshotNotFoundException"/> when no snapshot was found.
+        /// </summary>
+        public bool UseStrictMode
+        {
+            get { return _useStrictMode; }
         }
 
         private MatchOptions AddIgnoreMatchOperator<T>(string fieldsPath)
