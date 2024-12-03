@@ -768,6 +768,37 @@ namespace Snapshooter.Xunit.Tests
         }
 
         #endregion
+        
+        #region Match Snapshots - Exclude Fields Tests
+
+        [Fact]
+        public void Match_ExcludeScalarField_SuccessfulExcluded()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonSandraSchneider()
+                .WithSize(1.5m)
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.ExcludeField("Size"));
+        }
+        
+        [Fact]
+        public void Match_ExcludeAllDateOfBirthFields_SuccessfulExcluded()
+        {
+            // arrange
+            TestPerson testPerson = TestDataBuilder
+                .TestPersonMarkWalton()
+                .Build();
+
+            // act & assert
+            Snapshot.Match(
+                testPerson, matchOptions => matchOptions.ExcludeAllFields("DateOfBirth"));
+        }
+        
+        #endregion
 
         #region Match Snapshots - Scalar Types Tests
 
