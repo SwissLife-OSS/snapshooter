@@ -12,34 +12,35 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Use .NET SDK from global.json
-        uses: actions/setup-dotnet@v3
-      - name: Build, Test and Push
-        uses: swisslife-oss/actions/release-packages@main
-        with:
-          tag: ${{ github.ref_name }}
-          nuget_api_key: ${{ secrets.NUGET_API_KEY }}
-          enable_push: 'yes'
 
-  sonar:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup .NET
+      - name: Use .NET SDK from global.json
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: |
-            6
-            7
             8
-      - name: Restore tools
-        run: dotnet tool restore
-      - name: Build, Test and Sonar
-        uses: swisslife-oss/actions/release-sonar@main
-        with:
-          tag: ${{ github.ref_name }}
-          sonar_token: ${{ secrets.SONAR_TOKEN }}
-          sonar_project_key: 'SwissLife-OSS_Snapshooter'
-          sonar_project_name: 'snapshooter'
-          sonar_exclusions: ${{ vars.SONAR_EXCLUSIONS }}
+            9
+
+      - name: Extract package version
+        run: echo "PACKAGE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Extract assembly version
+        run: echo "ASSEMBLY_VERSION=$(echo ${{ github.ref_name }} | grep -o '^[0-9]*\.[0-9]*\.[0-9]*').0" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Build projects
+        run: |
+          for sln in $(find . -name '*.sln'); do
+            echo -e "\n\033[0;34mBuilding $sln \033[0m"
+            dotnet build "$sln" -c Release /p:Version=${{ env.PACKAGE_VERSION }} /p:AssemblyVersion=${{ env.ASSEMBLY_VERSION }} /p:FileVersion=${{ env.ASSEMBLY_VERSION }}
+          done
+        shell: bash
+
+      - name: Pack
+        run: find . -name '*.sln' | parallel --jobs 0 'dotnet pack {} /p:PackageVersion=${{env.PACKAGE_VERSION}} -c Release -o ./out --no-build --include-symbols --include-source --verbosity Minimal'
+        shell: bash
+
+      - name: Push
+        run: |
+          find . -name '*.nupkg' | grep -v '.sources.nupkg' | parallel --jobs 0 'dotnet nuget push {} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json'
+        shell: bash
