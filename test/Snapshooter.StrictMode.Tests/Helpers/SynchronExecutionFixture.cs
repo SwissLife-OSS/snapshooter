@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-
-namespace Snapshooter.Environment.Tests.Helpers
+namespace Snapshooter.StrictMode.Tests.Helpers
 {
     public static class CollectionFixtureNames
     {

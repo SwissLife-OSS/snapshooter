@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmark", "benchmark", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F9DFF684-4ACF-45E4-B23E-E8928DE0C9FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snapshooter.Environment.Tests", "..\test\Snapshooter.Environment.Tests\Snapshooter.Environment.Tests.csproj", "{C5859230-A6A7-45E7-993C-79C23527CB73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snapshooter.StrictMode.Tests", "..\test\Snapshooter.StrictMode.Tests\Snapshooter.StrictMode.Tests.csproj", "{C5859230-A6A7-45E7-993C-79C23527CB73}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snapshooter.Json.Tests", "..\test\Snapshooter.Json.Tests\Snapshooter.Json.Tests.csproj", "{C2727126-A53A-4B13-AB09-559260F294D7}"
 EndProject

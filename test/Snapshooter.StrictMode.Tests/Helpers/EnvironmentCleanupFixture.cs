@@ -1,7 +1,6 @@
 using System;
-using Newtonsoft.Json.Linq;
 
-namespace Snapshooter.Environment.Tests.Helpers
+namespace Snapshooter.StrictMode.Tests.Helpers
 {
     public class EnvironmentCleanupFixture : IDisposable
     {
