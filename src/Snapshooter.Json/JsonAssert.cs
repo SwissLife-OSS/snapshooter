@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
 
@@ -15,6 +15,7 @@ namespace Snapshooter.Json
         /// </summary>
         /// <param name="expectedSnapshot">The expected snapshot.</param>
         /// <param name="actualSnapshot">The actual snapshot.</param>
+        [AssertionMethod]
         public virtual void Assert(string expectedSnapshot, string actualSnapshot)
         {
             int snapshotCompare = string.Compare(
