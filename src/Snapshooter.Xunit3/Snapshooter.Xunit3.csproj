@@ -2,6 +2,7 @@
   <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
 
   <PropertyGroup>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>Snapshooter.Xunit3</AssemblyName>
     <RootNamespace>Snapshooter.Xunit3</RootNamespace>
     <PackageId>Snapshooter.Xunit3</PackageId>
