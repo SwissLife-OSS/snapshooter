@@ -1,0 +1,9 @@
+﻿{
+  "Customer": [
+    {
+      "Id": 1,
+      "Name": "Bla ",
+      "EmailAddress": "blabla@blabla.com"
+    }
+  ]
+}
