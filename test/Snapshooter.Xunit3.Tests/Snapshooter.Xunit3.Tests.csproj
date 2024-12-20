@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
+
+  <PropertyGroup>
+    <AssemblyName>Snapshooter.Xunit3.Tests</AssemblyName>
+    <RootNamespace>Snapshooter.Xunit3.Tests</RootNamespace>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
+    <ProjectReference Include="..\..\src\Snapshooter.Xunit3\Snapshooter.Xunit3.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="AcceptMatchOption\__snapshots__\**" />
+    <Compile Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
+    <Compile Remove="__snapshots__\__mismatch__\**" />
+    <EmbeddedResource Remove="AcceptMatchOption\__snapshots__\**" />
+    <EmbeddedResource Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
+    <EmbeddedResource Remove="__snapshots__\__mismatch__\**" />
+    <None Remove="AcceptMatchOption\__snapshots__\**" />
+    <None Remove="SubfolderTests\__snapshots__\__mismatch__\**" />
+    <None Remove="__snapshots__\__mismatch__\**" />
+    <None Remove="AcceptMatchOption\AcceptDecimal\__snapshots__\__mismatch__\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="SubfolderTests\__snapshots__\SnapshotSubfolderTests.Match_SubfolderFactMatchNewSingleSnapshot_ExpectedSnapshotHasBeenCreated.snap" />
+    <None Remove="SubfolderTests\__snapshots__\SnapshotSubfolderTests.Match_SubfolderFactMatchSingleSnapshot_OneFieldNotEqual.snap" />
+    <None Remove="__snapshots__\SnapshotTests.Match_TheoryMatchSingleSnapshot_ExpectedSnapshotNotExists.snap" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AcceptMatchOption\AcceptDateTime\__snapshots__\__mismatch__\" />
+    <Folder Include="AcceptMatchOption\AcceptDouble\__snapshots__\__mismatch__\" />
+    <Folder Include="AcceptMatchOption\AcceptString\__snapshots__\__mismatch__\" />
+    <Folder Include="Asynchronous\__snapshots__\" />
+    <Folder Include="Asynchronous\__snapshots__\__mismatch__\" />
+    <Folder Include="MatchOptions\ExcludeField\__snapshots__\__mismatch__\" />
+    <Folder Include="MatchOptions\HashField\__snapshots__\__mismatch__\" />
+    <Folder Include="MatchOptions\IncludeField\__snapshots__\" />
+    <Folder Include="MatchOptions\IncludeField\__snapshots__\__mismatch__\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>
