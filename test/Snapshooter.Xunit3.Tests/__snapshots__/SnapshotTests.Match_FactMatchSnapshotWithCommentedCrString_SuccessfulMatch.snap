@@ -1,0 +1,11 @@
+﻿query fetch {
+  customer(id: "Q3VzdG9tZXIteDE= \r ") {
+    name
+    consultant {
+      name\r
+    __typename
+    }
+    id
+    __typename
+  }
+}
