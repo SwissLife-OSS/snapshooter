@@ -21,7 +21,7 @@ namespace Snapshooter.Xunit3.Tests.Helpers
         {
             var snapshotFullNameResolver =
                 new SnapshotFullNameResolver(
-                    new XunitSnapshotFullNameReader());
+                    new Xunit3SnapshotFullNameReader());
 
             SnapshotFullName snapshotFullName =
                 snapshotFullNameResolver.ResolveSnapshotFullName();

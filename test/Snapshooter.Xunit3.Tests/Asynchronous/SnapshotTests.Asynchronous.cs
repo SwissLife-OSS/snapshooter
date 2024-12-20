@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Snapshooter.Xunit3.Tests
 {

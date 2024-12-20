@@ -213,7 +213,7 @@ namespace Snapshooter.Xunit3.Tests.MatchOptions.AssertField
         {
             // arrange
             var snapshotFullNameResolver = new SnapshotFullNameResolver(
-                new XunitSnapshotFullNameReader());
+                new Xunit3SnapshotFullNameReader());
 
             SnapshotFullName snapshotFullName =
                 snapshotFullNameResolver.ResolveSnapshotFullName();

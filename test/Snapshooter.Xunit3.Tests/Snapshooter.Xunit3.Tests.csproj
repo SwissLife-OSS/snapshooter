@@ -43,4 +43,8 @@
     <Folder Include="MatchOptions\IncludeField\__snapshots__\__mismatch__\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

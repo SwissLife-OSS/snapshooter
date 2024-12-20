@@ -305,7 +305,7 @@ public class IsTypeFieldTests
     {
         // arrange
         var snapshotFullNameResolver = new SnapshotFullNameResolver(
-            new XunitSnapshotFullNameReader());
+            new Xunit3SnapshotFullNameReader());
 
         SnapshotFullName snapshotFullName =
             snapshotFullNameResolver.ResolveSnapshotFullName();

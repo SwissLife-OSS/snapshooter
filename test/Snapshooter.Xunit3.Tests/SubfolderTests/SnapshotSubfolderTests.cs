@@ -2,7 +2,7 @@ using Snapshooter.Tests.Data;
 using System;
 using System.IO;
 using Xunit;
-using Xunit3.Sdk;
+using Xunit.Sdk;
 
 namespace Snapshooter.Xunit3.Tests.Subfolder;
 

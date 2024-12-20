@@ -1,11 +1,10 @@
 using System;
 using System.IO;
-using System.Net;
 using FluentAssertions;
 using Snapshooter.Tests.Data;
 using Snapshooter.Xunit3.Tests.Helpers;
 using Xunit;
-using Xunit3.Sdk;
+using Xunit.Sdk;
 
 namespace Snapshooter.Xunit3.Tests.MatchOptions.ExcludeField;
 

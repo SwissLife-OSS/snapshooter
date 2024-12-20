@@ -9,7 +9,7 @@ public class XunitSnapshotFullNameReaderTests
     public void ReadSnapshotFullName_ResolveSnapshotFileName_ResolvedSuccessfully()
     {
         // arrange
-        var snapshotFullNameResolver = new XunitSnapshotFullNameReader();
+        var snapshotFullNameResolver = new Xunit3SnapshotFullNameReader();
 
         // act
         SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
@@ -25,7 +25,7 @@ public class XunitSnapshotFullNameReaderTests
     public async Task ReadSnapshotFullName_ResolveFactSnapshotNameAsync_ResolvedSuccessfully()
     {
         // arrange
-        var snapshotFullNameResolver = new XunitSnapshotFullNameReader();
+        var snapshotFullNameResolver = new Xunit3SnapshotFullNameReader();
         await Task.Delay(1);
 
         // act
@@ -49,7 +49,7 @@ public class XunitSnapshotFullNameReaderTests
         string param1, int param2)
     {
         // arrange
-        var snapshotFullNameResolver = new XunitSnapshotFullNameReader();
+        var snapshotFullNameResolver = new Xunit3SnapshotFullNameReader();
 
         // act
         SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
@@ -69,7 +69,7 @@ public class XunitSnapshotFullNameReaderTests
        string param1, int param2)
     {
         // arrange
-        var snapshotFullNameResolver = new XunitSnapshotFullNameReader();
+        var snapshotFullNameResolver = new Xunit3SnapshotFullNameReader();
         await Task.Delay(1);
 
         // act

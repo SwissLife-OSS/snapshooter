@@ -8,7 +8,7 @@ using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
 using Snapshooter.Xunit3.Tests.Helpers;
 using Xunit;
-using Xunit3.Sdk;
+using Xunit.Sdk;
 
 namespace Snapshooter.Xunit3.Tests;
 
@@ -57,7 +57,7 @@ public partial class SnapshotTests
     {
         // arrange
         var snapshotFullNameResolver = new SnapshotFullNameResolver(
-            new XunitSnapshotFullNameReader());
+            new Xunit3SnapshotFullNameReader());
 
         SnapshotFullName snapshotFullName =
             snapshotFullNameResolver.ResolveSnapshotFullName();
@@ -130,7 +130,7 @@ public partial class SnapshotTests
     {
         // arrange
         var snapshotFullNameResolver = new SnapshotFullNameResolver(
-            new XunitSnapshotFullNameReader());
+            new Xunit3SnapshotFullNameReader());
 
         SnapshotFullName snapshotFullName =
             snapshotFullNameResolver.ResolveSnapshotFullName();
@@ -453,7 +453,7 @@ public partial class SnapshotTests
     {
         // arrange
         var snapshotFullNameResolver = new SnapshotFullNameResolver(
-            new XunitSnapshotFullNameReader());
+            new Xunit3SnapshotFullNameReader());
 
         SnapshotFullName snapshotFullName =
             snapshotFullNameResolver.ResolveSnapshotFullName();
@@ -484,7 +484,7 @@ public partial class SnapshotTests
     {
         // arrange
         var snapshotFullNameResolver = new SnapshotFullNameResolver(
-            new XunitSnapshotFullNameReader());
+            new Xunit3SnapshotFullNameReader());
 
         SnapshotFullName snapshotFullName =
             snapshotFullNameResolver.ResolveSnapshotFullName();

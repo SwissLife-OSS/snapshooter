@@ -1,6 +1,6 @@
 using Xunit;
 using System;
-using Xunit3.Sdk;
+using Xunit.Sdk;
 
 namespace Snapshooter.Xunit3.Tests;
 
@@ -10,7 +10,7 @@ public class XunitAssertTests
     public void Assert_AssertEqualText_AssertSuccessful()
     {
         // arrange
-        var snapshotAssert = new XunitAssert();
+        var snapshotAssert = new Xunit3Assert();
 
         // act & assert
         snapshotAssert.Assert("{Same}", "{Same}");         
@@ -20,7 +20,7 @@ public class XunitAssertTests
     public void Assert_AssertUnequalText_ThrowsEqualException()
     {
         // arrange
-        var snapshotAssert = new XunitAssert();
+        var snapshotAssert = new Xunit3Assert();
 
         // act 
         Action action = () => snapshotAssert.Assert("{Same}", "{Sme}");
