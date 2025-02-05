@@ -18,8 +18,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="TUnit.Assertions" Version="0.3.20" />
-    <PackageReference Include="TUnit.Core" Version="0.3.20" />
+    <PackageReference Include="TUnit.Assertions" Version="0.10.6" />
+    <PackageReference Include="TUnit.Core" Version="0.10.6" />
   </ItemGroup>
 
 </Project>

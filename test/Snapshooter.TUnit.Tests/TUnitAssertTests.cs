@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using TUnit.Assertions.AssertConditions.Throws;
 using TUnit.Assertions.Exceptions;
 
 namespace Snapshooter.TUnit.Tests
