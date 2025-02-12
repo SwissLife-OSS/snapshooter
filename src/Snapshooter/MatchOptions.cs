@@ -469,10 +469,48 @@ namespace Snapshooter
         /// <param name="fieldPath">The json path to the field(s) to exclude.</param>
         public MatchOptions ExcludeField(string fieldPath)
         {
-            _matchOperators.Add(
-                new ExcludeMatchOperator(fieldPath));
-
-            return this;
+            return AddExcludeMatchOperator(fieldPath);
+        }
+        
+        /// <summary>
+        /// The <see cref="ExcludeAllFields(string)"/> option excludes all available
+        /// fields by the given name. All fields with the given name will be excluded
+        /// during snapshot serialization.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// {
+        ///     "UserId": "0A332E69-FDDB-46B9-8E42-C411C3F633AC",
+        ///     "Firstname": "David",
+        ///     "Lastname": "Walton",
+        ///     "Relatives": [
+        ///         {
+        ///             "UserId": "E20EEEE6-39D1-4878-B8A9-621CECDDDA82",
+        ///             "Firstname": "Mark",
+        ///             "Lastname": "Walton",
+        ///         },
+        ///         {
+        ///             "UserId": "355910B4-6CD9-4FC3-962B-75D079C50415",
+        ///             "Firstname": "Jenny",
+        ///             "Lastname": "Walton",
+        ///         },
+        ///     ]
+        /// }
+        /// </code>
+        /// <para>
+        /// <c>Snapshot.Match(userDavidWalton, matchOptions => matchOptions.ExcludeAllFields("UserId")</c>
+        ///
+        /// This configured match option has the effect, that all 'UserId' fields
+        /// will be excluded during snapshot serialization. (Therefore all 3 UserIds)
+        ///
+        /// Only one 'name' per <see cref="ExcludeAllFields"/> option is allowed.
+        /// (No concatenated name strings)
+        /// </para>
+        /// </example>
+        /// <param name="name">The name of the field(s) to be excluded.</param>
+        public MatchOptions ExcludeAllFields(string name)
+        {
+            return AddExcludeMatchOperator(Wellknown.FindByNamePrefix + name);
         }
 
         /// <summary>
@@ -504,6 +542,14 @@ namespace Snapshooter
         {
             _matchOperators.Add(
                 new IgnoreMatchOperator<T>(fieldsPath));
+
+            return this;
+        }
+        
+        private MatchOptions AddExcludeMatchOperator(string fieldsPath)
+        {
+            _matchOperators.Add(
+                new ExcludeMatchOperator(fieldsPath));
 
             return this;
         }
