@@ -2,6 +2,7 @@
   <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
 
   <PropertyGroup>
+    <LangVersion>latest</LangVersion>
     <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>Snapshooter.TUnit</AssemblyName>
     <RootNamespace>Snapshooter.TUnit</RootNamespace>
@@ -18,8 +19,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="TUnit.Assertions" Version="0.10.6" />
-    <PackageReference Include="TUnit.Core" Version="0.10.6" />
+    <PackageReference Include="TUnit.Assertions" Version="0.52.30" />
+    <PackageReference Include="TUnit.Core" Version="0.52.30" />
   </ItemGroup>
 
 </Project>
