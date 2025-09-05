@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
 using Xunit;
+using System.Globalization;
 
 #nullable enable
 
@@ -62,9 +63,18 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.TestHelpers
                 Assert.Equal(exception.Message,
                     $"Accept match option failed, " +
                     $"because the field value of '{nameof(testee.Value)}' " +
-                    $"is '{testeeValue ?? testee.Value!.ToString()}', " +
+                    $"is '{testeeValue ?? FormatInvariant(testee.Value)}', " +
                     $"and therefore not of type '{typeName}'.");
             }
+        }
+
+        private static string FormatInvariant(object? value)
+        {
+            if (value == null) return "Null";
+            if (value is decimal d) return d.ToString(CultureInfo.InvariantCulture);
+            if (value is double db) return db.ToString(CultureInfo.InvariantCulture);
+            if (value is float f) return f.ToString(CultureInfo.InvariantCulture);
+            return value.ToString()!;
         }
     }
 }

@@ -130,9 +130,8 @@ namespace Snapshooter.MSTest
             DataRowAttribute currentRow =
                 dataRowAttributes.ElementAt(dataTestMethodRowIndex[method.Name]);
 
-            return $"{method.DeclaringType.Name}." +
-                method.Name +
-                $"_{string.Join("_", currentRow.Data.Select(d => d.ToString()))}";
+            return $"{method.DeclaringType.Name}.{method.Name}" +
+                SnapshotNameExtension.Create(currentRow.Data).ToParamsString();
         }
     }
 }
