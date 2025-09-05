@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
@@ -137,7 +138,7 @@ namespace Snapshooter.Core
             }
         }
 
-        private string CreateAcceptExceptionMessage(
+        private static string CreateAcceptExceptionMessage(
             string path, object field, string message)
         {
             return
@@ -147,9 +148,16 @@ namespace Snapshooter.Core
                 $"{message}";
         }
 
-        private string GetAcceptFieldValueString(object field)
+        private static string GetAcceptFieldValueString(object field)
         {
-            return field is { } ? field.ToString() : "Null";
+            return field switch
+            {
+                null => "Null",
+                decimal decimalValue => decimalValue.ToString(CultureInfo.InvariantCulture),
+                double doubleValue => doubleValue.ToString(CultureInfo.InvariantCulture),
+                float floatValue => floatValue.ToString(CultureInfo.InvariantCulture),
+                _ => field.ToString()
+            };
         }
     }
 }
