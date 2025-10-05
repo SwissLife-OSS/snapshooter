@@ -26,7 +26,7 @@ namespace Snapshooter.MSTest.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().WithAge(5).Build();
 
             // act & assert
-            Assert.ThrowsException<AssertFailedException>(() => Snapshot.Match(testPerson));
+            Assert.ThrowsExactly<AssertFailedException>(() => Snapshot.Match(testPerson));
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace Snapshooter.MSTest.Tests
             TestPerson testPerson = TestDataBuilder.TestPersonMarkWalton().Build();
 
             // act & assert
-            Assert.ThrowsException<AssertFailedException>(() => Snapshot.Match(testPerson));
+            Assert.ThrowsExactly<AssertFailedException>(() => Snapshot.Match(testPerson));
         }
 
         [TestMethod]
@@ -65,7 +65,7 @@ namespace Snapshooter.MSTest.Tests
             Assert.IsTrue(File.Exists(snapshotFileName));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(36, 189.45)]
         [DataRow(42, 173.16)]
         [DataRow(19, 193.02)]
@@ -92,7 +92,7 @@ namespace Snapshooter.MSTest.Tests
             testPerson.Address.Country.CountryCode = CountryCode.DE;
 
             // act & assert
-            Assert.ThrowsException<AssertFailedException>(() => Snapshot.Match(testPerson));
+            Assert.ThrowsExactly<AssertFailedException>(() => Snapshot.Match(testPerson));
         }
 
         [DataTestMethod]
@@ -105,7 +105,7 @@ namespace Snapshooter.MSTest.Tests
                 .WithAge(age).WithSize(size).Build();
 
             // act & assert
-            Assert.ThrowsException<AssertFailedException>(() => Snapshot.Match(testPerson));
+            Assert.ThrowsExactly<AssertFailedException>(() => Snapshot.Match(testPerson));
         }
 
         [DataRow(19, 162.3)]
