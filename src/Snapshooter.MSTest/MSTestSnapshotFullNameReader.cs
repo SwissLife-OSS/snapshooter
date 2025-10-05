@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -132,7 +132,7 @@ namespace Snapshooter.MSTest
 
             return $"{method.DeclaringType.Name}." +
                 method.Name +
-                $"_{string.Join("_", currentRow.Data.Select(d => d.ToString()))}";
+                $"_{string.Join("_", currentRow.Data.Select(d => Convert.ToString(d, CultureInfo.InvariantCulture)))}";
         }
     }
 }
