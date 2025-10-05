@@ -65,7 +65,7 @@ namespace Snapshooter.MSTest.Tests
             Assert.IsTrue(File.Exists(snapshotFileName));
         }
 
-        [TestMethod]
+        [DataTestMethod]
         [DataRow(36, 189.45)]
         [DataRow(42, 173.16)]
         [DataRow(19, 193.02)]
