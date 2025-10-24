@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="4.0.0-preview.25480.4" />
-    <PackageReference Include="MSTest.TestFramework" Version="4.0.0-preview.25480.4" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.0.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
