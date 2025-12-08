@@ -98,9 +98,9 @@ namespace Snapshooter.TUnit
         {
             TestContext currentTestContext = TestContext.Current!;
 
-            var typeName = currentTestContext.TestDetails.ClassType.Name;
-            var methodName = currentTestContext.TestDetails.TestName;
-            var parameters = SnapshotNameExtension.Create(currentTestContext.TestDetails.TestMethodArguments).ToParamsString();
+            var typeName = currentTestContext.Metadata.TestDetails.ClassType.Name;
+            var methodName = currentTestContext.Metadata.TestDetails.TestName;
+            var parameters = SnapshotNameExtension.Create(currentTestContext.Metadata.TestDetails.TestMethodArguments).ToParamsString();
 
             return $"{typeName}.{methodName}{parameters}";
         }
