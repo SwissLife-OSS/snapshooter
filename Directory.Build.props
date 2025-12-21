@@ -1,6 +1,35 @@
 <Project>
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);SYSLIB1006;SYSLIB1015;CS8618;CS8602</NoWarn>
+  </PropertyGroup>
 
   <PropertyGroup>
+    <TestProjectTargetFrameworks>net8.0;net9.0;net10.0</TestProjectTargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net462;net8.0;net9.0;net10.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>Full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsApp>false</IsApp>
+    <IsPublishable>false</IsPublishable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version Condition="$(Version) == ''">0.0.0</Version>
     <Product>Snapshooter</Product>
     <Authors>Swiss Life authors and contributors</Authors>
     <Company>Swiss Life</Company>
@@ -11,8 +40,7 @@
     <PackageTags>XUnit SwissLife Snapshot UnitTest Test IntegrationTest SystemTest DatabaseTest .Net</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIconUrl>https://github.com/SwissLife-OSS/snapshooter/raw/master/logo.png</PackageIconUrl>
-    <IsPackable>false</IsPackable>
-    <LangVersion>latest</LangVersion>
+    <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -26,7 +54,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" />
   </ItemGroup>
 
 </Project>

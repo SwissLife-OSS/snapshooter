@@ -3,8 +3,6 @@
   <PropertyGroup>
     <AssemblyName>Snapshooter.Tests.Data</AssemblyName>
     <RootNamespace>Snapshooter.Tests.Data</RootNamespace>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
 </Project>
