@@ -11,17 +11,19 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
-      - name: Use .NET SDK from global.json
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             8
             9
+            10
 
       - name: Extract package version
-        run: echo "PACKAGE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+        id: extract_version
+        run: echo "version=${{ github.ref_name }}" >> $GITHUB_ENV
         shell: bash
 
       - name: Extract assembly version
@@ -29,15 +31,11 @@ jobs:
         shell: bash
 
       - name: Build projects
-        run: |
-          for sln in $(find . -name '*.sln'); do
-            echo -e "\n\033[0;34mBuilding $sln \033[0m"
-            dotnet build "$sln" -c Release /p:Version=${{ env.PACKAGE_VERSION }} /p:AssemblyVersion=${{ env.ASSEMBLY_VERSION }} /p:FileVersion=${{ env.ASSEMBLY_VERSION }}
-          done
+        run: dotnet build
         shell: bash
 
       - name: Pack
-        run: find . -name '*.sln' | parallel --jobs 0 'dotnet pack {} /p:PackageVersion=${{env.PACKAGE_VERSION}} -c Release -o ./out --no-build --include-symbols --include-source --verbosity Minimal'
+        run: dotnet pack /p:PackageVersion=${{ steps.extract_version.outputs.version }} -c Release -o ./out --no-build --include-symbols --include-source --verbosity Minimal
         shell: bash
 
       - name: Push

@@ -12,7 +12,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIconUrl>https://github.com/SwissLife-OSS/snapshooter/raw/master/logo.png</PackageIconUrl>
     <IsPackable>false</IsPackable>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>

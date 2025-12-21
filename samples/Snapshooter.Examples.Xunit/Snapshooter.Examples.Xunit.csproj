@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7</TargetFramework>
     <IsPackable>false</IsPackable>
     <AssemblyName>Snapshooter.Examples.Xunit</AssemblyName>
     <RootNamespace>Snapshooter.Examples.Xunit</RootNamespace>
