@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>Snapshooter.TUnit.Tests</AssemblyName>
     <RootNamespace>Snapshooter.TUnit.Tests</RootNamespace>
   </PropertyGroup>

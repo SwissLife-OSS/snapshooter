@@ -19,10 +19,6 @@ jobs:
             9
             10
 
-      - name: Restore tools
-        run: dotnet tool restore
-        shell: bash
-
       - name: Build projects
         run: dotnet build
         shell: bash
