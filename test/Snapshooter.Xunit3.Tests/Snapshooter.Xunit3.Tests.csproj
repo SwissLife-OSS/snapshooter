@@ -10,8 +10,4 @@
     <ProjectReference Include="..\..\src\Snapshooter.Xunit3\Snapshooter.Xunit3.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="xunit.v3" Version="1.0.0" />
-  </ItemGroup>
-
 </Project>
