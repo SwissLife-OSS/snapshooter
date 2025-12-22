@@ -34,7 +34,7 @@ jobs:
 
       - name: Build projects
         shell: bash
-        run: dotnet build
+        run: dotnet build -c Release
 
       - name: Pack
         shell: bash
