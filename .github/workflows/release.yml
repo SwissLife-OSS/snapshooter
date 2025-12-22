@@ -25,8 +25,12 @@ jobs:
         id: extract_version
         shell: bash
         run: |
-          echo "package_version=${{ github.ref_name }}" >> $GITHUB_ENV
-          echo "assembly_version=$(echo ${{ github.ref_name }} | grep -o '^[0-9]*\.[0-9]*\.[0-9]*').0" >> $GITHUB_ENV
+          PACKAGE_VERSION="${{ github.ref_name }}"
+          ASSEMBLY_VERSION="$(echo ${{ github.ref_name }} | grep -o '^[0-9]*\.[0-9]*\.[0-9]*').0"
+          echo "package_version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+          echo "assembly_version=$ASSEMBLY_VERSION" >> $GITHUB_OUTPUT
+          echo "Package Version: $PACKAGE_VERSION"
+          echo "Assembly Version: $ASSEMBLY_VERSION"
 
       - name: Build projects
         shell: bash
