@@ -21,24 +21,31 @@ jobs:
             9
             10
 
-      - name: Extract package version
+      - name: Extract version
         id: extract_version
-        run: echo "version=${{ github.ref_name }}" >> $GITHUB_ENV
         shell: bash
-
-      - name: Extract assembly version
-        run: echo "ASSEMBLY_VERSION=$(echo ${{ github.ref_name }} | grep -o '^[0-9]*\.[0-9]*\.[0-9]*').0" >> $GITHUB_ENV
-        shell: bash
+        run: |
+          echo "package_version=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "assembly_version=$(echo ${{ github.ref_name }} | grep -o '^[0-9]*\.[0-9]*\.[0-9]*').0" >> $GITHUB_ENV
 
       - name: Build projects
-        run: dotnet build
         shell: bash
+        run: dotnet build
 
       - name: Pack
-        run: dotnet pack /p:PackageVersion=${{ steps.extract_version.outputs.version }} -c Release -o ./out --no-build --include-symbols --include-source --verbosity Minimal
         shell: bash
+        run: |
+          dotnet pack \
+            -c Release -o \
+            ./out --no-build  \
+            --include-symbols \
+            --include-source \
+            --verbosity Minimal \
+            /p:Version=${{ steps.extract_version.outputs.package_version }} \
+            /p:AssemblyVersion=${{ steps.extract_version.outputs.assembly_version }} \
+            /p:FileVersion=${{ steps.extract_version.outputs.assembly_version }}
 
       - name: Push
+        shell: bash
         run: |
           find . -name '*.nupkg' | grep -v '.sources.nupkg' | parallel --jobs 0 'dotnet nuget push {} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json'
-        shell: bash
