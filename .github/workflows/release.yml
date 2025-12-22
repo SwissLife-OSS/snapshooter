@@ -1,4 +1,5 @@
 name: Release
+run-name: Release ${{ github.ref_name }}
 
 on:
   push:
@@ -11,36 +12,45 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
-      - name: Use .NET SDK from global.json
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             8
             9
+            10
 
-      - name: Extract package version
-        run: echo "PACKAGE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+      - name: Extract version
+        id: extract_version
         shell: bash
-
-      - name: Extract assembly version
-        run: echo "ASSEMBLY_VERSION=$(echo ${{ github.ref_name }} | grep -o '^[0-9]*\.[0-9]*\.[0-9]*').0" >> $GITHUB_ENV
-        shell: bash
+        run: |
+          PACKAGE_VERSION="${{ github.ref_name }}"
+          ASSEMBLY_VERSION="$(echo ${{ github.ref_name }} | grep -o '^[0-9]*\.[0-9]*\.[0-9]*').0"
+          echo "package_version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+          echo "assembly_version=$ASSEMBLY_VERSION" >> $GITHUB_OUTPUT
+          echo "Package Version: $PACKAGE_VERSION"
+          echo "Assembly Version: $ASSEMBLY_VERSION"
 
       - name: Build projects
-        run: |
-          for sln in $(find . -name '*.sln'); do
-            echo -e "\n\033[0;34mBuilding $sln \033[0m"
-            dotnet build "$sln" -c Release /p:Version=${{ env.PACKAGE_VERSION }} /p:AssemblyVersion=${{ env.ASSEMBLY_VERSION }} /p:FileVersion=${{ env.ASSEMBLY_VERSION }}
-          done
         shell: bash
+        run: dotnet build -c Release
 
       - name: Pack
-        run: find . -name '*.sln' | parallel --jobs 0 'dotnet pack {} /p:PackageVersion=${{env.PACKAGE_VERSION}} -c Release -o ./out --no-build --include-symbols --include-source --verbosity Minimal'
         shell: bash
+        run: |
+          dotnet pack \
+            -c Release -o \
+            ./out --no-build  \
+            --include-symbols \
+            --include-source \
+            --verbosity Minimal \
+            /p:Version=${{ steps.extract_version.outputs.package_version }} \
+            /p:AssemblyVersion=${{ steps.extract_version.outputs.assembly_version }} \
+            /p:FileVersion=${{ steps.extract_version.outputs.assembly_version }}
 
       - name: Push
+        shell: bash
         run: |
           find . -name '*.nupkg' | grep -v '.sources.nupkg' | parallel --jobs 0 'dotnet nuget push {} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json'
-        shell: bash
