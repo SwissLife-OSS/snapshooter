@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
-
+  
   <PropertyGroup>
     <AssemblyName>Snapshooter.MSTest</AssemblyName>
     <RootNamespace>Snapshooter.MSTest</RootNamespace>
@@ -9,12 +8,12 @@
       MSTest Snapshooter is a flexible snapshot testing tool for .Net unit tests with MSTest.
       It creates and asserts snapshots (json format) within MSTest unit tests.
     </Description>
-    <IsTestProject>false</IsTestProject>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.0.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>

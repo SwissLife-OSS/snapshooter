@@ -1,12 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
-
+  
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>Snapshooter.TUnit.Tests</AssemblyName>
     <RootNamespace>Snapshooter.TUnit.Tests</RootNamespace>
-    <IsTestProject>true</IsTestProject>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

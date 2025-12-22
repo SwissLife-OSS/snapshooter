@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
-
+  
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>Snapshooter.TUnit</AssemblyName>
     <RootNamespace>Snapshooter.TUnit</RootNamespace>
     <PackageId>Snapshooter.TUnit</PackageId>
@@ -11,7 +8,7 @@
       TUnit Snapshooter is a flexible snapshot testing tool for .Net unit tests with TUnit.
       It creates and asserts snapshots (json format) within TUnit unit tests.
     </Description>
-    <IsTestProject>false</IsTestProject>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
   
   <ItemGroup>
