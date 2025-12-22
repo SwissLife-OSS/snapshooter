@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Snapshooter.Core;
+using Snapshooter.Core.Serialization;
 
 namespace Snapshooter.NUnit
 {
@@ -374,16 +375,20 @@ namespace Snapshooter.NUnit
         {
             get
             {
+                var snapshotSerializer =
+                    new SnapshotSerializer(new GlobalSnapshotSettingsResolver());
+
                 return
                     new Snapshooter(
                         new SnapshotAssert(
-                            new SnapshotSerializer(),
+                            snapshotSerializer,
                             new SnapshotFileHandler(),
                             new SnapshotEnvironmentCleaner(
                                 new SnapshotFileHandler()),
                             new JsonSnapshotComparer(
                                 new NUnitAssert(),
-                                new SnapshotSerializer())),
+                                snapshotSerializer),
+                            new JsonSnapshotFormatter(snapshotSerializer)),
                         new SnapshotFullNameResolver(
                             new NUnitSnapshotFullNameReader()));
             }

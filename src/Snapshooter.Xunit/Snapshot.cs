@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Snapshooter.Core;
+using Snapshooter.Core.Serialization;
 
 namespace Snapshooter.Xunit
 {
@@ -152,8 +153,14 @@ namespace Snapshooter.Xunit
             object currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshooter.AssertSnapshot(currentResult, FullName(), matchOptions);
-            _snapshotName = new AsyncLocal<SnapshotFullName>();
+            try
+            {
+                Snapshooter.AssertSnapshot(currentResult, FullName(), matchOptions);
+            }
+            finally
+            {
+                _snapshotName = new AsyncLocal<SnapshotFullName>();
+            }
         }
 
         /// <summary>
@@ -254,8 +261,14 @@ namespace Snapshooter.Xunit
             SnapshotFullName snapshotFullName,
             Func<MatchOptions, MatchOptions> matchOptions = null)
         {
-            Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
-            _snapshotName = new AsyncLocal<SnapshotFullName>();
+            try
+            {
+                Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
+            }
+            finally
+            {
+                _snapshotName = new AsyncLocal<SnapshotFullName>();
+            }
         }
 
         /// <summary>
@@ -366,16 +379,20 @@ namespace Snapshooter.Xunit
         {
             get
             {
+                var snapshotSerializer =
+                    new SnapshotSerializer(new GlobalSnapshotSettingsResolver());
+
                 return
                     new Snapshooter(
                         new SnapshotAssert(
-                            new SnapshotSerializer(),
+                            snapshotSerializer,
                             new SnapshotFileHandler(),
                             new SnapshotEnvironmentCleaner(
                                 new SnapshotFileHandler()),
                             new JsonSnapshotComparer(
                                 new XunitAssert(),
-                                new SnapshotSerializer())),
+                                snapshotSerializer),
+                            new JsonSnapshotFormatter(snapshotSerializer)),
                         new SnapshotFullNameResolver(
                             new XunitSnapshotFullNameReader()));
             }

@@ -20,6 +20,10 @@ dotnet add package Snapshooter.Xunit
 ```bash
 dotnet add package Snapshooter.NUnit
 ```
+### MSTest
+```bash
+dotnet add package Snapshooter.MSTest
+```
 
 [Get Started](https://swisslife-oss.github.io/snapshooter/docs/get-started)
 
@@ -98,7 +102,7 @@ For NUnit we will support the Assert.That syntax (Coming soon):
 
 ## Features
 
-### Ignore Fields in Snapshots Matches
+### Ignore Fields in Snapshots
 
 If some fields in your snapshot shall be ignored during snapshot assertion, then the following ignore options can be used:
 
@@ -133,9 +137,77 @@ Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Relativ
 
 // Ignores the field 'Name' of all 'Children' nodes of the person
 Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("Children[*].Name"));
+
+// Ignores all fields with name 'Id'
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreField("**.Id"));
 ```
 
-### Assert Fields in Snapshots Matches
+#### Ignore All Fields by name
+If we want to ignore all fields by a specific name, then we have two options:
+
+Option 1: Use the ignore match option 'IgnoreAllFields(<fieldName>)' and add the name.
+```csharp
+// Ignores all fields with name 'Id'
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreAllFields("Id"));
+```
+
+Option 2: Use the default ignore match option 'IgnoreFields(**.<fieldName>)' with the following JsonPath syntax **.<fieldName> 
+```csharp
+// Ignores all fields with name 'Id'
+Snapshot.Match<Person>(person, matchOptions => matchOptions.IgnoreFields("**.Id"));
+```
+
+### Hash Fields in Snapshots
+
+If some fields of our snapshot are too big, for example a binary field with a lot of data, then we can use the HashField option.
+The HashField option creates a Hash of the field value and therefore each time only the hash is compared. 
+If there is a change in the field value, then the snapshot match will fail.
+
+```csharp
+[Fact]
+public void ImageSnapshot_HashImageBinary()
+{
+    // arrange
+    var serviceClient = new ServiceClient();
+
+    // act
+    TestImage image = serviceClient.CreateMonaLisaImage();
+
+    // assert
+    Snapshot.Match(image, matchOptions => matchOptions.HashField("Data"));
+}
+```
+Example Snapshot with Hash
+```json
+{
+  "Id": 3450987,
+  "OwnerId": "0680faef-6e89-4d52-bad8-291053c66696",
+  "Name": "Mona Lisa",
+  "CreationDate": "2020-11-10T21:23:09.036+01:00",
+  "Price": 951868484.345,
+  "Data": "m+sQR9KG9WpgYoQiRASPkt9FLJOLsjK86UuiXKVRzas="  
+}
+```
+
+The field(s) to hash can be located via JsonPath or via field name.
+
+Hash Field Examples:
+
+```csharp
+// Hash the field 'Data' of the child node 'Thumbnail' of the person
+Snapshot.Match<Person>(person, matchOptions => matchOptions.HashField("Thumbnail.Data"));
+
+// Hash the field 'Data' of the first thumbnail in the 'Thumbnails' array of the image
+Snapshot.Match<Person>(person, matchOptions => matchOptions.HashField("Thumbnails[0].Data"));
+
+// Ignores the field 'Data' of all 'Thumbnails' nodes of the image
+Snapshot.Match<Person>(person, matchOptions => matchOptions.HashField("Thumbnails[*].Data"));
+
+// Ignores all fields with name 'Data'
+Snapshot.Match<Person>(person, matchOptions => matchOptions.HashField("**.Data"));
+```
+
+### Assert Fields in Snapshots
 
 Sometimes there are fields in a snapshot, which you want to assert separately against another value.
 
@@ -181,7 +253,11 @@ Snapshot.Match<Person>(person, > matchOption.Assert(
 
 // Asserts every 'Id' field of all the 'Relatives' of the person
 Snapshot.Match<Person>(person, > matchOption.Assert(
-                    fieldOption => Assert.NotNull(fieldOption.Field<string>("Relatives[*].Id"))));
+                    fieldOption => Assert.NotNull(fieldOption.Fields<string>("Relatives[*].Id"))));
+ 
+// Asserts 'Relatives' array is not empty
+Snapshot.Match<Person>(person, > matchOption.Assert(
+                    fieldOption => Assert.NotNull(fieldOption.Fields<TestPerson>("Relatives[*]"))));
 
 ```
 

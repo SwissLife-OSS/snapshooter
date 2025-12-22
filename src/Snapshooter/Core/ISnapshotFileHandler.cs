@@ -1,4 +1,6 @@
-﻿namespace Snapshooter.Core
+#nullable enable
+
+namespace Snapshooter.Core
 {
     /// <summary>
     /// The <see cref="SnapshotFileHandler"/> is responsible to handle all snapshots  
@@ -28,10 +30,25 @@
 
         /// <summary>
         /// Reads the current snapshot from the __snapshots__ folder.
+        /// If the snapshot does not exists, an exception is thrown.
         /// </summary>
         /// <param name="snapshotFullName">The full name of the snapshot.</param> 
         /// <returns>The expected snapshot.</returns>
         string ReadSnapshot(SnapshotFullName snapshotFullName);
+
+        /// <summary>
+        /// Tries to read the current snapshot from the __snapshots__ folder.
+        /// </summary>
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
+        /// <param name="snapshotData">The loaded snapshot data.</param>
+        /// <returns>True if the snapshot could be found.</returns>
+        bool TryReadSnapshot(SnapshotFullName snapshotFullName, out string snapshotData);
+
+        /// <summary>
+        /// Deletes the current snapshot if exists from the __snapshots__ folder.
+        /// </summary>
+        /// <param name="snapshotFullName">The full name of the snapshot.</param>
+        void DeleteSnapshot(SnapshotFullName snapshotFullName);
 
         /// <summary>
         /// Deletes the given subfolder of the __snapshots__ folder of the current snapshot test.

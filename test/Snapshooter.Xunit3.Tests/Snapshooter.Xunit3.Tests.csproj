@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <AssemblyName>Snapshooter.Xunit3.Tests</AssemblyName>
+    <RootNamespace>Snapshooter.Xunit3.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
+    <ProjectReference Include="..\..\src\Snapshooter.Xunit3\Snapshooter.Xunit3.csproj" />
+  </ItemGroup>
+
+</Project>
