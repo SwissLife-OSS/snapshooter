@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+
+#nullable enable
 
 namespace Snapshooter.Core
 {
@@ -21,7 +23,9 @@ namespace Snapshooter.Core
         /// <param name="actualSnapshot">
         /// The actual (modifiable) snapshot of the current result.
         /// </param>    
-        void CompareSnapshots(string expectedSnapshot, string actualSnapshot, 
-                              Func<MatchOptions, MatchOptions> matchOptions);
+        void CompareSnapshots(
+            string expectedSnapshot,
+            string actualSnapshot,
+            MatchOptions matchOptions);
     }
 }

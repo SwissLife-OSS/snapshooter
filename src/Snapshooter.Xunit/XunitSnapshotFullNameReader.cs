@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -26,6 +25,7 @@ namespace Snapshooter.Xunit
         {
             SnapshotFullName snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
+
             foreach (StackFrame stackFrame in stackFrames)
             {
                 MethodBase method = stackFrame.GetMethod();
@@ -33,7 +33,7 @@ namespace Snapshooter.Xunit
                 {
                     snapshotFullName = new SnapshotFullName(
                         method.ToName(),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }
@@ -43,12 +43,12 @@ namespace Snapshooter.Xunit
                 {
                     snapshotFullName = new SnapshotFullName(
                         asyncMethod.ToName(),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }
             }
-
+            
             if (snapshotFullName == null)
             {
                 throw new SnapshotTestException(
@@ -61,7 +61,7 @@ namespace Snapshooter.Xunit
             }
 
             snapshotFullName = LiveUnitTestingDirectoryResolver
-                                    .CheckForSession(snapshotFullName);
+                .CheckForSession(snapshotFullName);
 
             return snapshotFullName;
         }

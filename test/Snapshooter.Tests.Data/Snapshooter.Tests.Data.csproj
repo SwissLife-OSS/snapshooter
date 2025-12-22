@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <AssemblyName>Snapshooter.Tests.Data</AssemblyName>
+    <RootNamespace>Snapshooter.Tests.Data</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="__testsources__\*" />
+  </ItemGroup>
+
+</Project>

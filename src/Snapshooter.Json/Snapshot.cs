@@ -162,16 +162,20 @@ namespace Snapshooter.Json
         {
             get
             {
+                var snapshotSerializer =
+                    new SnapshotSerializer(new GlobalSnapshotSettingsResolver());
+
                 return
                     new Snapshooter(
                         new SnapshotAssert(
-                            new SnapshotSerializer(new GlobalSnapshotSettingsResolver()),
+                            snapshotSerializer,
                             new SnapshotFileHandler(),
                             new SnapshotEnvironmentCleaner(
                                 new SnapshotFileHandler()),
                             new JsonSnapshotComparer(
                                 new JsonAssert(),
-                                new SnapshotSerializer(new GlobalSnapshotSettingsResolver()))),
+                                snapshotSerializer),
+                            new JsonSnapshotFormatter(snapshotSerializer)),
                         new SnapshotFullNameResolver(
                             new JsonSnapshotFullNameReader()));
             }

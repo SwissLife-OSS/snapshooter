@@ -379,16 +379,20 @@ namespace Snapshooter.Xunit
         {
             get
             {
+                var snapshotSerializer =
+                    new SnapshotSerializer(new GlobalSnapshotSettingsResolver());
+
                 return
                     new Snapshooter(
                         new SnapshotAssert(
-                            new SnapshotSerializer(new GlobalSnapshotSettingsResolver()),
+                            snapshotSerializer,
                             new SnapshotFileHandler(),
                             new SnapshotEnvironmentCleaner(
                                 new SnapshotFileHandler()),
                             new JsonSnapshotComparer(
                                 new XunitAssert(),
-                                new SnapshotSerializer(new GlobalSnapshotSettingsResolver()))),
+                                snapshotSerializer),
+                            new JsonSnapshotFormatter(snapshotSerializer)),
                         new SnapshotFullNameResolver(
                             new XunitSnapshotFullNameReader()));
             }

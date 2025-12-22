@@ -1,0 +1,21 @@
+﻿{
+  "Id": null,
+  "Firstname": null,
+  "Lastname": null,
+  "CreationDate": null,
+  "DateOfBirth": null,
+  "Age": null,
+  "Size": null,
+  "Address": null,
+  "Children": [
+    {
+      "Name": "kYOkAt1IRp0S0C0IDtDWYn36ZZe6AZQo8TDkejf7l5M=",
+      "DateOfBirth": null
+    },
+    {
+      "Name": "FyObbiUBEDMO2mSinGEL8Ub4mIM3H6sJP+2gO+xhtkY=",
+      "DateOfBirth": null
+    }
+  ],
+  "Relatives": null
+}

@@ -32,6 +32,9 @@ bld/
 # Visual Studio 2017 auto generated files
 Generated\ Files/
 
+#Visual Studio Code
+.vscode/
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -337,3 +340,6 @@ tools/**
 !tools/packages.config
 
 __mismatch__/
+
+.DS_Store
+.vscode/

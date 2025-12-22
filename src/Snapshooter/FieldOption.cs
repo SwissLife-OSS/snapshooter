@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Snapshooter.Exceptions;
+using Snapshooter.Extensions;
 
 namespace Snapshooter
 {
@@ -13,25 +13,71 @@ namespace Snapshooter
     /// </summary>
     public class FieldOption
     {
-        private JToken _snapshotData;
+        private readonly JToken _snapshotData;
+        private readonly List<string> _fieldPaths;
 
         /// <summary>
-        /// Constructor of the class <see cref="FieldOption"/> 
+        /// Constructor of the class <see cref="FieldOption"/>
         /// initializes a new instance.
         /// </summary>
         /// <param name="snapshotData">The snapshot json data.</param>
         public FieldOption(JToken snapshotData)
         {
             _snapshotData = snapshotData;
+            _fieldPaths = new List<string>();
         }
 
         /// <summary>
         /// The path of the field, which was requested.
         /// </summary>
-        public string[] FieldPaths { get; private set; }
+        public string[] FieldPaths => _fieldPaths.ToArray();
 
         /// <summary>
-        /// Retrieves the field value by the field path.
+        /// Finds all jtokens by the given field path. if the field path
+        /// starts with '**.' then all the jtokens of the given name are searched.
+        /// </summary>
+        /// <param name="fieldPath">The path of the jtokens within the snapshot.</param>
+        /// <returns>The found jtokens.</returns>
+        internal JToken[] FindFieldTokens(string fieldPath)
+        {
+            if (fieldPath.TryFindFieldsByName(out string fieldName))
+            {
+                return GetTokensByName(fieldName);
+            }
+
+            return GetTokensByPath(fieldPath);
+        }
+
+        /// <summary>
+        /// Finds all field values by the given field path. if the field path
+        /// starts with '**.' then all the fields of the given name are searched.
+        /// </summary>
+        /// <param name="fieldPath">The path of the fields within the snapshot.</param>
+        /// <returns>The values of the requested fields.</returns>
+        public object[] FindAllFields(string fieldPath)
+        {
+            return FindAllFields<object>(fieldPath);
+        }
+
+        /// <summary>
+        /// Finds all field values by the given field path. if the field path
+        /// starts with '**.' then all the fields of the given name are searched.
+        /// </summary>
+        /// <typeparam name="T">The type of the fields to return.</typeparam>
+        /// <param name="fieldPath">The path of the fields within the snapshot.</param>
+        /// <returns>The values of the requested fields.</returns>
+        public T[] FindAllFields<T>(string fieldPath)
+        {
+            if (fieldPath.TryFindFieldsByName(out string fieldName))
+            {
+                return GetAllFieldsByName<T>(fieldName);
+            }
+
+            return Fields<T>(fieldPath);            
+        }
+
+        /// <summary>
+        /// Retrieves field value by the field path.
         /// </summary>
         /// <typeparam name="T">The type of the field to convert and return.</typeparam>
         /// <param name="fieldPath">The path of the field within the snapshot.</param>
@@ -40,22 +86,7 @@ namespace Snapshooter
         {
             try
             {
-                FieldPaths = new[] { fieldPath };
-
-                if (_snapshotData is JValue jValue)
-                {
-                    throw new SnapshotFieldException($"No snapshot match options are " +
-                        $"supported for snapshots with scalar values. Therefore the " +
-                        $"match option with field '{fieldPath}' is not allowed.");
-                }
-                                
-                IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
-
-                if (fields == null || fields.Count() == 0)
-                {
-                    throw new SnapshotFieldException(
-                        $"The field of the path '{fieldPath}' could not be found.");
-                }
+                IEnumerable<JToken> fields = GetTokensByPath(fieldPath);
 
                 if (fields.Count() > 1)
                 {
@@ -64,7 +95,7 @@ namespace Snapshooter
                         $"Please use the FieldOption for fields array (Fields).");
                 }
 
-                T fieldValue = ConvertToType<T>(fields.Single());
+                T fieldValue = fields.Single().ConvertToType<T>();
 
                 return fieldValue;
             }
@@ -76,7 +107,7 @@ namespace Snapshooter
         }
 
         /// <summary>
-        /// Retrieves the field values by the field path.
+        /// Retrieves field values by the field path.
         /// </summary>
         /// <typeparam name="T">The type of the fields to convert and return.</typeparam>
         /// <param name="fieldPath">The path of the fields within the snapshot.</param>
@@ -85,24 +116,11 @@ namespace Snapshooter
         {
             try
             {
-                FieldPaths = new[] { fieldPath };
+                IEnumerable<JToken> fields = GetTokensByPath(fieldPath);
 
-                if (_snapshotData is JValue jValue)
-                {
-                    throw new SnapshotFieldException($"No snapshot match options are " +
-                        $"supported for snapshots with scalar values. Therefore the " +
-                        $"match option with field '{fieldPath}' is not allowed.");
-                }
-
-                IEnumerable<JToken> fields = _snapshotData.SelectTokens(fieldPath, true);
-
-                if (fields == null || fields.Count() == 0)
-                {
-                    throw new SnapshotFieldException(
-                        $"No fields of the path '{fieldPath}' could not be found.");
-                }
-                
-                T[] fieldValues = fields.Select(f => ConvertToType<T>(f)).ToArray();
+                T[] fieldValues = fields
+                    .Select(field => field.ConvertToType<T>())
+                    .ToArray();
 
                 return fieldValues;
             }
@@ -111,7 +129,7 @@ namespace Snapshooter
                 throw new SnapshotFieldException($"The fields of '{fieldPath}' of " +
                     $"the compare context caused an error. {err.Message}", err);
             }
-        }
+        }        
 
         /// <summary>
         /// Retrieves all field values from all fields with the given name.
@@ -123,29 +141,13 @@ namespace Snapshooter
         {
             try
             {
-                if (_snapshotData is JValue jValue)
-                {
-                    throw new SnapshotFieldException($"No snapshot match options are " +
-                        $"supported for snapshots with scalar values. Therefore the " +
-                        $"match option with field name '{name}' is not allowed.");
-                }
-
-                List<JProperty> properties = ((JContainer)_snapshotData)
-                    .Descendants()
-                    .OfType<JProperty>()
-                    .Where(jprop => jprop.Name == name)
-                    .ToList();
+                IEnumerable<JProperty> properties =
+                    GetPropertiesByName(name);
 
                 T[] fieldValues = properties
-                    .Select(jprop => ConvertToType<T>(jprop.Value))
+                    .Select(jprop => jprop.Value.ConvertToType<T>())
                     .ToArray();
-
-                string[] fieldPaths = properties
-                    .Select(jprop => jprop.Path)
-                    .ToArray();
-
-                FieldPaths = fieldPaths;
-
+                
                 return fieldValues;
             }
             catch (Exception err)
@@ -155,18 +157,55 @@ namespace Snapshooter
             }
         }
 
-        private static T ConvertToType<T>(JToken field)
+        private JToken[] GetTokensByName(string name)
+        {            
+            return GetPropertiesByName(name)
+                    .Select(jprop => jprop.Value)
+                    .ToArray();
+        }
+
+        private JProperty[] GetPropertiesByName(string name)
         {
-            if (typeof(T) == typeof(int))
+            if (_snapshotData is JValue jValue)
             {
-                // This is a workaround, because the json method ToObject<> rounds
-                // decimal values to integer values, which is wrong. 
-                return JsonConvert.DeserializeObject<T>(field.Value<string>());
+                throw new SnapshotFieldException($"No snapshot match options are " +
+                    $"supported for snapshots with scalar values. Therefore the " +
+                    $"match option with field name '{name}' is not allowed.");
             }
-            else
+
+            JProperty[] properties = ((JContainer)_snapshotData)
+                .Descendants()
+                .OfType<JProperty>()
+                .Where(jprop => jprop.Name == name)
+                .ToArray();
+
+            _fieldPaths.AddRange(
+                properties.Select(jprop => jprop.Path)) ;
+
+            return properties;
+        }
+
+        private JToken[] GetTokensByPath(string fieldPath)
+        {
+            _fieldPaths.Add(fieldPath);
+
+            if (_snapshotData is JValue)
             {
-                return field.ToObject<T>();
+                throw new SnapshotFieldException($"No snapshot match options are " +
+                    $"supported for snapshots with scalar values. Therefore the " +
+                    $"match option with field '{fieldPath}' is not allowed.");
             }
+
+            IEnumerable<JToken> jTokens = _snapshotData
+                .SelectTokens(fieldPath, false);                
+
+            if (jTokens == null)
+            {
+                throw new SnapshotFieldException(
+                    $"No fields of the path '{fieldPath}' could not be found.");
+            }
+
+            return jTokens.ToArray();
         }        
     }
 }

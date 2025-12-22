@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <AssemblyName>Snapshooter.TUnit.Tests</AssemblyName>
+    <RootNamespace>Snapshooter.TUnit.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Snapshooter.TUnit\Snapshooter.TUnit.csproj" />
+    <ProjectReference Include="..\Snapshooter.Tests.Data\Snapshooter.Tests.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TUnit" Version="0.10.6" />
+  </ItemGroup>
+
+</Project>

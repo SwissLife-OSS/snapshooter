@@ -11,6 +11,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
+using Snapshooter.Extensions;
 
 namespace Snapshooter.NUnit
 {
@@ -35,7 +36,7 @@ namespace Snapshooter.NUnit
                 {
                     snapshotFullName = new SnapshotFullName(
                         GetCurrentSnapshotName(),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }
@@ -45,7 +46,7 @@ namespace Snapshooter.NUnit
                 {
                     snapshotFullName = new SnapshotFullName(
                         GetCurrentSnapshotName(),
-                        Path.GetDirectoryName(stackFrame.GetFileName()));
+                        stackFrame.GetFileName().GetDirectoryName());
 
                     break;
                 }
@@ -72,8 +73,9 @@ namespace Snapshooter.NUnit
         {
             bool isFactTest = IsTestMethod(method);
             bool isTheoryTest = IsTestCaseTestMethod(method);
+            bool isTheoryDataTest = IsTestCaseSourceTestMethod(method);
 
-            return isFactTest || isTheoryTest;
+            return isFactTest || isTheoryTest || isTheoryDataTest;
         }
 
         private static bool IsTestMethod(MemberInfo method)
@@ -84,6 +86,11 @@ namespace Snapshooter.NUnit
         private static bool IsTestCaseTestMethod(MemberInfo method)
         {
             return method?.GetCustomAttributes(typeof(TestCaseAttribute))?.Any() ?? false;
+        }
+
+        private static bool IsTestCaseSourceTestMethod(MemberInfo method)
+        {
+            return method?.GetCustomAttributes(typeof(TestCaseSourceAttribute))?.Any() ?? false;
         }
 
         private static MethodBase EvaluateAsynchronMethodBase(MemberInfo method)
