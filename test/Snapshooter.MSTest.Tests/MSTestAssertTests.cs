@@ -26,7 +26,7 @@ namespace Snapshooter.MSTest.Tests
             Action action = () => snapshotAssert.Assert("{Same}", "{Sme}");
 
             // assert
-            Assert.ThrowsException<AssertFailedException>(action);
+            Assert.ThrowsExactly<AssertFailedException>(action);
         }
     }
 }
