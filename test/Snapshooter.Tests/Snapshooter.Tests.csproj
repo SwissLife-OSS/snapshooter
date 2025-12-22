@@ -1,14 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
-
+  
   <PropertyGroup>
     <AssemblyName>Snapshooter.Tests</AssemblyName>
     <RootNamespace>Snapshooter.Tests</RootNamespace>
-    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Snapshooter\Snapshooter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.4.2" />
   </ItemGroup>
 
   <ItemGroup>
