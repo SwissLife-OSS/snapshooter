@@ -1,10 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
-
+  
   <PropertyGroup>
     <AssemblyName>Snapshooter.Tests.Data</AssemblyName>
     <RootNamespace>Snapshooter.Tests.Data</RootNamespace>
-    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
