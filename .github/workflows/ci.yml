@@ -20,9 +20,9 @@ jobs:
             10
 
       - name: Build projects
-        run: dotnet build
+        run: dotnet build ./all.csproj
         shell: bash
 
       - name: Run tests
-        run: dotnet test /p:BuildTestOnly=true
+        run: dotnet test ./all.csproj /p:BuildTestsOnly=true
         shell: bash
