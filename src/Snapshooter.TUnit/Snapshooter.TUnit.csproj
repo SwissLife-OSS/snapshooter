@@ -18,6 +18,10 @@
   <ItemGroup>
     <PackageReference Include="TUnit.Assertions" Version="1.5.6" />
     <PackageReference Include="TUnit.Core" Version="1.5.6" />
+    <PackageReference Include="Polyfill" Version="9.5.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
