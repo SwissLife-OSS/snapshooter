@@ -1,5 +1,5 @@
 name: Release
-run-name: Release ${{ github.ref_name }}
+run-name: Release 🚀 ${{ github.ref_name }}
 
 on:
   push:
@@ -9,18 +9,20 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        project: ['.']
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: |
-            8
-            9
-            10
+
+      - name: Build projects
+        shell: bash
+        working-directory: ${{ matrix.project }}
+        run: dotnet build ./all.csproj -c Release
 
       - name: Extract version
         id: extract_version
@@ -33,16 +35,14 @@ jobs:
           echo "Package Version: $PACKAGE_VERSION"
           echo "Assembly Version: $ASSEMBLY_VERSION"
 
-      - name: Build projects
-        shell: bash
-        run: dotnet build -c Release
-
       - name: Pack
         shell: bash
+        working-directory: ${{ matrix.project }}
         run: |
-          dotnet pack \
-            -c Release -o \
-            ./out --no-build  \
+          dotnet pack ./all.csproj \
+            -c Release \
+            -o ./out \
+            --no-build  \
             --include-symbols \
             --include-source \
             --verbosity Minimal \
@@ -52,5 +52,6 @@ jobs:
 
       - name: Push
         shell: bash
+        working-directory: ${{ matrix.project }}
         run: |
           find . -name '*.nupkg' | grep -v '.sources.nupkg' | parallel --jobs 0 'dotnet nuget push {} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json'

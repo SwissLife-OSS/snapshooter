@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.Build.Traversal/4.1.82">
 
   <PropertyGroup>
-    <BuildTestOnly>false</BuildTestOnly>
+    <BuildTestsOnly>false</BuildTestsOnly>
     <IncludeInSolutionFile>false</IncludeInSolutionFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="$(BuildTestOnly) != 'true'">
+  <ItemGroup Condition="'$(BuildTestsOnly)' != 'true'">
     <ProjectReference Include="**/*.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(BuildTestOnly) != 'true'">
-    <ProjectReference Include="**/test/*.csproj" />
+  <ItemGroup Condition="'$(BuildTestsOnly)' == 'true'">
+    <ProjectReference Include="**/test/**/*.csproj" />
   </ItemGroup>
 
 </Project>
