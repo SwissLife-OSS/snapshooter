@@ -19,6 +19,11 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
 
+      - name: Build projects
+        shell: bash
+        working-directory: ${{ matrix.project }}
+        run: dotnet build ./all.csproj -c Release
+
       - name: Extract version
         id: extract_version
         shell: bash
@@ -29,11 +34,6 @@ jobs:
           echo "assembly_version=$ASSEMBLY_VERSION" >> $GITHUB_OUTPUT
           echo "Package Version: $PACKAGE_VERSION"
           echo "Assembly Version: $ASSEMBLY_VERSION"
-
-      - name: Build projects
-        shell: bash
-        working-directory: ${{ matrix.project }}
-        run: dotnet build ./all.csproj -c Release
 
       - name: Pack
         shell: bash
