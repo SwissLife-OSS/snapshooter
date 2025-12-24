@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(BuildTestsOnly)' == 'true'">
-    <ProjectReference Include="**/*Tests.csproj" />
+    <ProjectReference Include="**/test/**/*.csproj" />
   </ItemGroup>
 
 </Project>
