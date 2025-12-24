@@ -1,5 +1,5 @@
 name: CI
-run-name: CI ${{ github.event.pull_request.title }}
+run-name: CI 🔍 ${{ github.event.pull_request.title }}
 
 on:
   pull_request:
@@ -11,6 +11,11 @@ concurrency:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        dotnet-version: [8, 9, 10]
+        project: ['.']
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -18,15 +23,14 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: |
-            8
-            9
-            10
+          dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Build projects
-        run: dotnet build ./all.csproj
         shell: bash
+        working-directory: ${{ matrix.project }}
+        run: dotnet build ./all.csproj
 
       - name: Run tests
-        run: dotnet test ./all.csproj /p:BuildTestsOnly=true
         shell: bash
+        working-directory: ${{ matrix.project }}
+        run: dotnet test ./all.csproj /p:BuildTestsOnly=true --no-build
