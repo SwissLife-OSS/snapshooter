@@ -16,7 +16,7 @@ namespace Snapshooter.Xunit
         /// </param>
         public static void MatchSnapshot(
             this object currentResult,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, matchOptions);
@@ -44,7 +44,7 @@ namespace Snapshooter.Xunit
         public static void MatchSnapshot(
             this object currentResult,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotNameExtension, matchOptions);
@@ -67,7 +67,7 @@ namespace Snapshooter.Xunit
         public static void MatchSnapshot(
             this object currentResult,
             string snapshotName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotName, matchOptions);
@@ -100,7 +100,7 @@ namespace Snapshooter.Xunit
             this object currentResult,
             string snapshotName,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotName, snapshotNameExtension, matchOptions);
@@ -122,7 +122,7 @@ namespace Snapshooter.Xunit
         public static void MatchSnapshot(
             this object currentResult,
             SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             var cleanedObject = currentResult.RemoveUnwantedWrappers();
             Snapshot.Match(cleanedObject, snapshotFullName, matchOptions);

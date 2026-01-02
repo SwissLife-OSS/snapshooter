@@ -23,12 +23,12 @@ public class Xunit3SnapshotFullNameReader : ISnapshotFullNameReader
     /// <returns>The full name of the snapshot.</returns>
     public SnapshotFullName ReadSnapshotFullName()
     {
-        SnapshotFullName snapshotFullName = null;
+        SnapshotFullName? snapshotFullName = null;
         StackFrame[] stackFrames = new StackTrace(true).GetFrames();
 
         foreach (StackFrame stackFrame in stackFrames)
         {
-            MethodBase method = stackFrame.GetMethod();
+            MethodBase? method = stackFrame.GetMethod();
             if (IsXunitTestMethod(method))
             {
                 snapshotFullName = new SnapshotFullName(
@@ -38,7 +38,7 @@ public class Xunit3SnapshotFullNameReader : ISnapshotFullNameReader
                 break;
             }
 
-            MethodBase asyncMethod = EvaluateAsynchronMethodBase(method);
+            MethodBase? asyncMethod = EvaluateAsynchronMethodBase(method);
             if (IsXunitTestMethod(asyncMethod))
             {
                 snapshotFullName = new SnapshotFullName(
@@ -66,7 +66,7 @@ public class Xunit3SnapshotFullNameReader : ISnapshotFullNameReader
         return snapshotFullName;
     }
 
-    private static bool IsXunitTestMethod(MemberInfo method)
+    private static bool IsXunitTestMethod(MemberInfo? method)
     {
         bool isFactTest = IsFactTestMethod(method);
         bool isTheoryTest = IsTheoryTestMethod(method);
@@ -74,22 +74,22 @@ public class Xunit3SnapshotFullNameReader : ISnapshotFullNameReader
         return isFactTest || isTheoryTest;
     }
 
-    private static bool IsFactTestMethod(MemberInfo method)
+    private static bool IsFactTestMethod(MemberInfo? method)
     {
         return method?.GetCustomAttributes(typeof(FactAttribute))?.Any() ?? false;
     }
 
-    private static bool IsTheoryTestMethod(MemberInfo method)
+    private static bool IsTheoryTestMethod(MemberInfo? method)
     {
         return method?.GetCustomAttributes(typeof(TheoryAttribute))?.Any() ?? false;
     }
 
-    private static MethodBase EvaluateAsynchronMethodBase(MemberInfo method)
+    private static MethodBase? EvaluateAsynchronMethodBase(MemberInfo? method)
     {
-        Type methodDeclaringType = method?.DeclaringType;
-        Type classDeclaringType = methodDeclaringType?.DeclaringType;
+        Type? methodDeclaringType = method?.DeclaringType;
+        Type? classDeclaringType = methodDeclaringType?.DeclaringType;
 
-        MethodInfo actualMethodInfo = null;
+        MethodInfo? actualMethodInfo = null;
         if (classDeclaringType != null)
         {
             IEnumerable<MethodInfo> selectedMethodInfos =
