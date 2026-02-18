@@ -49,4 +49,21 @@ jobs:
 
       - name: Build benchmarks
         shell: bash
-        run: dotnet build ./benchmark/Snapshooter.Benchmarks/Snapshooter.Benchmarks.csproj -c Release
+        run: dotnet build ./all.csproj /p:BuildBenchmarksOnly=true -c Release -f net10.0
+
+  samples:
+    runs-on: ubuntu-latest
+    name: Build Samples
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10
+
+      - name: Build samples
+        shell: bash
+        run: dotnet build ./all.csproj /p:BuildSamplesOnly=true -c Release -f net10.0
