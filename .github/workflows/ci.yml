@@ -33,3 +33,20 @@ jobs:
       - name: Run tests
         shell: bash
         run: dotnet test ./all.csproj /p:BuildTestsOnly=true --no-build -f net${{ matrix.dotnet-version }}.0
+
+  benchmarks:
+    runs-on: ubuntu-latest
+    name: Build Benchmarks
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10
+
+      - name: Build benchmarks
+        shell: bash
+        run: dotnet build ./benchmark/Snapshooter.Benchmarks/Snapshooter.Benchmarks.csproj -c Release

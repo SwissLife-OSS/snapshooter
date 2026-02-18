@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(BuildTestsOnly)' != 'true'">
-    <ProjectReference Include="**/*.csproj" />
+    <ProjectReference Include="**/*.csproj" Exclude="**/Snapshooter.Benchmarks.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(BuildTestsOnly)' == 'true'">
