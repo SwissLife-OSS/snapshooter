@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(CCTestProjectProps)" Condition="Exists('$(CCTestProjectProps)')" />
-
+  
   <PropertyGroup>
     <AssemblyName>Snapshooter.MSTest.Tests</AssemblyName>
     <RootNamespace>Snapshooter.MSTest.Tests</RootNamespace>
-    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.0.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>

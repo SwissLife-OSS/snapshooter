@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#pragma warning disable MSTEST0044 // Prefer TestMethod over DataTestMethod
+
 namespace Snapshooter.MSTest.Tests
 {
     [TestClass]
@@ -17,9 +19,9 @@ namespace Snapshooter.MSTest.Tests
             SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
 
             // assert
-            Assert.AreEqual(snapshotFullName.Filename,
-                $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
-                $"{nameof(ReadSnapshotFullName_ResolveTestSnapshotFullName_ResolvedSuccessfully)}");
+            var expected = $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
+                           $"{nameof(ReadSnapshotFullName_ResolveTestSnapshotFullName_ResolvedSuccessfully)}";
+            Assert.AreEqual(expected, snapshotFullName.Filename);
         }
 
         [TestMethod]
@@ -34,9 +36,9 @@ namespace Snapshooter.MSTest.Tests
 
             // assert
             await Task.Delay(1);
-            Assert.AreEqual(snapshotFullName.Filename,
-                $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
-                $"{nameof(ReadSnapshotFullName_ResolveTestSnapshotFullNameAsync_ResolvedSuccessfully)}");
+            var expected = $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
+                           $"{nameof(ReadSnapshotFullName_ResolveTestSnapshotFullNameAsync_ResolvedSuccessfully)}";
+            Assert.AreEqual(expected, snapshotFullName.Filename);
         }
 
         [DataTestMethod]
@@ -53,10 +55,10 @@ namespace Snapshooter.MSTest.Tests
             SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
 
             // assert
-            Assert.AreEqual(snapshotFullName.Filename,
-                $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
-                $"{nameof(ReadSnapshotFullName_ResolveTheorySnapshotName_NameResolvedWithoutInlineDataParameters)}" +
-                $"_{param1}_{param2}");
+            var expected = $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
+                           $"{nameof(ReadSnapshotFullName_ResolveTheorySnapshotName_NameResolvedWithoutInlineDataParameters)}" +
+                           $"_{param1}_{param2}";
+            Assert.AreEqual(expected, snapshotFullName.Filename);
         }
 
         [DataTestMethod]
@@ -75,13 +77,13 @@ namespace Snapshooter.MSTest.Tests
 
             // assert
             await Task.Delay(1);
-            Assert.AreEqual(snapshotFullName.Filename,
-                $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
-                $"{nameof(ReadSnapshotFullName_ResolveTheorySnapshotNameAsync_NameResolvedWithoutInlineDataParameters)}" +
-                $"_{param1}_{param2}");
+            var expected = $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
+                           $"{nameof(ReadSnapshotFullName_ResolveTheorySnapshotNameAsync_NameResolvedWithoutInlineDataParameters)}" +
+                           $"_{param1}_{param2}";
+            Assert.AreEqual(expected, snapshotFullName.Filename);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataSource(nameof(TestCases))]
         public void ReadSnapshotFullName_ResolveTheoryDataSnapshotName_NameResolvedWithoutInlineDataParameters(
            string param1, int param2)
@@ -93,13 +95,13 @@ namespace Snapshooter.MSTest.Tests
             SnapshotFullName snapshotFullName = snapshotFullNameResolver.ReadSnapshotFullName();
 
             // assert
-            Assert.AreEqual(snapshotFullName.Filename,
-                $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
-                $"{nameof(ReadSnapshotFullName_ResolveTheoryDataSnapshotName_NameResolvedWithoutInlineDataParameters)}" +
-                $"_{param1}_{param2}");
+            var expected = $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
+                           $"{nameof(ReadSnapshotFullName_ResolveTheoryDataSnapshotName_NameResolvedWithoutInlineDataParameters)}" +
+                           $"_{param1}_{param2}";
+            Assert.AreEqual(expected, snapshotFullName.Filename);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataSource(nameof(TestCases))]
         public async Task ReadSnapshotFullName_ResolveTheoryDataSnapshotNameAsync_NameResolvedWithoutInlineDataParameters(
            string param1, int param2)
@@ -113,10 +115,10 @@ namespace Snapshooter.MSTest.Tests
 
             // assert
             await Task.Delay(1);
-            Assert.AreEqual(snapshotFullName.Filename,
-                $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
-                $"{nameof(ReadSnapshotFullName_ResolveTheoryDataSnapshotNameAsync_NameResolvedWithoutInlineDataParameters)}" +
-                $"_{param1}_{param2}");
+            var expected = $"{nameof(MSTestSnapshotFullNameReaderTests)}." +
+                           $"{nameof(ReadSnapshotFullName_ResolveTheoryDataSnapshotNameAsync_NameResolvedWithoutInlineDataParameters)}" +
+                           $"_{param1}_{param2}";
+            Assert.AreEqual(expected, snapshotFullName.Filename);
         }
 
         [DataTestMethod]

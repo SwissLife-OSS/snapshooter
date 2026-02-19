@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(CCResourceProjectProps)" Condition="Exists('$(CCResourceProjectProps)')" />
-
+  
   <PropertyGroup>
     <AssemblyName>Snapshooter</AssemblyName>
     <RootNamespace>Snapshooter</RootNamespace>
     <PackageId>Snapshooter</PackageId>
     <Description>Snapshooter core functionalities to create and assert snapshots in .Net unit tests.</Description>
-    <IsTestProject>false</IsTestProject>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -14,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

@@ -29,7 +29,7 @@ namespace Snapshooter.MSTest.Tests
             testPerson.Should().MatchSnapshot(nameof(MatchSnapshot_ShouldFluentAssertionsNameOf_RemovesSubject));
         }
 
-        [TestMethod("Test for issue #118")]
+        [TestMethod(DisplayName = "Test for issue #118")]
         public void MatchSnapshot_FluentAssertions_StringValue_ShouldRemovesSubject()
         {
             // arrange
@@ -39,7 +39,7 @@ namespace Snapshooter.MSTest.Tests
             testValue.Should().MatchSnapshot();
         }
 
-        [TestMethod("Test for issue #118")]
+        [TestMethod(DisplayName = "Test for issue #118")]
         public void MatchSnapshot_FluentAssertions_DictionaryValue_ShouldRemovesSubject()
         {
             // arrange
@@ -96,7 +96,7 @@ namespace Snapshooter.MSTest.Tests
             TestPerson testPerson = null;
 
             // act & assert
-            Assert.ThrowsException<ArgumentNullException>(() => testPerson.MatchSnapshot());
+            Assert.ThrowsExactly<ArgumentNullException>(() => testPerson.MatchSnapshot());
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -145,7 +145,7 @@ namespace Snapshooter.MSTest
         {
             var d when d is null => "null",
             var d when d is IEnumerable => $"[{string.Join("_", (IEnumerable<object>)d)}]",
-            _ => data.ToString()
+            _ => Convert.ToString(d, CultureInfo.InvariantCulture))
         };
     }
 }

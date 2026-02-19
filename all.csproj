@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.Build.Traversal/4.1.82">
+
+  <PropertyGroup>
+    <BuildTestsOnly>false</BuildTestsOnly>
+    <BuildSamplesOnly>false</BuildSamplesOnly>
+    <BuildBenchmarksOnly>false</BuildBenchmarksOnly>
+    <IncludeInSolutionFile>false</IncludeInSolutionFile>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(BuildTestsOnly)' != 'true'">
+    <ProjectReference Include="**/*.csproj" Exclude="benchmark/**/*.csproj;samples/**/*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(BuildTestsOnly)' == 'true'">
+    <ProjectReference Include="**/test/**/*.csproj" Exclude="benchmark/**/*.csproj;samples/**/*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(BuildSamplesOnly)' == 'true'">
+    <ProjectReference Include="samples/**/*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(BuildBenchmarksOnly)' == 'true'">
+    <ProjectReference Include="benchmark/**/*.csproj" />
+  </ItemGroup>
+
+</Project>

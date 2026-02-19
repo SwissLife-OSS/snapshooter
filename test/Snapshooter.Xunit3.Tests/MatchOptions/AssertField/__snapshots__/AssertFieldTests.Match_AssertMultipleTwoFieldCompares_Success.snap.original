@@ -1,0 +1,91 @@
+{
+  "result": {
+    "data": {
+      "deleteDocument": {
+        "success": true,
+        "errors": null
+      }
+    }
+  },
+  "docInstances": [
+    {
+      "Id": "f80c97a9-9b91-44d0-8f79-7deeca2db556",
+      "DocumentId": "49333741-ef79-4e5a-97bc-bf2cdd3f1efd",
+      "RefId": "7ed772a2-2c33-4720-986d-8a9655b33d15",
+      "Name": "Default test document small",
+      "Tenant": "FCD",
+      "IsDeleted": true,
+      "Created": "2019-05-28T08:20:37Z",
+      "Modified": "2019-05-28T09:20:37Z",
+      "CreatedBy": "cfc67d0b-9c3c-4e4d-af2e-57fd12efc78f",
+      "ModifiedBy": "ee0a3db2-3f9e-4ce2-8f3e-f0869f366983",
+      "Metadata": [
+        {
+          "Name": "Language",
+          "Value": "En"
+        },
+        {
+          "Name": "OfferType",
+          "Value": "TestOffer"
+        },
+        {
+          "Name": "ContractId",
+          "Value": "aa5756be-4f3c-4962-8ce7-d110f94a8627"
+        },
+        {
+          "Name": "Pages",
+          "Value": 2
+        },
+        {
+          "Name": "IsSent",
+          "Value": true
+        },
+        {
+          "Name": "LetterDate",
+          "Value": "2019-05-28T10:20:37Z"
+        }
+      ],
+      "MetadataAddition": []
+    }
+  ],
+  "changeSets": [
+    {
+      "Id": "b79eb661-10ec-4adf-b3e1-f25b08bb07a2",
+      "DocumentId": null,
+      "DocumentInstanceId": "f80c97a9-9b91-44d0-8f79-7deeca2db556",
+      "UserId": "78125579-a2b1-4463-9188-23208afcd1dd",
+      "Tenant": "FCD",
+      "ChangeDate": "2022-11-18T15:21:31.967Z",
+      "Changes": [
+        {
+          "Type": "Document",
+          "Action": "Deleted",
+          "Name": null,
+          "OldValue": null,
+          "NewValue": null
+        }
+      ],
+      "Infos": {}
+    }
+  ],
+  "audits": [
+    {
+      "Id": "e1dbc5fb-68c4-4c77-a48a-b234f1fc7114",
+      "DocumentInstanceId": "f80c97a9-9b91-44d0-8f79-7deeca2db556",
+      "UserId": "78125579-a2b1-4463-9188-23208afcd1dd",
+      "Tenant": "FCD",
+      "AuditAction": "Delete",
+      "TimeStamp": "2022-11-18T15:21:31.964Z",
+      "Details": []
+    }
+  ],
+  "users": [
+    {
+      "UserId": "78125579-a2b1-4463-9188-23208afcd1dd",
+      "LoginId": "TheTestClientIdToDeleteDocument",
+      "Username": "Unresolved",
+      "DisplayName": "Unresolved",
+      "Type": "Service"
+    }
+  ]
+}

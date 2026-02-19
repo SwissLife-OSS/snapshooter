@@ -1,0 +1,62 @@
+name: Release
+run-name: Release 🚀 ${{ github.ref_name }}
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ['.']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
+
+      - name: Build projects
+        shell: bash
+        working-directory: ${{ matrix.project }}
+        run: dotnet build ./all.csproj -c Release
+
+      - name: Extract version
+        id: extract_version
+        shell: bash
+        run: |
+          PACKAGE_VERSION="${{ github.ref_name }}"
+          ASSEMBLY_VERSION="$(echo ${{ github.ref_name }} | grep -o '^[0-9]*\.[0-9]*\.[0-9]*').0"
+          echo "package_version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+          echo "assembly_version=$ASSEMBLY_VERSION" >> $GITHUB_OUTPUT
+          echo "Package Version: $PACKAGE_VERSION"
+          echo "Assembly Version: $ASSEMBLY_VERSION"
+
+      - name: Pack
+        shell: bash
+        working-directory: ${{ matrix.project }}
+        run: |
+          dotnet pack ./all.csproj \
+            -c Release \
+            -o ./out \
+            --no-build  \
+            --include-symbols \
+            --include-source \
+            --verbosity Minimal \
+            /p:Version=${{ steps.extract_version.outputs.package_version }} \
+            /p:AssemblyVersion=${{ steps.extract_version.outputs.assembly_version }} \
+            /p:FileVersion=${{ steps.extract_version.outputs.assembly_version }}
+
+      - name: Push
+        shell: bash
+        working-directory: ${{ matrix.project }}
+        run: |
+          find . -name '*.nupkg' | grep -v '.sources.nupkg' | parallel --jobs 0 'dotnet nuget push {} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json'
