@@ -145,7 +145,7 @@ namespace Snapshooter.MSTest
         {
             var d when d is null => "null",
             var d when d is IEnumerable => $"[{string.Join("_", (IEnumerable<object>)d)}]",
-            _ => Convert.ToString(d, CultureInfo.InvariantCulture))
+            _ => Convert.ToString(data, CultureInfo.InvariantCulture)
         };
     }
 }
