@@ -143,8 +143,9 @@ namespace Snapshooter.MSTest
 
         private static string ParamDataFormatter(object data) => data switch
         {
-            var d when d is null => "null",
-            var d when d is IEnumerable => $"[{string.Join("_", (IEnumerable<object>)d)}]",
+            null => "null",
+            string s => s,
+            IEnumerable e => $"[{string.Join("_", e.Cast<object>().Select(ParamDataFormatter))}]",
             _ => Convert.ToString(data, CultureInfo.InvariantCulture)
         };
     }
