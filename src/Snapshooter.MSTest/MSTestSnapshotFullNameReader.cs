@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -130,9 +131,22 @@ namespace Snapshooter.MSTest
             DataRowAttribute currentRow =
                 dataRowAttributes.ElementAt(dataTestMethodRowIndex[method.Name]);
 
+            if (!string.IsNullOrEmpty(currentRow.DisplayName))
+            {
+                return $"{method.DeclaringType.Name}.{currentRow.DisplayName}";
+            }
+
             return $"{method.DeclaringType.Name}." +
                 method.Name +
-                $"_{string.Join("_", currentRow.Data.Select(d => Convert.ToString(d, CultureInfo.InvariantCulture)))}";
+                $"_{string.Join("_", currentRow.Data.Select(ParamDataFormatter))}";
         }
+
+        private static string ParamDataFormatter(object data) => data switch
+        {
+            null => "null",
+            string s => s,
+            IEnumerable e => $"[{string.Join("_", e.Cast<object>().Select(ParamDataFormatter))}]",
+            _ => Convert.ToString(data, CultureInfo.InvariantCulture)
+        };
     }
 }
