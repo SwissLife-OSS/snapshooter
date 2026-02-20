@@ -188,7 +188,7 @@ namespace Snapshooter.Xunit3.Tests.MatchOptions.AssertField
             testPerson.Id = Guid.NewGuid();
             testPerson.CreationDate = DateTime.UtcNow;
             testPerson.Address.StreetNumber = -58;
-            testPerson.Address.Country = null;
+            testPerson.Address.Country = null!;
             testPerson.Relatives[0].Address.Plz = null;
 
             // act & assert
