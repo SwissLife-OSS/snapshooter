@@ -16,6 +16,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <None Include="$(MSBuildThisFileDirectory)logo.png"
+          Pack="true"
+          PackagePath="\" />
   </PropertyGroup>
 
   <PropertyGroup>
@@ -37,7 +40,7 @@
     <PackageProjectUrl>https://github.com/SwissLife-OSS/Snapshooter</PackageProjectUrl>
     <PackageReleaseNotes>Release notes: https://github.com/SwissLife-OSS/Snapshooter/releases/$(Version)</PackageReleaseNotes>
     <PackageTags>XUnit SwissLife Snapshot UnitTest Test IntegrationTest SystemTest DatabaseTest .Net</PackageTags>
-    <PackageIconUrl>https://github.com/SwissLife-OSS/snapshooter/raw/master/logo.png</PackageIconUrl>
+    <PackageIcon>logo.png</PackageIcon>
     <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
 
