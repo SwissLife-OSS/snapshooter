@@ -16,9 +16,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <None Include="$(MSBuildThisFileDirectory)logo.png"
-          Pack="true"
-          PackagePath="\" />
   </PropertyGroup>
 
   <PropertyGroup>
@@ -56,6 +53,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.102" PrivateAssets="All" />
+    <None Include="$(MSBuildThisFileDirectory)logo.png"
+          Pack="true"
+          PackagePath="\" />
   </ItemGroup>
 
 </Project>
