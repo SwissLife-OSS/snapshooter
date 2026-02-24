@@ -38,6 +38,7 @@
     <PackageReleaseNotes>Release notes: https://github.com/SwissLife-OSS/Snapshooter/releases/$(Version)</PackageReleaseNotes>
     <PackageTags>XUnit SwissLife Snapshot UnitTest Test IntegrationTest SystemTest DatabaseTest .Net</PackageTags>
     <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
 
@@ -54,6 +55,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.102" PrivateAssets="All" />
     <None Include="$(MSBuildThisFileDirectory)logo.png"
+          Pack="true"
+          PackagePath="\" />
+    <None Include="$(MSBuildThisFileDirectory)README.md"
           Pack="true"
           PackagePath="\" />
   </ItemGroup>
