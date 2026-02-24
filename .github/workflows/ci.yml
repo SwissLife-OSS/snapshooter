@@ -23,8 +23,6 @@ jobs:
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Build projects
         shell: bash
@@ -44,8 +42,6 @@ jobs:
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10
 
       - name: Build benchmarks
         shell: bash
@@ -61,8 +57,6 @@ jobs:
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10
 
       - name: Build samples
         shell: bash
