@@ -9,9 +9,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: ['.']
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -26,7 +23,6 @@ jobs:
 
       - name: Build projects
         shell: bash
-        working-directory: ${{ matrix.project }}
         run: dotnet build ./all.csproj -c Release
 
       - name: Extract version
@@ -42,7 +38,6 @@ jobs:
 
       - name: Pack
         shell: bash
-        working-directory: ${{ matrix.project }}
         run: |
           dotnet pack ./all.csproj \
             -c Release \
@@ -57,6 +52,5 @@ jobs:
 
       - name: Push
         shell: bash
-        working-directory: ${{ matrix.project }}
         run: |
           find . -name '*.nupkg' | grep -v '.sources.nupkg' | parallel --jobs 0 'dotnet nuget push {} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json'
