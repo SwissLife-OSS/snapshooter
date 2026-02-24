@@ -23,6 +23,11 @@ jobs:
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
 
       - name: Build projects
         shell: bash
@@ -42,6 +47,11 @@ jobs:
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
 
       - name: Build benchmarks
         shell: bash
@@ -57,6 +67,11 @@ jobs:
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.x
+            9.x
+            10.x
 
       - name: Build samples
         shell: bash
