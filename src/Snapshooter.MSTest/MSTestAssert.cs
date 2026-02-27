@@ -1,3 +1,4 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Snapshooter.Core;
 using MsTest = Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,7 +17,16 @@ namespace Snapshooter.MSTest
         /// <param name="actualSnapshot">The actual snapshot.</param>
         public void Assert(string expectedSnapshot, string actualSnapshot)
         {
-            MsTest.Assert.AreEqual(expectedSnapshot, actualSnapshot);
+            try
+            {
+                MsTest.Assert.AreEqual(expectedSnapshot, actualSnapshot);
+            }
+            catch (AssertFailedException ex)
+            {
+                string displayableDiff = DiffGenerator.GenerateDiff(expectedSnapshot, actualSnapshot);
+
+                throw new AssertFailedException($"Assert.AreEqual failed. {displayableDiff}", ex);
+            }
         }
     }
 }
