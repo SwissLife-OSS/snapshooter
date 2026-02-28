@@ -30,7 +30,8 @@ namespace Snapshooter.TUnit
         /// </param>
         public static void Match<T>(
             T currentResult,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, matchOptions);
         }
@@ -58,7 +59,8 @@ namespace Snapshooter.TUnit
         public static void Match<T>(
             T currentResult,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotNameExtension, matchOptions);
         }
@@ -81,7 +83,8 @@ namespace Snapshooter.TUnit
         public static void Match<T>(
             T currentResult,
             string snapshotName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotName, matchOptions);
         }
@@ -114,7 +117,8 @@ namespace Snapshooter.TUnit
             T currentResult,
             string snapshotName,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
@@ -134,7 +138,8 @@ namespace Snapshooter.TUnit
         public static void Match<T>(
             T currentResult,
             SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotFullName, matchOptions);
         }
@@ -151,7 +156,7 @@ namespace Snapshooter.TUnit
         /// </param>
         public static void Match(
             object currentResult,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             Match(currentResult, FullName(), matchOptions);
         }
@@ -178,7 +183,7 @@ namespace Snapshooter.TUnit
         public static void Match(
             object currentResult,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             Match(currentResult, FullName(snapshotNameExtension), matchOptions);
         }
@@ -200,7 +205,7 @@ namespace Snapshooter.TUnit
         public static void Match(
             object currentResult,
             string snapshotName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             Match(currentResult, FullName(snapshotName), matchOptions);
         }
@@ -232,7 +237,7 @@ namespace Snapshooter.TUnit
             object currentResult,
             string snapshotName,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             Match(currentResult, FullName(snapshotName, snapshotNameExtension), matchOptions);
         }
@@ -252,7 +257,7 @@ namespace Snapshooter.TUnit
         public static void Match(
             object currentResult,
             SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             try
             {

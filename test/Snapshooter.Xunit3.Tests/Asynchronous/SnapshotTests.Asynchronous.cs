@@ -133,7 +133,7 @@ namespace Snapshooter.Xunit3.Tests
         }
 
         [Fact]
-        public async Task Match_FactMatchSnapshotInAsncMethod_OneFieldNotEqual()
+        public async Task Match_FactMatchSnapshotInAsyncMethod_OneFieldNotEqual()
         {
             // arrange
             await Task.Delay(1);

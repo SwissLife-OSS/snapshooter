@@ -207,7 +207,7 @@ namespace Snapshooter.Xunit
         public static void Match(
             object currentResult,
             string snapshotName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             Match(currentResult, FullName(snapshotName), matchOptions);
         }

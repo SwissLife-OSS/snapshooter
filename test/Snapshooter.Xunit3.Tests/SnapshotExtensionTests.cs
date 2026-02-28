@@ -62,9 +62,9 @@ public class SnapshotExtensionTests
     public void MatchSnapshot_Null_Throws()
     {
         // arrange
-        TestPerson testPerson = null;
+        TestPerson? testPerson = null;
 
         // act & assert
-        Assert.Throws<ArgumentNullException>(() => testPerson.MatchSnapshot());
+        Assert.Throws<ArgumentNullException>(() => testPerson!.MatchSnapshot());
     }
 }
