@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using Snapshooter.Core;
 using Snapshooter.Core.Serialization;
@@ -28,6 +28,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void Match<T>(
             T currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
@@ -55,6 +56,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void Match<T>(
             T currentResult,
             SnapshotNameExtension snapshotNameExtension,
@@ -78,6 +80,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void Match<T>(
             T currentResult,
             string snapshotName,
@@ -110,6 +113,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void Match<T>(
             T currentResult,
             string snapshotName,
@@ -131,6 +135,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison.
         /// </param>
+        [AssertionMethod]
         public static void Match<T>(
             T currentResult,
             SnapshotFullName snapshotFullName,
@@ -149,6 +154,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void Match(
             object currentResult,
             Func<MatchOptions, MatchOptions> matchOptions = null)
@@ -182,6 +188,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void Match(
             object currentResult,
             SnapshotNameExtension snapshotNameExtension,
@@ -204,6 +211,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison
         /// </param>
+        [AssertionMethod]
         public static void Match(
             object currentResult,
             string snapshotName,
@@ -235,6 +243,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison.
         /// </param>
+        [AssertionMethod]
         public static void Match(
             object currentResult,
             string snapshotName,
@@ -256,6 +265,7 @@ namespace Snapshooter.Xunit
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the snapshot comparison.
         /// </param>
+        [AssertionMethod]
         public static void Match(
             object currentResult,
             SnapshotFullName snapshotFullName,

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Snapshooter.Core;
 using Snapshooter.Core.Serialization;
 
@@ -26,6 +26,7 @@ namespace Snapshooter.Json
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the comparison
         /// </param>
+        [AssertionMethod]
         public static void Match<T>(T currentResult,
                                     string snapshotName,
                                     Func<MatchOptions, MatchOptions> matchOptions = null)
@@ -56,6 +57,7 @@ namespace Snapshooter.Json
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the comparison
         /// </param>
+        [AssertionMethod]
         public static void Match<T>(T currentResult,
                                     string snapshotName,
                                     SnapshotNameExtension snapshotNameExtension,
@@ -77,6 +79,7 @@ namespace Snapshooter.Json
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the comparison
         /// </param>
+        [AssertionMethod]
         public static void Match(object currentResult,
                                  string snapshotName,
                                  Func<MatchOptions, MatchOptions> matchOptions = null)
@@ -108,6 +111,7 @@ namespace Snapshooter.Json
         /// <param name="matchOptions">
         /// Additional compare actions, which can be applied during the comparison
         /// </param>
+        [AssertionMethod]
         public static void Match(object currentResult,
                                  string snapshotName,
                                  SnapshotNameExtension snapshotNameExtension,
