@@ -12,7 +12,7 @@ namespace Snapshooter
         private readonly ISnapshotFullNameReader _snapshotFullNameReader;
 
         /// <summary>
-        /// Constructor of the class <see cref="SnapshotFullNameResolver"/> 
+        /// Constructor of the class <see cref="SnapshotFullNameResolver"/>
         /// initializes a new instance.
         /// </summary>
         /// <param name="snapshotFullNameReader">The filename.</param>
@@ -32,13 +32,13 @@ namespace Snapshooter
         }
 
         /// <summary>
-        /// Resolves the snapshot name for the running unit test. 
-        /// The default generated snapshot name can be overwritten 
+        /// Resolves the snapshot name for the running unit test.
+        /// The default generated snapshot name can be overwritten
         /// by the given snapshot name.
         /// </summary>
         /// <param name="snapshotName">
-        /// The snapshot name given by the user. This snapshot name will overwrite 
-        /// the automatically generated snapshot name. 
+        /// The snapshot name given by the user. This snapshot name will overwrite
+        /// the automatically generated snapshot name.
         /// </param>
         /// <returns>The full name of a snapshot.</returns>
         public SnapshotFullName ResolveSnapshotFullName(
@@ -48,14 +48,14 @@ namespace Snapshooter
         }
 
         /// <summary>
-        /// Resolves the snapshot name for the running unit test. 
-        /// The default generated snapshot name can either be overwritten 
+        /// Resolves the snapshot name for the running unit test.
+        /// The default generated snapshot name can either be overwritten
         /// with a given snapshot name, or can be extended by the snapshot name extensions,
         /// or both.
         /// </summary>
         /// <param name="snapshotName">
-        /// The snapshot name given by the user, this snapshot name will overwrite 
-        /// the automatically generated snapshot name. 
+        /// The snapshot name given by the user, this snapshot name will overwrite
+        /// the automatically generated snapshot name.
         /// </param>
         /// <param name="snapshotNameExtension">
         /// The snapshot name extension will extend the snapshot name with
@@ -66,7 +66,7 @@ namespace Snapshooter
         public SnapshotFullName ResolveSnapshotFullName(
             string snapshotName, string snapshotNameExtension)
         {
-            SnapshotFullName snapshotFullName = 
+            SnapshotFullName snapshotFullName =
                 _snapshotFullNameReader.ReadSnapshotFullName();
 
             if (snapshotFullName == null)
@@ -75,7 +75,7 @@ namespace Snapshooter
                     "The snapshot full name could not be evaluated.");
             }
 
-            if(string.IsNullOrWhiteSpace(snapshotFullName.Filename) && 
+            if(string.IsNullOrWhiteSpace(snapshotFullName.Filename) &&
                string.IsNullOrWhiteSpace(snapshotName))
             {
                 throw new SnapshotTestException(
@@ -89,7 +89,7 @@ namespace Snapshooter
 
             snapshotName = AddSnapshotNameExtension(snapshotName, snapshotNameExtension);
             snapshotName = EnsureSnapshotFileExtension(snapshotName);
-                                   
+
             return new SnapshotFullName(snapshotName, snapshotFullName.FolderPath);
         }
 
