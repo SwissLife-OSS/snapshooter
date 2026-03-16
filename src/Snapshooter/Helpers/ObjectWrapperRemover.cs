@@ -5,7 +5,7 @@ namespace Snapshooter
 {
     public static class ObjectWrapperRemover
     {
-        public static object RemoveUnwantedWrappers(this object objectToRemoveWrappers)
+        internal static object RemoveUnwantedWrappers(this object objectToRemoveWrappers)
         {
             if (objectToRemoveWrappers == null)
             {
