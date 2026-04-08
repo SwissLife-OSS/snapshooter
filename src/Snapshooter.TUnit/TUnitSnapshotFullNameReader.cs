@@ -24,11 +24,11 @@ namespace Snapshooter.TUnit
         /// <returns>The full name of the snapshot.</returns>
         public SnapshotFullName ReadSnapshotFullName()
         {
-            SnapshotFullName snapshotFullName = null;
+            SnapshotFullName? snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
             foreach (StackFrame stackFrame in stackFrames)
             {
-                MethodBase method = stackFrame.GetMethod();
+                MethodBase? method = stackFrame.GetMethod();
                 if (IsTUnitTestMethod(method))
                 {
                     snapshotFullName = new SnapshotFullName(
@@ -38,7 +38,7 @@ namespace Snapshooter.TUnit
                     break;
                 }
 
-                MethodBase asyncMethod = EvaluateAsynchronousMethodBase(method);
+                MethodBase? asyncMethod = EvaluateAsynchronousMethodBase(method);
                 if (IsTUnitTestMethod(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
@@ -66,17 +66,17 @@ namespace Snapshooter.TUnit
             return snapshotFullName;
         }
 
-        private static bool IsTUnitTestMethod(MemberInfo method)
+        private static bool IsTUnitTestMethod(MemberInfo? method)
         {
             return method?.GetCustomAttributes(typeof(TestAttribute)).Any() ?? false;
         }
 
-        private static MethodBase EvaluateAsynchronousMethodBase(MemberInfo method)
+        private static MethodBase? EvaluateAsynchronousMethodBase(MemberInfo? method)
         {
-            Type methodDeclaringType = method?.DeclaringType;
-            Type classDeclaringType = methodDeclaringType?.DeclaringType;
+            Type? methodDeclaringType = method?.DeclaringType;
+            Type? classDeclaringType = methodDeclaringType?.DeclaringType;
 
-            MethodInfo actualMethodInfo = null;
+            MethodInfo? actualMethodInfo = null;
             if (classDeclaringType != null)
             {
                 IEnumerable<MethodInfo> selectedMethodInfos =

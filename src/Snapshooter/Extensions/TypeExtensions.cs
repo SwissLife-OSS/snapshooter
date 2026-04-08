@@ -34,12 +34,12 @@ namespace Snapshooter.Extensions
 
         public static string GetAliasName(this Type type)
         {
-            if (_typeAlias.TryGetValue(type, out string alias))
+            if (_typeAlias.TryGetValue(type, out var alias))
             {
                 return alias;
             }
 
-            Type nullbase = Nullable.GetUnderlyingType(type);
+            Type? nullbase = Nullable.GetUnderlyingType(type);
             if (nullbase != null)
             {
                 return GetAliasName(nullbase) + "?";

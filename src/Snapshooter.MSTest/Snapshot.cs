@@ -29,7 +29,8 @@ namespace Snapshooter.MSTest
         /// </param>
         public static void Match<T>(
             T currentResult,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, matchOptions);
         }
@@ -57,7 +58,8 @@ namespace Snapshooter.MSTest
         public static void Match<T>(
             T currentResult,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotNameExtension, matchOptions);
         }
@@ -80,7 +82,8 @@ namespace Snapshooter.MSTest
         public static void Match<T>(
             T currentResult,
             string snapshotName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotName, matchOptions);
         }
@@ -113,7 +116,8 @@ namespace Snapshooter.MSTest
             T currentResult,
             string snapshotName,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
@@ -133,7 +137,8 @@ namespace Snapshooter.MSTest
         public static void Match<T>(
             T currentResult,
             SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotFullName, matchOptions);
         }
@@ -150,7 +155,7 @@ namespace Snapshooter.MSTest
         /// </param>
         public static void Match(
             object currentResult,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             try
             {
@@ -184,7 +189,7 @@ namespace Snapshooter.MSTest
         public static void Match(
             object currentResult,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             Match(currentResult, FullName(snapshotNameExtension), matchOptions);
         }
@@ -206,7 +211,7 @@ namespace Snapshooter.MSTest
         public static void Match(
             object currentResult,
             string snapshotName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             Match(currentResult, FullName(snapshotName), matchOptions);
         }
@@ -238,7 +243,7 @@ namespace Snapshooter.MSTest
             object currentResult,
             string snapshotName,
             SnapshotNameExtension snapshotNameExtension,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             Match(currentResult, FullName(snapshotName, snapshotNameExtension), matchOptions);
         }
@@ -258,7 +263,7 @@ namespace Snapshooter.MSTest
         public static void Match(
             object currentResult,
             SnapshotFullName snapshotFullName,
-            Func<MatchOptions, MatchOptions> matchOptions = null)
+            Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             try
             {
@@ -276,7 +281,7 @@ namespace Snapshooter.MSTest
         /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName()
         {
-            SnapshotFullName fullName = _snapshotName.Value;
+            SnapshotFullName? fullName = _snapshotName.Value;
 
             if (fullName is null)
             {
@@ -299,7 +304,7 @@ namespace Snapshooter.MSTest
         /// <returns>The full name of a snapshot.</returns>
         public static SnapshotFullName FullName(string snapshotName)
         {
-            SnapshotFullName fullName = _snapshotName.Value;
+            SnapshotFullName? fullName = _snapshotName.Value;
 
             if (fullName is null)
             {
@@ -328,7 +333,7 @@ namespace Snapshooter.MSTest
         public static SnapshotFullName FullName(
             SnapshotNameExtension snapshotNameExtension)
         {
-            SnapshotFullName fullName = _snapshotName.Value;
+            SnapshotFullName? fullName = _snapshotName.Value;
 
             if (fullName is null)
             {
@@ -363,7 +368,7 @@ namespace Snapshooter.MSTest
         public static SnapshotFullName FullName(
             string snapshotName, SnapshotNameExtension snapshotNameExtension)
         {
-            SnapshotFullName fullName = _snapshotName.Value;
+            SnapshotFullName? fullName = _snapshotName.Value;
 
             if (fullName is null)
             {
