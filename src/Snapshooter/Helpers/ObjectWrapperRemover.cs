@@ -24,7 +24,7 @@ namespace Snapshooter
                 return objectToRemoveWrappers;
             }
 
-            PropertyInfo prop = resultType.GetProperty("Subject");
+            PropertyInfo? prop = resultType.GetProperty("Subject");
             if (prop == null)
             {
                 return objectToRemoveWrappers;

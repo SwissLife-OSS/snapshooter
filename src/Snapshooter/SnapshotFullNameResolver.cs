@@ -42,7 +42,7 @@ namespace Snapshooter
         /// </param>
         /// <returns>The full name of a snapshot.</returns>
         public SnapshotFullName ResolveSnapshotFullName(
-            string snapshotName)
+            string? snapshotName)
         {
             return ResolveSnapshotFullName(snapshotName, null);
         }
@@ -64,7 +64,7 @@ namespace Snapshooter
         /// </param>
         /// <returns>The full name of a snapshot.</returns>
         public SnapshotFullName ResolveSnapshotFullName(
-            string snapshotName, string snapshotNameExtension)
+            string? snapshotName, string? snapshotNameExtension)
         {
             SnapshotFullName snapshotFullName = 
                 _snapshotFullNameReader.ReadSnapshotFullName();
@@ -105,7 +105,7 @@ namespace Snapshooter
         }
 
         private string AddSnapshotNameExtension(
-            string snapshotName, string snapshotNameExtension)
+            string snapshotName, string? snapshotNameExtension)
         {
             if (snapshotNameExtension != null)
             {

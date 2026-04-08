@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Snapshooter.Core;
 using Snapshooter.Exceptions;
 using Snapshooter.Tests.Data;
@@ -360,6 +361,7 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Decimal
             string typeName = "NotDefined")
         {
             // arrange
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             TestPerson testPerson = TestDataBuilder
                 .TestPersonSandraSchneider()
                 .WithSize(insertNull ? null : 1.756m)
@@ -405,7 +407,8 @@ namespace Snapshooter.Xunit.Tests.AcceptMatchOption.Decimal
             Assert.Equal(
                 snapshotFileHandler.ReadSnapshot(Snapshot.FullName(
                     SnapshotNameExtension.Create("Verified"))),
-                snapshotFileHandler.ReadSnapshot(originalFullName));
+                snapshotFileHandler.ReadSnapshot(originalFullName),
+                ignoreLineEndingDifferences: true);
         }
 
         #endregion

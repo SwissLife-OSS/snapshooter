@@ -28,7 +28,8 @@ namespace Snapshooter.Json
         /// </param>
         public static void Match<T>(T currentResult,
                                     string snapshotName,
-                                    Func<MatchOptions, MatchOptions> matchOptions = null)
+                                    Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotName, matchOptions);
         }
@@ -59,7 +60,8 @@ namespace Snapshooter.Json
         public static void Match<T>(T currentResult,
                                     string snapshotName,
                                     SnapshotNameExtension snapshotNameExtension,
-                                    Func<MatchOptions, MatchOptions> matchOptions = null)
+                                    Func<MatchOptions, MatchOptions>? matchOptions = null)
+            where T : notnull
         {
             Match((object)currentResult, snapshotName, snapshotNameExtension, matchOptions);
         }
@@ -79,7 +81,7 @@ namespace Snapshooter.Json
         /// </param>
         public static void Match(object currentResult,
                                  string snapshotName,
-                                 Func<MatchOptions, MatchOptions> matchOptions = null)
+                                 Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             SnapshotFullName snapshotFullName = FullName(snapshotName);
             Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);
@@ -111,7 +113,7 @@ namespace Snapshooter.Json
         public static void Match(object currentResult,
                                  string snapshotName,
                                  SnapshotNameExtension snapshotNameExtension,
-                                 Func<MatchOptions, MatchOptions> matchOptions = null)
+                                 Func<MatchOptions, MatchOptions>? matchOptions = null)
         {
             SnapshotFullName snapshotFullName = FullName(snapshotName, snapshotNameExtension);
             Snapshooter.AssertSnapshot(currentResult, snapshotFullName, matchOptions);

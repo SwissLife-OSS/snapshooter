@@ -27,11 +27,11 @@ namespace Snapshooter.NUnit
         /// <returns>The full name of the snapshot.</returns>
         public SnapshotFullName ReadSnapshotFullName()
         {
-            SnapshotFullName snapshotFullName = null;
+            SnapshotFullName? snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
             foreach (StackFrame stackFrame in stackFrames)
             {
-                MethodBase method = stackFrame.GetMethod();
+                MethodBase? method = stackFrame.GetMethod();
                 if (IsNUnitTestMethod(method))
                 {
                     snapshotFullName = new SnapshotFullName(
@@ -41,7 +41,7 @@ namespace Snapshooter.NUnit
                     break;
                 }
 
-                MethodBase asyncMethod = EvaluateAsynchronMethodBase(method);
+                MethodBase? asyncMethod = EvaluateAsynchronMethodBase(method);
                 if (IsNUnitTestMethod(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
@@ -69,7 +69,7 @@ namespace Snapshooter.NUnit
             return snapshotFullName;
         }
 
-        private static bool IsNUnitTestMethod(MemberInfo method)
+        private static bool IsNUnitTestMethod(MemberInfo? method)
         {
             bool isFactTest = IsTestMethod(method);
             bool isTheoryTest = IsTestCaseTestMethod(method);
@@ -78,27 +78,27 @@ namespace Snapshooter.NUnit
             return isFactTest || isTheoryTest || isTheoryDataTest;
         }
 
-        private static bool IsTestMethod(MemberInfo method)
+        private static bool IsTestMethod(MemberInfo? method)
         {
             return method?.GetCustomAttributes(typeof(TestAttribute))?.Any() ?? false;
         }
 
-        private static bool IsTestCaseTestMethod(MemberInfo method)
+        private static bool IsTestCaseTestMethod(MemberInfo? method)
         {
             return method?.GetCustomAttributes(typeof(TestCaseAttribute))?.Any() ?? false;
         }
 
-        private static bool IsTestCaseSourceTestMethod(MemberInfo method)
+        private static bool IsTestCaseSourceTestMethod(MemberInfo? method)
         {
             return method?.GetCustomAttributes(typeof(TestCaseSourceAttribute))?.Any() ?? false;
         }
 
-        private static MethodBase EvaluateAsynchronMethodBase(MemberInfo method)
+        private static MethodBase? EvaluateAsynchronMethodBase(MemberInfo? method)
         {
-            Type methodDeclaringType = method?.DeclaringType;
-            Type classDeclaringType = methodDeclaringType?.DeclaringType;
+            Type? methodDeclaringType = method?.DeclaringType;
+            Type? classDeclaringType = methodDeclaringType?.DeclaringType;
 
-            MethodInfo actualMethodInfo = null;
+            MethodInfo? actualMethodInfo = null;
             if (classDeclaringType != null)
             {
                 IEnumerable<MethodInfo> selectedMethodInfos =

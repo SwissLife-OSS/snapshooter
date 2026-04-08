@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -27,11 +28,11 @@ namespace Snapshooter.MSTest
         /// <returns>The full name of the snapshot.</returns>
         public SnapshotFullName ReadSnapshotFullName()
         {
-            SnapshotFullName snapshotFullName = null;
+            SnapshotFullName? snapshotFullName = null;
             StackFrame[] stackFrames = new StackTrace(true).GetFrames();
             foreach (StackFrame stackFrame in stackFrames)
             {
-                MethodBase method = stackFrame.GetMethod();
+                MethodBase? method = stackFrame.GetMethod();
                 if (IsMSTestTest(method))
                 {
                     snapshotFullName = new SnapshotFullName(
@@ -41,7 +42,7 @@ namespace Snapshooter.MSTest
                     break;
                 }
 
-                MethodBase asyncMethod = EvaluateAsynchronMethodBase(method);
+                MethodBase? asyncMethod = EvaluateAsynchronMethodBase(method);
                 if (IsMSTestTest(asyncMethod))
                 {
                     snapshotFullName = new SnapshotFullName(
@@ -69,7 +70,7 @@ namespace Snapshooter.MSTest
             return snapshotFullName;
         }
 
-        private static bool IsMSTestTest(MemberInfo method)
+        private static bool IsMSTestTest([NotNullWhen(true)] MemberInfo? method)
         {
             bool isFactTest = IsTestMethodTestMethod(method);
             bool isTheoryTest = IsDataTestMethodTestMethod(method);
@@ -77,22 +78,22 @@ namespace Snapshooter.MSTest
             return isFactTest || isTheoryTest;
         }
 
-        private static bool IsTestMethodTestMethod(MemberInfo method)
+        private static bool IsTestMethodTestMethod([NotNullWhen(true)] MemberInfo? method)
         {
             return method?.GetCustomAttributes(typeof(TestMethodAttribute))?.Any() ?? false;
         }
 
-        private static bool IsDataTestMethodTestMethod(MemberInfo method)
+        private static bool IsDataTestMethodTestMethod([NotNullWhen(true)] MemberInfo? method)
         {
             return method?.GetCustomAttributes(typeof(DataTestMethodAttribute))?.Any() ?? false;
         }
 
-        private static MethodBase EvaluateAsynchronMethodBase(MemberInfo method)
+        private static MethodBase? EvaluateAsynchronMethodBase(MemberInfo? method)
         {
-            Type methodDeclaringType = method?.DeclaringType;
-            Type classDeclaringType = methodDeclaringType?.DeclaringType;
+            Type? methodDeclaringType = method?.DeclaringType;
+            Type? classDeclaringType = methodDeclaringType?.DeclaringType;
 
-            MethodInfo actualMethodInfo = null;
+            MethodInfo? actualMethodInfo = null;
             if (classDeclaringType != null)
             {
                 IEnumerable<MethodInfo> selectedMethodInfos =
@@ -141,7 +142,7 @@ namespace Snapshooter.MSTest
                 $"_{string.Join("_", currentRow.Data.Select(ParamDataFormatter))}";
         }
 
-        private static string ParamDataFormatter(object data) => data switch
+        private static string? ParamDataFormatter(object? data) => data switch
         {
             null => "null",
             string s => s,

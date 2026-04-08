@@ -9,11 +9,11 @@ namespace Snapshooter.Core.Validators
         {
             if (!originalSnapshotExists)
             {
-                string value = Environment
+                var value = Environment
                     .GetEnvironmentVariable("SNAPSHOOTER_STRICT_MODE");
 
                 if (string.Equals(value, "on", StringComparison.Ordinal)
-                    || (bool.TryParse(value, out bool b) && b))
+                    || (bool.TryParse(value, out var b) && b))
                 {
                     throw new SnapshotNotFoundException(
                         "Strict mode is enabled and no snapshot has been found " +

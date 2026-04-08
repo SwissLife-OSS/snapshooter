@@ -484,16 +484,14 @@ namespace Snapshooter
         /// <param name="fieldPath">The json path to the field(s) to include.</param>
         public MatchOptions IncludeField(string fieldPath)
         {
-            FieldMatchOperator fieldMatchOperator =
-                _matchOperators.SingleOrDefault(op => op is IncludeMatchOperator);
+            IncludeMatchOperator? includeMatchOperator =
+                _matchOperators.OfType<IncludeMatchOperator>().SingleOrDefault();
 
-            if (fieldMatchOperator == null)
+            if (includeMatchOperator == null)
             {
-                fieldMatchOperator = new IncludeMatchOperator();
-                _matchOperators.Add(fieldMatchOperator);
+                includeMatchOperator = new IncludeMatchOperator();
+                _matchOperators.Add(includeMatchOperator);
             }
-
-            var includeMatchOperator = (IncludeMatchOperator)fieldMatchOperator;
 
             includeMatchOperator.AddFieldPath(fieldPath);
 

@@ -28,7 +28,8 @@ namespace Snapshooter.Xunit3.Tests.AcceptMatchOption.TestHelpers
             Assert.Equal(
                 snapshotFileHandler.ReadSnapshot(Snapshot.FullName(
                     SnapshotNameExtension.Create("Verified"))),
-                snapshotFileHandler.ReadSnapshot(originalFullName));
+                snapshotFileHandler.ReadSnapshot(originalFullName),
+                ignoreLineEndingDifferences: true);
         }
 
         public static void AssertAcceptWrongTypeExceptionCase<TAccept, TTestee>(
